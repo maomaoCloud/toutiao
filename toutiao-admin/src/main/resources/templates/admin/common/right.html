@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="admin/common/left">
+<head>
+    <title>梅州文化云</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" type="text/css" th:href="@{css/reset.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/main.css}"/>
+    <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/base.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.epiclock.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+            $("#contentDiv").attr("style","display:none");
+            $('#epiClock').epiclock({
+                //format : ' Y-F-j　G:i:s'
+                format: ' Y-F-j　G:i:s'
+            }); //绑定
+            $.epiclock(); //开始运行
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="right" class="right">
+    <div class="site">
+        <em>您现在所在的位置：</em>首页
+    </div>
+    <div class="site-title">当前时间：<span id="epiClock"></span>
+    </div>
+    <div class="in-content">
+        <div class="in-article" style="font-size: 24px; ">
+            <br/>
+            <p>总注册用户数：${terminalUserAll }</p><br/>
+            <p>今日注册用户数：${terminalUserToday }</p><br/>
+            <p>总发布活动数：${activityAll }</p><br/>
+            <p>今日发布活动数：${activityToday }</p><br/>
+            <p>今日活动下单数：${orderToday }</p><br/>
+            <p>总场馆数：${venueAll }</p><br/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

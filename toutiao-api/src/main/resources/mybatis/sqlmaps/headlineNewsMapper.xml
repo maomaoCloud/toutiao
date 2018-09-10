@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiaotiaopoker.dao.HeadlineNewsMapper">
+    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.HeadlineNews">
+        <id column="NEWS_ID" property="newsId" jdbcType="VARCHAR" />
+        <result column="NEWS_TITLE" property="newsTitle" jdbcType="VARCHAR" />
+        <result column="NEWS_COVER_IMG" property="newsCoverImg" jdbcType="VARCHAR" />
+        <result column="NEWS_CREATE_TIME" property="newsCreateTime" jdbcType="TIMESTAMP" />
+        <result column="NEWS_UPDATE_TIME" property="newsUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="NEWS_SORT" property="newsSort" jdbcType="INTEGER" />
+        <result column="NEWS_TYPE" property="newsType" jdbcType="VARCHAR" />
+        <result column="NEWS_STATUS" property="newsStatus" jdbcType="INTEGER" />
+        <result column="NEWS_BROWSE_COUNT" property="newsBrowseCount" jdbcType="BIGINT" />
+        <result column="NEWS_LINK" property="newsLink" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.HeadlineNews">
+        <result column="NEWS_DETAIL" jdbcType="LONGVARCHAR" property="newsDetail"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        NEWS_ID, NEWS_TITLE, NEWS_COVER_IMG, NEWS_CREATE_TIME, NEWS_UPDATE_TIME, NEWS_SORT,
+        NEWS_TYPE, NEWS_STATUS, NEWS_BROWSE_COUNT, NEWS_LINK
+    </sql>
+    <sql id="Blob_Column_List" >
+        NEWS_DETAIL
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from headline_news
+        where NEWS_ID = #{newsId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from headline_news
+        where NEWS_ID = #{newsId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
+        insert into headline_news (NEWS_ID, NEWS_TITLE, NEWS_COVER_IMG,
+        NEWS_CREATE_TIME, NEWS_UPDATE_TIME, NEWS_SORT,
+        NEWS_TYPE, NEWS_STATUS, NEWS_BROWSE_COUNT,
+        NEWS_LINK, NEWS_DETAIL)
+        values (#{newsId,jdbcType=VARCHAR}, #{newsTitle,jdbcType=VARCHAR}, #{newsCoverImg,jdbcType=VARCHAR},
+        #{newsCreateTime,jdbcType=TIMESTAMP}, #{newsUpdateTime,jdbcType=TIMESTAMP}, #{newsSort,jdbcType=INTEGER},
+        #{newsType,jdbcType=VARCHAR}, #{newsStatus,jdbcType=INTEGER}, #{newsBrowseCount,jdbcType=BIGINT},
+        #{newsLink,jdbcType=VARCHAR}, #{newsDetail,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
+        insert into headline_news
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="newsId != null" >
+                NEWS_ID,
+            </if>
+            <if test="newsTitle != null" >
+                NEWS_TITLE,
+            </if>
+            <if test="newsCoverImg != null" >
+                NEWS_COVER_IMG,
+            </if>
+            <if test="newsCreateTime != null" >
+                NEWS_CREATE_TIME,
+            </if>
+            <if test="newsUpdateTime != null" >
+                NEWS_UPDATE_TIME,
+            </if>
+            <if test="newsSort != null" >
+                NEWS_SORT,
+            </if>
+            <if test="newsType != null" >
+                NEWS_TYPE,
+            </if>
+            <if test="newsStatus != null" >
+                NEWS_STATUS,
+            </if>
+            <if test="newsBrowseCount != null" >
+                NEWS_BROWSE_COUNT,
+            </if>
+            <if test="newsLink != null" >
+                NEWS_LINK,
+            </if>
+            <if test="newsDetail != null" >
+                NEWS_DETAIL,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="newsId != null" >
+                #{newsId,jdbcType=VARCHAR},
+            </if>
+            <if test="newsTitle != null" >
+                #{newsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="newsCoverImg != null" >
+                #{newsCoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="newsCreateTime != null" >
+                #{newsCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsUpdateTime != null" >
+                #{newsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsSort != null" >
+                #{newsSort,jdbcType=INTEGER},
+            </if>
+            <if test="newsType != null" >
+                #{newsType,jdbcType=VARCHAR},
+            </if>
+            <if test="newsStatus != null" >
+                #{newsStatus,jdbcType=INTEGER},
+            </if>
+            <if test="newsBrowseCount != null" >
+                #{newsBrowseCount,jdbcType=BIGINT},
+            </if>
+            <if test="newsLink != null" >
+                #{newsLink,jdbcType=VARCHAR},
+            </if>
+            <if test="newsDetail != null" >
+                #{newsDetail,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
+        update headline_news
+        <set >
+            <if test="newsTitle != null" >
+                NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="newsCoverImg != null" >
+                NEWS_COVER_IMG = #{newsCoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="newsCreateTime != null" >
+                NEWS_CREATE_TIME = #{newsCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsUpdateTime != null" >
+                NEWS_UPDATE_TIME = #{newsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsSort != null" >
+                NEWS_SORT = #{newsSort,jdbcType=INTEGER},
+            </if>
+            <if test="newsType != null" >
+                NEWS_TYPE = #{newsType,jdbcType=VARCHAR},
+            </if>
+            <if test="newsStatus != null" >
+                NEWS_STATUS = #{newsStatus,jdbcType=INTEGER},
+            </if>
+            <if test="newsBrowseCount != null" >
+                NEWS_BROWSE_COUNT = #{newsBrowseCount,jdbcType=BIGINT},
+            </if>
+            <if test="newsLink != null" >
+                NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+            </if>
+            <if test="newsDetail != null" >
+                NEWS_DETAIL = #{newsDetail,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where NEWS_ID = #{newsId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
+        update headline_news
+        set NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
+        NEWS_COVER_IMG = #{newsCoverImg,jdbcType=VARCHAR},
+        NEWS_CREATE_TIME = #{newsCreateTime,jdbcType=TIMESTAMP},
+        NEWS_UPDATE_TIME = #{newsUpdateTime,jdbcType=TIMESTAMP},
+        NEWS_SORT = #{newsSort,jdbcType=INTEGER},
+        NEWS_TYPE = #{newsType,jdbcType=VARCHAR},
+        NEWS_STATUS = #{newsStatus,jdbcType=INTEGER},
+        NEWS_BROWSE_COUNT = #{newsBrowseCount,jdbcType=BIGINT},
+        NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+        NEWS_DETAIL = #{newsDetail,jdbcType=LONGVARCHAR}
+        where NEWS_ID = #{newsId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
+        update headline_news
+        set NEWS_TITLE = #{newsTitle,jdbcType=VARCHAR},
+        NEWS_COVER_IMG = #{newsCoverImg,jdbcType=VARCHAR},
+        NEWS_CREATE_TIME = #{newsCreateTime,jdbcType=TIMESTAMP},
+        NEWS_UPDATE_TIME = #{newsUpdateTime,jdbcType=TIMESTAMP},
+        NEWS_SORT = #{newsSort,jdbcType=INTEGER},
+        NEWS_TYPE = #{newsType,jdbcType=VARCHAR},
+        NEWS_STATUS = #{newsStatus,jdbcType=INTEGER},
+        NEWS_BROWSE_COUNT = #{newsBrowseCount,jdbcType=BIGINT},
+        NEWS_LINK = #{newsLink,jdbcType=VARCHAR}
+        where NEWS_ID = #{newsId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="queryNewsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select * from headline_news
+        where
+        1=1
+        and
+        NEWS_STATUS != 0
+        <if test="newsType != '' and newsType != null">
+            and NEWS_TYPE= #{newsType,jdbcType=VARCHAR}
+        </if>
+        <if test="newsStatus != '' and newsStatus != null">
+            and NEWS_STATUS= #{newsStatus,jdbcType=INTEGER}
+        </if>
+        <if test="newsTitle != '' and newsTitle != null">
+            and NEWS_TITLE like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startSort != null">
+            and NEWS_SORT &gt;= #{startSort,jdbcType=INTEGER}
+        </if>
+        <if test="endSort != null">
+            and NEWS_SORT &lt;= #{endSort,jdbcType=INTEGER}
+        </if>
+        order by
+        CASE
+        WHEN NEWS_SORT = 0 THEN
+        1000000
+        ELSE
+        NEWS_SORT
+        END ASC ,NEWS_UPDATE_TIME DESC
+    </select>
+
+    <select id="countNewsByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(NEWS_ID)
+        from
+        headline_news
+        where
+        1=1
+        and
+        NEWS_STATUS != 0
+        <if test="newsType != '' and newsType != null">
+            and NEWS_TYPE= #{newsType,jdbcType=VARCHAR}
+        </if>
+        <if test="newsStatus != '' and newsStatus != null">
+            and NEWS_STATUS= #{newsStatus,jdbcType=INTEGER}
+        </if>
+        <if test="newsTitle != '' and newsTitle != null">
+            and NEWS_TITLE like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

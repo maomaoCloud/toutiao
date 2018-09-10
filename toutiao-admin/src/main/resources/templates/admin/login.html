@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/jquery.alerts.css">
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/page.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/select2.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/STATIC/css/dialog-back.css"/>
+
+    <script type="text/javascript" src="${path}/STATIC/js/jquery.min.js"></script>
+    <script src="${path}/STATIC/js/placeholder.js"></script>
+    <script src="${path}/STATIC/js/avalon.js"></script>
+</head>
+<body>
+<div class="login-top">
+    <div class="logo" style="width: 600px;">
+        <img src="${path}/STATIC/image/backstage-logo.png" alt=""/>
+        <span style="font-size: 22px;color:#fff;">（${cityName}）</span>
+    </div>
+</div>
+
+<div class="login-box" ms-important="dataForm">
+    <div class="user name">
+        <label class="txt"></label><input id="userAccount"  type="text"
+                                          ms-duplex="userAccount"  placeholder="用户名"/>
+    </div>
+    <div class="user pwd">
+        <label class="txt"></label><input type="password" id="userPassword"
+                                          ms-duplex="userPassword"   placeholder="密码"/>
+    </div>
+    <div  class="msg-error" ms-if="errText!=0" >{{errText}}</div>
+    <div class="user login-btn" onclick="userLogin()">
+        <input type="button" class="login-submit"  value="登录" />
+    </div>
+</div>
+
+<script th:inline="javascript">
+    fixPlaceholder();
+    $(document).keydown(function(e){
+        if (e.which == 13) {
+            userLogin();
+            return false;
+        }
+        return true;
+    });
+    function userLogin(){
+        if (!dataForm.userAccount||dataForm.userAccount=="用户名") {
+            dataForm.errText="请输入用户名!";
+            $("#userAccount").focus();
+            return;
+        }
+        if (!dataForm.userPassword) {
+            dataForm.errText="请输入密码!";
+            $("#userPassword").focus();
+            return;
+        }
+        var asm = new Date().getTime();
+        dataForm.randomData=new Date().getTime();
+        $.post("${path}/user/loginCheckSysUser.do?asm="+asm, dataForm.$model, function(data) {
+            if (data == "success") {
+                window.location.href="${path}/admin.do";
+            } else if (data == "freeze") {
+                dataForm.errText="该用户已被冻结!";
+                $("#userPassword").focus();
+            }
+            else {
+                dataForm.errText="用户名或密码错误!";
+                $("#userPassword").focus();
+            }
+        });
+    }
+</script>
+</body>
+</html>

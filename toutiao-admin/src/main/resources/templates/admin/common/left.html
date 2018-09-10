@@ -1,0 +1,143 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" th:href="@{css/reset.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/left.css}"/>
+    <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery.mCustomScrollbar.concat.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/left.js}"></script>
+</head>
+<body>
+<div class="left">
+    <div class="left-top">
+        <div class="logo line"><img src="${path}/STATIC/image/logo-back.png" alt=""/></div>
+        <div class="user-box line">
+            <div class="img fl">
+                <img src="../image/face_secrecy.png" alt="" width="50" height="50"/>
+            </div>
+            <div class="info fl">
+                <p>管理员
+                    <a class="edit-info" href="${path}/user/preEditPass.do" target="main"></a>
+                </p>
+                <p>
+                    <a href="${path}/user/sysUserLoginOut.do" target="_top" style="color:#ffffff">退出</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="left-tree" id="left-tree">
+        <div class="tree-panel">
+            <ul class="tree" th:id="treeDiv">
+                <li>
+                    <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">新闻模块管理</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li><a th:href="@{'/news/addAndEditPage?newsType=1'}" th:target="content" ><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">添加新闻</span></a></li>
+                        <li><a th:href="@{'/news/listPage?newsType=1'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">新闻列表</span></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">游戏模块管理</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li><a th:href="@{'/news/addAndEditPage?newsType=2'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">添加游戏</span></a></li>
+                        <li><a th:href="@{'/news/listPage?newsType=2'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">游戏列表</span></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">管理</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li class="tree-selected">
+                            <a href="javascript:;" class="tree-node tree-node2">
+                                <span class="tree-line"></span><span class="tree-icon tree-collapsed"></span><span
+                                    class="tree-title">场馆信息管理</span>
+                            </a>
+                            <ul class="tree-child2" style="display: none;">
+                                <li><a th:href="@{/content}" th:target="content"><span
+                                        class="tree-line"></span><span class="tree-icon"></span><span
+                                        class="tree-title">场馆列表</span></a></li>
+                                <li><a th:href="@{/content}" th:target="content"><span class="tree-line"></span><span
+                                        class="tree-icon"></span><span class="tree-title">新建场馆</span></a></li>
+                                <li><a target="main" href="${path}/venue/venueDraftList.do"><span
+                                        class="tree-line"></span><span class="tree-icon"></span><span
+                                        class="tree-title">场馆草稿箱</span></a></li>
+                                <li><a target="main" href="${path}/venue/venueRecycleList.do"><span
+                                        class="tree-line"></span><span class="tree-icon"></span><span
+                                        class="tree-title">场馆回收站</span></a></li>
+                                <li class="tree-node-last"><a target="main"
+                                                              href="${path}/venue/venueCommentIndex.do"><span
+                                        class="tree-line"></span><span class="tree-icon"></span><span
+                                        class="tree-title">场馆评论管理</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="left-statistic">
+            <ul>
+                <li><i></i><a href="#"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="content" th:id="contentDiv" >
+    <iframe id="content" th:name="content" frameborder="0"
+            scrolling="yes" width="100%" >
+    </iframe>
+</div>
+<div layout:fragment="right" th:id="layoutDiv">
+
+</div>
+<script th:inline="javascript">
+
+    function SetWinHeight()
+    {
+
+        $("#content").height($(document).height()-5);
+    }
+
+    $(function () {
+        SetWinHeight();
+
+        $("#treeDiv").find("a[target='content']").click(function(){
+            $("#contentDiv").show();
+            $("#layoutDiv").hide();
+        });
+
+        /*var selectUls = $(".tree-selected");
+        for (var i = 0; i < selectUls.length; i++) {
+            var selectUl = selectUls[i];
+            if ($(selectUl).find("a[target='right']").length <= 0) {
+                $(selectUl).hide();
+            }
+        }
+
+        var selectUs = $(".tree-child");
+        for (var j = 0; j < selectUs.length; j++) {
+            var selectU = selectUs[j];
+            if ($(selectU).find("a[target='right']").length <= 0) {
+                $(selectU).parent().hide();
+            }
+        }*/
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/layui.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../static/js/admin.js"></script>
+    <script type="text/javascript" src="../../static/js/view.js"></script>
+    <script type="text/javascript" src="../../static/js/laytpl.js"></script>
+    <script type="text/javascript" src="../../static/js/layui.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //头部菜单切换
+            $(".layui-tab-title").on("click", "li", function () {
+                $(this).addClass("layui-this").siblings("li").removeClass("layui-this");
+                $(".layui-tab-item").eq($(this).index()).addClass("layui-show").siblings("div").removeClass("layui-show");
+            });
+
+            //左侧菜单开合事件
+            $(".layui-nav").on("click", 'a', function () {
+                if ($(this).parent().attr("class").indexOf("layui-nav-itemed") != -1) {
+                    $(this).parent().removeClass("layui-nav-itemed");
+                } else {
+                    $(this).parent().addClass("layui-nav-itemed");
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li style="min-width:236px" class="layui-this">现场投屏</li>
+                <li style="min-width:236px" class="">签到设置</li>
+                <li style="min-width:236px" class="">比赛设置</li>
+                <li style="min-width:236px" class="">参赛人员</li>
+                <li style="min-width:236px" class="">座次编排</li>
+                <li style="min-width:236px" class="">成绩录入</li>
+                <li style="min-width:236px" class="">历史赛事</li>
+                <li style="min-width:236px" class="">帮助中心</li>
+            </ul>
+            <!--现场投屏-->
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline" lay-filter="component-nav-active">
+                        <li class="layui-nav-item"><a href="javascript:;">签到</a></li>
+                        <li class="layui-nav-item"><a href="javascript:;">规则</a></li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">第一轮<span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">选项一</a></dd>
+                                <dd><a href="javascript:;">选项二</a></dd>
+                                <dd><a href="javascript:;">选项三</a></dd>
+                                <dd><a href="http://www.layui.com/admin/" target="_blank">跳转项</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">第二轮<span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">座次</a></dd>
+                                <dd><a href="javascript:;">比赛</a></dd>
+                                <dd><a href="javascript:;">成绩</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">第三轮<span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">座次</a></dd>
+                                <dd><a href="javascript:;">比赛</a></dd>
+                                <dd><a href="javascript:;">成绩</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item"><a href="javascript:;">总成绩</a></li>
+                        <span class="layui-nav-bar" style="top: 22.5px; height: 0px; opacity: 0;"></span>
+                    </ul>
+                </div>
+                <div class="layui-tab-item">2</div>
+                <div class="layui-tab-item">3</div>
+                <div class="layui-tab-item">4</div>
+                <!--座次编排-->
+                <div class="layui-tab-item">
+                    <div class="layui-tab-item layui-show">
+                        <ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline"
+                            lay-filter="component-nav-active">
+                            <li class="layui-nav-item"><a href="javascript:;">第一轮</a></li>
+                            <li class="layui-nav-item"><a href="javascript:;">第二轮</a></li>
+                            <li class="layui-nav-item"><a href="javascript:;">第三轮</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="layui-tab-item">6</div>
+                <div class="layui-tab-item">7</div>
+                <div class="layui-tab-item">8</div>
+                <div class="layui-tab-item">9</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

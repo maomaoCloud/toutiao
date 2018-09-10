@@ -1,0 +1,23 @@
+.ui-dialog-title, .ui-dialog-content textarea {
+    font-family: Microsoft YaHei;
+}
+
+.ui-dialog-header {
+    border-color: #9b9b9b;
+}
+
+.ui-dialog-close {
+    display: none;
+}
+
+.ui-dialog-title {
+    color: #F23330;
+    font-size: 20px;
+    text-align: center;
+}
+
+.ui-dialog-content {
+}
+
+.ui-dialog-body {
+}
