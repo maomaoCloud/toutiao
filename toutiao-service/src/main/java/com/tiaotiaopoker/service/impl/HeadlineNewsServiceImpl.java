@@ -75,6 +75,7 @@ public class HeadlineNewsServiceImpl implements HeadlineNewsService {
             news.setNewsId(StringUtils.generateShortUUID());
             news.setNewsCreateTime(new Date());
             news.setNewsUpdateTime(new Date());
+            news.setNewsStatus(2);
             news.setNewsSort(0);
             news.setNewsBrowseCount(new Long(0));
             result = headlineNewsMapper.insert(news);

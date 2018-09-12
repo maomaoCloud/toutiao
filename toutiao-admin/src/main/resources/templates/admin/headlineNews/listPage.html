@@ -120,7 +120,6 @@
             });
         }
 
-        //推荐管理
         //初始化dialog
         seajs.config({
             alias: {
@@ -217,7 +216,7 @@
                         <!--上下架操作-->
                         <a th:if="${news.newsStatus==2}" th:onclick="'changeNewsStatus(\'1\',\''+${news.newsId}+'\',\''+${news.newsTitle}+'\')'">发布  |</a>
                         <a th:if="${news.newsStatus==1}" th:onclick="'changeNewsStatus(\'2\',\''+${news.newsId}+'\',\''+${news.newsTitle}+'\')'">下架  |</a>
-                        <a >编辑</a> |
+                        <a th:href="'/news/addAndEditPage?newsId='+${news.newsId}">编辑</a> |
                         <a th:onclick="'changeNewsStatus(\'0\',\''+${news.newsId}+'\',\''+${news.newsTitle}+'\')'">删除</a> |
                         <!--置顶操作-->
                         <a th:onclick="'changeNewsSort(\'1\',\''+${news.newsId}+'\',\''+${news.newsTitle}+'\')'" th:if="${news.newsSort==0}">置顶</a>

@@ -25,7 +25,7 @@ public class HeadlineNewsController {
 
     /*新增+编辑页*/
     @RequestMapping("addAndEditPage")
-    public ModelAndView addAndEditPage(ModelAndView mv, @ModelAttribute(value = "news") HeadlineNews news) {
+    public ModelAndView addAndEditPage(ModelAndView mv, HeadlineNews news) {
         if (!StringUtils.isBlank(news.getNewsId())) {
             news = headlineNewsService.queryNewsById(news.getNewsId());
         }

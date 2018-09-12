@@ -2,170 +2,74 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + 'css/style.css'}"/>
+    <!--富文本编辑器 start-->
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/sample.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.uploadify-3.1.min.js'}"></script>
+    <!--富文本编辑器 end-->
+    <!--上传start-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
+    <!--上传end-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/main.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/common.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/base.js'}"></script>
+    <!--弹窗start-->
+    <link rel="Stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/DialogBySHF.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/dialog-back.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/dialog-min.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/sea.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/DialogBySHF.js'}"></script>
+    <!--弹窗end-->
     <title>编辑</title>
     <style>
-        input{box-sizing: content-box !important;}
+        input {
+            box-sizing: content-box !important;
+        }
     </style>
-    <div th:replace="admin/common/commonPage :: html"></div>
     <script type="text/javascript">
         $(function () {
-            /**
-             * 单选
-             * @param id
-             */
-            function tagSelectSingle(id) {
-                /* tag标签选择 */
+            var newsType = $("#newsType").val();
 
-                $('#' + id).find('a').click(function () {
-                    $('#' + id).find('a').removeClass('cur');
-                    $(this).addClass('cur');
-                });
+            //游戏不需要富文本
+            if (newsType == '1'){
+                //页面初始化时加载富文本编辑器
+                var editor = CKEDITOR.replace('newsDetail');
             }
 
-            //模块标签单选
-            tagSelectSingle("TypeLabel");
+            //页面初始化时加载上传插件
+            $('#upload').html5uploader({
+                auto: false,
+                multi: false,
+                removeTimeout: 9999999,
+                url: '/upload/uplodaHeadlineImg',
+                onUploadStart: function () {
 
-            //展示形式单选
-            tagSelectSingle("showTypeLabel");
+                },
+                onInit: function () {
 
-            //初始化展示形式
-            $("#showPic").click();
+                },
+                onUploadComplete: function () {
 
-            //页面初始化时加载富文本编辑器
-            var editor = CKEDITOR.replace('infoContent');
-
-            //初始化展示形式
-            if ($("#infoShowtype").val() == '0') {
-                $("#showPic").click();
-                showPic();
-            }
-            if ($("#infoShowtype").val() == '1') {
-                $("#showVideo").click();
-                showVideo();
-            }
-
-            //切换展示形式
-            $(".showType").click(function () {
-                if (this.id == "showPic") {
-                    showPic();
-                }
-                if (this.id == "showVideo") {
-                    showVideo();
                 }
             });
 
-            //初始化标签
-            $.post("${path}/MzInfoTypeController/queryTypeList.do", {typeModule: "${module}"}, function (data) {
-                var list = eval(data);
-                var typeHtml = '';
-                for (var i = 0; i < list.length; i++) {
-                    var obj = list[i];
-                    var typeId = obj.typeId;
-                    var typeName = obj.typeName;
-                    if (typeId == "${info.infoType}") {
-                        var classCss = "typeType cur";
-                    } else {
-                        var classCss = "typeType";
-                    }
-                    var cl = '';
-                    cl = 'class="cur"';
-                    typeHtml += '<a th:id="' + typeId + '" class="' + classCss + '" onclick="setParentId(\''
-                        + typeId + '\')">' + typeName
-                        + '</a>';
-                }
-                $("#TypeLabel").html(typeHtml);
-                tagSelectSingle("TypeLabel");
+            //回显删除按钮
+            $("#deleteBtn").on("click",function () {
+                $("#reviewUl").remove();
             });
         });
 
-        //父标签的点击事件
-        function setParentId(id) {
-            $("#infoType").val(id);
-        }
-
-        //删除图片
-        function remove(data) {
-            data.parentNode.remove();
-        }
-
-        function showPic() {
-            $("#showVideoType").attr("style", "display:none");
-            $("#showPicType").removeAttr("style");
-            $("#infoVideo").removeAttr("name");
-            $("#infoImages").attr("name", "infoImages");
-            $("#infoShowtype").val("0");
-            $("#spanred").removeAttr("style");
-        }
-
-        function showVideo() {
-            $("#showPicType").attr("style", "display:none");
-            $("#showVideoType").removeAttr("style");
-            $("#infoImages").removeAttr("name");
-            $("#infoVideo").attr("name", "infoVideo");
-            $("#infoShowtype").val("1");
-            $("#spanred").attr("style", "display:none");
-        }
-
-        //上传封面回调函数
-        function uploadImgCallbackHomepage(up, file, info) {
-            $('#' + file.id).append("<input type='hidden' id='infoIconUrl' name='infoIconUrl' th:value='http://culturecloud.img-cn-hangzhou.aliyuncs.com/" + info + "'/>");
-            //alert($("#infoIconUrl").val());
-        }
-
-        //上传图片集回调函数
-        function uploadImgCallbackImages(up, file, info) {
-            $('#' + file.id).append("<input type='hidden' th:value='http://culturecloud.img-cn-hangzhou.aliyuncs.com/" + info + "'/>");
-            //alert($("#infoImages").val());
-        }
-
-        //上传视频回调函数
-        function uploadImgCallbackVideo(up, file, info) {
-            $('#' + file.id).append("<video controls style='width:220px;height:220px;' src='http://culturecloud.img-cn-hangzhou.aliyuncs.com/"
-                + info + "'></video><input type='hidden' id='infoVideoUrl' name='infoVideoUrl' th:value='http://culturecloud.img-cn-hangzhou.aliyuncs.com/" + info + "'/>");
-            //视频全名
-            var video = $("#infoVideoUrl").val();
-            //视频后缀名开始的下标
-            var point = video.lastIndexOf(".");
-            //视频后缀
-            var type = video.substr(point);
-            if (type != ".mp4") {
-                dialogAlert("提示", "请上传正确的视频格式！");
-                $("#infoVideoUrl").parent().remove();
-            }
-            //alert($("#infoVideo").val());  MP4、flv、avi、wmv
-        }
-
         //前端校验数据
-        function addInfo() {
-            var images = $(".imagesDiv").find("input");
-            for (var i = 0, j = images.length; i < j; i++) {
-                if (i == 0) {
-                    $("#infoImages").val($("#infoImages").val() + images[i].value);
-                } else {
-                    $("#infoImages").val($("#infoImages").val() + ";" + images[i].value);
-                }
-            }
+        function addNews() {
 
-            var tags = $("#infoTagTd").find("input");
-            for (var i = 0, j = tags.length; i < j; i++) {
-                if (tags[i].value.trim() != "") {
-                    if (i == 0) {
-                        $("#infoTags").val($("#infoTags").val() + tags[i].value.trim());
-                    } else {
-                        $("#infoTags").val($("#infoTags").val() + ";" + tags[i].value.trim());
-                    }
-                }
-            }
+            var newsTitle = $("#newsTitle").val();
+            var newsCoverImg = $("#newsCoverImg").val();
+            var newsLink = $("#newsLink").val();
 
-
-            $('#infoContent').val(CKEDITOR.instances.infoContent.getData());
-            var infoType = $("#infoType").val();
-            var infoTitle = $("#infoTitle").val();
-            var infoIconUrl = $("#infoIconUrl").val();
-            var infoShowtype = $("#infoShowtype").val();
-            var infoContent = CKEDITOR.instances.infoContent.getData();
-
-            if (infoTitle == undefined || infoTitle == "") {
+            if (newsTitle == undefined || newsTitle == "") {
                 removeMsg("titleLabel");
                 appendMsg("titleLabel", "标题不能为空!");
                 $("#titleLabel").focus();
@@ -175,318 +79,107 @@
                 removeMsg("titleLabel");
             }
 
-            if (infoIconUrl == undefined || infoIconUrl == "") {
-                removeMsg("homepageLabel");
-                appendMsg("homepageLabel", "封面不能为空!");
-                $('#homepageLabel').focus();
-                window.location.hash = "#homepageLabel";
-                return;
-            } else {
-                removeMsg("homepageLabel");
-            }
-
-            if ("${module}" != "WHZX" && "${module}" != "WHTT") {
-                if (infoType == undefined || infoType == "") {
-                    removeMsg("infoTypeLabel");
-                    appendMsg("infoTypeLabel", "模块不能为空!");
-                    $('#infoTypeLabel').focus();
-                    window.location.hash = "#infoTypeLabel";
+            if($("#newsType").val()=="2"){
+                if (newsLink == undefined || newsLink == "") {
+                    removeMsg("newsLinkLabel");
+                    appendMsg("newsLinkLabel", "链接地址不能为空!");
+                    $('#newsLinkLabel').focus();
+                    window.location.hash = "#newsLinkLabel";
                     return;
                 } else {
-                    removeMsg("infoTypeLabel");
+                    removeMsg("newsLinkLabel");
                 }
             }
 
-            if (infoContent == undefined || infoContent == "") {
-                removeMsg("infoContentLabel");
-                appendMsg("infoContentLabel", "详情信息不能为空!");
-                $('#infoContentLabel').focus();
-                window.location.hash = "#infoContentLabel";
+            if (newsCoverImg == undefined || newsCoverImg == "") {
+                removeMsg("newsCoverImgLabel");
+                appendMsg("newsCoverImgLabel", "封面不能为空!");
+                $('#newsCoverImgLabel').focus();
+                window.location.hash = "#newsCoverImgLabel";
                 return;
             } else {
-                removeMsg("infoContentLabel");
+                removeMsg("newsCoverImgLabel");
             }
 
-            if (infoShowtype == undefined || infoShowtype == "") {
-                $("#infoShowtype").val(0);
+            if($("#newsType").val()=="1"){
+                $('#newsDetail').val(CKEDITOR.instances.newsDetail.getData());
+                var newsDetail = CKEDITOR.instances.newsDetail.getData();
+                if (newsDetail == undefined || newsDetail == "") {
+                    removeMsg("newsDetailLabel");
+                    appendMsg("newsDetailLabel", "详情信息不能为空!");
+                    $('#newsDetailLabel').focus();
+                    window.location.hash = "#newsDetailLabel";
+                    return;
+                } else {
+                    removeMsg("newsDetailLabel");
+                }
             }
 
-            $.post("${path}/MzInfoController/infoAddEdit.do", $('#infoForm').serialize(), function (data) {
-                if (data != null && data == 'success') {
-                    dialogAlert("提示", "发布成功！", function () {
-                        window.location.href = "${path}/MzInfoController/mzInfoList.do?infoModule=${module}";
+            $.post("/news/addOrEdit", $('#infoForm').serialize(), function (data) {
+                if (data!= null && data.success) {
+                    dialogAlert("提示", "保存成功！", function () {
+                        window.location.href = "/news/listPage?newsType="+$("#newsType").val();
                     });
                 } else if (data == "nologin") {
                     dialogConfirm("提示", "请先登录！", function () {
                         window.location.href = "${path}/login.do";
                     });
                 } else {
-                    dialogConfirm("提示", "上架失败！")
+                    dialogConfirm("提示", "保存失败！")
                 }
             });
         }
     </script>
 </head>
-<style>
-    div[name=aliFile] br, div[name=aliFile] p, div[name=aliFile] span，.progress {
-        display: none !important;
-    }
-
-    #webuploadhomepage div[name=aliFile] img:nth-child(1) {
-        position: relative !important;
-        max-width: 750px !important;
-        max-height: 500px !important;
-    }
-
-    #webuploadhomepage div[name=aliFile] img:nth-child(1) {
-        max-width: 750px;
-        max-height: 500px;
-    }
-
-    #webuploadhomepage div[name=aliFile] {
-        width: 750px !important;
-        max-width: 500px !important;
-    }
-
-    #webuploadimages div[name=aliFile] img:nth-child(1) {
-        position: relative !important;
-        max-width: 560px !important;
-        max-height: 420px !important;
-    }
-
-    #webuploadimages div[name=aliFile] img:nth-child(1) {
-        max-width: 560px;
-        max-height: 420px;
-    }
-
-    #webuploadimages div[name=aliFile] {
-        width: 560px !important;
-        max-width: 420px !important;
-    }
-</style>
 <body style="background: #FFFFFF;">
 <div class="site">
-    <em>您现在所在的位置：<p style="float: right;" th:if="" >新闻列表</p></em>
+    <em>您现在所在的位置：<p style="float: right;" th:if="${news.newsType=='1'}" >添加新闻</p> <p style="float: right;" th:if="${news.newsType=='2'}" >添加游戏</p></em>
 </div>
 <div class="site-title">发布</div>
 <div class="main-publish">
-    <form th:id="infoForm" method="post" th:object="${headlineNews}" th:action="@{${#httpServletRequest.getContextPath()} + '/news/addOrEdit'}" >
+    <form th:id="infoForm" method="post" th:action="@{${#httpServletRequest.getContextPath()} + '/news/listPage'}">
         <table width="100%" class="form-table">
             <tr>
                 <td width="100" class="td-title"><span class="red">*</span>标题：</td>
                 <td class="td-input" th:id="titleLabel">
-                    <input th:id="infoTitle" name="infoTitle" type="text" class="input-text w510" maxlength="20"
-                           th:value=""/>
+                    <input th:id="newsTitle" name="newsTitle" type="text" class="input-text w510" maxlength="20"
+                           th:value="${news.newsTitle}"/>
                     <span class="error-msg"></span>
                 </td>
             </tr>
 
             <tr>
                 <td width="100" class="td-title"><span class="red">*</span>封面：</td>
-                <td class="td-upload" th:id="homepageLabel">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="whyVedioInfoContent" style="margin-top:-10px;">
-                                    <div class="whyUploadVedio" th:id="webuploadhomepage">
-                                        <div style="width: 700px;">
-                                            <div th:id="ossfile2">
-                                                <div name="aliFile"
-                                                     style="position:relative;margin-bottom:5px;margin-right:15px;max-width:130px;display:inline-block;">
-                                                    <img style="max-height: 130px;max-width: 130px;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"
-                                                         src="${info.infoIconUrl }"><br>
-                                                    <img onclick="remove(this);" th:id="aliRemoveBtn"
-                                                         src="http://culturecloud.img-cn-hangzhou.aliyuncs.com/H5/201733161236Bn6gTqiCZBHhgObFvsCkLFNzmIBoh2.png"
-                                                         style="position:absolute;right:0;top:0;width:20px">
-                                                    <input th:id="infoIconUrl" name="infoIconUrl"
-                                                           th:value="" type="hidden">
-                                                </div>
-                                            </div>
-                                            <div th:id="container2" style="clear:both;">
-                                                <a th:id="selectfiles2" href="javascript:void(0);" class='btn'
-                                                   style="width: 120px;background-color: #1882FC;">选择封面</a>
-                                                <pre style="font-size: 14px;color: #999;line-height: 25px;">Tip：可上传1张图片，建议尺寸<span
-                                                        style="color:red">750*500像素</span>，格式为jpg、jpeg、png、gif，大小不超过<span
-                                                        style="color:red">2M</span></pre>
-                                            </div>
-                                            <script type="text/javascript">
-                                                // 图片
-                                                aliUploadImg('webuploadhomepage', uploadImgCallbackHomepage, 1, true, '');
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                <td class="td-upload" th:id="newsCoverImgLabel">
+                    <div id="upload">
+
+                    </div>
+                    <ul th:if="${not #lists.isEmpty(news.newsCoverImg)}" class="filelist" id="reviewUl">
+                        <li id="1file">
+                            <div class="progress"><div class="progressbar"></div></div>
+                            <a class="delfilebtn" id="deleteBtn">删除</a>
+                            <div>
+                                <img th:src="${news.newsCoverImg}">
+                            </div>
+                        </li>
+                    </ul>
                 </td>
             </tr>
 
-            <tr>
-                <td width="100" class="td-title"><span class="red">*</span>所属模块：</td>
-                <td class="td-tag" th:id="infoTypeLabel">
-                    <input type="hidden" th:id="infoType" name="infoType" th:value=""/>
-                    <dl>
-                        <dd th:id="TypeLabel">
-                        </dd>
-                    </dl>
+            <tr th:if="${news.newsType=='2'}">
+                <td width="100" class="td-title"><span class="red">*</span>链接地址：</td>
+                <td class="td-input" th:id="newsLinkLabel">
+                    <input th:id="newsLink" name="newsLink" type="text" class="input-text w510" maxlength="20"
+                           th:value="${news.newsLink}"/>
+                    <span class="error-msg"></span>
                 </td>
             </tr>
 
-            <tr>
-                <td width="100" class="td-title">标签：</td>
-                <td placeholder="标签" class="td-input" th:id="infoTagTd">
-                    <input type="hidden" name="infoTags" th:value="" th:id="infoTags"/>
-                    <input type="text" class="input-text w110" th:value=""/>
-                    <input type="text" class="input-text w110" th:value=""/>
-                    <input type="text" class="input-text w110" th:value=""/>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="100" class="td-title">：</td>
-                <td class="td-input" th:id="publisherNameLabel">
-                    <input th:id="publisherNameval" type="text" class="input-text w210" maxlength="20" name="infoAuthor"
-                           th:value=""/>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="100" class="td-title">展示形式：</td>
-                <td class="td-tag">
-                    <dl>
-                        <dd th:id="showTypeLabel">
-                            <a th:id="showPic" class="showType" style="width: 50px; text-align: center">图片</a>
-                            <a th:id="showVideo" class="showType" style="width: 50px; text-align: center">视频</a>
-                        </dd>
-                    </dl>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="100" class="td-title">展示形式：</td>
-                <td class="td-tag">
-                    <dl>
-                        <dd th:id="showTypeLabel">
-                            <a th:id="showPic" class="showType" style="width: 50px; text-align: center">图片</a>
-                            <a th:id="showVideo" class="showType" style="width: 50px; text-align: center">视频</a>
-                        </dd>
-                    </dl>
-                </td>
-            </tr>
-
-            <tr>
-                <td width="100" class="td-title">展示形式：</td>
-                <td class="td-tag">
-                    <dl>
-                        <dd th:id="showTypeLabel">
-                            <a th:id="showPic" class="showType" style="width: 50px; text-align: center">图片</a>
-                            <a th:id="showVideo" class="showType" style="width: 50px; text-align: center">视频</a>
-                        </dd>
-                    </dl>
-                </td>
-            </tr>
-
-
-            <tr th:id="showPicType">
-                <td width="100" class="td-title">图片集：</td>
-                <td class="td-upload" th:id="imagesLabel">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="whyVedioInfoContent" style="margin-top:-10px;">
-                                    <div class="whyUploadVedio" th:id="webuploadimages">
-                                        <div style="width: 700px;">
-                                            <div th:id="ossfile2" class="imagesDiv">
-                                                <div name="aliFile"
-                                                     style="position:relative;margin-bottom:5px;margin-right:15px;max-width:130px;display:inline-block;">
-                                                    <img style="max-height: 130px;max-width: 130px;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"
-                                                         src="${info.infoImages}"/><br/>
-                                                    <img onclick="remove(this);" th:id="aliRemoveBtn"
-                                                         src="http://culturecloud.img-cn-hangzhou.aliyuncs.com/H5/201733161236Bn6gTqiCZBHhgObFvsCkLFNzmIBoh2.png"
-                                                         style="position:absolute;right:0;top:0;width:20px"/>
-                                                    <input th:id="infoImage" th:value="" type="hidden"/>
-                                                </div>
-                                                <div name="aliFile"
-                                                     style="position:relative;margin-bottom:5px;margin-right:15px;max-width:130px;display:inline-block;">
-                                                    <img style="max-height: 130px;max-width: 130px;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"
-                                                         src="${s}"/><br/>
-                                                    <img onclick="remove(this);" th:id="aliRemoveBtn"
-                                                         src="http://culturecloud.img-cn-hangzhou.aliyuncs.com/H5/201733161236Bn6gTqiCZBHhgObFvsCkLFNzmIBoh2.png"
-                                                         style="position:absolute;right:0;top:0;width:20px"/>
-                                                    <input th:id="infoImage" th:value="" type="hidden"/>
-                                                </div>
-                                            </div>
-                                            <div th:id="container2" style="clear:both;">
-                                                <a th:id="selectfiles2" href="javascript:void(0);" class='btn'
-                                                   style="width: 120px;background-color: #1882FC;">上传图片</a>
-                                                <pre style="font-size: 14px;color: #999;line-height: 25px;">Tip：最多可上传6张图片，建议尺寸<span
-                                                        style="color:red">560*420像素</span>，格式为jpg、jpeg、png、gif，建议大小不超过<span
-                                                        style="color:red">2M</span></pre>
-                                            </div>
-                                            <script type="text/javascript">
-                                                // 图片
-                                                aliUploadImg('webuploadimages', uploadImgCallbackImages, 6, true, '');
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr th:id="showVideoType" style="display: none">
-                <td width="100" class="td-title"><span class="red">*</span>视频：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="td-upload" th:id="videoLabel">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="whyVedioInfoContent" style="margin-top:-10px;">
-                                    <div class="whyUploadVedio" th:id="webuploadvideo">
-                                        <div style="width: 700px;">
-                                            <div th:id="ossfile2">
-                                                <div name="aliFile"
-                                                     style="position:relative;margin-bottom:5px;margin-right:15px;max-width:130px;display:inline-block;">
-                                                    <img style="max-height: 130px;max-width: 130px;position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;"
-                                                         src=""><br>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" style="width: 200px;"
-                                                             ></div>
-                                                    </div>
-                                                    <img onclick="remove(this);" th:id="aliRemoveBtn"
-                                                         src="http://culturecloud.img-cn-hangzhou.aliyuncs.com/H5/201733161236Bn6gTqiCZBHhgObFvsCkLFNzmIBoh2.png"
-                                                         style="position:absolute;right:0;top:0;width:20px;z-index:10;">
-                                                    <video controls style='width:400px;height:300px;'
-                                                           src='${info.infoVideoUrl }'></video>
-                                                    <input th:id="infoVideoUrl" name="infoVideoUrl"
-                                                           th:value="" type="hidden">
-                                                </div>
-                                            </div>
-                                            <div th:id="container2" style="clear:both;">
-                                                <a th:id="selectfiles2" href="javascript:void(0);" class='btn'
-                                                   style="width: 120px;background-color: #1882FC;">上传视频</a>
-                                                <pre style="font-size: 14px;color: #999;line-height: 25px;">Tip：<span
-                                                        style="color:red">仅支持MP4</span></pre>
-                                            </div>
-                                            <script type="text/javascript">
-                                                // 视频
-                                                aliUploadFiles('webuploadvideo', uploadImgCallbackVideo, 1, true, '');
-                                            </script>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr>
+            <tr th:if="${news.newsType=='1'}">
                 <td width="100" class="td-title"><span class="red" th:id="spanred">*</span>详细描述：</td>
-                <td class="td-content" th:id="infoContentLabel">
+                <td class="td-content" th:id="newsDetailLabel">
                     <div class="editor-box">
-                        <textarea name="infoContent" th:id="infoContent">${info.infoContent }</textarea>
+                        <textarea name="newsDetail" th:id="newsDetail" th:text="${news.newsDetail}"></textarea>
                     </div>
                 </td>
             </tr>
@@ -494,12 +187,10 @@
             <tr>
                 <td width="100" class="td-title"></td>
                 <td class="td-btn">
-                    <input type="hidden" name="infoId" th:id="infoId" th:value=""/>
-                    <input type="hidden" name="infoModule" th:id="infoModule" th:value=""/>
-                    <input type="hidden" name="infoShowtype" th:id="infoShowtype" th:value=""/>
-                    <input type="hidden" th:id="infoImages" name="infoImages"/>
-                    <input type="hidden" th:id="infoStatus" name="infoStatus" th:value="0"/>
-                    <input th:id="btnPublish" class="btn-publish" type="button" onclick="addInfo()" th:value="保存并发布"/>
+                    <input type="hidden" name="newsCoverImg" th:id="newsCoverImg" th:value="${news.newsCoverImg}"/>
+                    <input type="hidden" name="newsId" th:id="infoId" th:value="${news.newsId}"/>
+                    <input type="hidden" name="newsType" th:id="newsType" th:value="${news.newsType}"/>
+                    <input th:id="btnPublish" class="btn-publish" type="button" onclick="addNews()" value="保存并发布"/>
                 </td>
             </tr>
         </table>
