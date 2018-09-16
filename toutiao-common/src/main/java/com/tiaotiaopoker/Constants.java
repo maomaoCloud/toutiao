@@ -20,4 +20,14 @@ public class Constants {
         public static final Integer IS_DELETE_FALSE = 0;
         public static final Integer IS_DELETE_TRUE  = 1;
     }
+
+    public static final class Http {
+        public static final int HTTP_POST = 0;
+        public static final int HTTP_GET  = 1;
+    }
+
+    public static final class Charset {
+        public static final String UTF8     = "UTF-8";
+        public static final String ISO88591 = "ISO-8859-1";
+    }
 }

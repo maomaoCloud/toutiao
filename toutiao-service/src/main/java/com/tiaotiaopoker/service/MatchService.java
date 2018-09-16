@@ -12,4 +12,6 @@ public interface MatchService {
 
     Map<String, Object> getMatchList(Integer pageNum,
                                      Integer pageSize);
+
+    Map<String, Object> getMatchInfoById(String matchId);
 }

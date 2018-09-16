@@ -2,14 +2,17 @@ package com.tiaotiaopoker.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.StringUtil;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.dao.MatchMapper;
 import com.tiaotiaopoker.entity.ApiMatchData;
+import com.tiaotiaopoker.entity.ApiMatchDetail;
 import com.tiaotiaopoker.pojo.Match;
 import com.tiaotiaopoker.pojo.MatchExample;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
 import com.tiaotiaopoker.service.MatchService;
+import com.tiaotiaopoker.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,9 +26,11 @@ import java.util.*;
 @Service
 public class MatchServiceImpl implements MatchService {
     @Autowired
-    private MatchMapper matchMapper;
+    private MatchMapper  matchMapper;
     @Value("${match.banner.default}")
-    private String      MATCH_BANNER_DEFAULT;
+    private String       MATCH_BANNER_DEFAULT;
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public void saveMatch(@RequestBody MatchWithBLOBs data) {
@@ -60,6 +65,24 @@ public class MatchServiceImpl implements MatchService {
         resultMap.put( "data", resDataList );
         resultMap.put( "hasMore", totalPages > pageNum );
 
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> getMatchInfoById(String matchId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if( StringUtil.isNotEmpty( matchId ) ) {
+            MatchExample ex = new MatchExample();
+            ex.createCriteria().andIdEqualTo( matchId );
+            List<MatchWithBLOBs> matches = matchMapper.selectByExampleWithBLOBs( ex );
+
+            if( matches != null && matches.size() > 0 ) {
+                ApiMatchDetail data = ApiMatchDetail.genFromMatch( matches.get( 0 ) );
+                List<ApiMatchDetail.MatchApplyUser> matchApplyUsersList = orderService.getApplyUserByMatchId( matchId );
+                data.setApplyList( matchApplyUsersList );
+                resultMap.put( "data", data );
+            }
+        }
         return resultMap;
     }
 }

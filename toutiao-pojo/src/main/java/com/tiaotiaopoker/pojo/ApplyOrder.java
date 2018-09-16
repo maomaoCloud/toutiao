@@ -1,0 +1,225 @@
+package com.tiaotiaopoker.pojo;
+
+import java.util.Date;
+
+public class ApplyOrder {
+    private String id;
+
+    private String userId;
+
+    private String userName;
+
+    private String userPhone;
+
+    private String partnerId;
+
+    private String partnerName;
+
+    private String partnerPhone;
+
+    private Integer hasPartner;
+
+    private Float price;
+
+    private Float payMoney;
+
+    private String matchId;
+
+    private String userHead;
+
+    private String partnerHead;
+
+    private Date addTime;
+
+    private Integer payStatue;
+
+    private Float sharePercent;
+
+    private Date payDate;
+
+    private Integer userSignStatus;
+
+    private Integer partnerSignStatue;
+
+    private String patnerCode;
+
+    private Date userSignDatetime;
+
+    private Date partnerSignDatetime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone == null ? null : userPhone.trim();
+    }
+
+    public String getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(String partnerId) {
+        this.partnerId = partnerId == null ? null : partnerId.trim();
+    }
+
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName == null ? null : partnerName.trim();
+    }
+
+    public String getPartnerPhone() {
+        return partnerPhone;
+    }
+
+    public void setPartnerPhone(String partnerPhone) {
+        this.partnerPhone = partnerPhone == null ? null : partnerPhone.trim();
+    }
+
+    public Integer getHasPartner() {
+        return hasPartner;
+    }
+
+    public void setHasPartner(Integer hasPartner) {
+        this.hasPartner = hasPartner;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Float getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Float payMoney) {
+        this.payMoney = payMoney;
+    }
+
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(String matchId) {
+        this.matchId = matchId == null ? null : matchId.trim();
+    }
+
+    public String getUserHead() {
+        return userHead;
+    }
+
+    public void setUserHead(String userHead) {
+        this.userHead = userHead == null ? null : userHead.trim();
+    }
+
+    public String getPartnerHead() {
+        return partnerHead;
+    }
+
+    public void setPartnerHead(String partnerHead) {
+        this.partnerHead = partnerHead == null ? null : partnerHead.trim();
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Integer getPayStatue() {
+        return payStatue;
+    }
+
+    public void setPayStatue(Integer payStatue) {
+        this.payStatue = payStatue;
+    }
+
+    public Float getSharePercent() {
+        return sharePercent;
+    }
+
+    public void setSharePercent(Float sharePercent) {
+        this.sharePercent = sharePercent;
+    }
+
+    public Date getPayDate() {
+        return payDate;
+    }
+
+    public void setPayDate(Date payDate) {
+        this.payDate = payDate;
+    }
+
+    public Integer getUserSignStatus() {
+        return userSignStatus;
+    }
+
+    public void setUserSignStatus(Integer userSignStatus) {
+        this.userSignStatus = userSignStatus;
+    }
+
+    public Integer getPartnerSignStatue() {
+        return partnerSignStatue;
+    }
+
+    public void setPartnerSignStatue(Integer partnerSignStatue) {
+        this.partnerSignStatue = partnerSignStatue;
+    }
+
+    public String getPatnerCode() {
+        return patnerCode;
+    }
+
+    public void setPatnerCode(String patnerCode) {
+        this.patnerCode = patnerCode == null ? null : patnerCode.trim();
+    }
+
+    public Date getUserSignDatetime() {
+        return userSignDatetime;
+    }
+
+    public void setUserSignDatetime(Date userSignDatetime) {
+        this.userSignDatetime = userSignDatetime;
+    }
+
+    public Date getPartnerSignDatetime() {
+        return partnerSignDatetime;
+    }
+
+    public void setPartnerSignDatetime(Date partnerSignDatetime) {
+        this.partnerSignDatetime = partnerSignDatetime;
+    }
+}

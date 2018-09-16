@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiaotiaopoker.dao.AppUserMapper" >
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.AppUser" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+    <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="reg_date" property="regDate" jdbcType="TIMESTAMP" />
+    <result column="update_info_date" property="updateInfoDate" jdbcType="TIMESTAMP" />
+    <result column="wx_qr_img" property="wxQrImg" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+    <result column="user_from" property="userFrom" jdbcType="INTEGER" />
+    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+    <result column="parent_user_id" property="parentUserId" jdbcType="VARCHAR" />
+    <result column="last_login_date_time" property="lastLoginDateTime" jdbcType="TIMESTAMP" />
+    <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, open_id, nick_name, avatar_url, true_name, phone, reg_date, update_info_date, 
+    wx_qr_img, user_status, user_level, user_from, user_address, parent_user_id, last_login_date_time, 
+    union_id, id_card, sex
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.AppUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from app_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.AppUserExample" >
+    delete from app_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.AppUser" >
+    insert into app_user (id, open_id, nick_name, 
+      avatar_url, true_name, phone, 
+      reg_date, update_info_date, wx_qr_img, 
+      user_status, user_level, user_from, 
+      user_address, parent_user_id, last_login_date_time, 
+      union_id, id_card, sex
+      )
+    values (#{id,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{avatarUrl,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{regDate,jdbcType=TIMESTAMP}, #{updateInfoDate,jdbcType=TIMESTAMP}, #{wxQrImg,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=INTEGER}, #{userLevel,jdbcType=INTEGER}, #{userFrom,jdbcType=INTEGER}, 
+      #{userAddress,jdbcType=VARCHAR}, #{parentUserId,jdbcType=VARCHAR}, #{lastLoginDateTime,jdbcType=TIMESTAMP}, 
+      #{unionId,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.AppUser" >
+    insert into app_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url,
+      </if>
+      <if test="trueName != null" >
+        true_name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="regDate != null" >
+        reg_date,
+      </if>
+      <if test="updateInfoDate != null" >
+        update_info_date,
+      </if>
+      <if test="wxQrImg != null" >
+        wx_qr_img,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="userFrom != null" >
+        user_from,
+      </if>
+      <if test="userAddress != null" >
+        user_address,
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id,
+      </if>
+      <if test="lastLoginDateTime != null" >
+        last_login_date_time,
+      </if>
+      <if test="unionId != null" >
+        union_id,
+      </if>
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null" >
+        #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateInfoDate != null" >
+        #{updateInfoDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxQrImg != null" >
+        #{wxQrImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userFrom != null" >
+        #{userFrom,jdbcType=INTEGER},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null" >
+        #{parentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDateTime != null" >
+        #{lastLoginDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.AppUserExample" resultType="java.lang.Integer" >
+    select count(*) from app_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update app_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarUrl != null" >
+        avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trueName != null" >
+        true_name = #{record.trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regDate != null" >
+        reg_date = #{record.regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateInfoDate != null" >
+        update_info_date = #{record.updateInfoDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.wxQrImg != null" >
+        wx_qr_img = #{record.wxQrImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userLevel != null" >
+        user_level = #{record.userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.userFrom != null" >
+        user_from = #{record.userFrom,jdbcType=INTEGER},
+      </if>
+      <if test="record.userAddress != null" >
+        user_address = #{record.userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentUserId != null" >
+        parent_user_id = #{record.parentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginDateTime != null" >
+        last_login_date_time = #{record.lastLoginDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unionId != null" >
+        union_id = #{record.unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null" >
+        id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update app_user
+    set id = #{record.id,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      true_name = #{record.trueName,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      reg_date = #{record.regDate,jdbcType=TIMESTAMP},
+      update_info_date = #{record.updateInfoDate,jdbcType=TIMESTAMP},
+      wx_qr_img = #{record.wxQrImg,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=INTEGER},
+      user_level = #{record.userLevel,jdbcType=INTEGER},
+      user_from = #{record.userFrom,jdbcType=INTEGER},
+      user_address = #{record.userAddress,jdbcType=VARCHAR},
+      parent_user_id = #{record.parentUserId,jdbcType=VARCHAR},
+      last_login_date_time = #{record.lastLoginDateTime,jdbcType=TIMESTAMP},
+      union_id = #{record.unionId,jdbcType=VARCHAR},
+      id_card = #{record.idCard,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.AppUser" >
+    update app_user
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null" >
+        true_name = #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regDate != null" >
+        reg_date = #{regDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateInfoDate != null" >
+        update_info_date = #{updateInfoDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxQrImg != null" >
+        wx_qr_img = #{wxQrImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userFrom != null" >
+        user_from = #{userFrom,jdbcType=INTEGER},
+      </if>
+      <if test="userAddress != null" >
+        user_address = #{userAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id = #{parentUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDateTime != null" >
+        last_login_date_time = #{lastLoginDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unionId != null" >
+        union_id = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.AppUser" >
+    update app_user
+    set open_id = #{openId,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      true_name = #{trueName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      reg_date = #{regDate,jdbcType=TIMESTAMP},
+      update_info_date = #{updateInfoDate,jdbcType=TIMESTAMP},
+      wx_qr_img = #{wxQrImg,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      user_level = #{userLevel,jdbcType=INTEGER},
+      user_from = #{userFrom,jdbcType=INTEGER},
+      user_address = #{userAddress,jdbcType=VARCHAR},
+      parent_user_id = #{parentUserId,jdbcType=VARCHAR},
+      last_login_date_time = #{lastLoginDateTime,jdbcType=TIMESTAMP},
+      union_id = #{unionId,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
