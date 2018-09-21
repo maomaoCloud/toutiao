@@ -47,4 +47,18 @@ public class MatchController extends BaseController {
         }
         return jsonResult;
     }
+
+    @RequestMapping("detail/{matchId}")
+    public JsonResult getMatchDetail(@PathVariable("matchId") String matchId) {
+        JsonResult jsonResult;
+        try {
+            Map<String, Object> resultMap = matchService.getMatchInfoById( matchId );
+            jsonResult = JsonResult.SUCCESS();
+            jsonResult.setResData( resultMap );
+        } catch (Exception e) {
+            jsonResult = JsonResult.FAILED( "赛事详情接口异常" );
+            e.printStackTrace();
+        }
+        return jsonResult;
+    }
 }

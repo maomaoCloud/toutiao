@@ -17,6 +17,8 @@ public interface MatchService {
     Map<String, Object> getMatchList(Integer pageNum,
                                      Integer pageSize);
 
+    Map<String, Object> getMatchInfoById(String matchId);
+
     List<Match> queryMatchByCondition(Match match, Pagination page);
 
     int updateMatchBySelective(MatchWithBLOBs match, SysUser sysUser);

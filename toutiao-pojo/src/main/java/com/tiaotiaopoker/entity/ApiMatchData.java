@@ -78,7 +78,8 @@ public class ApiMatchData {
         res.setBannerImg( md.getBannerImg() );
 
         try {
-            res.setFee( Integer.parseInt( md.getFee().toString() ) );
+
+            res.setFee( (int)((float)md.getFee()));
         } catch (Exception e) {
             res.setFee( 0 );
         }
