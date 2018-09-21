@@ -24,4 +24,6 @@ public interface MatchService {
     int updateMatchBySelective(MatchWithBLOBs match, SysUser sysUser);
 
     MatchWithBLOBs selectMatchById(String id);
+
+    MatchWithBLOBs getMatchDataById(String matchId);
 }

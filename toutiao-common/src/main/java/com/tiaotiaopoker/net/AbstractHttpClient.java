@@ -46,7 +46,7 @@ public abstract class AbstractHttpClient implements HttpClient {
         postHttpRequest( httpRequest, httpEntity, charset );
         CloseableHttpResponse execute = client.execute( httpRequest );
         HttpEntity resentity = execute.getEntity();
-        return EntityUtils.toString( resentity );
+        return EntityUtils.toString( resentity, "utf-8" );
     }
 
     @Override

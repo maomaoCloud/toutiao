@@ -33,7 +33,6 @@ public class MatchServiceImpl implements MatchService {
     private String       MATCH_BANNER_DEFAULT;
     @Autowired
     private OrderService orderService;
-    private String MATCH_BANNER_DEFAULT;
 
     @Override
     public void saveMatch(@RequestBody MatchWithBLOBs data) {
@@ -89,7 +88,6 @@ public class MatchServiceImpl implements MatchService {
         return resultMap;
     }
 
-    @Override
     public List<Match> queryMatchByCondition(Match match, Pagination page) {
         Map<String, Object> paramMap = new HashMap<>();
         if (null != match.getStatue()) {
@@ -109,9 +107,16 @@ public class MatchServiceImpl implements MatchService {
         return matchMapper.updateByExampleSelective(match,null);
     }
 
+    public MatchWithBLOBs getMatchDataById(String matchId) {
+        MatchExample example = new MatchExample();
+        example.createCriteria().andIdEqualTo( matchId );
+        List<MatchWithBLOBs> matches = matchMapper.selectByExampleWithBLOBs( example );
+        if( matches != null && matches.size() > 0 ) return matches.get( 0 );
+        return null;
+    }
+
     @Override
     public MatchWithBLOBs selectMatchById(String id) {
-
         return matchMapper.selectMatchById(id);
     }
 }

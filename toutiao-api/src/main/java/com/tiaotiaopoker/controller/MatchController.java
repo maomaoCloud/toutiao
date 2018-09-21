@@ -2,7 +2,9 @@ package com.tiaotiaopoker.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.tiaotiaopoker.JsonResult;
+import com.tiaotiaopoker.entity.ApiApplyParams;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
+import com.tiaotiaopoker.service.ApplyOrderService;
 import com.tiaotiaopoker.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +20,9 @@ import java.util.Map;
 @Scope("prototype")
 public class MatchController extends BaseController {
     @Autowired
-    private MatchService matchService;
+    private MatchService      matchService;
+    @Autowired
+    private ApplyOrderService applyOrderService;
 
     @RequestMapping(value = "add",
                     method = RequestMethod.POST)
@@ -61,4 +65,16 @@ public class MatchController extends BaseController {
         }
         return jsonResult;
     }
+
+    @RequestMapping("apply")
+    public JsonResult apply(@RequestBody ApiApplyParams params) {
+        try {
+            params.setRequestIp( getIpAddress() );
+            Map<String, Object> resultMap = applyOrderService.addOrder( params );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return JsonResult.FAILED( "报名失败！" );
+    }
+
 }

@@ -2,6 +2,9 @@
   <dictionary name="apple">
     <words>
       <w>appid</w>
+      <w>hmmss</w>
+      <w>spbill</w>
+      <w>unifiedorder</w>
     </words>
   </dictionary>
 </component>

@@ -1,5 +1,8 @@
 package com.tiaotiaopoker.pojo;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.StringUtil;
+
 import java.util.Date;
 
 public class AppUser {
@@ -38,6 +41,12 @@ public class AppUser {
     private String idCard;
 
     private String sex;
+
+    private String country;
+
+    private String province;
+
+    private String city;
 
     public String getId() {
         return id;
@@ -181,5 +190,82 @@ public class AppUser {
 
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country == null ? null : country.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
+    }
+
+    public static AppUser genFromJsonData(String userInfoJsonData,
+                                          String userId) {
+        AppUser user = new AppUser();
+        user.setId( userId );
+
+        //Object jo = JSONObject.parse( userInfoJsonData );
+        JSONObject jo = JSONObject.parseObject( userInfoJsonData );
+        String openId = jo.getString( "openId" );
+        String nickName = jo.getString( "nickName" );
+        int gender = jo.getInteger( "gender" );
+        String city = jo.getString( "city" );
+        String province = jo.getString( "province" );
+        String country = jo.getString( "country" );
+        String avatarUrl = jo.getString( "avatarUrl" );
+        String unionId = jo.getString( "unionId" );
+
+        user.setOpenId( openId );
+        user.setNickName( nickName );
+        String sex;
+        switch (gender) {
+            case 0:
+                sex = "未知";
+                break;
+            case 1:
+                sex = "男";
+                break;
+            case 2:
+                sex = "女";
+                break;
+            default:
+                sex = "未知";
+        }
+
+        user.setSex( sex );
+        user.setAvatarUrl( avatarUrl );
+        user.setUnionId( unionId );
+        StringBuffer sbAddress = new StringBuffer();
+        if( StringUtil.isNotEmpty( province ) ) {
+            sbAddress.append( province );
+        }
+
+        if( StringUtil.isNotEmpty( city ) ) {
+            sbAddress.append( city );
+        }
+
+        user.setUserAddress( sbAddress.toString() );
+        user.setProvince( province );
+        user.setCity( city );
+        user.setCountry( country );
+
+        return user;
     }
 }

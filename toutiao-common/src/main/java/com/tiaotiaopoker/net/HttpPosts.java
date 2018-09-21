@@ -92,7 +92,7 @@ public enum HttpPosts {
         @Override
         protected AbstractHttpEntity initialHttpEntity(Map<String, Object> parameters) throws UnsupportedEncodingException {
             String jsonData = parameters.get( "data" ).toString();
-            return new StringEntity( jsonData.toString() );
+            return new StringEntity( jsonData.toString(), "utf-8" );
         }
 
     };

@@ -20,6 +20,9 @@
     <result column="union_id" property="unionId" jdbcType="VARCHAR" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,7 +85,7 @@
   <sql id="Base_Column_List" >
     id, open_id, nick_name, avatar_url, true_name, phone, reg_date, update_info_date, 
     wx_qr_img, user_status, user_level, user_from, user_address, parent_user_id, last_login_date_time, 
-    union_id, id_card, sex
+    union_id, id_card, sex, country, province, city
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.AppUserExample" >
     select
@@ -120,14 +123,16 @@
       reg_date, update_info_date, wx_qr_img, 
       user_status, user_level, user_from, 
       user_address, parent_user_id, last_login_date_time, 
-      union_id, id_card, sex
+      union_id, id_card, sex, 
+      country, province, city
       )
     values (#{id,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{avatarUrl,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{regDate,jdbcType=TIMESTAMP}, #{updateInfoDate,jdbcType=TIMESTAMP}, #{wxQrImg,jdbcType=VARCHAR}, 
       #{userStatus,jdbcType=INTEGER}, #{userLevel,jdbcType=INTEGER}, #{userFrom,jdbcType=INTEGER}, 
       #{userAddress,jdbcType=VARCHAR}, #{parentUserId,jdbcType=VARCHAR}, #{lastLoginDateTime,jdbcType=TIMESTAMP}, 
-      #{unionId,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}
+      #{unionId,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.AppUser" >
@@ -187,6 +192,15 @@
       <if test="sex != null" >
         sex,
       </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -242,6 +256,15 @@
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -308,6 +331,15 @@
       <if test="record.sex != null" >
         sex = #{record.sex,jdbcType=VARCHAR},
       </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -332,7 +364,10 @@
       last_login_date_time = #{record.lastLoginDateTime,jdbcType=TIMESTAMP},
       union_id = #{record.unionId,jdbcType=VARCHAR},
       id_card = #{record.idCard,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=VARCHAR}
+      sex = #{record.sex,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -391,6 +426,15 @@
       <if test="sex != null" >
         sex = #{sex,jdbcType=VARCHAR},
       </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -412,7 +456,10 @@
       last_login_date_time = #{lastLoginDateTime,jdbcType=TIMESTAMP},
       union_id = #{unionId,jdbcType=VARCHAR},
       id_card = #{idCard,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=VARCHAR}
+      sex = #{sex,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
