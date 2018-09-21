@@ -33,6 +33,26 @@ public class HeadlineNews {
 
     private String newsDetail;
 
+    private String newsCreateUser;
+
+    private String newsUpdateUser;
+
+    public String getNewsUpdateUser() {
+        return newsUpdateUser;
+    }
+
+    public void setNewsUpdateUser(String newsUpdateUser) {
+        this.newsUpdateUser = newsUpdateUser;
+    }
+
+    public String getNewsCreateUser() {
+        return newsCreateUser;
+    }
+
+    public void setNewsCreateUser(String newsCreateUser) {
+        this.newsCreateUser = newsCreateUser;
+    }
+
     public String getNewsId() {
         return newsId;
     }

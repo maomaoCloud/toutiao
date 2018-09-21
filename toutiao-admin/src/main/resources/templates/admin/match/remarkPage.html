@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--通用页面-->
+    <div th:replace="admin/common/commonPage :: html"></div>
+</head>
+<script th:inline="javascript">
+    seajs.config({
+        alias: {
+            "jquery": "/js/dialog/lib/jquery-1.10.2.js"
+        }
+    });
+    seajs.use(['/js/dialogBack/src/dialog-plus'], function (dialog) {
+        window.dialog = dialog;
+    });
+    window.console = window.console || {
+        log: function () {
+        }
+    }
+    seajs.use(['jquery'], function ($) {
+        $(function () {
+            /*点击取消按钮，关闭登录框*/
+            $(".btn-save").on("click", function(){
+                $.post("/match/update",$("#remarkForm").serialize(),function(data){
+                    if (data != null && data.success) {
+                        dialogAlert("提示", "备注成功！", function () {
+                            parent.location.href="/match/matchListPage";
+                        });
+                    } else if (data.msg == "nologin") {
+                        dialogConfirm("提示", "请先登录！", function () {
+                            parent.location.href = "/login";
+                        });
+                    } else {
+                        dialogConfirm("提示", data.msg);
+                    }
+                });
+            });
+        })
+    });
+</script>
+<body>
+<form action="" id="remarkForm">
+    <div class="main-publish tag-add">
+        <table width="100%" class="form-table">
+            <tr>
+                <td class="td-title">比赛备注：</td>
+                <td class="td-content" id="updateDescrLable">
+                    <input type="hidden" name="id" th:value="${match.id }">
+                    <textarea style="height: 250px" th:value="${match.remark}" th:text="${match.remark}" id="dictRemark" name="remark" class="text-des" maxlength="200"></textarea><span style="color:red">200字内</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-btn" align="center" colspan="2">
+                    <input class="btn-save" type="button"  value="保存"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+</body>
+</html>

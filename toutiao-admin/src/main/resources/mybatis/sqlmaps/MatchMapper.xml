@@ -22,6 +22,7 @@
     <result column="statue" property="statue" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchWithBLOBs" extends="BaseResultMap" >
     <result column="active_content" property="activeContent" jdbcType="LONGVARCHAR" />
@@ -295,9 +296,6 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update match_data
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
@@ -352,6 +350,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.operateUser != null" >
+        operate_user = #{record.operateUser,jdbcType=VARCHAR},
+      </if>
       <if test="record.orderNo != null" >
         order_no = #{record.orderNo,jdbcType=INTEGER},
       </if>
@@ -362,9 +363,7 @@
         rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    where id = #{record.id,jdbcType=VARCHAR}
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update match_data
@@ -388,6 +387,7 @@
       statue = #{record.statue,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
       order_no = #{record.orderNo,jdbcType=INTEGER},
+      operate_user = #{record.operateUser,jdbcType=VARCHAR},
       active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
       rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -420,4 +420,45 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="queryMatchByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    id, md.user_id, theme, start_date, end_date, province, city, area, address, contact_name,
+    phone, wx_head, fee, banner_img, add_time, is_delete, fee_share_percent, statue,
+    remark, order_no,su.user_account as operate_user
+    from match_data as md
+    left join
+    sys_user as su on
+      su.user_id = md.operate_user
+    where
+    1=1
+    <if test="statue != '' and statue != null">
+      and statue= #{statue,jdbcType=INTEGER}
+    </if>
+    <if test="theme != '' and theme != null">
+      and theme like CONCAT('%',#{theme,jdbcType=VARCHAR},'%')
+    </if>
+    order by
+    statue ASC
+  </select>
+
+  <select id="countMatchByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(id)
+    from match_data
+    where
+    1=1
+    <if test="statue != '' and statue != null">
+      and statue= #{statue,jdbcType=INTEGER}
+    </if>
+    <if test="theme != '' and theme != null">
+      and theme like CONCAT('%',#{theme,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+  
+  <select id="selectMatchById" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select *
+    from
+    match_data
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

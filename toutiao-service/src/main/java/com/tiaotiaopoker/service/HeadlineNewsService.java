@@ -3,7 +3,7 @@ package com.tiaotiaopoker.service;
 
 import com.tiaotiaopoker.common.Pagination;
 import com.tiaotiaopoker.pojo.HeadlineNews;
-import org.springframework.stereotype.Component;
+import com.tiaotiaopoker.pojo.SysUser;
 
 import java.util.List;
 import java.util.Map;
@@ -16,10 +16,10 @@ public interface HeadlineNewsService {
 
     HeadlineNews queryNewsById(String newsId);
 
-    int addOrUpdateNews(HeadlineNews news);
+    int addOrUpdateNews(HeadlineNews news, SysUser loginUser);
 
-    int editNewsBySelective(HeadlineNews news);
+    int editNewsBySelective(HeadlineNews news, SysUser loginUser);
 
-    int setNewsSort(HeadlineNews news);
+    int setNewsSort(HeadlineNews news, SysUser loginUser);
 
 }

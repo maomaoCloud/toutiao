@@ -171,8 +171,7 @@
                             xhr.onreadystatechange = function (e) {
                                 if (xhr.readyState == 4) {
                                     if (xhr.status == 200) {
-                                        $("#newsCoverImg").val(xhr.responseText);
-                                        $("#newsCoverImgLabel").append('<div id="imgDiv"><img src="'+xhr.responseText+'"></div>');
+                                        $("#uploadImg").val(xhr.responseText);
                                         self.onUploadSuccess(file, xhr.responseText);
                                         setTimeout(function () {
                                             ZXXFILE.onDelete(file.index);

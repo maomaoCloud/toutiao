@@ -61,8 +61,6 @@ public class UploadController {
     public void uplodaImg(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         try {
             Map<String, Object> resultMap = fileLogService.saveFile("admin", file);
-
-
             String imgUrl = resultMap.get("fileUrl").toString();
             String callback = request.getParameter("CKEditorFuncNum");
             String fullContentType = "text/html;charset=UTF-8";

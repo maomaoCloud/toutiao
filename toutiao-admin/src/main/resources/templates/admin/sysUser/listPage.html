@@ -1,0 +1,160 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>列表页</title>
+    <!--通用页面-->
+    <div th:replace="admin/common/commonPage :: html"></div>
+    <!--分页插件start-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/page.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/page.min.js'}"></script>
+    <!--分页插件end-->
+    <script th:inline="javascript">
+        ctxPath = /*[[@{/}]]*/ '';
+
+        $(function () {
+            //调用下拉列表js
+            selectModel();
+
+            //分页插件初始化
+            kkpager.generPageHtml({
+                pno: [[${page.page}]],
+                total: [[${page.countPage}]],
+                totalRecords: [[${page.total}]],
+                mode: 'click',//默认值是link，可选link或者click
+                click: function (n) {
+                    this.selectPage(n);
+                    $("#page").val(n);
+                    formSub('#form');
+                    return false;
+                }
+            });
+
+            infoTitle = $("#infoTitle").val();
+            if (infoTitle == "输入标题名称") {
+                infoTitle = "";
+            }
+            infotype = $("#infotype").val();
+            infoStatus = $("#infoStatus").val();
+            infoType = $("#infoType").val();
+
+        });
+
+        //搜索
+        function formSub(formName) {
+            var infoTitle = $('#infoTitle').val();
+            if (infoTitle != undefined && infoTitle == '输入管理员名称') {
+                $('#infoTitle').val("");
+            }
+            $(formName).submit();
+        }
+
+        //上下架+删除
+        function changeUserStatus(status, id, title) {
+            if (status == "0") {
+                var msg = "删除成功！";
+                var html = "您确定要删除“" + title + "”吗？";
+                var error = "删除失败";
+            }
+            dialogConfirm("提示", html, function () {
+                $.post("/sysUser/update", {
+                    "userId": id,
+                    "userState": status
+                }, function (data) {
+                    if (data != null && data.success) {
+                        dialogAlert("提示", msg, function () {
+                            formSub('#form');
+                        });
+                    } else if (data == "nologin") {
+                        dialogConfirm("提示", "请先登录！", function () {
+                            window.location.href = "/login";
+                        });
+                    } else {
+                        dialogConfirm("提示", error);
+                    }
+                });
+            });
+        }
+
+
+        //初始化dialog
+        seajs.config({
+            alias: {
+                "jquery": "jquery-1.10.2.js"
+            }
+        });
+        seajs.use(['/js/dialogBack/src/dialog-plus'], function (dialog) {
+            window.dialog = dialog;
+        });
+        window.console = window.console || {
+            log: function () {
+            }
+        }
+
+        //添加click事件
+        /*seajs.use(['jquery'], function ($) {
+            $('._edit').on('click', function () {
+                var type = $(this).attr("data-type");
+                var id = $(this).attr("data-id");
+                dialog({
+                    url: '${path}/info/preRecommendInfo.do?infotype=' + type + '&infoId=' + id,
+                    title: '运营位排序',
+                    width: 460,
+                    height: 350,
+                    fixed: true
+                }).showModal();
+                return false;
+            });
+        });*/
+
+    </script>
+</head>
+<body>
+<form th:id="form" th:action="@{${#httpServletRequest.getContextPath()} + '/sysUser/listPage'}" th:object="${user}" method="post">
+    <div class="site">
+        <em>您现在所在的位置：管理员列表</em>
+    </div>
+    <div class="search">
+        <div class="search-box">
+            <i></i><input type="text" th:id="infoTitle" th:field="*{userAccount}" th:value="${user.userAccount}" data-val="输入管理员名称"
+                          class="input-text"/>
+        </div>
+        <div class="select-btn">
+            <input type="button" onclick="$('#page').val(1);formSub('#form');" value="搜索"/>
+        </div>
+    </div>
+    <div class="main-content">
+        <table width="100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th class="title">用户名</th>
+                <th>最新操作人</th>
+                <th>创建时间</th>
+                <th>最新操作时间</th>
+                <th>管理</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user,userStat: ${list}">
+                    <td th:text="${userStat.index+1}"></td>
+                    <td class="title" th:text="${user.userAccount}"></td>
+                    <td th:text="${user.userUpdateUser}"></td>
+                    <td th:text="${#dates.format(user.userCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#dates.format(user.userUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td>
+                        <a th:href="'/sysUser/addAndEditPage?userId='+${user.userId}">编辑</a> |
+                        <a th:onclick="'changeUserStatus(\'0\',\''+${user.userId}+'\',\''+${user.userAccount}+'\')'">删除</a>
+                    </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(list)}">
+                <td colspan="8"><h4 style="color:#DC590C">暂无数据!</h4></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" th:id="page" name="page" value="1"/>
+        <div th:id="kkpager"></div>
+    </div>
+</form>
+</body>
+</html>

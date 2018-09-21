@@ -19,11 +19,11 @@
                 <img src="../image/face_secrecy.png" alt="" width="50" height="50"/>
             </div>
             <div class="info fl">
-                <p>管理员
-                    <a class="edit-info" href="${path}/user/preEditPass.do" target="main"></a>
+                <p th:text="${sysUser.userAccount}">
+                    <a class="edit-info" href="#" target="main"></a>
                 </p>
                 <p>
-                    <a href="${path}/user/sysUserLoginOut.do" target="_top" style="color:#ffffff">退出</a></p>
+                    <a href="/sysUserLoginOut" target="_top" style="color:#ffffff">退出</a></p>
             </div>
         </div>
     </div>
@@ -63,9 +63,37 @@
                         <span class="tree-icon tree-collapsed"></span><span class="tree-title">比赛模块管理</span>
                     </a>
                     <ul class="tree-child" style="display: none;">
-                        <li><a th:href="@{'/news/listPage?newsType=2'}" th:target="content"><span
+                        <li><a th:href="@{'/match/matchListPage'}" th:target="content"><span
                                 class="tree-line"></span><span class="tree-icon"></span><span
                                 class="tree-title">比赛列表</span></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">广告管理</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li><a th:href="@{'/advert/addAndEditPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">新建广告</span></a></li>
+                        <li><a th:href="@{'/advert/listPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">广告列表</span></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">站点管理</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li><a th:href="@{'/sysUser/addAndEditPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">新建管理员</span></a></li>
+                        <li><a th:href="@{'/sysUser/listPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">管理员列表</span></a></li>
                     </ul>
                 </li>
 

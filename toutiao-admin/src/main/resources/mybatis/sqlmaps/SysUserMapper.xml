@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiaotiaopoker.dao.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.SysUser">
+        <id column="USER_ID" jdbcType="VARCHAR" property="userId"/>
+        <result column="USER_ACCOUNT" jdbcType="VARCHAR" property="userAccount"/>
+        <result column="USER_PASSWORD" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="USER_SEX" jdbcType="INTEGER" property="userSex"/>
+        <result column="USER_MOBILE_PHONE" jdbcType="VARCHAR" property="userMobilePhone"/>
+        <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail"/>
+        <result column="USER_STATE" jdbcType="INTEGER" property="userState"/>
+        <result column="USER_CREATE_USER" jdbcType="VARCHAR" property="userCreateUser"/>
+        <result column="USER_CREATE_TIME" jdbcType="TIMESTAMP" property="userCreateTime"/>
+        <result column="USER_UPDATE_USER" jdbcType="VARCHAR" property="userUpdateUser"/>
+        <result column="USER_UPDATE_TIME" jdbcType="TIMESTAMP" property="userUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    USER_ID, USER_ACCOUNT, USER_PASSWORD, USER_SEX, USER_MOBILE_PHONE, USER_EMAIL,
+    USER_STATE, USER_CREATE_USER, USER_CREATE_TIME, USER_UPDATE_USER, USER_UPDATE_TIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_user
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.SysUser">
+    insert into sys_user
+      (
+        USER_ID,
+        USER_ACCOUNT,
+        USER_PASSWORD,
+        USER_SEX,
+        USER_MOBILE_PHONE,
+        USER_EMAIL,
+        USER_STATE,
+        USER_CREATE_USER,
+        USER_CREATE_TIME,
+        USER_UPDATE_USER,
+        USER_UPDATE_TIME
+      )
+    values
+      (
+        #{userId,jdbcType=VARCHAR},
+        #{userAccount,jdbcType=VARCHAR},
+        #{userPassword,jdbcType=VARCHAR},
+        #{userSex,jdbcType=INTEGER},
+        #{userMobilePhone,jdbcType=VARCHAR},
+        #{userEmail,jdbcType=VARCHAR},
+        #{userState,jdbcType=INTEGER},
+        #{userCreateUser,jdbcType=VARCHAR},
+        #{userCreateTime,jdbcType=TIMESTAMP},
+        #{userUpdateUser,jdbcType=VARCHAR},
+        #{userUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="userAccount != null">
+                USER_ACCOUNT,
+            </if>
+            <if test="userPassword != null">
+                USER_PASSWORD,
+            </if>
+            <if test="userSex != null">
+                USER_SEX,
+            </if>
+            <if test="userMobilePhone != null">
+                USER_MOBILE_PHONE,
+            </if>
+            <if test="userEmail != null">
+                USER_EMAIL,
+            </if>
+            <if test="userState != null">
+                USER_STATE,
+            </if>
+            <if test="userCreateUser != null">
+                USER_CREATE_USER,
+            </if>
+            <if test="userCreateTime != null">
+                USER_CREATE_TIME,
+            </if>
+            <if test="userUpdateUser != null">
+                USER_UPDATE_USER,
+            </if>
+            <if test="userUpdateTime != null">
+                USER_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userAccount != null">
+                #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userMobilePhone != null">
+                #{userMobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userState != null">
+                #{userState,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateUser != null">
+                #{userCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateTime != null">
+                #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateUser != null">
+                #{userUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="userUpdateTime != null">
+                #{userUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.SysUser">
+        update sys_user
+        <set>
+            <if test="userAccount != null">
+                USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                USER_SEX = #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userMobilePhone != null">
+                USER_MOBILE_PHONE = #{userMobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userState != null">
+                USER_STATE = #{userState,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateUser != null">
+                USER_CREATE_USER = #{userCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateTime != null">
+                USER_CREATE_TIME = #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateUser != null">
+                USER_UPDATE_USER = #{userUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="userUpdateTime != null">
+                USER_UPDATE_TIME = #{userUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where USER_ID = #{userId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.SysUser">
+    update sys_user
+    set USER_ACCOUNT = #{userAccount,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=INTEGER},
+      USER_MOBILE_PHONE = #{userMobilePhone,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_STATE = #{userState,jdbcType=INTEGER},
+      USER_CREATE_USER = #{userCreateUser,jdbcType=VARCHAR},
+      USER_CREATE_TIME = #{userCreateTime,jdbcType=TIMESTAMP},
+      USER_UPDATE_USER = #{userUpdateUser,jdbcType=VARCHAR},
+      USER_UPDATE_TIME = #{userUpdateTime,jdbcType=TIMESTAMP}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="queryUserByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+          su.USER_ID,
+          su.USER_ACCOUNT,
+          su.USER_PASSWORD,
+          su.USER_SEX,
+          su.USER_MOBILE_PHONE,
+          su.USER_EMAIL,
+          su.USER_STATE,
+          su.USER_CREATE_USER,
+          su.USER_CREATE_TIME,
+          base_user.USER_ACCOUNT as USER_UPDATE_USER,
+          su.USER_UPDATE_TIME
+        from
+        sys_user as su
+          left join
+            sys_user as base_user
+          on
+          base_user.USER_ID = su.USER_UPDATE_USER
+        where
+          su.USER_STATE != 0
+        <if test="userAccount != null">
+            and su.USER_ACCOUNT like CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')
+        </if>
+        order by
+        su.USER_UPDATE_TIME desc
+    </select>
+
+    <select id="countUserByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(user_id)
+        from
+        sys_user
+        where
+        USER_STATE != 0
+        <if test="userAccount != null">
+            and USER_ACCOUNT like CONCAT('%',#{userAccount,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

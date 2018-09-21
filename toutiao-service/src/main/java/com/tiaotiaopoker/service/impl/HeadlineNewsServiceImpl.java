@@ -5,6 +5,7 @@ import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.common.Pagination;
 import com.tiaotiaopoker.entity.NewsListItem;
 import com.tiaotiaopoker.pojo.HeadlineNews;
+import com.tiaotiaopoker.pojo.SysUser;
 import com.tiaotiaopoker.service.HeadlineNewsService;
 import com.tiaotiaopoker.dao.HeadlineNewsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,39 +70,43 @@ public class HeadlineNewsServiceImpl implements HeadlineNewsService {
     }
 
     @Override
-    public int addOrUpdateNews(HeadlineNews news) {
+    public int addOrUpdateNews(HeadlineNews news, SysUser loginUser) {
         int result = 0;
         if (StringUtils.isBlank(news.getNewsId())) {
             news.setNewsId(StringUtils.generateShortUUID());
             news.setNewsCreateTime(new Date());
             news.setNewsUpdateTime(new Date());
+            news.setNewsCreateUser(loginUser.getUserId());
+            news.setNewsUpdateUser(loginUser.getUserId());
             news.setNewsStatus(2);
             news.setNewsSort(0);
             news.setNewsBrowseCount(new Long(0));
             result = headlineNewsMapper.insert(news);
         } else {
             news.setNewsUpdateTime(new Date());
+            news.setNewsUpdateUser(loginUser.getUserId());
             result = headlineNewsMapper.updateByPrimaryKeySelective(news);
         }
         return result;
     }
 
     @Override
-    public int editNewsBySelective(HeadlineNews news) {
+    public int editNewsBySelective(HeadlineNews news, SysUser loginUser) {
         int newsStatus = news.getNewsStatus();
         if (news.getNewsStatus() == 0 || news.getNewsStatus() == 2) {
             //删除和下架时，需要将排序字段置为0，同时更新其他排序字段
             news.setNewsSort(0);
-            setNewsSort(news);
+            setNewsSort(news, loginUser);
         }
         //设置状态（重置排序字段的同时会更新状态）
         news.setNewsStatus(newsStatus);
         news.setNewsUpdateTime(new Date());
+        news.setNewsUpdateUser(loginUser.getUserId());
         return headlineNewsMapper.updateByPrimaryKeySelective(news);
     }
 
     @Override
-    public int setNewsSort(HeadlineNews news) {
+    public int setNewsSort(HeadlineNews news, SysUser loginUser) {
         int result = 0;
         Map<String, Object> paramMap = new HashMap<>();
         HeadlineNews oldPositionNews = headlineNewsMapper.selectByPrimaryKey(news.getNewsId());
@@ -133,6 +138,7 @@ public class HeadlineNewsServiceImpl implements HeadlineNewsService {
         //置顶的同时上架
         news.setNewsStatus(1);
         news.setNewsUpdateTime(new Date());
+        news.setNewsUpdateUser(loginUser.getUserId());
         result = headlineNewsMapper.updateByPrimaryKeySelective(news);
         return result;
     }

@@ -49,6 +49,16 @@ public class Match {
 
     private Integer orderNo;
 
+    private String operateUser;
+
+    public String getOperateUser() {
+        return operateUser;
+    }
+
+    public void setOperateUser(String operateUser) {
+        this.operateUser = operateUser;
+    }
+
     public String getId() {
         return id;
     }

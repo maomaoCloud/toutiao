@@ -1,7 +1,11 @@
 package com.tiaotiaopoker.service;
 
+import com.tiaotiaopoker.common.Pagination;
+import com.tiaotiaopoker.pojo.Match;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
+import com.tiaotiaopoker.pojo.SysUser;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,4 +16,10 @@ public interface MatchService {
 
     Map<String, Object> getMatchList(Integer pageNum,
                                      Integer pageSize);
+
+    List<Match> queryMatchByCondition(Match match, Pagination page);
+
+    int updateMatchBySelective(MatchWithBLOBs match, SysUser sysUser);
+
+    MatchWithBLOBs selectMatchById(String id);
 }

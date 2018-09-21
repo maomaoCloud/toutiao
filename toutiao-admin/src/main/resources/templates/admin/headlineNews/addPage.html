@@ -52,7 +52,10 @@
 
                 },
                 onUploadComplete: function () {
-
+                    //form表单值
+                    $("#newsCoverImg").val($("#uploadImg").val());
+                    //图片回显
+                    $("#newsCoverImgLabel").append('<div id="imgDiv"><img src="'+$("#uploadImg").val()+'"></div>');
                 }
             });
 
@@ -122,7 +125,7 @@
                     });
                 } else if (data == "nologin") {
                     dialogConfirm("提示", "请先登录！", function () {
-                        window.location.href = "${path}/login.do";
+                        window.location.href = "/login";
                     });
                 } else {
                     dialogConfirm("提示", "保存失败！")
@@ -151,6 +154,7 @@
             <tr>
                 <td width="100" class="td-title"><span class="red">*</span>封面：</td>
                 <td class="td-upload" th:id="newsCoverImgLabel">
+                    <input type="hidden" th:id="uploadImg" th:value="${news.newsCoverImg}">
                     <div id="upload">
 
                     </div>

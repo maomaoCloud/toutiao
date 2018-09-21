@@ -7,6 +7,8 @@
         <result column="NEWS_COVER_IMG" property="newsCoverImg" jdbcType="VARCHAR" />
         <result column="NEWS_CREATE_TIME" property="newsCreateTime" jdbcType="TIMESTAMP" />
         <result column="NEWS_UPDATE_TIME" property="newsUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="NEWS_CREATE_USER" property="newsCreateUser" jdbcType="VARCHAR" />
+        <result column="NEWS_UPDATE_USER" property="newsUpdateUser" jdbcType="VARCHAR" />
         <result column="NEWS_SORT" property="newsSort" jdbcType="INTEGER" />
         <result column="NEWS_TYPE" property="newsType" jdbcType="VARCHAR" />
         <result column="NEWS_STATUS" property="newsStatus" jdbcType="INTEGER" />
@@ -18,7 +20,7 @@
     </resultMap>
     <sql id="Base_Column_List" >
     NEWS_ID, NEWS_TITLE, NEWS_COVER_IMG, NEWS_CREATE_TIME, NEWS_UPDATE_TIME, NEWS_SORT,
-    NEWS_TYPE, NEWS_STATUS, NEWS_BROWSE_COUNT, NEWS_LINK
+    NEWS_TYPE, NEWS_STATUS, NEWS_BROWSE_COUNT, NEWS_LINK, NEWS_CREATE_USER, NEWS_UPDATE_USER
   </sql>
     <sql id="Blob_Column_List" >
     NEWS_DETAIL
@@ -39,11 +41,11 @@
     insert into headline_news (NEWS_ID, NEWS_TITLE, NEWS_COVER_IMG,
       NEWS_CREATE_TIME, NEWS_UPDATE_TIME, NEWS_SORT,
       NEWS_TYPE, NEWS_STATUS, NEWS_BROWSE_COUNT,
-      NEWS_LINK, NEWS_DETAIL)
+      NEWS_LINK, NEWS_DETAIL, NEWS_CREATE_USER, NEWS_UPDATE_USER)
     values (#{newsId,jdbcType=VARCHAR}, #{newsTitle,jdbcType=VARCHAR}, #{newsCoverImg,jdbcType=VARCHAR},
       #{newsCreateTime,jdbcType=TIMESTAMP}, #{newsUpdateTime,jdbcType=TIMESTAMP}, #{newsSort,jdbcType=INTEGER},
       #{newsType,jdbcType=VARCHAR}, #{newsStatus,jdbcType=INTEGER}, #{newsBrowseCount,jdbcType=BIGINT},
-      #{newsLink,jdbcType=VARCHAR}, #{newsDetail,jdbcType=LONGVARCHAR})
+      #{newsLink,jdbcType=VARCHAR}, #{newsDetail,jdbcType=LONGVARCHAR}, #{newsCreateUser,jdbcType=VARCHAR}, #{newsUpdateUser,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
         insert into headline_news
@@ -81,6 +83,12 @@
             <if test="newsDetail != null" >
                 NEWS_DETAIL,
             </if>
+            <if test="newsCreateUser != null" >
+                NEWS_CREATE_USER,
+            </if>
+            <if test="newsUpdateUser != null" >
+                NEWS_UPDATE_USER,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="newsId != null" >
@@ -115,6 +123,12 @@
             </if>
             <if test="newsDetail != null" >
                 #{newsDetail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="newsCreateUser != null" >
+                #{newsCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="newsUpdateUser != null" >
+                #{newsUpdateUser,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -151,6 +165,12 @@
             <if test="newsDetail != null" >
                 NEWS_DETAIL = #{newsDetail,jdbcType=LONGVARCHAR},
             </if>
+            <if test="newsCreateUser != null" >
+                NEWS_CREATE_USER = #{newsCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="newsUpdateUser != null" >
+                NEWS_UPDATE_USER = #{newsUpdateUser,jdbcType=VARCHAR},
+            </if>
         </set>
         where NEWS_ID = #{newsId,jdbcType=VARCHAR}
     </update>
@@ -165,7 +185,9 @@
       NEWS_STATUS = #{newsStatus,jdbcType=INTEGER},
       NEWS_BROWSE_COUNT = #{newsBrowseCount,jdbcType=BIGINT},
       NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
-      NEWS_DETAIL = #{newsDetail,jdbcType=LONGVARCHAR}
+      NEWS_DETAIL = #{newsDetail,jdbcType=LONGVARCHAR},
+      NEWS_CREATE_USER = #{newsCreateUser,jdbcType=VARCHAR},
+      NEWS_UPDATE_USER = #{newsUpdateUser,jdbcType=VARCHAR}
     where NEWS_ID = #{newsId,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.HeadlineNews">
@@ -178,12 +200,30 @@
       NEWS_TYPE = #{newsType,jdbcType=VARCHAR},
       NEWS_STATUS = #{newsStatus,jdbcType=INTEGER},
       NEWS_BROWSE_COUNT = #{newsBrowseCount,jdbcType=BIGINT},
-      NEWS_LINK = #{newsLink,jdbcType=VARCHAR}
+      NEWS_LINK = #{newsLink,jdbcType=VARCHAR},
+      NEWS_CREATE_USER = #{newsCreateUser,jdbcType=VARCHAR},
+      NEWS_UPDATE_USER = #{newsUpdateUser,jdbcType=VARCHAR}
     where NEWS_ID = #{newsId,jdbcType=VARCHAR}
   </update>
 
     <select id="queryNewsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
-        select * from headline_news
+        select
+          hn.NEWS_ID,
+          hn.NEWS_TITLE,
+          hn.NEWS_COVER_IMG,
+          hn.NEWS_CREATE_TIME,
+          hn.NEWS_UPDATE_TIME,
+          hn.NEWS_SORT,
+          hn.NEWS_TYPE,
+          hn.NEWS_STATUS,
+          hn.NEWS_BROWSE_COUNT,
+          hn.NEWS_LINK,
+          su.USER_ACCOUNT as NEWS_UPDATE_USER
+        from headline_news as hn
+        left join
+          sys_user as su
+        on
+          hn.NEWS_UPDATE_USER = su.USER_ID
         where
         1=1
         and

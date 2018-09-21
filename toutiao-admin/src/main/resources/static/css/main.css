@@ -59,9 +59,9 @@ a:hover{ color: #ED3838;}
 .main-publish{ overflow: hidden; padding: 30px 20px 150px;}
 .form-table{}
 .form-table td{ line-height: 42px; color: #142340; padding: 13px 0;}
-.form-table .td-title{ padding-right: 10px; text-align: right; vertical-align: top;}
+.form-table .td-title{ padding-right: 10px; text-align: right; vertical-align: top;font-size: 12px !important;}
 .form-table .td-title .red{ color: #EC3838; font-weight: bold; margin-right: 4px;}
-.form-table .td-input .input-text{ display: inline-block; height: 20px; line-height: 20px; padding: 10px; margin-right: 4px; border: solid 1px #ACB4C3; color: #596887; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;}
+.form-table .td-input .input-text{ display: inline-block; height: 20px; line-height: 20px; padding: 10px; margin-right: 4px; border: solid 1px #ACB4C3; color: #596887; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;font-size: 12px !important;}
 .form-table .td-input .input-textarea{ display: inline-block; height: 80px; line-height: 20px; padding: 10px; margin-right: 4px; border: solid 1px #ACB4C3; color: #596887; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;}
 .form-table .td-input em{ display: inline-block; margin-right: 6px; vertical-align: top; font-size: 12px;}
 .form-table .td-input .td-tip{ display: inline-block; color: #596988; margin-left: 10px; vertical-align: top;}
@@ -103,8 +103,8 @@ a:hover{ color: #ED3838;}
 .form-table .td-time .start,.form-table .td-time .end{ float: left; width: 218px; height: 20px; line-height: 20px; padding: 10px 6px; margin-right: 10px; border: solid 1px #ACB4C3; position: relative; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;}
 .form-table .td-time .startl,.form-table .td-time .endl{ float: inherit ;width: 218px; height: 20px; line-height: 20px; padding: 10px 6px; margin-right: 10px; border: solid 1px #ACB4C3; position: relative; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;}
 .form-table .td-time .starts,.form-table .td-time .ends{ float: left; width: 170px; height: 20px; line-height: 20px; padding: 10px 6px; margin-right: 10px; border: solid 1px #ACB4C3; position: relative; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x;}
-.form-table .td-time .text{ float: left; display: inline-block; color: #596887; padding: 0 10px 0 5px;}
-.form-table .td-time div input{ float: left; display: inline-block; line-height: 20px; color: #142340; width: 80px; border: 0; text-align: left;}
+.form-table .td-time .text{ float: left; display: inline-block; color: #596887; padding: 0 10px 0 5px;font-size: 12px !important;}
+.form-table .td-time div input{ float: left; display: inline-block; line-height: 20px; color: #142340; width: 80px; border: 0; text-align: left;font-size: 12px !important;}
 .form-table .td-time div .dateSpan{ float: left; display: inline-block; line-height: 20px; color: #142340; width: 72px; border: 0; text-align: left;}
 .form-table .td-time div .week{ float: left; display: inline-block; line-height: 20px; color: #142340;}
 .form-table .td-time div .gray{ color: #596887 !important;}
@@ -118,7 +118,7 @@ a:hover{ color: #ED3838;}
 .w210{ width: 210px;}
 .td-select .select-box{ float: left; height: 40px; border: solid 1px #ACB4C3; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; background: url("../image/input-icon1.gif") repeat-x; margin-right: 8px; position: relative;}
 .td-select .ng-select-box{width:142px;height: 38px; margin-right: 8px ;border-radius:4px;box-shadow: 1px 1px 5px #888888}
-.td-select .select-box .select-text{ height: 20px; line-height: 20px; color: #142340; padding: 10px 30px 10px 10px; background: url("../image/arrow-icon2.png") no-repeat; cursor: pointer;}
+.td-select .select-box .select-text{ height: 20px; line-height: 20px; color: #142340; padding: 10px 30px 10px 10px; background: url("../image/arrow-icon2.png") no-repeat; cursor: pointer;font-size: 12px !important;}
 .td-select .select-box .select-text{ background-position: 120px 15px;}
 .td-select .select-box .select-option{ display: none; margin: 0; position: absolute; left: -1px; top: 38px; z-index: 3; width: 140px; max-height: 286px; overflow-y:auto; overflow-x: hidden; background-color: #FFFFFF; border: solid 1px #ACB4C3; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px;}
 .td-select .select-box .select-option li{ margin: 0 10px; height: 40px; text-align: left; line-height: 40px;  cursor: pointer; overflow: hidden; border-top: 1px solid #ABB3C2; color: #142340;}
@@ -182,7 +182,7 @@ a:hover{ color: #ED3838;}
 .main-content tfoot label input{ vertical-align: middle; margin: 0 36px 0 8px; *margin-left:5px;}
 .main-content tfoot .btn-delete{ float: right; display: block; width: 120px; height: 36px; line-height: 36px; text-align: center; color: #FFFFFF; font-size: 14px; font-weight: bold; background-color: #ED3838; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; margin: 12px 0 0 18px;}
 .form-table .td-select-time .time-text{ float: left; margin-right: 10px;}
-.form-table .td-select-time .select-box .select-option li{ height: 30px; line-height: 30px;}
+.form-table .td-select-time .select-box .select-option li{ height: 30px; line-height: 30px;font-size: 12px !important;}
 .form-table .td-checkbox label{ display: inline-block; height: 42px; line-height: 42px; vertical-align: top; margin-right: 15px;}
 .form-table .td-checkbox label input{ vertical-align: middle; margin-right: 6px;}
 .form-table .td-set-time label{ display: inline-block; height: 42px; line-height: 42px; vertical-align: top; margin-right: 15px;}

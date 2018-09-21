@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiaotiaopoker.dao.AdvertRecommendMapper">
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.AdvertRecommend">
+    <id column="advert_id" jdbcType="VARCHAR" property="advertId" />
+    <result column="advert_title" jdbcType="VARCHAR" property="advertTitle" />
+    <result column="advert_link_url" jdbcType="VARCHAR" property="advertLinkUrl" />
+    <result column="advert_img_url" jdbcType="VARCHAR" property="advertImgUrl" />
+    <result column="advert_create_time" jdbcType="TIMESTAMP" property="advertCreateTime" />
+    <result column="advert_update_time" jdbcType="TIMESTAMP" property="advertUpdateTime" />
+    <result column="advert_create_user" jdbcType="VARCHAR" property="advertCreateUser" />
+    <result column="advert_update_user" jdbcType="VARCHAR" property="advertUpdateUser" />
+    <result column="advert_start_time" jdbcType="VARCHAR" property="advertStartTime" />
+    <result column="advert_end_time" jdbcType="VARCHAR" property="advertEndTime" />
+    <result column="advert_start_date" jdbcType="VARCHAR" property="advertStartDate" />
+    <result column="advert_end_date" jdbcType="VARCHAR" property="advertEndDate" />
+    <result column="advert_state" jdbcType="INTEGER" property="advertState" />
+  </resultMap>
+
+  <resultMap id="ResultMapDto" extends="BaseResultMap" type="com.tiaotiaopoker.entity.AdvertRecommendDto">
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    advert_id, advert_title, advert_link_url, advert_img_url, advert_create_time, advert_update_time, 
+    advert_create_user, advert_update_user, advert_start_time, advert_end_time, advert_start_date, advert_end_date, advert_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from advert_recommend
+    where advert_id = #{advertId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectDtoByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapDto">
+    select
+    <include refid="Base_Column_List" />
+    from advert_recommend
+    where advert_id = #{advertId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from advert_recommend
+    where advert_id = #{advertId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.AdvertRecommend">
+    insert into advert_recommend (advert_id, advert_title, advert_link_url, 
+      advert_img_url, advert_create_time, advert_update_time, 
+      advert_create_user, advert_update_user, advert_start_time,
+      advert_end_time, advert_start_date,
+      advert_end_date, advert_state)
+    values (#{advertId,jdbcType=VARCHAR}, #{advertTitle,jdbcType=VARCHAR}, #{advertLinkUrl,jdbcType=VARCHAR}, 
+      #{advertImgUrl,jdbcType=VARCHAR}, #{advertCreateTime,jdbcType=TIMESTAMP}, #{advertUpdateTime,jdbcType=TIMESTAMP}, 
+      #{advertCreateUser,jdbcType=VARCHAR}, #{advertUpdateUser,jdbcType=VARCHAR}, #{advertStartTime,jdbcType=VARCHAR},
+      #{advertEndTime,jdbcType=VARCHAR}, #{advertStartDate,jdbcType=VARCHAR},
+      #{advertEndDate,jdbcType=VARCHAR}, #{advertState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.AdvertRecommend">
+    insert into advert_recommend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="advertId != null">
+        advert_id,
+      </if>
+      <if test="advertTitle != null">
+        advert_title,
+      </if>
+      <if test="advertLinkUrl != null">
+        advert_link_url,
+      </if>
+      <if test="advertImgUrl != null">
+        advert_img_url,
+      </if>
+      <if test="advertCreateTime != null">
+        advert_create_time,
+      </if>
+      <if test="advertUpdateTime != null">
+        advert_update_time,
+      </if>
+      <if test="advertCreateUser != null">
+        advert_create_user,
+      </if>
+      <if test="advertUpdateUser != null">
+        advert_update_user,
+      </if>
+      <if test="advertStartTime != null">
+        advert_start_time,
+      </if>
+      <if test="advertEndTime != null">
+        advert_end_time,
+      </if>
+      <if test="advertStartDate != null">
+        advert_start_time,
+      </if>
+      <if test="advertEndDate != null">
+        advert_end_time,
+      </if>
+      <if test="advertState != null">
+        advert_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="advertId != null">
+        #{advertId,jdbcType=VARCHAR},
+      </if>
+      <if test="advertTitle != null">
+        #{advertTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="advertLinkUrl != null">
+        #{advertLinkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertImgUrl != null">
+        #{advertImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertCreateTime != null">
+        #{advertCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advertUpdateTime != null">
+        #{advertUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advertCreateUser != null">
+        #{advertCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="advertUpdateUser != null">
+        #{advertUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="advertStartTime != null">
+        #{advertStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="advertEndTime != null">
+        #{advertEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="advertStartDate != null">
+        #{advertStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="advertEndDate != null">
+        #{advertEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="advertState != null">
+        #{advertState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.AdvertRecommend">
+    update advert_recommend
+    <set>
+      <if test="advertTitle != null">
+        advert_title = #{advertTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="advertLinkUrl != null">
+        advert_link_url = #{advertLinkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertImgUrl != null">
+        advert_img_url = #{advertImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertCreateTime != null">
+        advert_create_time = #{advertCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advertUpdateTime != null">
+        advert_update_time = #{advertUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="advertCreateUser != null">
+        advert_create_user = #{advertCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="advertUpdateUser != null">
+        advert_update_user = #{advertUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="advertStartTime != null">
+        advert_start_time = #{advertStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="advertEndTime != null">
+        advert_end_time = #{advertEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="advertStartDate != null">
+        advert_start_date = #{advertStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="advertEndDate != null">
+        advert_end_date = #{advertEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="advertState != null">
+        advert_state = #{advertState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where advert_id = #{advertId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.AdvertRecommend">
+    update advert_recommend
+    set advert_title = #{advertTitle,jdbcType=VARCHAR},
+      advert_link_url = #{advertLinkUrl,jdbcType=VARCHAR},
+      advert_img_url = #{advertImgUrl,jdbcType=VARCHAR},
+      advert_create_time = #{advertCreateTime,jdbcType=TIMESTAMP},
+      advert_update_time = #{advertUpdateTime,jdbcType=TIMESTAMP},
+      advert_create_user = #{advertCreateUser,jdbcType=VARCHAR},
+      advert_update_user = #{advertUpdateUser,jdbcType=VARCHAR},
+      advert_start_time = #{advertStartTime,jdbcType=VARCHAR},
+      advert_end_time = #{advertEndTime,jdbcType=VARCHAR},
+      advert_start_date = #{advertStartDate,jdbcType=VARCHAR},
+      advert_end_date = #{advertEndDate,jdbcType=VARCHAR},
+      advert_state = #{advertState,jdbcType=INTEGER}
+    where advert_id = #{advertId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryAdvertByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+      ar.advert_id,
+      ar.advert_title,
+      ar.advert_link_url,
+      ar.advert_img_url,
+      ar.advert_create_time,
+      ar.advert_update_time,
+      ar.advert_create_user,
+      base_user.user_account as advert_update_user,
+      ar.advert_start_time,
+      ar.advert_end_time,
+      ar.advert_start_date,
+      ar.advert_end_date,
+      ar.advert_state
+    from
+    advert_recommend as ar
+    left join
+    sys_user as base_user
+    on
+    base_user.USER_ID = ar.advert_update_user
+    where
+    ar.advert_state != 0
+    <if test="advertState != '' and advertState != null">
+      and advert_state = #{advertState,jdbcType=INTEGER}
+    </if>
+    <if test="advertTitle != '' and advertTitle != null">
+      and advert_title like CONCAT('%',#{advertTitle,jdbcType=VARCHAR},'%')
+    </if>
+    order by
+    ar.advert_update_time desc
+  </select>
+  
+  <select id="countAdvertByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select
+      count(advert_id)
+    from
+    advert_recommend
+    where
+    advert_state != 0
+    <if test="advertState != '' and advertState != null">
+      and advert_state = #{advertState,jdbcType=INTEGER}
+    </if>
+    <if test="advertTitle != '' and advertTitle != null">
+      and advert_title like CONCAT('%',#{advertTitle,jdbcType=VARCHAR},'%')
+    </if>
+  </select>
+</mapper>

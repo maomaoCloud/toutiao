@@ -74,9 +74,9 @@
                         dialogAlert("提示", msg, function () {
                             formSub('#form');
                         });
-                    } else if (data == "nologin") {
+                    } else if (data.msg == "nologin") {
                         dialogConfirm("提示", "请先登录！", function () {
-                            window.location.href = "${path}/login.do";
+                            window.location.href = "/login";
                         });
                     } else {
                         dialogConfirm("提示", error);
@@ -109,9 +109,9 @@
                         dialogAlert("提示", msg, function () {
                             formSub('#form');
                         });
-                    } else if (data == "nologin") {
+                    } else if (data.msg == "nologin") {
                         dialogConfirm("提示", "请先登录！", function () {
-                            window.location.href = "${path}/login.do";
+                            window.location.href = "/login";
                         });
                     } else {
                         dialogConfirm("提示", error);
@@ -123,7 +123,7 @@
         //初始化dialog
         seajs.config({
             alias: {
-                "jquery": "jquery-1.10.2.js"
+                "jquery": "/js/dialog/lib/jquery-1.10.2.js"
             }
         });
         seajs.use(['/js/dialogBack/src/dialog-plus'], function (dialog) {
@@ -189,7 +189,7 @@
             <tr>
                 <th>ID</th>
                 <th class="title">标题</th>
-                <th>操作人</th>
+                <th>最新操作人</th>
                 <th>创建时间</th>
                 <th>最新操作时间</th>
                 <th>排序</th>
@@ -202,7 +202,7 @@
             <tr th:each="news,newsStat: ${list}">
                     <td th:text="${newsStat.index+1}"></td>
                     <td class="title" th:text="${news.newsTitle}"></td>
-                    <td>${info.infoCreateUser}</td>
+                    <td th:text="${news.newsUpdateUser}"></td>
                     <td th:text="${#dates.format(news.newsCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="${#dates.format(news.newsUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <!--置顶状态-->

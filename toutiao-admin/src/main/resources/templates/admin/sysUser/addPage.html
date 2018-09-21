@@ -1,0 +1,155 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--通用页面-->
+    <div th:replace="admin/common/commonPage :: html"></div>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/common.js'}"></script>
+    <title>编辑</title>
+    <style>
+        input {
+            box-sizing: content-box !important;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+        });
+
+        //前端校验数据
+        function addUser() {
+
+            var userAccount = $("#userAccount").val();
+            var userPassword = $("#userPassword").val();
+            var confirmUserPassword = $("#confirmUserPassword").val();
+
+            if (userAccount == undefined || userAccount == "") {
+                removeMsg("userAccountLabel");
+                appendMsg("userAccountLabel", "标题不能为空!");
+                $("#userAccountLabel").focus();
+                window.location.hash = "#userAccountLabel";
+                return;
+            } else {
+                removeMsg("userAccountLabel");
+            }
+
+            var pattern = new RegExp("[^a-zA-Z0-9\_\u4e00-\u9fa5]","i");
+            if (pattern.test(userAccount)) {
+                removeMsg("userAccountLabel");
+                appendMsg("userAccountLabel", "支持数字、字母、下划线、汉字!");
+                $("#userAccountLabel").focus();
+                window.location.hash = "#userAccountLabel";
+                return;
+            } else {
+                removeMsg("userAccountLabel");
+            }
+
+            if (userPassword == undefined || userPassword == "") {
+                removeMsg("userPasswordLabel");
+                appendMsg("userPasswordLabel", "密码不能为空!");
+                $("#userPasswordLabel").focus();
+                window.location.hash = "#userPasswordLabel";
+                return;
+            } else {
+                removeMsg("userPasswordLabel");
+            }
+
+            if (userPassword != confirmUserPassword) {
+                console.log(userPassword);
+                console.log(confirmUserPassword);
+                removeMsg("confirmUserPasswordLabel");
+                appendMsg("confirmUserPasswordLabel", "两次密码不一样!");
+                $("#confirmUserPasswordLabel").focus();
+                window.location.hash = "#confirmUserPasswordLabel";
+                return;
+            } else {
+                removeMsg("userPasswordLabel");
+            }
+
+            $.post("/sysUser/addOrEdit", $('#userForm').serialize(), function (data) {
+                if (data != null && data.success) {
+                    dialogAlert("提示", "保存成功！", function () {
+                        window.location.href = "/sysUser/listPage";
+                    });
+                } else if (data == "nologin") {
+                    dialogConfirm("提示", "请先登录！", function () {
+                        window.location.href = "/login";
+                    });
+                } else {
+                    dialogAlert("提示", data.msg);
+                }
+            });
+        }
+    </script>
+</head>
+<body style="background: #FFFFFF;">
+<div class="site">
+    <em>您现在所在的位置：新建管理员</em>
+</div>
+<div class="site-title">新建管理员</div>
+<div class="main-publish">
+    <form th:id="userForm" method="post" th:object="${user}" th:action="@{${#httpServletRequest.getContextPath()} + '/news/listPage'}">
+        <table width="100%" class="form-table">
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>用户名：</td>
+                <td class="td-input" th:id="userAccountLabel">
+                    <input th:id="userAccount" name="userAccount" type="text" class="input-text w510" maxlength="20"
+                        th:value="${user.userAccount}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td-title"><span class="red">*</span>密码</td>
+                <td class="td-input" id="userPasswordLabel">
+                    <input type="password" class="input-text w410" style="" name="userPassword" id="userPassword" th:value="${user.userPassword }"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-title"><span class="red">*</span>确认密码</td>
+                <td class="td-input" id="confirmUserPasswordLabel">
+                    <input type="password" class="input-text w410" name="confirmUserPassword" id="confirmUserPassword" th:value="${user.userPassword }"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td-title">性别：</td>
+                <td class="td-radio" th:if="${user.userSex == 2}">
+                    <label><input type="radio" value="1" name="userSex"/><em>男</em></label>
+                    <label><input type="radio" value="2" checked name="userSex"/><em>女</em></label>
+                </td>
+                <td class="td-radio" th:unless="${user.userSex == 2}">
+                    <label><input type="radio" value="1" name="userSex" checked/><em>男</em></label>
+                    <label><input type="radio" value="2" name="userSex"/><em>女</em></label>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title">手机号码：</td>
+                <td class="td-input" th:id="userMobilePhoneLabel">
+                    <input th:id="userMobilePhone" name="userMobilePhone" type="text" class="input-text w510" maxlength="20"
+                        th:value="${user.userMobilePhone }"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"></span>邮箱：</td>
+                <td class="td-input" th:id="userEmailLabel">
+                    <input th:id="userEmail" name="userEmail" type="text" class="input-text w510" maxlength="20"
+                        th:value="${user.userEmail }" />
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"></td>
+                <td class="td-btn">
+                    <input type="hidden" name="userId" th:id="userId" th:value="${user.userId}"/>
+                    <input th:id="btnPublish" class="btn-publish" type="button" onclick="addUser()" value="保存并发布"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

@@ -4,8 +4,12 @@ import com.tiaotiaopoker.pojo.Match;
 import com.tiaotiaopoker.pojo.MatchExample;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
+@Component(value = "matchMapper")
 public interface MatchMapper {
     int countByExample(MatchExample example);
 
@@ -27,4 +31,10 @@ public interface MatchMapper {
 
     int updateByExample(@Param("record") Match record,
                         @Param("example") MatchExample example);
+
+    List<Match> queryMatchByCondition(Map<String,Object> paramMap);
+
+    Integer countMatchByCondition(Map<String,Object> paramMap);
+
+    MatchWithBLOBs selectMatchById(String id);
 }
