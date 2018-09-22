@@ -6,6 +6,7 @@ import com.github.pagehelper.StringUtil;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.common.Pagination;
+import com.tiaotiaopoker.dao.CustomerDaoMapper;
 import com.tiaotiaopoker.dao.MatchMapper;
 import com.tiaotiaopoker.entity.ApiMatchData;
 import com.tiaotiaopoker.entity.ApiMatchDetail;
@@ -28,44 +29,58 @@ import java.util.*;
 @Service
 public class MatchServiceImpl implements MatchService {
     @Autowired
-    private MatchMapper  matchMapper;
+    private MatchMapper       matchMapper;
     @Value("${match.banner.default}")
-    private String       MATCH_BANNER_DEFAULT;
+    private String            MATCH_BANNER_DEFAULT;
     @Autowired
-    private OrderService orderService;
+    private OrderService      orderService;
+    @Autowired
+    private CustomerDaoMapper customerDaoMapper;
 
     @Override
     public void saveMatch(@RequestBody MatchWithBLOBs data) {
-        data.setId(StringUtils.generateShortUUID());
-        data.setIsDelete(Constants.DataBaseCommon.IS_DELETE_FALSE);
-        if (StringUtils.isBlank(data.getBannerImg())) {
-            data.setBannerImg(MATCH_BANNER_DEFAULT);
+        data.setId( StringUtils.generateShortUUID() );
+        data.setIsDelete( Constants.DataBaseCommon.IS_DELETE_FALSE );
+        if( StringUtils.isBlank( data.getBannerImg() ) ) {
+            data.setBannerImg( MATCH_BANNER_DEFAULT );
         }
-        data.setAddTime(new Date());
-        matchMapper.insertSelective(data);
+        data.setAddTime( new Date() );
+        matchMapper.insertSelective( data );
     }
 
     @Override
     public Map<String, Object> getMatchList(Integer pageNum,
-                                            Integer pageSize) {
-        Page<Object> page = PageHelper.startPage(pageNum, pageSize);
+                                            Integer pageSize,
+                                            String userId) {
+        Page<Object> page = PageHelper.startPage( pageNum, pageSize );
         MatchExample ex = new MatchExample();
-        ex.setOrderByClause("start_date");
-        ex.createCriteria().andIsDeleteEqualTo(Constants.DataBaseCommon.IS_DELETE_FALSE).andStatueEqualTo(
-                1).andStartDateGreaterThanOrEqualTo(new Date());
-        List<Match> dataList = matchMapper.selectByExample(ex);
+        ex.setOrderByClause( "start_date" );
+        ex.createCriteria().andIsDeleteEqualTo( Constants.DataBaseCommon.IS_DELETE_FALSE ).andStatueEqualTo(
+                1 ).andStartDateGreaterThanOrEqualTo( new Date() );
+        List<Match> dataList = matchMapper.selectByExample( ex );
         List<ApiMatchData> resDataList = new ArrayList<>();
         ApiMatchData apiData;
-        for (Match md : dataList) {
-            apiData = ApiMatchData.genFromMatch(md);
-            // TODO 设置订阅人数
-            resDataList.add(apiData);
+        List<String> ids = new ArrayList<>();
+        for( Match md : dataList ) {
+            ids.add( md.getId() );
+            apiData = ApiMatchData.genFromMatch( md );
+            resDataList.add( apiData );
         }
 
         int totalPages = page.getPages();
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("data", resDataList);
-        resultMap.put("hasMore", totalPages > pageNum);
+        if( ids.size() > 0 ) {
+            List<String> matchIds = customerDaoMapper.checkUserHasApply( userId, ids );
+            Set<String> matchIdSet = new HashSet<>( matchIds );
+            for( ApiMatchData data : resDataList ) {
+                data.setHasApply( matchIdSet.contains( data.getId() ) );
+            }
+
+        }
+
+
+        resultMap.put( "data", resDataList );
+        resultMap.put( "hasMore", totalPages > pageNum );
 
         return resultMap;
     }
@@ -88,23 +103,25 @@ public class MatchServiceImpl implements MatchService {
         return resultMap;
     }
 
-    public List<Match> queryMatchByCondition(Match match, Pagination page) {
+    public List<Match> queryMatchByCondition(Match match,
+                                             Pagination page) {
         Map<String, Object> paramMap = new HashMap<>();
-        if (null != match.getStatue()) {
-            paramMap.put("statue", match.getStatue());
+        if( null != match.getStatue() ) {
+            paramMap.put( "statue", match.getStatue() );
         }
-        if (!StringUtils.isBlank(match.getTheme())) {
-            paramMap.put("theme", match.getTheme());
+        if( !StringUtils.isBlank( match.getTheme() ) ) {
+            paramMap.put( "theme", match.getTheme() );
         }
-        List<Match> list = matchMapper.queryMatchByCondition(paramMap);
-        page.setTotal(matchMapper.countMatchByCondition(paramMap));
+        List<Match> list = matchMapper.queryMatchByCondition( paramMap );
+        page.setTotal( matchMapper.countMatchByCondition( paramMap ) );
         return list;
     }
 
     @Override
-    public int updateMatchBySelective(MatchWithBLOBs match, SysUser sysUser) {
-        match.setOperateUser(sysUser.getUserId());
-        return matchMapper.updateByExampleSelective(match,null);
+    public int updateMatchBySelective(MatchWithBLOBs match,
+                                      SysUser sysUser) {
+        match.setOperateUser( sysUser.getUserId() );
+        return matchMapper.updateByExampleSelective( match, null );
     }
 
     public MatchWithBLOBs getMatchDataById(String matchId) {
@@ -117,6 +134,6 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public MatchWithBLOBs selectMatchById(String id) {
-        return matchMapper.selectMatchById(id);
+        return matchMapper.selectMatchById( id );
     }
 }

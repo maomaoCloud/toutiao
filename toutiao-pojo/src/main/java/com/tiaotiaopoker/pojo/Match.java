@@ -218,4 +218,15 @@ public class Match {
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
+
+    /**自定义字段*/
+    private int applyCount;
+
+    public void setApplyCount(int applyCount) {
+        this.applyCount = applyCount;
+    }
+
+    public int getApplyCount() {
+        return applyCount;
+    }
 }
