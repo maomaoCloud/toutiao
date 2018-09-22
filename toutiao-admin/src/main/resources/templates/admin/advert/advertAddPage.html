@@ -90,7 +90,7 @@
                     //form表单值
                     $("#advertImgUrl").val($("#uploadImg").val());
                     //图片回显
-                    $("#advertImgUrlLabel").append('<div id="imgDiv"><img src="' + $("#uploadImg").val() + '"></div>');
+                    $("#advertImgUrlLabel").append('<div id="imgDiv"><img style="height:400px;width:600px" src="' + $("#uploadImg").val() + '"></div>');
                 }
             });
 
@@ -241,7 +241,7 @@
                             </div>
                             <a class="delfilebtn" id="deleteBtn">删除</a>
                             <div>
-                                <img th:src="${advert.advertImgUrl}">
+                                <img style="height:400px;width:600px" th:src="${advert.advertImgUrl}">
                             </div>
                         </li>
                     </ul>

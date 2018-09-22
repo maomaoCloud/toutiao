@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("news")
-@Scope("prototype")
 public class HeadlineNewsController {
 
     @Autowired
@@ -27,12 +26,12 @@ public class HeadlineNewsController {
 
     /*新增+编辑页*/
     @RequestMapping("addAndEditPage")
-    public ModelAndView addAndEditPage(ModelAndView mv, HeadlineNews news) {
+    public ModelAndView addAndEditPage(ModelAndView mv, @ModelAttribute(value = "news") HeadlineNews news) {
         if (!StringUtils.isBlank(news.getNewsId())) {
             news = headlineNewsService.queryNewsById(news.getNewsId());
         }
         mv.addObject("news", news);
-        mv.setViewName("admin/headLineNews/addPage");
+        mv.setViewName("admin/headlineNews/newsAddPage");
         return mv;
     }
 
@@ -58,7 +57,7 @@ public class HeadlineNewsController {
             if (null == loginUser) {
                 jsonResult = JsonResult.FAILED("nologin");
             } else {
-                int result = headlineNewsService.addOrUpdateNews(news,loginUser);
+                int result = headlineNewsService.addOrUpdateNews(news, loginUser);
                 if (result > 0) {
                     jsonResult = JsonResult.SUCCESS("编辑成功");
                 } else {
@@ -86,7 +85,7 @@ public class HeadlineNewsController {
                 if (StringUtils.isBlank(news.getNewsId()) || null == news.getNewsSort()) {
                     jsonResult = JsonResult.FAILED("参数缺失");
                 } else {
-                    int result = headlineNewsService.setNewsSort(news,loginUser);
+                    int result = headlineNewsService.setNewsSort(news, loginUser);
                     if (result > 0) {
                         jsonResult = JsonResult.SUCCESS();
                     } else {
@@ -114,7 +113,7 @@ public class HeadlineNewsController {
                 if (StringUtils.isBlank(news.getNewsId())) {
                     jsonResult = JsonResult.FAILED("id缺失");
                 } else {
-                    int result = headlineNewsService.editNewsBySelective(news,loginUser);
+                    int result = headlineNewsService.editNewsBySelective(news, loginUser);
                     if (result > 0) {
                         jsonResult = JsonResult.SUCCESS("更新成功");
                     } else {
