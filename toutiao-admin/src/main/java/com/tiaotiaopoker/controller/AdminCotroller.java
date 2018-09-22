@@ -32,6 +32,12 @@ public class AdminCotroller {
         return "helloJsp";
     }
 
+    @RequestMapping("/")
+    public ModelAndView index(ModelAndView mv) {
+        mv.setViewName("admin/login");
+        return mv;
+    }
+
     @RequestMapping("login")
     public ModelAndView admin(ModelAndView mv) {
         mv.setViewName("admin/login");

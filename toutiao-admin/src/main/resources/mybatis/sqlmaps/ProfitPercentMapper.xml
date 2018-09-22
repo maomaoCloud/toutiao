@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiaotiaopoker.dao.ProfitPercentMapper">
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.ProfitPercent">
+    <id column="profit_id" jdbcType="VARCHAR" property="profitId" />
+    <result column="profit_high_line" jdbcType="INTEGER" property="profitHighLine" />
+    <result column="profit_down_line" jdbcType="INTEGER" property="profitDownLine" />
+    <result column="profit_create_time" jdbcType="TIMESTAMP" property="profitCreateTime" />
+    <result column="profit_create_user" jdbcType="VARCHAR" property="profitCreateUser" />
+    <result column="profit_update_time" jdbcType="TIMESTAMP" property="profitUpdateTime" />
+    <result column="profit_update_user" jdbcType="VARCHAR" property="profitUpdateUser" />
+    <result column="profit_percent" jdbcType="INTEGER" property="profitPercent" />
+    <result column="profit_state" jdbcType="INTEGER" property="profitState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    profit_id, profit_high_line, profit_down_line, profit_create_time, profit_create_user, 
+    profit_update_time, profit_update_user, profit_percent, profit_state
+  </sql>
+  <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.ProfitPercentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from profit_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profit_percent
+    where profit_id = #{profitId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from profit_percent
+    where profit_id = #{profitId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.ProfitPercentExample">
+    delete from profit_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.ProfitPercent">
+    insert into profit_percent (profit_id, profit_high_line, profit_down_line, 
+      profit_create_time, profit_create_user, profit_update_time, 
+      profit_update_user, profit_percent, profit_state
+      )
+    values (#{profitId,jdbcType=VARCHAR}, #{profitHighLine,jdbcType=INTEGER}, #{profitDownLine,jdbcType=INTEGER}, 
+      #{profitCreateTime,jdbcType=TIMESTAMP}, #{profitCreateUser,jdbcType=VARCHAR}, #{profitUpdateTime,jdbcType=TIMESTAMP}, 
+      #{profitUpdateUser,jdbcType=VARCHAR}, #{profitPercent,jdbcType=INTEGER}, #{profitState,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.ProfitPercent">
+    insert into profit_percent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="profitId != null">
+        profit_id,
+      </if>
+      <if test="profitHighLine != null">
+        profit_high_line,
+      </if>
+      <if test="profitDownLine != null">
+        profit_down_line,
+      </if>
+      <if test="profitCreateTime != null">
+        profit_create_time,
+      </if>
+      <if test="profitCreateUser != null">
+        profit_create_user,
+      </if>
+      <if test="profitUpdateTime != null">
+        profit_update_time,
+      </if>
+      <if test="profitUpdateUser != null">
+        profit_update_user,
+      </if>
+      <if test="profitPercent != null">
+        profit_percent,
+      </if>
+      <if test="profitState != null">
+        profit_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="profitId != null">
+        #{profitId,jdbcType=VARCHAR},
+      </if>
+      <if test="profitHighLine != null">
+        #{profitHighLine,jdbcType=INTEGER},
+      </if>
+      <if test="profitDownLine != null">
+        #{profitDownLine,jdbcType=INTEGER},
+      </if>
+      <if test="profitCreateTime != null">
+        #{profitCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="profitCreateUser != null">
+        #{profitCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profitUpdateTime != null">
+        #{profitUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="profitUpdateUser != null">
+        #{profitUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profitPercent != null">
+        #{profitPercent,jdbcType=INTEGER},
+      </if>
+      <if test="profitState != null">
+        #{profitState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.ProfitPercentExample" resultType="java.lang.Integer">
+    select count(*) from profit_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update profit_percent
+    <set>
+      <if test="record.profitId != null">
+        profit_id = #{record.profitId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profitHighLine != null">
+        profit_high_line = #{record.profitHighLine,jdbcType=INTEGER},
+      </if>
+      <if test="record.profitDownLine != null">
+        profit_down_line = #{record.profitDownLine,jdbcType=INTEGER},
+      </if>
+      <if test="record.profitCreateTime != null">
+        profit_create_time = #{record.profitCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.profitCreateUser != null">
+        profit_create_user = #{record.profitCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profitUpdateTime != null">
+        profit_update_time = #{record.profitUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.profitUpdateUser != null">
+        profit_update_user = #{record.profitUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profitPercent != null">
+        profit_percent = #{record.profitPercent,jdbcType=INTEGER},
+      </if>
+      <if test="record.profitState != null">
+        profit_state = #{record.profitState,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update profit_percent
+    set profit_id = #{record.profitId,jdbcType=VARCHAR},
+      profit_high_line = #{record.profitHighLine,jdbcType=INTEGER},
+      profit_down_line = #{record.profitDownLine,jdbcType=INTEGER},
+      profit_create_time = #{record.profitCreateTime,jdbcType=TIMESTAMP},
+      profit_create_user = #{record.profitCreateUser,jdbcType=VARCHAR},
+      profit_update_time = #{record.profitUpdateTime,jdbcType=TIMESTAMP},
+      profit_update_user = #{record.profitUpdateUser,jdbcType=VARCHAR},
+      profit_percent = #{record.profitPercent,jdbcType=INTEGER},
+      profit_state = #{record.profitState,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.ProfitPercent">
+    update profit_percent
+    <set>
+      <if test="profitHighLine != null">
+        profit_high_line = #{profitHighLine,jdbcType=INTEGER},
+      </if>
+      <if test="profitDownLine != null">
+        profit_down_line = #{profitDownLine,jdbcType=INTEGER},
+      </if>
+      <if test="profitCreateTime != null">
+        profit_create_time = #{profitCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="profitCreateUser != null">
+        profit_create_user = #{profitCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profitUpdateTime != null">
+        profit_update_time = #{profitUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="profitUpdateUser != null">
+        profit_update_user = #{profitUpdateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="profitPercent != null">
+        profit_percent = #{profitPercent,jdbcType=INTEGER},
+      </if>
+      <if test="profitState != null">
+        profit_state = #{profitState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where profit_id = #{profitId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.ProfitPercent">
+    update profit_percent
+    set profit_high_line = #{profitHighLine,jdbcType=INTEGER},
+      profit_down_line = #{profitDownLine,jdbcType=INTEGER},
+      profit_create_time = #{profitCreateTime,jdbcType=TIMESTAMP},
+      profit_create_user = #{profitCreateUser,jdbcType=VARCHAR},
+      profit_update_time = #{profitUpdateTime,jdbcType=TIMESTAMP},
+      profit_update_user = #{profitUpdateUser,jdbcType=VARCHAR},
+      profit_percent = #{profitPercent,jdbcType=INTEGER},
+      profit_state = #{profitState,jdbcType=INTEGER}
+    where profit_id = #{profitId,jdbcType=VARCHAR}
+  </update>
+</mapper>
