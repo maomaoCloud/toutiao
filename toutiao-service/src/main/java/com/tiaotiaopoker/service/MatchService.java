@@ -15,13 +15,16 @@ public interface MatchService {
     void saveMatch(MatchWithBLOBs data);
 
     Map<String, Object> getMatchList(Integer pageNum,
-                                     Integer pageSize);
+                                     Integer pageSize,
+                                     String userId);
 
     Map<String, Object> getMatchInfoById(String matchId);
 
-    List<Match> queryMatchByCondition(Match match, Pagination page);
+    List<Match> queryMatchByCondition(Match match,
+                                      Pagination page);
 
-    int updateMatchBySelective(MatchWithBLOBs match, SysUser sysUser);
+    int updateMatchBySelective(MatchWithBLOBs match,
+                               SysUser sysUser);
 
     MatchWithBLOBs selectMatchById(String id);
 

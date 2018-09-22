@@ -220,7 +220,6 @@ public class AppUser {
                                           String userId) {
         AppUser user = new AppUser();
         user.setId( userId );
-
         //Object jo = JSONObject.parse( userInfoJsonData );
         JSONObject jo = JSONObject.parseObject( userInfoJsonData );
         String openId = jo.getString( "openId" );

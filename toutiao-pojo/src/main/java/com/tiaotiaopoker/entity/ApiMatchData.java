@@ -11,9 +11,10 @@ public class ApiMatchData {
     private String  theme;
     private String  startDate;
     private String  location;
-    private Integer applyCount;
+    private int     applyCount;
     private Integer fee;
     private String  bannerImg;
+    private boolean hasApply;
 
     public String getId() {
         return id;
@@ -71,15 +72,24 @@ public class ApiMatchData {
         this.bannerImg = bannerImg;
     }
 
+    public void setHasApply(boolean hasApply) {
+        this.hasApply = hasApply;
+    }
+
+    public Boolean getHasApply() {
+        return hasApply;
+    }
+
     public static ApiMatchData genFromMatch(Match md) {
         ApiMatchData res = new ApiMatchData();
         res.setId( md.getId() );
         res.setApplyCount( 0 );
         res.setBannerImg( md.getBannerImg() );
+        res.setApplyCount( md.getApplyCount() );
 
         try {
 
-            res.setFee( (int)((float)md.getFee()));
+            res.setFee( (int) ( (float) md.getFee() ) );
         } catch (Exception e) {
             res.setFee( 0 );
         }

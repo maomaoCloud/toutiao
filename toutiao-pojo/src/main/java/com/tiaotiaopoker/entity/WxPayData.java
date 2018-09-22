@@ -144,6 +144,7 @@ public class WxPayData {
         sb.append( "mch_id=" ).append( this.mch_id ).append( "&" );
         sb.append( "nonce_str=" ).append( this.nonce_str ).append( "&" );
         sb.append( "notify_url=" ).append( this.notify_url ).append( "&" );
+        sb.append( "openid=" ).append( this.openid ).append( "&" );
         sb.append( "out_trade_no=" ).append( this.out_trade_no ).append( "&" );
         sb.append( "spbill_create_ip=" ).append( this.spbill_create_ip ).append( "&" );
         sb.append( "total_fee=" ).append( this.total_fee ).append( "&" );

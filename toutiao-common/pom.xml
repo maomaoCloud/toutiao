@@ -50,6 +50,22 @@
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.45</version>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
     <groupId>com.tiaotiaopoer</groupId>
     <artifactId>toutiao-common</artifactId>

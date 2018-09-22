@@ -36,13 +36,14 @@ public class MatchController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "{pageNum}/{pageSize}",
+    @RequestMapping(value = "{pageNum}/{pageSize}/{userId}",
                     method = RequestMethod.POST)
     public JsonResult getMatch(@PathVariable("pageNum") Integer pageNum,
-                               @PathVariable("pageSize") Integer pageSize) {
+                               @PathVariable("pageSize") Integer pageSize,
+                               @PathVariable("userId") String userId) {
         JsonResult jsonResult;
         try {
-            Map<String, Object> resultMap = matchService.getMatchList( pageNum, pageSize );
+            Map<String, Object> resultMap = matchService.getMatchList( pageNum, pageSize ,userId);
             jsonResult = JsonResult.SUCCESS();
             jsonResult.setResData( resultMap );
         } catch (Exception e) {
@@ -71,6 +72,7 @@ public class MatchController extends BaseController {
         try {
             params.setRequestIp( getIpAddress() );
             Map<String, Object> resultMap = applyOrderService.addOrder( params );
+            return JsonResult.SUCCESS( "success", resultMap );
         } catch (Exception e) {
             e.printStackTrace();
         }

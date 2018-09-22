@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiaotiaopoker.dao.CustomerDaoMapper">
+    <select id="checkUserHasApply" resultType="java.lang.String">
+        SELECT match_Id AS matchId FROM apply_order WHERE user_id = #{userId,jdbcType=VARCHAR} AND pay_statue = 1 AND
+        match_Id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="getMatchOtherInfo" resultType="com.tiaotiaopoker.entity.ApiMatchData">
+        SELECT getMathcApplyCount(match_Id) AS applyCount, checkUserHasApplyTheMatch(match_Id,user_id) AS hasApply, match_Id AS id FROM apply_order WHERE user_id  = #{userId,jdbcType=VARCHAR} AND pay_statue = 1 AND match_Id IN
+        <foreach collection="ids" open="(" close=")" separator="," item="item">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="getMatchApplyUserList"  resultType="com.tiaotiaopoker.entity.ApiMatchDetail.MatchApplyUser">
+        SELECT user_name as `name`,user_head AS headImg FROM apply_order WHERE match_id = #{matchId,jdbcType=VARCHAR} AND pay_statue = 1 ORDER BY add_time DESC
+    </select>
+</mapper>

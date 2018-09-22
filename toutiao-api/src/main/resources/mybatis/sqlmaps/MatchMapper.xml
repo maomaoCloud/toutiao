@@ -1,135 +1,139 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tiaotiaopoker.dao.MatchMapper" >
-  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.Match" >
-    <result column="id" property="id" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="theme" property="theme" jdbcType="VARCHAR" />
-    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
-    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="area" property="area" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="wx_head" property="wxHead" jdbcType="VARCHAR" />
-    <result column="fee" property="fee" jdbcType="REAL" />
-    <result column="banner_img" property="bannerImg" jdbcType="VARCHAR" />
-    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
-    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
-    <result column="fee_share_percent" property="feeSharePercent" jdbcType="INTEGER" />
-    <result column="statue" property="statue" jdbcType="INTEGER" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchWithBLOBs" extends="BaseResultMap" >
-    <result column="active_content" property="activeContent" jdbcType="LONGVARCHAR" />
-    <result column="rewards_content" property="rewardsContent" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="com.tiaotiaopoker.dao.MatchMapper">
+    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.Match">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="theme" property="theme" jdbcType="VARCHAR"/>
+        <result column="start_date" property="startDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="contact_name" property="contactName" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="wx_head" property="wxHead" jdbcType="VARCHAR"/>
+        <result column="fee" property="fee" jdbcType="REAL"/>
+        <result column="banner_img" property="bannerImg" jdbcType="VARCHAR"/>
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="fee_share_percent" property="feeSharePercent" jdbcType="INTEGER"/>
+        <result column="statue" property="statue" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="INTEGER"/>
+        <result column="applyCount" property="applyCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchWithBLOBs" extends="BaseResultMap">
+        <result column="active_content" property="activeContent" jdbcType="LONGVARCHAR"/>
+        <result column="rewards_content" property="rewardsContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     id, user_id, theme, start_date, end_date, province, city, area, address, contact_name, 
     phone, wx_head, fee, banner_img, add_time, is_delete, fee_share_percent, statue, 
-    remark, order_no
+    remark, order_no, getMathcApplyCount(id) AS applyCount
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     active_content, rewards_content
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tiaotiaopoker.pojo.MatchExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from match_data
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.MatchExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from match_data
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchExample" >
-    delete from match_data
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.tiaotiaopoker.pojo.MatchExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from match_data
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.MatchExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from match_data
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchExample">
+        delete from match_data
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs">
     insert into match_data (id, user_id, theme, 
       start_date, end_date, province, 
       city, area, address, 
@@ -147,277 +151,277 @@
       #{remark,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, #{activeContent,jdbcType=LONGVARCHAR}, 
       #{rewardsContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs" >
-    insert into match_data
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="theme != null" >
-        theme,
-      </if>
-      <if test="startDate != null" >
-        start_date,
-      </if>
-      <if test="endDate != null" >
-        end_date,
-      </if>
-      <if test="province != null" >
-        province,
-      </if>
-      <if test="city != null" >
-        city,
-      </if>
-      <if test="area != null" >
-        area,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="contactName != null" >
-        contact_name,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="wxHead != null" >
-        wx_head,
-      </if>
-      <if test="fee != null" >
-        fee,
-      </if>
-      <if test="bannerImg != null" >
-        banner_img,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-      <if test="isDelete != null" >
-        is_delete,
-      </if>
-      <if test="feeSharePercent != null" >
-        fee_share_percent,
-      </if>
-      <if test="statue != null" >
-        statue,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-      <if test="orderNo != null" >
-        order_no,
-      </if>
-      <if test="activeContent != null" >
-        active_content,
-      </if>
-      <if test="rewardsContent != null" >
-        rewards_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="theme != null" >
-        #{theme,jdbcType=VARCHAR},
-      </if>
-      <if test="startDate != null" >
-        #{startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null" >
-        #{endDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null" >
-        #{area,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="contactName != null" >
-        #{contactName,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="wxHead != null" >
-        #{wxHead,jdbcType=VARCHAR},
-      </if>
-      <if test="fee != null" >
-        #{fee,jdbcType=REAL},
-      </if>
-      <if test="bannerImg != null" >
-        #{bannerImg,jdbcType=VARCHAR},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=INTEGER},
-      </if>
-      <if test="feeSharePercent != null" >
-        #{feeSharePercent,jdbcType=INTEGER},
-      </if>
-      <if test="statue != null" >
-        #{statue,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="orderNo != null" >
-        #{orderNo,jdbcType=INTEGER},
-      </if>
-      <if test="activeContent != null" >
-        #{activeContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="rewardsContent != null" >
-        #{rewardsContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchExample" resultType="java.lang.Integer" >
-    select count(*) from match_data
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update match_data
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userId != null" >
+    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs">
+        insert into match_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="theme != null">
+                theme,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="contactName != null">
+                contact_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="wxHead != null">
+                wx_head,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="bannerImg != null">
+                banner_img,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="feeSharePercent != null">
+                fee_share_percent,
+            </if>
+            <if test="statue != null">
+                statue,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="orderNo != null">
+                order_no,
+            </if>
+            <if test="activeContent != null">
+                active_content,
+            </if>
+            <if test="rewardsContent != null">
+                rewards_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="theme != null">
+                #{theme,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="contactName != null">
+                #{contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="wxHead != null">
+                #{wxHead,jdbcType=VARCHAR},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=REAL},
+            </if>
+            <if test="bannerImg != null">
+                #{bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="feeSharePercent != null">
+                #{feeSharePercent,jdbcType=INTEGER},
+            </if>
+            <if test="statue != null">
+                #{statue,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null">
+                #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="activeContent != null">
+                #{activeContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="rewardsContent != null">
+                #{rewardsContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchExample" resultType="java.lang.Integer">
+        select count(*) from match_data
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update match_data
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.theme != null">
+                theme = #{record.theme,jdbcType=VARCHAR},
+            </if>
+            <if test="record.startDate != null">
+                start_date = #{record.startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endDate != null">
+                end_date = #{record.endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.province != null">
+                province = #{record.province,jdbcType=VARCHAR},
+            </if>
+            <if test="record.city != null">
+                city = #{record.city,jdbcType=VARCHAR},
+            </if>
+            <if test="record.area != null">
+                area = #{record.area,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contactName != null">
+                contact_name = #{record.contactName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wxHead != null">
+                wx_head = #{record.wxHead,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fee != null">
+                fee = #{record.fee,jdbcType=REAL},
+            </if>
+            <if test="record.bannerImg != null">
+                banner_img = #{record.bannerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.addTime != null">
+                add_time = #{record.addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.isDelete != null">
+                is_delete = #{record.isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="record.feeSharePercent != null">
+                fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
+            </if>
+            <if test="record.statue != null">
+                statue = #{record.statue,jdbcType=INTEGER},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderNo != null">
+                order_no = #{record.orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.activeContent != null">
+                active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.rewardsContent != null">
+                rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update match_data
+        set id = #{record.id,jdbcType=VARCHAR},
         user_id = #{record.userId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.theme != null" >
         theme = #{record.theme,jdbcType=VARCHAR},
-      </if>
-      <if test="record.startDate != null" >
         start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.endDate != null" >
         end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.province != null" >
         province = #{record.province,jdbcType=VARCHAR},
-      </if>
-      <if test="record.city != null" >
         city = #{record.city,jdbcType=VARCHAR},
-      </if>
-      <if test="record.area != null" >
         area = #{record.area,jdbcType=VARCHAR},
-      </if>
-      <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
-      </if>
-      <if test="record.contactName != null" >
         contact_name = #{record.contactName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.phone != null" >
         phone = #{record.phone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.wxHead != null" >
         wx_head = #{record.wxHead,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fee != null" >
         fee = #{record.fee,jdbcType=REAL},
-      </if>
-      <if test="record.bannerImg != null" >
         banner_img = #{record.bannerImg,jdbcType=VARCHAR},
-      </if>
-      <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.isDelete != null" >
         is_delete = #{record.isDelete,jdbcType=INTEGER},
-      </if>
-      <if test="record.feeSharePercent != null" >
         fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
-      </if>
-      <if test="record.statue != null" >
         statue = #{record.statue,jdbcType=INTEGER},
-      </if>
-      <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.orderNo != null" >
         order_no = #{record.orderNo,jdbcType=INTEGER},
-      </if>
-      <if test="record.activeContent != null" >
         active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.rewardsContent != null" >
-        rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update match_data
-    set id = #{record.id,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      theme = #{record.theme,jdbcType=VARCHAR},
-      start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
-      contact_name = #{record.contactName,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      wx_head = #{record.wxHead,jdbcType=VARCHAR},
-      fee = #{record.fee,jdbcType=REAL},
-      banner_img = #{record.bannerImg,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      is_delete = #{record.isDelete,jdbcType=INTEGER},
-      fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
-      statue = #{record.statue,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      order_no = #{record.orderNo,jdbcType=INTEGER},
-      active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
-      rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update match_data
-    set id = #{record.id,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      theme = #{record.theme,jdbcType=VARCHAR},
-      start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
-      contact_name = #{record.contactName,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      wx_head = #{record.wxHead,jdbcType=VARCHAR},
-      fee = #{record.fee,jdbcType=REAL},
-      banner_img = #{record.bannerImg,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      is_delete = #{record.isDelete,jdbcType=INTEGER},
-      fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
-      statue = #{record.statue,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      order_no = #{record.orderNo,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
+        rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update match_data
+        set id = #{record.id,jdbcType=VARCHAR},
+        user_id = #{record.userId,jdbcType=VARCHAR},
+        theme = #{record.theme,jdbcType=VARCHAR},
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+        province = #{record.province,jdbcType=VARCHAR},
+        city = #{record.city,jdbcType=VARCHAR},
+        area = #{record.area,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        wx_head = #{record.wxHead,jdbcType=VARCHAR},
+        fee = #{record.fee,jdbcType=REAL},
+        banner_img = #{record.bannerImg,jdbcType=VARCHAR},
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+        is_delete = #{record.isDelete,jdbcType=INTEGER},
+        fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
+        statue = #{record.statue,jdbcType=INTEGER},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        order_no = #{record.orderNo,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
 </mapper>
