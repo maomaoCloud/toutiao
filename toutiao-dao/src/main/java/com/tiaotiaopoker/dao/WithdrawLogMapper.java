@@ -4,7 +4,9 @@ import com.tiaotiaopoker.pojo.WithdrawLog;
 import com.tiaotiaopoker.pojo.WithdrawLogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component("withdrawLogMapper")
 public interface WithdrawLogMapper {
     int countByExample(WithdrawLogExample example);
 
@@ -36,4 +38,6 @@ public interface WithdrawLogMapper {
     int updateByPrimaryKeyWithBLOBs(WithdrawLog record);
 
     int updateByPrimaryKey(WithdrawLog record);
+
+    int sumMoneyByUserId(String userId);
 }

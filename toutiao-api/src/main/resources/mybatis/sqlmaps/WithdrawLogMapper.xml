@@ -462,4 +462,15 @@
       re_user_name = #{reUserName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="sumMoneyByUserId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT
+        IFNULL(SUM(money),0)
+    FROM
+     withdraw_log
+    WHERE
+    state = 2
+    AND
+    user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

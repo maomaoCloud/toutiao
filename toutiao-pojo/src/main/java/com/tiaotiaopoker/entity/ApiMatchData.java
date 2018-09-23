@@ -1,7 +1,10 @@
 package com.tiaotiaopoker.entity;
 
+import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.pojo.Match;
 import org.joda.time.DateTime;
+
+import java.util.Date;
 
 /**
  * Created by xiekang on 2018/9/10.
@@ -15,6 +18,24 @@ public class ApiMatchData {
     private Integer fee;
     private String  bannerImg;
     private boolean hasApply;
+    private String matchState;
+    private int signUpNum;
+
+    public int getSignUpNum() {
+        return signUpNum;
+    }
+
+    public void setSignUpNum(int signUpNum) {
+        this.signUpNum = signUpNum;
+    }
+
+    public String getMatchState() {
+        return matchState;
+    }
+
+    public void setMatchState(String matchState) {
+        this.matchState = matchState;
+    }
 
     public String getId() {
         return id;
@@ -101,6 +122,18 @@ public class ApiMatchData {
         res.setLocation( location );
         res.setStartDate( new DateTime( md.getStartDate() ).toString( "yyyy-MM-dd HH:mm" ) );
         res.setTheme( md.getTheme() );
+
+        //比赛状态
+        DateTime nowDate = new DateTime(new Date());
+        DateTime startDate = new DateTime(md.getStartDate());
+        DateTime endDate = new DateTime(md.getEndDate());
+        if (nowDate.compareTo(startDate) < 0) {
+            res.setMatchState(Constants.Match.NOT_START);
+        } else if (nowDate.compareTo(endDate) > 0) {
+            res.setMatchState(Constants.Match.END);
+        } else {
+            res.setMatchState(Constants.Match.UNDER_WAY);
+        }
 
         return res;
     }

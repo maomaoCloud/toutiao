@@ -4,7 +4,9 @@ import com.tiaotiaopoker.pojo.AppUser;
 import com.tiaotiaopoker.pojo.AppUserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component("appUserMapper")
 public interface AppUserMapper {
     int countByExample(AppUserExample example);
 

@@ -201,24 +201,11 @@
       ar.advert_id,
       ar.advert_title,
       ar.advert_link_url,
-      ar.advert_img_url,
-      ar.advert_create_time,
-      ar.advert_update_time,
-      ar.advert_create_user,
-      base_user.user_account as advert_update_user,
-      ar.advert_start_time,
-      ar.advert_end_time,
-      ar.advert_start_date,
-      ar.advert_end_date,
-      ar.advert_state
+      ar.advert_img_url
     from
     advert_recommend as ar
-    left join
-    sys_user as base_user
-    on
-    base_user.USER_ID = ar.advert_update_user
     where
-    ar.advert_state != 0
+    ar.advert_state =1
     <if test="advertState != '' and advertState != null">
       and advert_state = #{advertState,jdbcType=INTEGER}
     </if>
