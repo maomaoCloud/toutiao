@@ -43,7 +43,7 @@ public class MatchController extends BaseController {
                                @PathVariable("userId") String userId) {
         JsonResult jsonResult;
         try {
-            Map<String, Object> resultMap = matchService.getMatchList( pageNum, pageSize ,userId);
+            Map<String, Object> resultMap = matchService.getMatchList( pageNum, pageSize, userId );
             jsonResult = JsonResult.SUCCESS();
             jsonResult.setResData( resultMap );
         } catch (Exception e) {
@@ -53,11 +53,12 @@ public class MatchController extends BaseController {
         return jsonResult;
     }
 
-    @RequestMapping("detail/{matchId}")
-    public JsonResult getMatchDetail(@PathVariable("matchId") String matchId) {
+    @RequestMapping("detail/{matchId}/{userId}")
+    public JsonResult getMatchDetail(@PathVariable("matchId") String matchId,
+                                     @PathVariable("userId") String userId) {
         JsonResult jsonResult;
         try {
-            Map<String, Object> resultMap = matchService.getMatchInfoById( matchId );
+            Map<String, Object> resultMap = matchService.getMatchInfoById( matchId, userId );
             jsonResult = JsonResult.SUCCESS();
             jsonResult.setResData( resultMap );
         } catch (Exception e) {

@@ -16,7 +16,7 @@
         </foreach>
     </select>
 
-    <select id="getMatchApplyUserList"  resultType="com.tiaotiaopoker.entity.ApiMatchDetail.MatchApplyUser">
+    <select id="getMatchApplyUserList" resultType="com.tiaotiaopoker.entity.MatchApplyUser">
         SELECT user_name as `name`,user_head AS headImg FROM apply_order WHERE match_id = #{matchId,jdbcType=VARCHAR} AND pay_statue = 1 ORDER BY add_time DESC
     </select>
 </mapper>

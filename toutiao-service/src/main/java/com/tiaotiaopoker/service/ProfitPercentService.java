@@ -9,12 +9,16 @@ import java.util.List;
 
 public interface ProfitPercentService {
 
-    List<ProfitPercent> queryProfitByCondition(ProfitPercent Profit, Pagination page);
+    List<ProfitPercent> queryProfitByCondition(ProfitPercent Profit,
+                                               Pagination page);
 
     ProfitPercent queryProfitById(String ProfitId);
 
-    int addOrUpdateProfit(ProfitPercent Profit, SysUser loginUser);
+    int addOrUpdateProfit(ProfitPercent Profit,
+                          SysUser loginUser);
 
-    int editProfitBySelective(ProfitPercent Profit, SysUser loginUser);
+    int editProfitBySelective(ProfitPercent Profit,
+                              SysUser loginUser);
 
+    Integer getPercentByPrice(float fee);
 }

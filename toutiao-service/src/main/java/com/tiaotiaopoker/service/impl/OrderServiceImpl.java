@@ -2,8 +2,9 @@ package com.tiaotiaopoker.service.impl;
 
 import com.tiaotiaopoker.XmlUtils;
 import com.tiaotiaopoker.dao.ApplyOrderMapper;
+import com.tiaotiaopoker.dao.CustomerDaoMapper;
 import com.tiaotiaopoker.dao.WxPayLogMapper;
-import com.tiaotiaopoker.entity.ApiMatchDetail;
+import com.tiaotiaopoker.entity.MatchApplyUser;
 import com.tiaotiaopoker.pojo.ApplyOrder;
 import com.tiaotiaopoker.pojo.WxPayLog;
 import com.tiaotiaopoker.service.OrderService;
@@ -21,15 +22,16 @@ import java.util.Map;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    private ApplyOrderMapper applyOrderMapper;
+    private ApplyOrderMapper  applyOrderMapper;
     @Autowired
-    private WxPayLogMapper   wxPayLogMapper;
+    private WxPayLogMapper    wxPayLogMapper;
+    @Autowired
+    private CustomerDaoMapper customerDaoMapper;
 
     @Override
-    public List<ApiMatchDetail.MatchApplyUser> getApplyUserByMatchId(String matchId) {
+    public List<MatchApplyUser> getApplyUserByMatchId(String matchId) {
 
-
-        return null;
+        return customerDaoMapper.getMatchApplyUserList( matchId );
     }
 
     @Override

@@ -18,7 +18,8 @@ public interface MatchService {
                                      Integer pageSize,
                                      String userId);
 
-    Map<String, Object> getMatchInfoById(String matchId);
+    Map<String, Object> getMatchInfoById(String matchId,
+                                         String userId);
 
     List<Match> queryMatchByCondition(Match match,
                                       Pagination page);
@@ -29,4 +30,6 @@ public interface MatchService {
     MatchWithBLOBs selectMatchById(String id);
 
     MatchWithBLOBs getMatchDataById(String matchId);
+
+    List<Match> getMatchByKeyWord(String kw);
 }

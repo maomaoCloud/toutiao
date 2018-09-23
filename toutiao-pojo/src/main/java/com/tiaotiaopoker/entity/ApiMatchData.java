@@ -83,7 +83,6 @@ public class ApiMatchData {
     public static ApiMatchData genFromMatch(Match md) {
         ApiMatchData res = new ApiMatchData();
         res.setId( md.getId() );
-        res.setApplyCount( 0 );
         res.setBannerImg( md.getBannerImg() );
         res.setApplyCount( md.getApplyCount() );
 

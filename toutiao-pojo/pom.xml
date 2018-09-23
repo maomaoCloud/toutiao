@@ -29,7 +29,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.tiaotiaopoker</groupId>
+            <groupId>com.tiaotiaopoer</groupId>
             <artifactId>toutiao-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

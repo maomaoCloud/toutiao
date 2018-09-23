@@ -10,9 +10,10 @@ import java.util.List;
  * Created by xiekang on 2018/9/14.
  */
 public class ApiMatchDetail {
-    private String headImg, theme, startDateTime, endDateTime, address, activeContent, rewardsContent, contactName, contactPhone, wxHead;
+    private String headImg, theme, startDateTime, endDateTime, address, activeContent, rewardsContent, contactName, contactPhone, wxHead, id;
     private Float                fee;
     private List<MatchApplyUser> applyList;
+    private Boolean              hasApply;
 
     public ApiMatchDetail() {
         super();
@@ -118,27 +119,6 @@ public class ApiMatchDetail {
         this.applyList = applyList;
     }
 
-    public static class MatchApplyUser {
-        private String name;
-        private String headImg;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getHeadImg() {
-            return headImg;
-        }
-
-        public void setHeadImg(String headImg) {
-            this.headImg = headImg;
-        }
-    }
-
     public static ApiMatchDetail genFromMatch(MatchWithBLOBs m) {
         ApiMatchDetail data = new ApiMatchDetail();
         data.setHeadImg( m.getBannerImg() );
@@ -151,11 +131,28 @@ public class ApiMatchDetail {
         data.setRewardsContent( m.getRewardsContent() );
         data.setWxHead( m.getWxHead() );
         data.setTheme( m.getTheme() );
+        data.setId( m.getId() );
 
         StringBuffer sbStress = new StringBuffer();
         sbStress.append( m.getProvince() ).append( m.getCity() ).append( m.getArea() ).append( m.getAddress() );
         data.setAddress( sbStress.toString() );
 
         return data;
+    }
+
+    public Boolean getHasApply() {
+        return hasApply;
+    }
+
+    public void setHasApply(Boolean hasApply) {
+        this.hasApply = hasApply;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
