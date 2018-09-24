@@ -61,6 +61,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         example.createCriteria().andUserIdEqualTo( params.getUserId() ).andMatchIdEqualTo( params.getMatchId() );
         List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample( example );
         ApplyOrder order;
+        Boolean needPay = true;
         resultMap.put( "hasPay", false );
         if( applyOrders != null && applyOrders.size() > 0 ) {
             order = applyOrders.get( 0 );
@@ -89,6 +90,13 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             order.setUserSignStatus( 0 );
             order.setPartnerSignStatue( 0 );
             order.setPatnerCode( StringUtils.gen6Num() );
+            needPay = order.getPayMoney() > 0.0f;
+
+            if(!needPay){//如果不需要支付
+                order.setPayStatue( 1 );
+                order.setPayDate( new Date(  ) );
+            }
+
             applyOrderMapper.insertSelective( order );
         }
 
@@ -97,7 +105,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             return resultMap;
         }
 
-        Boolean needPay = order.getPayMoney() > 0.0f;
+
         resultMap.put( "needPay", needPay );//是否需要支付
         resultMap.put( "orderId", order.getId() );
         if( needPay ) {

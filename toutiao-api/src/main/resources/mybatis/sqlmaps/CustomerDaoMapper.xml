@@ -10,7 +10,8 @@
     </select>
 
     <select id="getMatchOtherInfo" resultType="com.tiaotiaopoker.entity.ApiMatchData">
-        SELECT getMathcApplyCount(match_Id) AS applyCount, checkUserHasApplyTheMatch(match_Id,user_id) AS hasApply, match_Id AS id FROM apply_order WHERE user_id  = #{userId,jdbcType=VARCHAR} AND pay_statue = 1 AND match_Id IN
+        SELECT getMathcApplyCount(match_Id) AS applyCount, checkUserHasApplyTheMatch(match_Id,user_id) AS hasApply,
+        match_Id AS id FROM apply_order WHERE user_id = #{userId,jdbcType=VARCHAR} AND pay_statue = 1 AND match_Id IN
         <foreach collection="ids" open="(" close=")" separator="," item="item">
             #{item,jdbcType=VARCHAR}
         </foreach>
@@ -18,5 +19,9 @@
 
     <select id="getMatchApplyUserList" resultType="com.tiaotiaopoker.entity.MatchApplyUser">
         SELECT user_name as `name`,user_head AS headImg FROM apply_order WHERE match_id = #{matchId,jdbcType=VARCHAR} AND pay_statue = 1 ORDER BY add_time DESC
+    </select>
+
+    <select id="getMatchHotKeyWords" resultType="java.lang.String">
+        SELECT kw FROM( SELECT kw, COUNT(1) AS count FROM search_log WHERE search_type = 0 GROUP BY kw ORDER BY 1 DESC LIMIT 8) A
     </select>
 </mapper>

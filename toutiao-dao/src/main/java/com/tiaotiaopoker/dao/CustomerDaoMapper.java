@@ -21,4 +21,6 @@ public interface CustomerDaoMapper {
                                          @Param("ids") List<String> ids);
 
     List<MatchApplyUser> getMatchApplyUserList(@Param("matchId") String matchId);
+
+    List<String> getMatchHotKeyWords();
 }

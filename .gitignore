@@ -12,6 +12,7 @@
 .idea
 *.idea/
 .idea/
+*/.idea/
 # Package Files #
 *.jar
 *.war

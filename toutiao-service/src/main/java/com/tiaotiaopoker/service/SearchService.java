@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,4 +9,6 @@ import java.util.Map;
 public interface SearchService {
     Map<String, Object> searchForMatch(String userId,
                                        String kw);
+
+    List<String> getHotSearchKeyWords();
 }

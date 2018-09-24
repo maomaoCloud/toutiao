@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,10 +33,14 @@ public class SearchController {
         }
     }
 
-    @RequestMapping("/match/hotSearch")
+    @RequestMapping("/match/hotKw")
     public JsonResult getMatchHotSearch() {
-
-        return  JsonResult.FAILED();
+        try {
+            List<String> kws = searchService.getHotSearchKeyWords();
+            return JsonResult.SUCCESS( "success", kws );
+        } catch (Exception e) {
+            return JsonResult.FAILED( "热搜索接口异常" );
+        }
     }
 
 }

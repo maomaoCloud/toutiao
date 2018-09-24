@@ -5,8 +5,10 @@ import com.tiaotiaopoker.WxUtils;
 import com.tiaotiaopoker.entity.ApiAppUserInfo;
 import com.tiaotiaopoker.entity.WxLoginParam;
 import com.tiaotiaopoker.pojo.AppUser;
+import com.tiaotiaopoker.pojo.WithdrawLog;
 import com.tiaotiaopoker.service.AppUserService;
 import com.tiaotiaopoker.service.OrderService;
+import com.tiaotiaopoker.service.WithdrawLogService;
 import com.tiaotiaopoker.service.WxApiService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,13 @@ import java.util.Map;
 @Scope("prototype")
 public class WxApiController extends BaseController {
     @Autowired
-    private WxApiService   wxApiService;
+    private WxApiService       wxApiService;
     @Autowired
-    private AppUserService appUserService;
+    private AppUserService     appUserService;
     @Autowired
-    private OrderService   orderService;
+    private OrderService       orderService;
+    @Autowired
+    private WithdrawLogService withdrawLogService;
 
     @RequestMapping("sessionKey")
     public JsonResult getSessionKey(String code) {
@@ -62,6 +66,31 @@ public class WxApiController extends BaseController {
             e.printStackTrace();
             return JsonResult.FAILED( "登录接口异常！" );
         }
+    }
+
+    /**
+     * 提现接口
+     */
+    @RequestMapping(value = "pay/withdraw",
+                    method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResult withdraw(String userId,
+                               String openId,
+                               Float money) {
+        AppUser user = appUserService.getUserByUserId( userId );
+        if( user == null || !openId.equals( user.getOpenId() ) ) {
+            return JsonResult.FAILED( "非法操作." );
+        }
+
+
+
+        try {
+            //Map<String, Object> resultMap = withdrawLogService.withdraw( user, money );
+        } catch (Exception e) {
+            return JsonResult.FAILED( "发放失败" );
+        }
+
+        return JsonResult.SUCCESS();
     }
 
     @RequestMapping("pay/notify")
