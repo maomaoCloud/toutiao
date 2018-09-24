@@ -32,4 +32,6 @@ public interface MatchService {
     MatchWithBLOBs getMatchDataById(String matchId);
 
     List<Match> getMatchByKeyWord(String kw);
+
+    Map<String, Object> getMatchListManage(String userId);
 }

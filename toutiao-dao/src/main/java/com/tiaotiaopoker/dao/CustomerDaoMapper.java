@@ -4,12 +4,14 @@ import com.tiaotiaopoker.entity.ApiMatchData;
 import com.tiaotiaopoker.entity.ApiMatchDetail;
 import com.tiaotiaopoker.entity.MatchApplyUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by xiekang on 2018/9/22.
  */
+@Component("customerDaoMapper")
 public interface CustomerDaoMapper {
     @Deprecated
     List<String> checkUserHasApply(@Param("userId") String userId,

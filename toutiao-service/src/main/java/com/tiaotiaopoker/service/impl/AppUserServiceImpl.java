@@ -156,7 +156,7 @@ public class AppUserServiceImpl implements AppUserService {
         paramMap.put("userId", userId);
         int sumPayMoney = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         if (!"0".equals(matchId)) {
-            //需要查出该用户本场比赛收益+累计收益
+            //需要查出该用户本场比赛收益
             paramMap.put("matchId", matchId);
             int sumPayMoneyByMatch = applyOrderMapper.sumPayMoneyByCondition(paramMap);
             resultMap.put("sumMoneyMatch",sumPayMoneyByMatch);
@@ -172,7 +172,10 @@ public class AppUserServiceImpl implements AppUserService {
         int sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         //可提现
         int alreadyWithdraw = withdrawLogMapper.sumMoneyByUserId(userId);
-        int availableWithdraw = sumPayMoney - alreadyWithdraw;
+        //累计可提现收益
+        paramMap.put("signState",Constants.Order.USER_SIGN_STATUS_END);
+        int sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        int availableWithdraw = sumAvailableWithdraw - alreadyWithdraw;
         resultMap.put("sumSignUpToday",sumSignUpToday);
         resultMap.put("sumMoneyToday",sumPayMoneyToday);
         resultMap.put("availableWithdraw",availableWithdraw);

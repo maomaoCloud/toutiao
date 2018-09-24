@@ -42,4 +42,6 @@ public interface ApplyOrderMapper {
     int sumPayMoneyByCondition(Map<String, Object> paramMap);
 
     int sumSignUpNumByCondition(Map<String, Object> paramMap);
+
+    int sumSignInNumByMatchId(String id);
 }

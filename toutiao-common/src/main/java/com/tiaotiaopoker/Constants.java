@@ -41,5 +41,6 @@ public class Constants {
         public static final String NOT_SIGN_IN = "未签到";
         public static final String SIGN_IN = "已签到";
         public static final String END = "已结束";
+        public static final Integer USER_SIGN_STATUS_END = 1;
     }
 }

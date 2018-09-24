@@ -20,6 +20,24 @@ public class ApiMatchData {
     private boolean hasApply;
     private String matchState;
     private int signUpNum;
+    private int signInNum;
+    private int sumMoney;
+
+    public int getSumMoney() {
+        return sumMoney;
+    }
+
+    public void setSumMoney(int sumMoney) {
+        this.sumMoney = sumMoney;
+    }
+
+    public int getSignInNum() {
+        return signInNum;
+    }
+
+    public void setSignInNum(int signInNum) {
+        this.signInNum = signInNum;
+    }
 
     public int getSignUpNum() {
         return signUpNum;
