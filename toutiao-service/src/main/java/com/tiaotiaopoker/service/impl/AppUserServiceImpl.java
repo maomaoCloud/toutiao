@@ -170,11 +170,12 @@ public class AppUserServiceImpl implements AppUserService {
         int sumSignUpToday = applyOrderMapper.sumSignUpNumByCondition(paramMap);
         //今日报名费
         int sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition(paramMap);
-        //可提现
+        //已提现
         int alreadyWithdraw = withdrawLogMapper.sumMoneyByUserId(userId);
         //累计可提现收益
         paramMap.put("signState",Constants.Order.USER_SIGN_STATUS_END);
         int sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        //可提现
         int availableWithdraw = sumAvailableWithdraw - alreadyWithdraw;
         resultMap.put("sumSignUpToday",sumSignUpToday);
         resultMap.put("sumMoneyToday",sumPayMoneyToday);
