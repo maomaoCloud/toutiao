@@ -526,9 +526,9 @@
         match_id = #{matchId,jdbcType=VARCHAR}
     </select>
 
-    <select id="sumPayMoneyByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+    <select id="sumPayMoneyByCondition" parameterType="java.util.Map" resultType="java.math.BigDecimal">
         select
-        IFNULL(SUM(ao.pay_money),0)
+        IFNULL(SUM(ao.pay_money*100*ao.share_percent),0)
         FROM
         apply_order as ao
         LEFT JOIN

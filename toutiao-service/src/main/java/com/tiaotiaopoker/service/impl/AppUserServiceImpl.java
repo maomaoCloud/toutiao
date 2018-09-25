@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.applet.Main;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -152,15 +153,16 @@ public class AppUserServiceImpl implements AppUserService {
     public Map<String, Object> getUserIncome(String userId, String matchId) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> paramMap = new HashMap<>();
+        BigDecimal hundred = new BigDecimal(100);
         //累计收益
         paramMap.put("userId", userId);
-        int sumPayMoney = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        BigDecimal sumPayMoney = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         if (!"0".equals(matchId)) {
             //需要查出该用户本场比赛收益
             paramMap.put("matchId", matchId);
-            int sumPayMoneyByMatch = applyOrderMapper.sumPayMoneyByCondition(paramMap);
-            resultMap.put("sumMoneyMatch",sumPayMoneyByMatch);
-            resultMap.put("sumMoney",sumPayMoney);
+            BigDecimal sumPayMoneyByMatch = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+            resultMap.put("sumMoneyMatch", sumPayMoneyByMatch.divide(hundred));
+            resultMap.put("sumMoney", sumPayMoney.divide(hundred));
         }
 
         paramMap.clear();
@@ -169,17 +171,17 @@ public class AppUserServiceImpl implements AppUserService {
         //今日报名数
         int sumSignUpToday = applyOrderMapper.sumSignUpNumByCondition(paramMap);
         //今日报名费
-        int sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        BigDecimal sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         //已提现
         int alreadyWithdraw = withdrawLogMapper.sumMoneyByUserId(userId);
         //累计可提现收益
-        paramMap.put("signState",Constants.Order.USER_SIGN_STATUS_END);
-        int sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        paramMap.put("signState", Constants.Order.USER_SIGN_STATUS_END);
+        BigDecimal sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         //可提现
-        int availableWithdraw = sumAvailableWithdraw - alreadyWithdraw;
-        resultMap.put("sumSignUpToday",sumSignUpToday);
-        resultMap.put("sumMoneyToday",sumPayMoneyToday);
-        resultMap.put("availableWithdraw",availableWithdraw);
+        BigDecimal availableWithdraw = (sumAvailableWithdraw.subtract(new BigDecimal(alreadyWithdraw))).divide(hundred);
+        resultMap.put("sumSignUpToday", sumSignUpToday);
+        resultMap.put("sumMoneyToday", sumPayMoneyToday.divide(hundred));
+        resultMap.put("availableWithdraw", availableWithdraw);
         return resultMap;
     }
 }

@@ -7,6 +7,7 @@ import com.tiaotiaopoker.service.WithdrawLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +22,14 @@ public class WithdrawLogServiceImpl implements WithdrawLogService {
     private ApplyOrderMapper applyOrderMapper;
 
     @Override
-    public int getAvailableWithdraw(String userId) {
+    public BigDecimal getAvailableWithdraw(String userId) {
         Map<String, Object> paramMap = new HashMap<>();
         //已提现
         int alreadyWithdraw = withdrawLogMapper.sumMoneyByUserId(userId);
         //累计可提现收益
         paramMap.put("signState", Constants.Order.USER_SIGN_STATUS_END);
-        int sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        BigDecimal sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
         //可提现
-        return sumAvailableWithdraw - alreadyWithdraw;
+        return (sumAvailableWithdraw.subtract(new BigDecimal(alreadyWithdraw))).divide(new BigDecimal(100));
     }
 }

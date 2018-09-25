@@ -4,6 +4,7 @@ import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.pojo.Match;
 import org.joda.time.DateTime;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,13 +22,13 @@ public class ApiMatchData {
     private String matchState;
     private int signUpNum;
     private int signInNum;
-    private int sumMoney;
+    private BigDecimal sumMoney;
 
-    public int getSumMoney() {
+    public BigDecimal getSumMoney() {
         return sumMoney;
     }
 
-    public void setSumMoney(int sumMoney) {
+    public void setSumMoney(BigDecimal sumMoney) {
         this.sumMoney = sumMoney;
     }
 

@@ -3,6 +3,8 @@ package com.tiaotiaopoker.dao;
 import com.tiaotiaopoker.entity.ApplyOrderDto;
 import com.tiaotiaopoker.pojo.ApplyOrder;
 import com.tiaotiaopoker.pojo.ApplyOrderExample;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public interface ApplyOrderMapper {
 
     int sumSignUpNumByMatchId(String id);
 
-    int sumPayMoneyByCondition(Map<String, Object> paramMap);
+    BigDecimal sumPayMoneyByCondition(Map<String, Object> paramMap);
 
     int sumSignUpNumByCondition(Map<String, Object> paramMap);
 
