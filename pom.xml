@@ -18,6 +18,7 @@
         <module>toutiao-api</module>
         <module>toutiao-common</module>
         <module>toutiao-admin</module>
+        <module>toutiao-screen</module>
     </modules>
 
     <properties>
