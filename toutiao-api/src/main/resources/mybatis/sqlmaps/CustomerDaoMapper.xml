@@ -24,4 +24,8 @@
     <select id="getMatchHotKeyWords" resultType="java.lang.String">
         SELECT kw FROM( SELECT kw, COUNT(1) AS count FROM search_log WHERE search_type = 0 GROUP BY kw ORDER BY 1 DESC LIMIT 8) A
     </select>
+
+    <select id="getTodayWithdrawTimes" resultType="com.tiaotiaopoker.entity.WithdrawLimit">
+        SELECT IFNULL(COUNT(1), 0)  AS todayWithdrawTimes, SUM(IFNULL(money,0)/100.0) AS todayWithdrawTotalAmount FROM withdraw_log WHERE user_id = #{userId,jdbcType=VARCHAR} AND DATE(apply_date) = DATE(NOW()) AND state = 2 GROUP BY user_id
+    </select>
 </mapper>

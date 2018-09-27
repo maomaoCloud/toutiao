@@ -3,6 +3,7 @@ package com.tiaotiaopoker.dao;
 import com.tiaotiaopoker.entity.ApiMatchData;
 import com.tiaotiaopoker.entity.ApiMatchDetail;
 import com.tiaotiaopoker.entity.MatchApplyUser;
+import com.tiaotiaopoker.entity.WithdrawLimit;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -23,4 +24,6 @@ public interface CustomerDaoMapper {
     List<MatchApplyUser> getMatchApplyUserList(@Param("matchId") String matchId);
 
     List<String> getMatchHotKeyWords();
+
+    WithdrawLimit getTodayWithdrawTimes(@Param("userId") String userId);
 }

@@ -3,9 +3,9 @@ package com.tiaotiaopoker.pojo;
 import java.util.Date;
 
 public class WithdrawLog {
-    private Integer id;
+    private String id;
 
-    private Integer userId;
+    private String userId;
 
     private Integer money;
 
@@ -37,20 +37,20 @@ public class WithdrawLog {
 
     private String xmlData;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public Integer getMoney() {

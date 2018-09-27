@@ -90,10 +90,11 @@ public class MatchServiceImpl implements MatchService {
         List<ApiMatchData> resDataList = new ArrayList<>();
         ApiMatchData apiData;
         List<String> ids = new ArrayList<>();
-        for (Match md : dataList) {
-            ids.add(md.getId());
-            apiData = ApiMatchData.genFromMatch(md);
-            resDataList.add(apiData);
+
+        for( Match md : dataList ) {
+            ids.add( md.getId() );
+            apiData = ApiMatchData.genFromMatch( md, userId );
+            resDataList.add( apiData );
         }
 
         int totalPages = page.getPages();
@@ -123,16 +124,18 @@ public class MatchServiceImpl implements MatchService {
             List<MatchWithBLOBs> matches = matchMapper.selectByExampleWithBLOBs(ex);
 
             List<String> ids = new ArrayList<>();
-            ids.add(matchId);
-            List<String> applyIds = customerDaoMapper.checkUserHasApply(userId, ids);
-            Set<String> applySet = new HashSet<>(applyIds);
 
-            if (matches != null && matches.size() > 0) {
-                ApiMatchDetail data = ApiMatchDetail.genFromMatch(matches.get(0));
-                List<MatchApplyUser> matchApplyUsersList = orderService.getApplyUserByMatchId(matchId);
-                data.setApplyList(matchApplyUsersList);
-                data.setHasApply(applySet.contains(data.getId()));
-                resultMap.put("data", data);
+            ids.add( matchId );
+            List<String> applyIds = customerDaoMapper.checkUserHasApply( userId, ids );
+            Set<String> applySet = new HashSet<>( applyIds );
+
+            if( matches != null && matches.size() > 0 ) {
+                ApiMatchDetail data = ApiMatchDetail.genFromMatch( matches.get( 0 ) );
+                List<MatchApplyUser> matchApplyUsersList = orderService.getApplyUserByMatchId( matchId );
+                data.setApplyList( matchApplyUsersList );
+                data.setHasApply( applySet.contains( data.getId() ) );
+                data.setIsMine( userId.equals( matches.get( 0 ).getUserId() ) );
+                resultMap.put( "data", data );
             }
         }
         return resultMap;
@@ -219,7 +222,9 @@ public class MatchServiceImpl implements MatchService {
                 }
             }
             index += 1;
-            ApiMatchData apiMatch = ApiMatchData.genFromMatch(match);
+
+            ApiMatchData apiMatch = ApiMatchData.genFromMatch( match, userId );
+
             // 已签到人数
             int signInNum = applyOrderMapper.sumSignInNumByMatchId(match.getId());
             apiMatch.setSignInNum(signInNum);
