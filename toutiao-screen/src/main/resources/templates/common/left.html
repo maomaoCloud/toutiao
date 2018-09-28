@@ -1,0 +1,2223 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Minimal 1.0 - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <link rel="shortcut icon" href="http://www.17sucai.com/static/images/favicon.ico" type="image/x-icon"/>
+    <!-- Bootstrap -->
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/font-awesome.css'}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/animate/animate.min.css'}">
+    <link type="text/css" rel="stylesheet" media="all" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/mmenu/css/jquery.mmenu.all.css'}"/>
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/videobackground/css/jquery.videobackground.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap-checkbox.css'}">
+
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/rickshaw/css/rickshaw.min.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/morris/css/morris.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/tabdrop/css/tabdrop.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/css/summernote.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/css/summernote-bs3.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen.min.css'}">
+    <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen-bootstrap.css'}">
+
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css'}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js} IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js} doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/html5shiv.js'}"></script>
+    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/respond.min.js'}"></script>
+    <![endif]-->
+
+    <link rel="stylesheet"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/css/summernote-bs3.css'}">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css'}"
+          rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css'}" rel="stylesheet">
+
+    <style>
+        body {
+            width: 100%;
+            font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+        }
+
+        .full-screen {
+            padding-left: 15px !important;
+        }
+
+        .body_full {
+            position: absolute !important;
+            top: 0;
+        }
+
+        .box-title {
+            text-align: center;
+            width: 100%;
+            font-weight: 500;
+            font-size: 18px !important;
+            font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+            border-bottom: 1px solid rgba(200, 200, 200, .2);
+            padding-bottom: 10px !important;
+        }
+
+        .tile-body {
+            width: 100%;
+            text-align: center;
+        }
+
+        .user-group {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-group img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .user-group .user-a {
+            width: 45%;
+            background-color: rgba(150, 150, 150, 0.4);
+        }
+
+        .user-group .da {
+            height: 30px;
+            width: 30px;
+            background-color: rgba(150, 150, 150, 0.8);
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .user-group .user-b {
+            width: 45%;
+            background-color: rgba(150, 150, 150, 0.4);
+        }
+
+        .user-group .user-name {
+            margin-left: 40%;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        #sign-list {
+            overflow: scroll;
+        }
+    </style>
+</head>
+<body class="bg-1" id="body">
+
+
+<!-- Preloader -->
+<div class="mask">
+    <div id="loader"></div>
+</div>
+<!--/Preloader -->
+
+<!-- Wrap all page content here -->
+<div id="wrap">
+
+
+    <!-- Make page fluid -->
+    <div class="row">
+
+
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top navbar-transparent-black mm-fixed-top" role="navigation"
+             id="navbar">
+
+
+            <!-- Branding -->
+            <div class="navbar-header col-md-2">
+                <a class="navbar-brand" href="index.html">
+                    跳跳棋趣
+                </a>
+                <div class="sidebar-collapse">
+                    <a href="#">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Branding end -->
+            <div class="copyrights">Collect from <a href="http://www.17sucai.com/" title="网站模板">网站模板</a></div>
+
+
+            <!-- .nav-collapse -->
+            <div class="navbar-collapse">
+
+                <!-- Page refresh -->
+                <ul class="nav navbar-nav">
+                    <li class="divided">
+                        <a href="">现场投屏</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">签到设置</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="javascript:;" th:id="matchSetting">比赛设置</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">参赛人员</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">座位编排</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">成绩录入</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">历史赛事</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#">帮助中心</a>
+                    </li>
+
+                    <li class="divided">
+                        <a href="#" class="full-screen-btn"><i class="fa fa-arrows-alt"></i></a>
+                    </li>
+                </ul>
+                <!-- /Page refresh -->
+
+                <!-- Sidebar -->
+                <ul class="nav navbar-nav side-nav" id="sidebar">
+
+                    <li class="collapsed-content">
+                        <ul>
+                            <li class="search"><!-- Collapsed search pasting here at 768px --></li>
+                        </ul>
+                    </li>
+
+                    <li class="navigation" id="navigation">
+                        <ul class="menu">
+
+                            <li class="">
+                                <a href="index.html">
+                                    <i class="fa fa-tachometer"></i> 签到
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="index.html">
+                                    <i class="fa fa-tachometer"></i> 规则
+                                </a>
+                            </li>
+
+                            <li class="dropdown open">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-list"></i> 第一轮 <b class="fa fa-plus dropdown-plus"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="form-elements.html">
+                                            <i class="fa fa-caret-right"></i> 座位
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="validation-elements.html">
+                                            <i class="fa fa-caret-right"></i> 比赛
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="form-wizard.html">
+                                            <i class="fa fa-caret-right"></i> 成绩
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown open">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-list"></i> 第二轮 <b class="fa fa-plus dropdown-plus"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="form-elements.html">
+                                            <i class="fa fa-caret-right"></i> 座位
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="validation-elements.html">
+                                            <i class="fa fa-caret-right"></i> 比赛
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="form-wizard.html">
+                                            <i class="fa fa-caret-right"></i> 成绩
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown open">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-list"></i> 第三轮 <b class="fa fa-plus dropdown-plus"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="form-elements.html">
+                                            <i class="fa fa-caret-right"></i> 座位
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="validation-elements.html">
+                                            <i class="fa fa-caret-right"></i> 比赛
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="form-wizard.html">
+                                            <i class="fa fa-caret-right"></i> 成绩
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="">
+                                <a href="index.html">
+                                    <i class="fa fa-tachometer"></i> 总成绩
+                                </a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+                <!-- Sidebar end -->
+
+
+            </div>
+            <!--/.nav-collapse -->
+
+
+        </div>
+        <!-- Fixed navbar end -->
+
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+            <!-- content main container -->
+            <div class="main">
+
+                <!-- row -->
+                <div class="row">
+
+                        <!-- tile -->
+                    <div class="col-md-6">
+                        <section class="tile color transparent-black">
+
+
+                            <!-- tile header -->
+                            <div class="tile-header">
+                                <h1><strong>Text</strong> Inputs</h1>
+                                <div class="controls">
+                                    <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                    <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <!-- /tile header -->
+
+                            <!-- tile body -->
+                            <div class="tile-body">
+
+                                <form class="form-horizontal" role="form">
+
+                                    <div class="form-group">
+                                        <label for="input01" class="col-sm-4 control-label">Normal input field</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="input01">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="input02" class="col-sm-4 control-label">Password input field</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" id="input02">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="input03" class="col-sm-4 control-label">Input with help text</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="input03">
+                                            <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="input04" class="col-sm-4 control-label">Input field with placeholder</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="input04" placeholder="This is placeholder...">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="input05" class="col-sm-4 control-label">Normal textarea</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" id="input05" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group transparent-editor">
+                                        <label class="col-sm-4 control-label">Textarea with editor</label>
+                                        <div class="col-sm-8">
+                                            <div class="form-control" id="input06" style="display: none;"></div>
+                                            <div class="note-editor">
+                                                <div class="note-dropzone">
+                                                    <div class="note-dropzone-message"></div>
+                                                </div>
+                                                <div class="note-dialog">
+                                                    <div class="note-image-dialog modal" aria-hidden="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" aria-hidden="true" tabindex="-1">×
+                                                                    </button>
+                                                                    <h4>Insert Image</h4></div>
+                                                                <div class="modal-body">
+                                                                    <div class="row-fluid"><h5>Select from files</h5><input
+                                                                            class="note-image-input" type="file" name="files"
+                                                                            accept="image/*"><h5>Image URL</h5><input
+                                                                            class="note-image-url form-control span12" type="text"></div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button href="#" class="btn btn-primary note-image-btn disabled"
+                                                                            disabled="disabled">Insert Image
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="note-link-dialog modal" aria-hidden="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" aria-hidden="true" tabindex="-1">×
+                                                                    </button>
+                                                                    <h4>Insert Link</h4></div>
+                                                                <div class="modal-body">
+                                                                    <div class="row-fluid">
+                                                                        <div class="form-group"><label>Text to display</label><span
+                                                                                class="note-link-text form-control input-xlarge uneditable-input"></span>
+                                                                        </div>
+                                                                        <div class="form-group"><label>To what URL should this link
+                                                                            go?</label><input class="note-link-url form-control span12"
+                                                                                              type="text"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button href="#" class="btn btn-primary note-link-btn disabled"
+                                                                            disabled="disabled">Insert Link
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="note-video-dialog modal" aria-hidden="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" aria-hidden="true" tabindex="-1">×
+                                                                    </button>
+                                                                    <h4>Insert Video</h4></div>
+                                                                <div class="modal-body">
+                                                                    <div class="row-fluid">
+                                                                        <div class="form-group"><label>Video URL?</label>&nbsp;<small
+                                                                                class="text-muted">(YouTube, Vimeo, Vine, Instagram, or
+                                                                            DailyMotion)
+                                                                        </small>
+                                                                            <input class="note-video-url form-control span12" type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button href="#" class="btn btn-primary note-video-btn disabled"
+                                                                            disabled="disabled">Insert Video
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="note-help-dialog modal" aria-hidden="false">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="modal-background"><a class="modal-close pull-right"
+                                                                                                     aria-hidden="true"
+                                                                                                     tabindex="-1">Close</a>
+                                                                        <div class="title">Keyboard shortcuts</div>
+                                                                        <table class="note-shortcut-layout">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table class="note-shortcut">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th>Action</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Z</td>
+                                                                                            <td>Undo</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + Z</td>
+                                                                                            <td>Redo</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + ]</td>
+                                                                                            <td>Indent</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + [</td>
+                                                                                            <td>Outdent</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + K</td>
+                                                                                            <td>Insert Link</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + ENTER</td>
+                                                                                            <td>Insert Horizontal Rule</td>
+                                                                                        </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <table class="note-shortcut">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th>Text formatting</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + B</td>
+                                                                                            <td>Bold</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + I</td>
+                                                                                            <td>Italic</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + U</td>
+                                                                                            <td>Underline</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + S</td>
+                                                                                            <td>Strike</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + \</td>
+                                                                                            <td>Remove Font Style</td>
+                                                                                        </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table class="note-shortcut">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th>Document Style</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM0</td>
+                                                                                            <td>Normal</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM1</td>
+                                                                                            <td>Header 1</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM2</td>
+                                                                                            <td>Header 2</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM3</td>
+                                                                                            <td>Header 3</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM4</td>
+                                                                                            <td>Header 4</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM5</td>
+                                                                                            <td>Header 5</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + NUM6</td>
+                                                                                            <td>Header 6</td>
+                                                                                        </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <table class="note-shortcut">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            <th>Paragraph formatting</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + L</td>
+                                                                                            <td>Align left</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + E</td>
+                                                                                            <td>Align center</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + R</td>
+                                                                                            <td>Align right</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + J</td>
+                                                                                            <td>Justify full</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + NUM7</td>
+                                                                                            <td>Ordered list</td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td>Ctrl + Shift + NUM8</td>
+                                                                                            <td>Unordered list</td>
+                                                                                        </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <p class="text-center"><a href="//hackerwins.github.io/summernote/"
+                                                                                                  target="_blank">Summernote 0.5.1</a> · <a
+                                                                                href="//github.com/HackerWins/summernote" target="_blank">Project</a>
+                                                                            · <a href="//github.com/HackerWins/summernote/issues"
+                                                                                 target="_blank">Issues</a></p></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="note-handle">
+                                                    <div class="note-control-selection">
+                                                        <div class="note-control-selection-bg"></div>
+                                                        <div class="note-control-holder note-control-nw"></div>
+                                                        <div class="note-control-holder note-control-ne"></div>
+                                                        <div class="note-control-holder note-control-sw"></div>
+                                                        <div class="note-control-sizing note-control-se"></div>
+                                                        <div class="note-control-selection-info"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="note-popover">
+                                                    <div class="note-link-popover popover bottom in" style="display: none;">
+                                                        <div class="arrow"></div>
+                                                        <div class="popover-content note-link-content"><a href="http://www.google.com"
+                                                                                                          target="_blank">www.google.com</a>&nbsp;&nbsp;<div
+                                                                class="note-insert btn-group">
+                                                            <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                    data-event="showLinkDialog" tabindex="-1" data-original-title="Edit"><i
+                                                                    class="fa fa-edit icon-edit"></i></button>
+                                                            <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                    data-event="unlink" tabindex="-1" data-original-title="Unlink"><i
+                                                                    class="fa fa-unlink icon-unlink"></i></button>
+                                                            <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                    data-event="showVideoDialog" tabindex="-1"
+                                                                    data-original-title="Video Link"><i
+                                                                    class="fa fa-youtube-play icon-play"></i></button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="note-image-popover popover bottom in" style="display: none;">
+                                                        <div class="arrow"></div>
+                                                        <div class="popover-content note-image-content">
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="resize" data-value="1" tabindex="-1"
+                                                                        data-original-title="Resize Full"><span class="note-fontsize-10">100%</span>
+                                                                </button>
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="resize" data-value="0.5" tabindex="-1"
+                                                                        data-original-title="Resize Half"><span
+                                                                        class="note-fontsize-10">50%</span></button>
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="resize" data-value="0.25" tabindex="-1"
+                                                                        data-original-title="Resize Quarter"><span class="note-fontsize-10">25%</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="floatMe" data-value="left" tabindex="-1"
+                                                                        data-original-title="Float Left"><i
+                                                                        class="fa fa-align-left icon-align-left"></i></button>
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="floatMe" data-value="right" tabindex="-1"
+                                                                        data-original-title="Float Right"><i
+                                                                        class="fa fa-align-right icon-align-right"></i></button>
+                                                                <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                        data-event="floatMe" data-value="none" tabindex="-1"
+                                                                        data-original-title="Float None"><i
+                                                                        class="fa fa-align-justify icon-align-justify"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="note-toolbar btn-toolbar">
+                                                    <div class="note-style btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+B" data-mac-shortcut="⌘+B" data-event="bold"
+                                                                tabindex="-1" data-original-title="Bold (Ctrl+B)"><i
+                                                                class="fa fa-bold icon-bold"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+I" data-mac-shortcut="⌘+I" data-event="italic"
+                                                                tabindex="-1" data-original-title="Italic (Ctrl+I)"><i
+                                                                class="fa fa-italic icon-italic"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+U" data-mac-shortcut="⌘+U" data-event="underline"
+                                                                tabindex="-1" data-original-title="Underline (Ctrl+U)"><i
+                                                                class="fa fa-underline icon-underline"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+\" data-mac-shortcut="⌘+\" data-event="removeFormat"
+                                                                tabindex="-1" data-original-title="Remove Font Style (Ctrl+\)"><i
+                                                                class="fa fa-eraser icon-eraser"></i></button>
+                                                    </div>
+                                                    <div class="note-fontsize btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm btn-small dropdown-toggle"
+                                                                data-toggle="dropdown" title="" tabindex="-1"
+                                                                data-original-title="Font Size"><span
+                                                                class="note-current-fontsize">11</span> <b class="caret"></b></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a data-event="fontSize" data-value="8"><i class="fa fa-check icon-ok"></i>
+                                                                8</a></li>
+                                                            <li><a data-event="fontSize" data-value="9"><i class="fa fa-check icon-ok"></i>
+                                                                9</a></li>
+                                                            <li><a data-event="fontSize" data-value="10"><i class="fa fa-check icon-ok"></i>
+                                                                10</a></li>
+                                                            <li><a data-event="fontSize" data-value="11"><i class="fa fa-check icon-ok"></i>
+                                                                11</a></li>
+                                                            <li><a data-event="fontSize" data-value="12"><i class="fa fa-check icon-ok"></i>
+                                                                12</a></li>
+                                                            <li><a data-event="fontSize" data-value="14"><i class="fa fa-check icon-ok"></i>
+                                                                14</a></li>
+                                                            <li><a data-event="fontSize" data-value="18"><i class="fa fa-check icon-ok"></i>
+                                                                18</a></li>
+                                                            <li><a data-event="fontSize" data-value="24"><i class="fa fa-check icon-ok"></i>
+                                                                24</a></li>
+                                                            <li><a data-event="fontSize" data-value="36"><i class="fa fa-check icon-ok"></i>
+                                                                36</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="note-color btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm btn-small note-recent-color"
+                                                                title="" data-event="color"
+                                                                data-value="{&quot;backColor&quot;:&quot;yellow&quot;}" tabindex="-1"
+                                                                data-original-title="Recent Color"><i class="fa fa-font icon-font"
+                                                                                                      style="color:black;background-color:yellow;"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small dropdown-toggle"
+                                                                title="" data-toggle="dropdown" tabindex="-1"
+                                                                data-original-title="More Color"><span class="caret"></span></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <div class="btn-group">
+                                                                    <div class="note-palette-title">BackColor</div>
+                                                                    <div class="note-color-reset" data-event="backColor"
+                                                                         data-value="inherit" title="Transparent">Set transparent
+                                                                    </div>
+                                                                    <div class="note-color-palette" data-target-event="backColor">
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#000000;" data-event="backColor"
+                                                                                    data-value="#000000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#000000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#424242;" data-event="backColor"
+                                                                                    data-value="#424242" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#424242"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#636363;" data-event="backColor"
+                                                                                    data-value="#636363" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#636363"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C9C94;" data-event="backColor"
+                                                                                    data-value="#9C9C94" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C9C94"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEC6CE;" data-event="backColor"
+                                                                                    data-value="#CEC6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEC6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#EFEFEF;" data-event="backColor"
+                                                                                    data-value="#EFEFEF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#EFEFEF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7F7F7;" data-event="backColor"
+                                                                                    data-value="#F7F7F7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7F7F7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFFFFF;" data-event="backColor"
+                                                                                    data-value="#FFFFFF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFFFFF"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF0000;" data-event="backColor"
+                                                                                    data-value="#FF0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF9C00;" data-event="backColor"
+                                                                                    data-value="#FF9C00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF9C00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFFF00;" data-event="backColor"
+                                                                                    data-value="#FFFF00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFFF00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#00FF00;" data-event="backColor"
+                                                                                    data-value="#00FF00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#00FF00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#00FFFF;" data-event="backColor"
+                                                                                    data-value="#00FFFF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#00FFFF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#0000FF;" data-event="backColor"
+                                                                                    data-value="#0000FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#0000FF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C00FF;" data-event="backColor"
+                                                                                    data-value="#9C00FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C00FF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF00FF;" data-event="backColor"
+                                                                                    data-value="#FF00FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF00FF"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7C6CE;" data-event="backColor"
+                                                                                    data-value="#F7C6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7C6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFE7CE;" data-event="backColor"
+                                                                                    data-value="#FFE7CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFE7CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFEFC6;" data-event="backColor"
+                                                                                    data-value="#FFEFC6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFEFC6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6EFD6;" data-event="backColor"
+                                                                                    data-value="#D6EFD6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6EFD6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEDEE7;" data-event="backColor"
+                                                                                    data-value="#CEDEE7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEDEE7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEE7F7;" data-event="backColor"
+                                                                                    data-value="#CEE7F7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEE7F7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6D6E7;" data-event="backColor"
+                                                                                    data-value="#D6D6E7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6D6E7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E7D6DE;" data-event="backColor"
+                                                                                    data-value="#E7D6DE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E7D6DE"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E79C9C;" data-event="backColor"
+                                                                                    data-value="#E79C9C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E79C9C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFC69C;" data-event="backColor"
+                                                                                    data-value="#FFC69C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFC69C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFE79C;" data-event="backColor"
+                                                                                    data-value="#FFE79C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFE79C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B5D6A5;" data-event="backColor"
+                                                                                    data-value="#B5D6A5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B5D6A5"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#A5C6CE;" data-event="backColor"
+                                                                                    data-value="#A5C6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#A5C6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9CC6EF;" data-event="backColor"
+                                                                                    data-value="#9CC6EF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9CC6EF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B5A5D6;" data-event="backColor"
+                                                                                    data-value="#B5A5D6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B5A5D6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6A5BD;" data-event="backColor"
+                                                                                    data-value="#D6A5BD" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6A5BD"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E76363;" data-event="backColor"
+                                                                                    data-value="#E76363" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E76363"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7AD6B;" data-event="backColor"
+                                                                                    data-value="#F7AD6B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7AD6B"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFD663;" data-event="backColor"
+                                                                                    data-value="#FFD663" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFD663"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#94BD7B;" data-event="backColor"
+                                                                                    data-value="#94BD7B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#94BD7B"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#73A5AD;" data-event="backColor"
+                                                                                    data-value="#73A5AD" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#73A5AD"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#6BADDE;" data-event="backColor"
+                                                                                    data-value="#6BADDE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#6BADDE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#8C7BC6;" data-event="backColor"
+                                                                                    data-value="#8C7BC6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#8C7BC6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#C67BA5;" data-event="backColor"
+                                                                                    data-value="#C67BA5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#C67BA5"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CE0000;" data-event="backColor"
+                                                                                    data-value="#CE0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CE0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E79439;" data-event="backColor"
+                                                                                    data-value="#E79439" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E79439"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#EFC631;" data-event="backColor"
+                                                                                    data-value="#EFC631" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#EFC631"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#6BA54A;" data-event="backColor"
+                                                                                    data-value="#6BA54A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#6BA54A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#4A7B8C;" data-event="backColor"
+                                                                                    data-value="#4A7B8C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#4A7B8C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#3984C6;" data-event="backColor"
+                                                                                    data-value="#3984C6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#3984C6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#634AA5;" data-event="backColor"
+                                                                                    data-value="#634AA5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#634AA5"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#A54A7B;" data-event="backColor"
+                                                                                    data-value="#A54A7B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#A54A7B"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C0000;" data-event="backColor"
+                                                                                    data-value="#9C0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B56308;" data-event="backColor"
+                                                                                    data-value="#B56308" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B56308"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#BD9400;" data-event="backColor"
+                                                                                    data-value="#BD9400" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#BD9400"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#397B21;" data-event="backColor"
+                                                                                    data-value="#397B21" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#397B21"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#104A5A;" data-event="backColor"
+                                                                                    data-value="#104A5A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#104A5A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#085294;" data-event="backColor"
+                                                                                    data-value="#085294" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#085294"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#311873;" data-event="backColor"
+                                                                                    data-value="#311873" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#311873"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#731842;" data-event="backColor"
+                                                                                    data-value="#731842" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#731842"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#630000;" data-event="backColor"
+                                                                                    data-value="#630000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#630000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#7B3900;" data-event="backColor"
+                                                                                    data-value="#7B3900" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#7B3900"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#846300;" data-event="backColor"
+                                                                                    data-value="#846300" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#846300"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#295218;" data-event="backColor"
+                                                                                    data-value="#295218" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#295218"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#083139;" data-event="backColor"
+                                                                                    data-value="#083139" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#083139"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#003163;" data-event="backColor"
+                                                                                    data-value="#003163" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#003163"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#21104A;" data-event="backColor"
+                                                                                    data-value="#21104A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#21104A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#4A1031;" data-event="backColor"
+                                                                                    data-value="#4A1031" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#4A1031"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="btn-group">
+                                                                    <div class="note-palette-title">FontColor</div>
+                                                                    <div class="note-color-reset" data-event="foreColor"
+                                                                         data-value="inherit" title="Reset">Reset to default
+                                                                    </div>
+                                                                    <div class="note-color-palette" data-target-event="foreColor">
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#000000;" data-event="foreColor"
+                                                                                    data-value="#000000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#000000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#424242;" data-event="foreColor"
+                                                                                    data-value="#424242" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#424242"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#636363;" data-event="foreColor"
+                                                                                    data-value="#636363" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#636363"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C9C94;" data-event="foreColor"
+                                                                                    data-value="#9C9C94" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C9C94"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEC6CE;" data-event="foreColor"
+                                                                                    data-value="#CEC6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEC6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#EFEFEF;" data-event="foreColor"
+                                                                                    data-value="#EFEFEF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#EFEFEF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7F7F7;" data-event="foreColor"
+                                                                                    data-value="#F7F7F7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7F7F7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFFFFF;" data-event="foreColor"
+                                                                                    data-value="#FFFFFF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFFFFF"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF0000;" data-event="foreColor"
+                                                                                    data-value="#FF0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF9C00;" data-event="foreColor"
+                                                                                    data-value="#FF9C00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF9C00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFFF00;" data-event="foreColor"
+                                                                                    data-value="#FFFF00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFFF00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#00FF00;" data-event="foreColor"
+                                                                                    data-value="#00FF00" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#00FF00"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#00FFFF;" data-event="foreColor"
+                                                                                    data-value="#00FFFF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#00FFFF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#0000FF;" data-event="foreColor"
+                                                                                    data-value="#0000FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#0000FF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C00FF;" data-event="foreColor"
+                                                                                    data-value="#9C00FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C00FF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FF00FF;" data-event="foreColor"
+                                                                                    data-value="#FF00FF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FF00FF"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7C6CE;" data-event="foreColor"
+                                                                                    data-value="#F7C6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7C6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFE7CE;" data-event="foreColor"
+                                                                                    data-value="#FFE7CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFE7CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFEFC6;" data-event="foreColor"
+                                                                                    data-value="#FFEFC6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFEFC6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6EFD6;" data-event="foreColor"
+                                                                                    data-value="#D6EFD6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6EFD6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEDEE7;" data-event="foreColor"
+                                                                                    data-value="#CEDEE7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEDEE7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CEE7F7;" data-event="foreColor"
+                                                                                    data-value="#CEE7F7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CEE7F7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6D6E7;" data-event="foreColor"
+                                                                                    data-value="#D6D6E7" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6D6E7"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E7D6DE;" data-event="foreColor"
+                                                                                    data-value="#E7D6DE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E7D6DE"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E79C9C;" data-event="foreColor"
+                                                                                    data-value="#E79C9C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E79C9C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFC69C;" data-event="foreColor"
+                                                                                    data-value="#FFC69C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFC69C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFE79C;" data-event="foreColor"
+                                                                                    data-value="#FFE79C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFE79C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B5D6A5;" data-event="foreColor"
+                                                                                    data-value="#B5D6A5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B5D6A5"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#A5C6CE;" data-event="foreColor"
+                                                                                    data-value="#A5C6CE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#A5C6CE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9CC6EF;" data-event="foreColor"
+                                                                                    data-value="#9CC6EF" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9CC6EF"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B5A5D6;" data-event="foreColor"
+                                                                                    data-value="#B5A5D6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B5A5D6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#D6A5BD;" data-event="foreColor"
+                                                                                    data-value="#D6A5BD" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#D6A5BD"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E76363;" data-event="foreColor"
+                                                                                    data-value="#E76363" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E76363"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#F7AD6B;" data-event="foreColor"
+                                                                                    data-value="#F7AD6B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#F7AD6B"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#FFD663;" data-event="foreColor"
+                                                                                    data-value="#FFD663" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#FFD663"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#94BD7B;" data-event="foreColor"
+                                                                                    data-value="#94BD7B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#94BD7B"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#73A5AD;" data-event="foreColor"
+                                                                                    data-value="#73A5AD" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#73A5AD"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#6BADDE;" data-event="foreColor"
+                                                                                    data-value="#6BADDE" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#6BADDE"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#8C7BC6;" data-event="foreColor"
+                                                                                    data-value="#8C7BC6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#8C7BC6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#C67BA5;" data-event="foreColor"
+                                                                                    data-value="#C67BA5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#C67BA5"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#CE0000;" data-event="foreColor"
+                                                                                    data-value="#CE0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#CE0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#E79439;" data-event="foreColor"
+                                                                                    data-value="#E79439" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#E79439"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#EFC631;" data-event="foreColor"
+                                                                                    data-value="#EFC631" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#EFC631"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#6BA54A;" data-event="foreColor"
+                                                                                    data-value="#6BA54A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#6BA54A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#4A7B8C;" data-event="foreColor"
+                                                                                    data-value="#4A7B8C" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#4A7B8C"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#3984C6;" data-event="foreColor"
+                                                                                    data-value="#3984C6" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#3984C6"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#634AA5;" data-event="foreColor"
+                                                                                    data-value="#634AA5" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#634AA5"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#A54A7B;" data-event="foreColor"
+                                                                                    data-value="#A54A7B" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#A54A7B"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#9C0000;" data-event="foreColor"
+                                                                                    data-value="#9C0000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#9C0000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#B56308;" data-event="foreColor"
+                                                                                    data-value="#B56308" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#B56308"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#BD9400;" data-event="foreColor"
+                                                                                    data-value="#BD9400" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#BD9400"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#397B21;" data-event="foreColor"
+                                                                                    data-value="#397B21" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#397B21"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#104A5A;" data-event="foreColor"
+                                                                                    data-value="#104A5A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#104A5A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#085294;" data-event="foreColor"
+                                                                                    data-value="#085294" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#085294"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#311873;" data-event="foreColor"
+                                                                                    data-value="#311873" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#311873"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#731842;" data-event="foreColor"
+                                                                                    data-value="#731842" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#731842"></button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#630000;" data-event="foreColor"
+                                                                                    data-value="#630000" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#630000"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#7B3900;" data-event="foreColor"
+                                                                                    data-value="#7B3900" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#7B3900"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#846300;" data-event="foreColor"
+                                                                                    data-value="#846300" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#846300"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#295218;" data-event="foreColor"
+                                                                                    data-value="#295218" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#295218"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#083139;" data-event="foreColor"
+                                                                                    data-value="#083139" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#083139"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#003163;" data-event="foreColor"
+                                                                                    data-value="#003163" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#003163"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#21104A;" data-event="foreColor"
+                                                                                    data-value="#21104A" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#21104A"></button>
+                                                                            <button type="button" class="note-color-btn"
+                                                                                    style="background-color:#4A1031;" data-event="foreColor"
+                                                                                    data-value="#4A1031" title="" data-toggle="button"
+                                                                                    tabindex="-1" data-original-title="#4A1031"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="note-para btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+Shift+8" data-mac-shortcut="⌘+⇧+7"
+                                                                data-event="insertUnorderedList" tabindex="-1"
+                                                                data-original-title="Unordered list (Ctrl+Shift+8)"><i
+                                                                class="fa fa-list-ul icon-list-ul"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                data-shortcut="Ctrl+Shift+7" data-mac-shortcut="⌘+⇧+8"
+                                                                data-event="insertOrderedList" tabindex="-1"
+                                                                data-original-title="Ordered list (Ctrl+Shift+7)"><i
+                                                                class="fa fa-list-ol icon-list-ol"></i></button>
+                                                        <button type="button" class="btn btn-default btn-sm btn-small dropdown-toggle"
+                                                                title="" data-toggle="dropdown" tabindex="-1"
+                                                                data-original-title="Paragraph"><i
+                                                                class="fa fa-align-left icon-align-left"></i> <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <div class="note-align btn-group">
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+Shift+L" data-mac-shortcut="⌘+⇧+L"
+                                                                            data-event="justifyLeft" tabindex="-1"
+                                                                            data-original-title="Align left (Ctrl+Shift+L)"><i
+                                                                            class="fa fa-align-left icon-align-left"></i></button>
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+Shift+E" data-mac-shortcut="⌘+⇧+E"
+                                                                            data-event="justifyCenter" tabindex="-1"
+                                                                            data-original-title="Align center (Ctrl+Shift+E)"><i
+                                                                            class="fa fa-align-center icon-align-center"></i></button>
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+Shift+R" data-mac-shortcut="⌘+⇧+R"
+                                                                            data-event="justifyRight" tabindex="-1"
+                                                                            data-original-title="Align right (Ctrl+Shift+R)"><i
+                                                                            class="fa fa-align-right icon-align-right"></i></button>
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+Shift+J" data-mac-shortcut="⌘+⇧+J"
+                                                                            data-event="justifyFull" tabindex="-1"
+                                                                            data-original-title="Justify full (Ctrl+Shift+J)"><i
+                                                                            class="fa fa-align-justify icon-align-justify"></i></button>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="note-list btn-group">
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+[" data-mac-shortcut="⌘+["
+                                                                            data-event="outdent" tabindex="-1"
+                                                                            data-original-title="Outdent (Ctrl+[)"><i
+                                                                            class="fa fa-outdent icon-indent-left"></i></button>
+                                                                    <button type="button" class="btn btn-default btn-sm btn-small" title=""
+                                                                            data-shortcut="Ctrl+]" data-mac-shortcut="⌘+]"
+                                                                            data-event="indent" tabindex="-1"
+                                                                            data-original-title="Indent (Ctrl+])"><i
+                                                                            class="fa fa-indent icon-indent-right"></i></button>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="note-height btn-group">
+                                                        <button type="button" class="btn btn-default btn-sm btn-small dropdown-toggle"
+                                                                data-toggle="dropdown" title="" tabindex="-1"
+                                                                data-original-title="Line Height"><i
+                                                                class="fa fa-text-height icon-text-height"></i>&nbsp; <b class="caret"></b>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a data-event="lineHeight" data-value="1.0"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.0</a></li>
+                                                            <li><a data-event="lineHeight" data-value="1.2"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.2</a></li>
+                                                            <li><a data-event="lineHeight" data-value="1.4"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.4</a></li>
+                                                            <li><a data-event="lineHeight" data-value="1.5"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.5</a></li>
+                                                            <li><a data-event="lineHeight" data-value="1.6"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.6</a></li>
+                                                            <li><a data-event="lineHeight" data-value="1.8"><i
+                                                                    class="fa fa-check icon-ok"></i> 1.8</a></li>
+                                                            <li><a data-event="lineHeight" data-value="2.0"><i
+                                                                    class="fa fa-check icon-ok"></i> 2.0</a></li>
+                                                            <li><a data-event="lineHeight" data-value="3.0"><i
+                                                                    class="fa fa-check icon-ok"></i> 3.0</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <textarea class="note-codable"></textarea>
+                                                <div class="note-editable" contenteditable="true" style="height: 137px;"><p><br></p></div>
+                                                <div class="note-statusbar">
+                                                    <div class="note-resizebar">
+                                                        <div class="note-icon-bar"></div>
+                                                        <div class="note-icon-bar"></div>
+                                                        <div class="note-icon-bar"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-footer">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="reset" class="btn btn-default">Reset</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <!-- /tile body -->
+                        </section>
+                    </div>
+                        <!-- /tile -->
+
+
+                    <!-- col 4 -->
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+
+                        <!-- tile -->
+                        <section class="tile color transparent-black">
+
+
+                            <!-- tile header -->
+                            <div class="tile-header">
+                                <h1 class="box-title">打开微信，扫一扫签到</h1>
+                            </div>
+                            <!-- /tile header -->
+
+                            <!-- tile body -->
+                            <div class="tile-body">
+                                <img style="padding-bottom: 20px;" width="250" src="../images/qr.png">
+                            </div>
+                            <!-- /tile body -->
+
+
+                        </section>
+                        <!-- /tile -->
+                    </div>
+                    <!-- /col 4 -->
+
+
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /content container -->
+
+
+        </div>
+        <!-- Page content end -->
+
+
+        <div id="mmenu" class="right-panel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a href="#mmenu-users" data-toggle="tab"><i class="fa fa-users"></i></a></li>
+                <li class=""><a href="#mmenu-history" data-toggle="tab"><i class="fa fa-clock-o"></i></a></li>
+                <li class=""><a href="#mmenu-friends" data-toggle="tab"><i class="fa fa-heart"></i></a></li>
+                <li class=""><a href="#mmenu-settings" data-toggle="tab"><i class="fa fa-gear"></i></a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="mmenu-users">
+                    <h5><strong>Online</strong> Users</h5>
+
+                    <ul class="users-list">
+
+                        <li class="online">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/ici-avatar.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Ing. Imrich <strong>Kamarel</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Ulaanbaatar, Mongolia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="online">
+                            <div class="media">
+
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/arnold-avatar.jpg" alt>
+                                </a>
+                                <span class="badge badge-red unread">3</span>
+
+                                <div class="media-body">
+                                    <h6 class="media-heading">Arnold <strong>Karlsberg</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Bratislava, Slovakia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="online">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/peter-avatar.jpg" alt>
+
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Peter <strong>Kay</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Kosice, Slovakia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="online">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/george-avatar.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">George <strong>McCain</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Prague, Czech Republic</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="busy">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar1.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Lucius <strong>Cashmere</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Wien, Austria</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="busy">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar2.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Jesse <strong>Phoenix</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Berlin, Germany</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <h5><strong>Offline</strong> Users</h5>
+
+                    <ul class="users-list">
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar4.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Dell <strong>MacApple</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Paris, France</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar5.jpg" alt>
+                                </a>
+
+                                <div class="media-body">
+                                    <h6 class="media-heading">Roger <strong>Flopple</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Rome, Italia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar6.jpg" alt>
+
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Nico <strong>Vulture</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Kyjev, Ukraine</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar7.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Bobby <strong>Socks</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Moscow, Russia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar8.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Anna <strong>Opichia</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Budapest, Hungary</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="tab-pane" id="mmenu-history">
+                    <h5><strong>Chat</strong> History</h5>
+
+                    <ul class="history-list">
+
+                        <li class="online">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/ici-avatar.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Ing. Imrich <strong>Kamarel</strong></h6>
+                                    <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor
+                                    </small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="busy">
+                            <div class="media">
+
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/arnold-avatar.jpg" alt>
+                                </a>
+                                <span class="badge badge-red unread">3</span>
+
+                                <div class="media-body">
+                                    <h6 class="media-heading">Arnold <strong>Karlsberg</strong></h6>
+                                    <small>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                                        eu fugiat nulla pariatur
+                                    </small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/peter-avatar.jpg" alt>
+
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Peter <strong>Kay</strong></h6>
+                                    <small>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                                        deserunt mollit
+                                    </small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="tab-pane" id="mmenu-friends">
+                    <h5><strong>Friends</strong> List</h5>
+                    <ul class="favourite-list">
+
+                        <li class="online">
+                            <div class="media">
+
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/arnold-avatar.jpg" alt>
+                                </a>
+                                <span class="badge badge-red unread">3</span>
+
+                                <div class="media-body">
+                                    <h6 class="media-heading">Arnold <strong>Karlsberg</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Bratislava, Slovakia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+
+                            </div>
+                        </li>
+
+                        <li class="offline">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar8.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Anna <strong>Opichia</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Budapest, Hungary</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="busy">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/random-avatar1.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Lucius <strong>Cashmere</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Wien, Austria</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="online">
+                            <div class="media">
+                                <a class="pull-left profile-photo" href="#">
+                                    <img class="media-object" src="../images/ici-avatar.jpg" alt>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="media-heading">Ing. Imrich <strong>Kamarel</strong></h6>
+                                    <small><i class="fa fa-map-marker"></i> Ulaanbaatar, Mongolia</small>
+                                    <span class="badge badge-outline status"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="tab-pane pane-settings" id="mmenu-settings">
+                    <h5><strong>Chat</strong> Settings</h5>
+
+                    <ul class="settings">
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">Show Offline Users</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-offline" checked="">
+                                        <label class="onoffswitch-label" for="show-offline">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">Show Fullname</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-fullname">
+                                        <label class="onoffswitch-label" for="show-fullname">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">History Enable</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-history" checked="">
+                                        <label class="onoffswitch-label" for="show-history">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">Show Locations</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-location" checked="">
+                                        <label class="onoffswitch-label" for="show-location">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">Notifications</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-notifications">
+                                        <label class="onoffswitch-label" for="show-notifications">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="form-group">
+                                <label class="col-xs-8 control-label">Show Undread Count</label>
+                                <div class="col-xs-4 control-label">
+                                    <div class="onoffswitch greensea">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                                               id="show-unread" checked="">
+                                        <label class="onoffswitch-label" for="show-unread">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div><!-- tab-pane -->
+
+            </div><!-- tab-content -->
+        </div>
+
+
+    </div>
+    <!-- Make page fluid-->
+
+
+</div>
+<!-- Wrap all page content end -->
+
+
+<section class="videocontent" id="video"></section>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.js'}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/bootstrap/bootstrap.min.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/mmenu/js/jquery.mmenu.min.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/sparkline/jquery.sparkline.min.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/nicescroll/jquery.nicescroll.min.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/animate-numbers/jquery.animateNumbers.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/videobackground/jquery.videobackground.js'}"></script>
+<script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/blockui/jquery.blockUI.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/flot/jquery.flot.min.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/flot/jquery.flot.time.min.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/flot/jquery.flot.selection.min.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/flot/jquery.flot.animator.min.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/flot/jquery.flot.orderBars.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/easypiechart/jquery.easypiechart.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/rickshaw/raphael-min.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/rickshaw/d3.v2.js'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/rickshaw/rickshaw.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/morris/morris.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/tabdrop/bootstrap-tabdrop.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/summernote.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/chosen.jquery.min.js'}"></script>
+
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js'}"></script>
+
+<script th:inline="javascript">
+    function requestFullScreen() {
+        var element = document.getElementsByTagName("html")[0];
+        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+        if (requestMethod) {
+            requestMethod.call(element);
+        } else if (typeof window.ActiveXObject !== "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
+    $(function () {
+        $("#sign-list").height(getClientHeight() - 140);
+
+        $(".full-screen-btn").click(function () {
+            $("#navbar").addClass("hide");
+            $("#content").addClass("full-screen");
+            $("#body").addClass("body_full");
+            requestFullScreen();
+            $("#sign-list").height(getClientHeight() - 70);
+        });
+
+        $(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                $("#navbar").removeClass("hide");
+                $("#content").removeClass("full-screen");
+                $("#body").removeClass("body_full");
+                $("#sign-list").height(getClientHeight() - 140);
+            }
+        });
+
+        // Initialize card flip
+        $('.card.hover').hover(function () {
+            $(this).addClass('flip');
+        }, function () {
+            $(this).removeClass('flip');
+        });
+
+        // Initialize flot chart
+        var d1 = [[1, 715],
+            [2, 985],
+            [3, 1525],
+            [4, 1254],
+            [5, 1861],
+            [6, 2621],
+            [7, 1987],
+            [8, 2136],
+            [9, 2364],
+            [10, 2851],
+            [11, 1546],
+            [12, 2541]
+        ];
+        var d2 = [[1, 463],
+            [2, 578],
+            [3, 327],
+            [4, 984],
+            [5, 1268],
+            [6, 1684],
+            [7, 1425],
+            [8, 1233],
+            [9, 1354],
+            [10, 1200],
+            [11, 1260],
+            [12, 1320]
+        ];
+        var months = ["January", "February", "March", "April", "May", "Juny", "July", "August", "September", "October", "November", "December"];
+
+        // flot chart generate
+        var plot = $.plotAnimator($("#statistics-chart"),
+            [
+                {
+                    label: 'Sales',
+                    data: d1,
+                    lines: {lineWidth: 3},
+                    shadowSize: 0,
+                    color: '#ffffff'
+                },
+                {
+                    label: "Visits",
+                    data: d2,
+                    animator: {steps: 99, duration: 500, start: 200, direction: "right"},
+                    lines: {
+                        fill: .15,
+                        lineWidth: 0
+                    },
+                    color: ['#ffffff']
+                }, {
+                label: 'Sales',
+                data: d1,
+                points: {show: true, fill: true, radius: 6, fillColor: "rgba(0,0,0,.5)", lineWidth: 2},
+                color: '#fff',
+                shadowSize: 0
+            },
+                {
+                    label: "Visits",
+                    data: d2,
+                    points: {show: true, fill: true, radius: 6, fillColor: "rgba(255,255,255,.2)", lineWidth: 2},
+                    color: '#fff',
+                    shadowSize: 0
+                }
+            ], {
+
+                xaxis: {
+
+                    tickLength: 0,
+                    tickDecimals: 0,
+                    min: 1,
+                    ticks: [[1, "JAN"], [2, "FEB"], [3, "MAR"], [4, "APR"], [5, "MAY"], [6, "JUN"], [7, "JUL"], [8, "AUG"], [9, "SEP"], [10, "OCT"], [11, "NOV"], [12, "DEC"]],
+
+                    font: {
+                        lineHeight: 24,
+                        weight: "300",
+                        color: "#ffffff",
+                        size: 14
+                    }
+                },
+
+                yaxis: {
+                    ticks: 4,
+                    tickDecimals: 0,
+                    tickColor: "rgba(255,255,255,.3)",
+
+                    font: {
+                        lineHeight: 13,
+                        weight: "300",
+                        color: "#ffffff"
+                    }
+                },
+
+                grid: {
+                    borderWidth: {
+                        top: 0,
+                        right: 0,
+                        bottom: 1,
+                        left: 1
+                    },
+                    borderColor: 'rgba(255,255,255,.3)',
+                    margin: 0,
+                    minBorderMargin: 0,
+                    labelMargin: 20,
+                    hoverable: true,
+                    clickable: true,
+                    mouseActiveRadius: 6
+                },
+
+                legend: {show: false}
+            });
+
+        $(window).resize(function () {
+            // redraw the graph in the correctly sized div
+            plot.resize();
+            plot.setupGrid();
+            plot.draw();
+        });
+
+        $('#mmenu').on(
+            "opened.mm",
+            function () {
+                // redraw the graph in the correctly sized div
+                plot.resize();
+                plot.setupGrid();
+                plot.draw();
+            }
+        );
+
+        $('#mmenu').on(
+            "closed.mm",
+            function () {
+                // redraw the graph in the correctly sized div
+                plot.resize();
+                plot.setupGrid();
+                plot.draw();
+            }
+        );
+
+        // tooltips showing
+        $("#statistics-chart").bind("plothover", function (event, pos, item) {
+            if (item) {
+                var x = item.datapoint[0],
+                    y = item.datapoint[1];
+
+                $("#tooltip").html('<h1 style="color: #418bca">' + months[x - 1] + '</h1>' + '<strong>' + y + '</strong>' + ' ' + item.series.label)
+                    .css({top: item.pageY - 30, left: item.pageX + 5})
+                    .fadeIn(200);
+            } else {
+                $("#tooltip").hide();
+            }
+        });
+
+
+        //tooltips options
+        $("<div id='tooltip'></div>").css({
+            position: "absolute",
+            //display: "none",
+            padding: "10px 20px",
+            "background-color": "#ffffff",
+            "z-index": "99999"
+        }).appendTo("body");
+
+        //generate actual pie charts
+        $('.pie-chart').easyPieChart();
+
+
+        //server load rickshaw chart
+        var graph;
+
+        var seriesData = [[], []];
+        var random = new Rickshaw.Fixtures.RandomData(50);
+
+        for (var i = 0; i < 50; i++) {
+            random.addData(seriesData);
+        }
+
+        graph = new Rickshaw.Graph({
+            element: document.querySelector("#serverload-chart"),
+            height: 150,
+            renderer: 'area',
+            series: [
+                {
+                    data: seriesData[0],
+                    color: '#6e6e6e',
+                    name: 'File Server'
+                }, {
+                    data: seriesData[1],
+                    color: '#fff',
+                    name: 'Mail Server'
+                }
+            ]
+        });
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail({
+            graph: graph,
+        });
+
+        setInterval(function () {
+            random.removeData(seriesData);
+            random.addData(seriesData);
+            graph.update();
+
+        }, 1000);
+
+        // Morris donut chart
+        Morris.Donut({
+            element: 'browser-usage',
+            data: [
+                {label: "Chrome", value: 25},
+                {label: "Safari", value: 20},
+                {label: "Firefox", value: 15},
+                {label: "Opera", value: 5},
+                {label: "Internet Explorer", value: 10},
+                {label: "Other", value: 25}
+            ],
+            colors: ['#00a3d8', '#2fbbe8', '#72cae7', '#d9544f', '#ffc100', '#1693A5']
+        });
+
+        $('#browser-usage').find("path[stroke='#ffffff']").attr('stroke', 'rgba(0,0,0,0)');
+
+        //sparkline charts
+        $('#projectbar1').sparkline('html', {type: 'bar', barColor: '#22beef', barWidth: 4, height: 20});
+        $('#projectbar2').sparkline('html', {type: 'bar', barColor: '#cd97eb', barWidth: 4, height: 20});
+        $('#projectbar3').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
+        $('#projectbar4').sparkline('html', {type: 'bar', barColor: '#ffc100', barWidth: 4, height: 20});
+        $('#projectbar5').sparkline('html', {type: 'bar', barColor: '#ff4a43', barWidth: 4, height: 20});
+        $('#projectbar6').sparkline('html', {type: 'bar', barColor: '#a2d200', barWidth: 4, height: 20});
+
+        // sortable table
+        $('.table.table-sortable th.sortable').click(function () {
+            var o = $(this).hasClass('sort-asc') ? 'sort-desc' : 'sort-asc';
+            $('th.sortable').removeClass('sort-asc').removeClass('sort-desc');
+            $(this).addClass(o);
+        });
+
+        //todo's
+        $('#todolist li label').click(function () {
+            $(this).toggleClass('done');
+        });
+
+        // Initialize tabDrop
+        $('.tabdrop').tabdrop({text: '<i class="fa fa-th-list"></i>'});
+
+        //load wysiwyg editor
+        $('#quick-message-content').summernote({
+            toolbar: [
+                //['style', ['style']], // no style button
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                //['insert', ['picture', 'link']], // no insert buttons
+                //['table', ['table']], // no table button
+                //['help', ['help']] //no help button
+            ],
+            height: 143   //set editable area's height
+        });
+
+        //multiselect input
+        $(".chosen-select").chosen({disable_search_threshold: 10});
+
+    })
+
+    function getClientHeight() {
+        var clientHeight = 0;
+        if (document.body.clientHeight && document.documentElement.clientHeight) {
+            var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+        }
+        else {
+            var clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
+        }
+        return clientHeight;
+    }
+
+</script>
+</body>
+</html>
+
