@@ -14,6 +14,7 @@ public class ApiMatchDetail {
     private Float                fee;
     private List<MatchApplyUser> applyList;
     private Boolean              hasApply;
+    private Boolean              isMine;//当前比赛是否是我自己发布的，如果是我自己发布的，就不能报名
 
     public ApiMatchDetail() {
         super();
@@ -154,5 +155,13 @@ public class ApiMatchDetail {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Boolean getIsMine() {
+        return isMine;
+    }
+
+    public void setIsMine(Boolean mine) {
+        isMine = mine;
     }
 }

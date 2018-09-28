@@ -45,7 +45,7 @@ public class SearchServiceImpl implements SearchService {
         if( datas != null && datas.size() > 0 ) {
             resultMap.put( "hasData", true );
             for( Match data : datas ) {
-                resDatas.add( ApiMatchData.genFromMatch( data ) );
+                resDatas.add( ApiMatchData.genFromMatch( data, userId ) );
             }
         }
 

@@ -11,18 +11,19 @@ import java.util.Date;
  * Created by xiekang on 2018/9/10.
  */
 public class ApiMatchData {
-    private String  id;
-    private String  theme;
-    private String  startDate;
-    private String  location;
-    private int     applyCount;
-    private Integer fee;
-    private String  bannerImg;
-    private boolean hasApply;
-    private String matchState;
-    private int signUpNum;
-    private int signInNum;
+    private String     id;
+    private String     theme;
+    private String     startDate;
+    private String     location;
+    private int        applyCount;
+    private Integer    fee;
+    private String     bannerImg;
+    private boolean    hasApply;
+    private String     matchState;
+    private int        signUpNum;
+    private int        signInNum;
     private BigDecimal sumMoney;
+    private Boolean    isMine;
 
     public BigDecimal getSumMoney() {
         return sumMoney;
@@ -120,14 +121,15 @@ public class ApiMatchData {
         return hasApply;
     }
 
-    public static ApiMatchData genFromMatch(Match md) {
+    public static ApiMatchData genFromMatch(Match md,
+                                            String myUserId) {
         ApiMatchData res = new ApiMatchData();
         res.setId( md.getId() );
         res.setBannerImg( md.getBannerImg() );
         res.setApplyCount( md.getApplyCount() );
+        res.setIsMine( md.getUserId().equals( myUserId ) );
 
         try {
-
             res.setFee( (int) ( (float) md.getFee() ) );
         } catch (Exception e) {
             res.setFee( 0 );
@@ -143,18 +145,26 @@ public class ApiMatchData {
         res.setTheme( md.getTheme() );
 
         //比赛状态
-        DateTime nowDate = new DateTime(new Date());
-        DateTime startDate = new DateTime(md.getStartDate());
-        DateTime endDate = new DateTime(md.getEndDate());
-        if (nowDate.compareTo(startDate) < 0) {
-            res.setMatchState(Constants.Match.NOT_START);
-        } else if (nowDate.compareTo(endDate) > 0) {
-            res.setMatchState(Constants.Match.END);
+        DateTime nowDate = new DateTime( new Date() );
+        DateTime startDate = new DateTime( md.getStartDate() );
+        DateTime endDate = new DateTime( md.getEndDate() );
+        if( nowDate.compareTo( startDate ) < 0 ) {
+            res.setMatchState( Constants.Match.NOT_START );
+        } else if( nowDate.compareTo( endDate ) > 0 ) {
+            res.setMatchState( Constants.Match.END );
         } else {
-            res.setMatchState(Constants.Match.UNDER_WAY);
+            res.setMatchState( Constants.Match.UNDER_WAY );
         }
 
         return res;
+    }
+
+    public Boolean getIsMine() {
+        return isMine;
+    }
+
+    public void setIsMine(Boolean mine) {
+        isMine = mine;
     }
 }
 
