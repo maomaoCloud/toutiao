@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,6 +31,7 @@ public class LoginController {
                     method = RequestMethod.GET)
     public ModelAndView loginPage() {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName( "login" );
         String id = StringUtils.genRandomKey();
         String key = SecurityFactory.MD5.encrypt( id + qrcode_key, null );
         String qrcode_url = String.format( qrcode_url_prefix, id, key );
@@ -40,6 +42,7 @@ public class LoginController {
 
     @RequestMapping(value = "login/check",
                     method = RequestMethod.POST)
+    @ResponseBody
     public String loginCheck(String id,
                              Long t) {
         long timeDiff = ( System.currentTimeMillis() - t ) / 1000;

@@ -6,9 +6,10 @@ package com.tiaotiaopoker;
  */
 public class Constants {
     public final static class ApiCode {
-        public static final Integer SUCCCESS = 200;
-        public static final Integer FAILED   = 500;
+        public static final Integer SUCCESS = 200;
+        public static final Integer FAILED  = 500;
 
+        public static final Integer LOGIN_EXPIRE = 405;
     }
 
     /**

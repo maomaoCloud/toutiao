@@ -3,7 +3,7 @@ package com.tiaotiaopoker;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static com.tiaotiaopoker.Constants.ApiCode.SUCCCESS;
+import static com.tiaotiaopoker.Constants.ApiCode.SUCCESS;
 
 
 public class JsonResult {
@@ -22,7 +22,7 @@ public class JsonResult {
 
     public static JsonResult SUCCESS(String desc,
                                      Object data) {
-        return new JsonResult( true, SUCCCESS, desc, data );
+        return new JsonResult( true, SUCCESS, desc, data );
     }
 
     public static JsonResult FAILED() {

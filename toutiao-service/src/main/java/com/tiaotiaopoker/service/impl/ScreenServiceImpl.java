@@ -67,6 +67,7 @@ public class ScreenServiceImpl implements ScreenService {
             Object resObj = redisService.get( key );
             if( resObj != null ) return resObj.toString();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return "";
     }
@@ -86,7 +87,7 @@ public class ScreenServiceImpl implements ScreenService {
 
     @Override
     public AppUser getLoginUser(String token) {
-        String key = genLoginScanKey( token );
+        String key = genUserLoginKey( token );
         try {
             Object userObj = redisService.get( key );
             if( userObj != null && StringUtils.isNotBlank( userObj.toString() ) ) {
@@ -98,8 +99,8 @@ public class ScreenServiceImpl implements ScreenService {
         return null;
     }
 
-    private String genUserLoginKey(String userId) {
-        return String.format( login_user_key, userId );
+    private String genUserLoginKey(String token) {
+        return String.format( login_user_key, token );
     }
 
     private Map<String, Object> loginDo(String id,

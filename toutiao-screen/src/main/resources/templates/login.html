@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">>
+<head>
+    <title>竞技头条比赛管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <link th:href="@{/css/vendor/bootstrap/bootstrap.min.css}" href="static/css/vendor/bootstrap/bootstrap.min.css"
+          rel="stylesheet">
+    <link th:href="@{/css/vendor/bootstrap-checkbox.css}" rel="stylesheet"
+          href="static/css/vendor/bootstrap-checkbox.css">
+    <link th:href="@{/css/minimal.css}" href="static/css/minimal.css?v=3" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/html5shiv.js}" src="static/js/html5shiv.js"></script>
+    <script th:src="@{/js/respond.min.js}" src="static/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="bg-1">
+<div id="wrap">
+    <div class="row">
+        <div id="content" class="col-md-12 full-page login">
+            <div class="inside-block">
+                <img th:src="${qrcode_url}" alt class="logo logo-scan">
+                <img th:src="@{/images/scan.png}" alt class="logo logo-scan-ok hide">
+                <h1>欢迎使用竞技头条比赛管理系统</h1>
+                <h5>打开竞技头条小程序“扫一扫”登录</h5>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/jquery.js}" src="static/js/jquery.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(function () {
+        var hasChange = false;
+        var data = {
+            id: [[${id}]], t: new Date().getTime()
+        };
+        var option = {
+            url: "/public/login/check", data: data,
+            type: "POST",
+            success: function (res) {
+                if (res == "WAIT_SCAN") {
+                    setTimeout(function () {
+                        data.t = new Date().getTime();
+                        option.data = data;
+                        $.ajax(option);
+                    }, 2000);
+                } else if (res == "HAS_SCAN") {
+                    if (!hasChange) {
+                        hasChange = true;
+                        //更改状态
+                        console.log("已经被扫描");
+                        $(".logo-scan").addClass("hide");
+                        $(".logo-scan-ok").removeClass("hide");
+                    }
+                    setTimeout(function () {
+                        data.t = new Date().getTime();
+                        option.data = data;
+                        $.ajax(option);
+                    }, 2000);
+                } else if (res.indexOf("HAS_LOGIN") != -1) {
+                    var token = res.split(":")[1];
+                    window.location.href = "/sys/index?token=" + token;
+                    console.log(token);
+                } else {
+                    setTimeout(function () {
+                        data.t = new Date().getTime();
+                        option.data = data;
+                        $.ajax(option);
+                    }, 2000);
+                }
+            }
+        };
+
+        $.ajax(option);
+
+    });
+
+    /*]]>*/
+</script>
+</html>
+      
