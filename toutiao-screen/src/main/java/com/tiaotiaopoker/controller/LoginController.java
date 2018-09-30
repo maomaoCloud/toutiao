@@ -50,4 +50,12 @@ public class LoginController {
         String res = screenService.checkLogin( id ); //如果登录成功:返回HAS_LOGIN:userId 然后每次请求都要携带token=userId
         return res;
     }
+
+    @RequestMapping("main")
+    public ModelAndView main(ModelAndView mv) {
+
+        mv.setViewName("common/left");
+        return mv;
+    }
+
 }
