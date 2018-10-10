@@ -1,0 +1,99 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<section class="tile color transparent-black">
+    <!-- tile header -->
+    <div class="tile-header">
+        <h1><strong>比赛信息</strong></h1>
+        <div class="controls">
+            <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+            <a href="#" class="remove"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- /tile header -->
+    <!-- tile body -->
+    <div class="tile-body">
+
+        <form class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label for="matchName" class="col-sm-4 control-label">比赛名称</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="matchName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="matchHost" class="col-sm-4 control-label">承办单位</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="matchHost">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="matchAddress" class="col-sm-4 control-label">比赛地点</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="matchAddress">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="matchReferee" class="col-sm-4 control-label">裁判长</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="matchReferee">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="matchLogo" class="col-sm-4 control-label">logo</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                          <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                              <i class="fa fa-upload"></i><input type="file" multiple="" id="matchLogo">
+                            </span>
+                          </span>
+                        <input type="text" class="form-control" readonly="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="matchTechnology" class="col-sm-4 control-label">技术支持</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="matchTechnology">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">奖品设置</label>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="matchChampion">一等奖</label>
+                            <input type="text" class="form-control" id="matchChampion">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="matchSecond">二等奖</label>
+                            <input type="text" class="form-control" id="matchSecond">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="matchThird">三等奖</label>
+                            <input type="text" class="form-control" id="matchThird">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-footer" style="margin-bottom: -28px;">
+                <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /tile body -->
+</section>

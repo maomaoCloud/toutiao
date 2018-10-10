@@ -133,6 +133,7 @@
                 <a class="navbar-brand" href="index.html">
                     跳跳棋趣
                 </a>
+                <input type="hidden" id="nowSettingMatch" th:value="${matchId}">
                 <div class="sidebar-collapse">
                     <a href="#">
                         <i class="fa fa-bars"></i>
@@ -149,7 +150,7 @@
                 <!-- Page refresh -->
                 <ul class="nav navbar-nav">
                     <li class="divided">
-                        <a href="/public/main">现场投屏</a>
+                        <a href="javascript:;" th:id="liveScreen">现场投屏</a>
                     </li>
 
                     <li class="divided">
@@ -204,61 +205,15 @@
                                 </a>
                             </li>
 
-                            <li class="">
+                            <li class="" id="turnBefore">
                                 <a href="index.html">
                                     <i class="fa fa-tachometer"></i> 规则
                                 </a>
                             </li>
 
-                            <li class="dropdown open">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-list"></i> 第一轮 <b class="fa fa-plus dropdown-plus"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="form-elements.html">
-                                            <i class="fa fa-caret-right"></i> 座位
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="validation-elements.html">
-                                            <i class="fa fa-caret-right"></i> 比赛
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="form-wizard.html">
-                                            <i class="fa fa-caret-right"></i> 成绩
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown open">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-list"></i> 第二轮 <b class="fa fa-plus dropdown-plus"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="form-elements.html">
-                                            <i class="fa fa-caret-right"></i> 座位
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="validation-elements.html">
-                                            <i class="fa fa-caret-right"></i> 比赛
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="form-wizard.html">
-                                            <i class="fa fa-caret-right"></i> 成绩
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown open">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-list"></i> 第三轮 <b class="fa fa-plus dropdown-plus"></b>
+                            <li th:each="turn,turnStat: ${ruleTurnList}"  class="dropdown turn">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" th:data="${turnStat.index+1}" >
+                                    <i class="fa fa-list"></i> <span th:text="'第'+${turn}+'轮'"></span> <b class="fa fa-plus dropdown-plus"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -1905,6 +1860,12 @@
             $("#body").addClass("body_full");
             requestFullScreen();
             $("#sign-list").height(getClientHeight() - 70);
+        });
+
+        //现场投屏
+        $("#liveScreen").click(function () {
+            var matchId = $("#nowSettingMatch").val();
+            window.location.href = "/sys/index?token="+token+"&matchId="+matchId;
         });
 
         //比赛设置

@@ -1,0 +1,108 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    $(function () {
+        //chosen select input
+        $(".chosen-select").chosen({disable_search_threshold: 10});
+    })
+
+    /* ]]> */
+</script>
+<section class="tile color transparent-black">
+    <!-- tile header -->
+    <div class="tile-header">
+        <h1><strong>基础规则设置</strong></h1>
+        <div class="controls">
+            <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+            <a href="#" class="remove"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- /tile header -->
+    <!-- tile body -->
+    <div class="tile-body">
+
+        <form class="form-horizontal" role="form">
+
+            <div class="form-group">
+                <label for="ruleTurn" class="col-sm-4 control-label">总轮次</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="ruleTurn">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="rulePair" class="col-sm-4 control-label">每轮副数</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="rulePair">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ruleTime" class="col-sm-4 control-label">每轮时间</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="ruleTime">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">是否显示平局</label>
+                <div class="col-sm-8" id="isShowDraw">
+                    <div class="radio radio-transparent">
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="0" checked
+                               onchange="showDraw(this);">
+                        <label for="optionsRadios2" style="float: left;">否</label>
+                    </div>
+                    <div class="radio radio-transparent">
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="1"
+                               onchange="showDraw(this);">
+                        <label for="optionsRadios1" style="float: left;">是</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">积分设置</label>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="rulWin">胜</label>
+                            <input type="text" class="form-control" id="rulWin">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="rulrFail">负</label>
+                            <input type="text" class="form-control" id="rulrFail">
+                        </div>
+                    </div>
+                    <div class="row" id="drawShow" style="display: none">
+                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                            <label for="ruleDraw">平</label>
+                            <input type="text" class="form-control" id="ruleDraw">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input07" class="col-sm-4 control-label">首轮座位排序方式</label>
+                <div class="col-sm-8">
+                    <select class="chosen-select chosen-transparent form-control" id="input07">
+                        <option th:value="0">————————————请选择首轮编排方式————————————</option>
+                        <option th:value="1"> 临近编排</option>
+                        <option th:value="2"> 首尾编排</option>
+                        <option th:value="3"> 拦腰编排</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group form-footer" style="margin-bottom: -28px;margin-top: 49px">
+                <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /tile body -->
+</section>

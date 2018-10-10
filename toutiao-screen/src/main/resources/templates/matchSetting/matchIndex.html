@@ -1,4 +1,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    $(function(){
+        var token = [[${token}]];
+        //将当前设置的比赛id放在left页面
+        $("#selectMatch").change(function(){
+            $("#nowSettingMatch").val($("#selectMatch").val());
+            //重置左侧轮次
+            $.post("/sys/matchSetting/matchTurn",{token:token,matchId:$("#nowSettingMatch").val()},function(data){
+                //移除旧轮次
+                $("#navigation").find(".turn").each(function () {
+                    $(this).remove();
+                });
+                //拼接新轮次
+                var li = '';
+                for (var i = 0; i< data.length; i ++){
+                    var turn = data[i];
+                    li += '<li class="dropdown turn">';
+                    li += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:data="'+(i+1)+'" >';
+                    li += '<i class="fa fa-list"></i> 第'+turn+'轮<b class="fa fa-plus dropdown-plus"></b>';
+                    li += '</a>';
+                    li += '<ul class="dropdown-menu">';
+                    li += '<li><a href="form-elements.html"><i class="fa fa-caret-right"></i> 座位</a></li>';
+                    li += '<li><a href="validation-elements.html"><i class="fa fa-caret-right"></i> 比赛</a></li>';
+                    li += '<li><a href="form-wizard.html"><i class="fa fa-caret-right"></i> 成绩</a></li>';
+                    li += '</ul></li>';
+                }
+                $("#turnBefore").after(li);
+            });
+            //重置比赛信息
+            $("#matchInfo").load("/sys/matchSetting/matchInfo?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+
+            });
+            //重置基础规则设置
+            $("#matchRule").load("/sys/matchSetting/matchRule?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+
+            });
+        });
+    })
+    /* ]]> */
+</script>
 <div class="pageheader" style="margin-left: 15px;">
     <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i> 比赛设置 <span>// Setting...</span>
     </h2>
@@ -20,13 +62,11 @@
         <div class="tile-body">
             <div class="row">
                 <div class="form-group">
-                    <label for="input07" class="col-sm-4 control-label">我的比赛</label>
+                    <label class="col-sm-4 control-label">我的比赛</label>
                     <div class="col-sm-8">
-                        <select class="chosen-select chosen-transparent form-control" id="">
+                        <select class="chosen-select chosen-transparent form-control" id="selectMatch" th:value="${matchId}">
                             <option th:value="0">————————————请选择比赛————————————</option>
-                            <option th:value="1"> 临近编排</option>
-                            <option th:value="2"> 首尾编排</option>
-                            <option th:value="3"> 拦腰编排</option>
+                            <option th:each="match:${matchList}" th:value="${match.id}" th:text="${match.theme}"></option>
                         </select>
                     </div>
                 </div>
@@ -35,206 +75,12 @@
         <!-- /tile body -->
     </section>
 </div>
-<div class="col-md-6">
-    <section class="tile color transparent-black">
-        <!-- tile header -->
-        <div class="tile-header">
-            <h1><strong>比赛信息</strong></h1>
-            <div class="controls">
-                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                <a href="#" class="remove"><i class="fa fa-times"></i></a>
-            </div>
-        </div>
-        <!-- /tile header -->
-        <!-- tile body -->
-        <div class="tile-body">
-
-            <form class="form-horizontal" role="form">
-
-                <div class="form-group">
-                    <label for="matchName" class="col-sm-4 control-label">比赛名称</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="matchName">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="matchHost" class="col-sm-4 control-label">承办单位</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="matchHost">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="matchAddress" class="col-sm-4 control-label">比赛地点</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="matchAddress">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="matchReferee" class="col-sm-4 control-label">裁判长</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="matchReferee">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="matchLogo" class="col-sm-4 control-label">logo</label>
-                    <div class="col-sm-8">
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <span class="btn btn-primary btn-file">
-                              <i class="fa fa-upload"></i><input type="file" multiple="" id="matchLogo">
-                            </span>
-                          </span>
-                            <input type="text" class="form-control" readonly="">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="matchTechnology" class="col-sm-4 control-label">技术支持</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="matchTechnology">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">奖品设置</label>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="matchChampion">一等奖</label>
-                                <input type="text" class="form-control" id="matchChampion">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="matchSecond">二等奖</label>
-                                <input type="text" class="form-control" id="matchSecond">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="matchThird">三等奖</label>
-                                <input type="text" class="form-control" id="matchThird">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group form-footer" style="margin-bottom: -28px;">
-                    <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
-                        <button type="submit" class="btn btn-primary">保存</button>
-                        <button type="reset" class="btn btn-default">重置</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <!-- /tile body -->
-    </section>
+<div id="matchInfo" class="col-md-6">
+    <div th:include="matchSetting/matchInfo :: html"></div>
 </div>
 
-<div class="col-md-6">
-    <section class="tile color transparent-black">
-        <!-- tile header -->
-        <div class="tile-header">
-            <h1><strong>基础规则设置</strong></h1>
-            <div class="controls">
-                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                <a href="#" class="remove"><i class="fa fa-times"></i></a>
-            </div>
-        </div>
-        <!-- /tile header -->
-        <!-- tile body -->
-        <div class="tile-body">
-
-            <form class="form-horizontal" role="form">
-
-                <div class="form-group">
-                    <label for="ruleTurn" class="col-sm-4 control-label">总轮次</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="ruleTurn">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="rulePair" class="col-sm-4 control-label">每轮副数</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="rulePair">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="ruleTime" class="col-sm-4 control-label">每轮时间</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="ruleTime">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">是否显示平局</label>
-                    <div class="col-sm-8" id="isShowDraw">
-                        <div class="radio radio-transparent">
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="0" checked
-                                   onchange="showDraw(this);">
-                            <label for="optionsRadios2" style="float: left;">否</label>
-                        </div>
-                        <div class="radio radio-transparent">
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="1"
-                                   onchange="showDraw(this);">
-                            <label for="optionsRadios1" style="float: left;">是</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">积分设置</label>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="rulWin">胜</label>
-                                <input type="text" class="form-control" id="rulWin">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="rulrFail">负</label>
-                                <input type="text" class="form-control" id="rulrFail">
-                            </div>
-                        </div>
-                        <div class="row" id="drawShow" style="display: none">
-                            <div class="form-group col-sm-6" style="margin-left: 0px">
-                                <label for="ruleDraw">平</label>
-                                <input type="text" class="form-control" id="ruleDraw">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="input07" class="col-sm-4 control-label">首轮座位排序方式</label>
-                    <div class="col-sm-8">
-                        <select class="chosen-select chosen-transparent form-control" id="input07">
-                            <option th:value="0">————————————请选择首轮编排方式————————————</option>
-                            <option th:value="1"> 临近编排</option>
-                            <option th:value="2"> 首尾编排</option>
-                            <option th:value="3"> 拦腰编排</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group form-footer" style="margin-bottom: -28px;margin-top: 49px">
-                    <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
-                        <button type="submit" class="btn btn-primary">保存</button>
-                        <button type="reset" class="btn btn-default">重置</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <!-- /tile body -->
-    </section>
+<div id="matchRule" class="col-md-6">
+    <div th:include="matchSetting/matchRule :: html"></div>
 </div>
 
 <script th:inline="javascript">
@@ -242,6 +88,12 @@
     $(function () {
         //chosen select input
         $(".chosen-select").chosen({disable_search_threshold: 10});
+        var nowMatchId = $("#nowSettingMatch").val();
+        $("#selectMatch").find("option").each(function(){
+            if ($(this).val()==nowMatchId){
+                $("#selectMatch_chosen").find("span").html($(this).html());
+            }
+        });
     })
 
     function showDraw(obj) {

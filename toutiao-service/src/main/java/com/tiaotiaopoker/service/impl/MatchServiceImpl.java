@@ -150,8 +150,13 @@ public class MatchServiceImpl implements MatchService {
         if (!StringUtils.isBlank(match.getTheme())) {
             paramMap.put("theme", match.getTheme());
         }
+        if (!StringUtils.isBlank(match.getUserId())){
+            paramMap.put("userId",match.getUserId());
+        }
         List<Match> list = matchMapper.queryMatchByCondition(paramMap);
-        page.setTotal(matchMapper.countMatchByCondition(paramMap));
+        if (null!= page){
+            page.setTotal(matchMapper.countMatchByCondition(paramMap));
+        }
         return list;
     }
 
