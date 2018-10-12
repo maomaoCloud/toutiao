@@ -1,71 +1,222 @@
-<div class="pageheader" style="margin-left: 15px;">
-    <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i> 比赛设置 <span>// Setting...</span></h2>
-</div>
-<section class="tile color transparent-black">
-    <!-- tile header -->
-    <div class="tile-header">
-        <div class="controls">
-            <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-            <a href="#" class="remove"><i class="fa fa-times"></i></a>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/Sortable.js'}"></script>
+    <style>
+        body {
+            width: 100%;
+            font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+        }
+
+        .full-screen {
+            padding-left: 15px !important;
+        }
+
+        .body_full {
+            position: absolute !important;
+            top: 0;
+        }
+
+        .box-title {
+            text-align: center;
+            width: 100%;
+            font-weight: 500;
+            font-size: 18px !important;
+            font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+            border-bottom: 1px solid rgba(200, 200, 200, .2);
+            padding-bottom: 10px !important;
+        }
+
+        .tile-body {
+            width: 100%;
+            text-align: center;
+        }
+
+        .user {
+            width: 20%;
+            background-color: rgba(150, 150, 150, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .user:nth-child(2n+1){
+            margin-left: 3%;
+            margin-right: 3%;
+        }
+
+        .user img{
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+
+        .user .user-name {
+            font-size: 20px;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        #sign-list {
+            overflow: scroll;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .title-name{
+            display: flex;
+            font-size:16px;
+            width: 100%;
+            padding: 0 7px !important;
+            margin-bottom: 10px;
+
+        }
+
+        .title-name div{
+            width: 50%;
+            text-align: center;
+            background-color: rgba(150, 150, 150, 0.4);
+            padding: 15px 0;
+        }
+
+        .title-zh div{
+            width: 100%;
+            text-align: center;
+            background-color: rgba(150, 150, 150, 0.4);
+            font-size: 16px;
+        }
+
+        .title-zh .first{
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+
+        .title-zh .zh{
+            height: 133px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .title-zh .space{
+            height: 20px;
+        }
+    </style>
+</head>
+<!-- Page content -->
+<div id="content" class="col-md-12">
+    <!-- content main container -->
+    <div class="main">
+        <!-- row -->
+        <div class="row" id="multi">
+            <!-- col 12 -->
+            <div class="col-lg-12 col-md-12">
+                <!-- tile -->
+                <section class="tile transparent">
+                    <div class="tile-header color transparent-black textured rounded-top-corners">
+                        <h1 class="box-title">座位编排</h1>
+                    </div>
+                    <!-- /tile header -->
+                    <div class="row tile-widget color transparent-black textured" style="padding:0; margin:0;max-height: 520px; overflow: scroll;">
+                        <div class="col-lg-2 col-md-2" style="padding-right:0;">
+                            <div class="title-zh">
+                                <div class="first">桌号</div>
+                                <div class="zh">1</div><div class="space"></div>
+                                <div class="zh">2</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-10 col-md-10" style="padding-left:0;">
+                            <div class="title-name">
+                                <div>先手队伍</div>
+                                <div>后手队伍</div>
+                            </div>
+                            <!-- tile widget -->
+                            <div class="" id="sign-list">
+                                <div class="user move-user" data-id="1">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得1</span>
+                                </div>
+                                <div class="user move-user" data-id="2">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得2</span>
+                                </div>
+
+                                <div class="user move-user" data-id="3">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得3</span>
+                                </div>
+                                <div class="user move-user" data-id="4">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得4</span>
+                                </div>
+
+                                <div class="user move-user" data-id="5">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得5</span>
+                                </div>
+                                <div class="user move-user" data-id="6">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得6</span>
+                                </div>
+
+                                <div class="user move-user" data-id="7">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得7</span>
+                                </div>
+                                <div class="user move-user" data-id="8">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得8</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- 操作按钮 -->
+            <div class="col-lg-12 col-md-12" style="text-align: center;">
+                <button type="button" id="over" class="btn btn-success margin-bottom-20">保存排列结果</button>
+                <button type="button" id="reset" class="btn btn-danger margin-bottom-20">重新排列</button>
+            </div>
+            <!-- /操作按钮 -->
         </div>
+        <!-- /col 12 -->
     </div>
-    <!-- /tile header -->
+    <!-- /row -->
+</div>
+<!-- /content container -->
 
-    <!-- tile body -->
-    <div class="tile-body nopadding">
+<script>
+    var ell = document.getElementById('sign-list');
+    Sortable.create(ell, {
+        animation: 150,
+        group:"user"
+    });
 
-        <table class="table table-bordered table-sortable">
-            <thead>
-            <tr>
-                <th >桌号</th>
-                <th rowspan="2">First Name</th>
-                <th class="sortable sort-alpha">Last Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div class="checkbox check-transparent">
-                    </div>
-                </td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td><a href="#" class="check-toggler checked"></a></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="checkbox check-transparent">
-                    </div>
-                </td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td><a href="#" class="check-toggler"></a></td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="checkbox check-transparent">
-                    </div>
-                </td>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td><a href="#" class="check-toggler checked"></a></td>
-            </tr>
-            </tbody>
-        </table>
+    $(function () {
+        $("#over").click(function () {
+            var sortResult = new Array();
+            $(".user").each(function () {
+                var id = $(this).attr("data-id");
+                sortResult.push(id);
+            });
 
-    </div>
-    <!-- /tile body -->
+            //打印排序结果
+            console.log(sortResult);
+        });
 
+        //重新排序，就是刷新页面重新进入
+        $("#reset").click(function () {
+            window.location.reload();
+        });
+    });
+</script>
+</body>
+</html>
 
-    <!-- tile footer -->
-    <div class="tile-footer bg-transparent-black-2 rounded-bottom-corners">
-    </div>
-    <!-- /tile footer -->
-
-
-
-
-</section>

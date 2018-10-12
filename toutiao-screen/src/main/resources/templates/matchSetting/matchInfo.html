@@ -1,4 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--上传start-->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
+    <!--上传end-->
+</head>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    $(function () {
+        //页面初始化时加载上传插件
+        $('.upload').html5uploader({
+            auto: false,
+            multi: false,
+            removeTimeout: 9999999,
+            url: '/upload/uplodaHeadlineImg',
+            onUploadStart: function () {
+
+            },
+            onInit: function () {
+
+            },
+            onUploadComplete: function () {
+            }
+        });
+
+        $("#updateMatchInfo").click(function(){
+            $.post("/sys/matchSetting/update",$("#matchInfoForm").serialize(),function (data) {
+                
+            });
+        });
+    })
+    /* ]]> */
+</script>
 <section class="tile color transparent-black">
     <!-- tile header -->
     <div class="tile-header">
@@ -12,46 +47,48 @@
     <!-- tile body -->
     <div class="tile-body">
 
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" id="matchInfoForm" role="form" th:method="post" th:action="@{${#httpServletRequest.getContextPath()} + '/sys/matchSetting/update'}">
 
             <div class="form-group">
                 <label for="matchName" class="col-sm-4 control-label">比赛名称</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="matchName">
+                    <input type="text" class="form-control" th:name="matchName" id="matchName" th:value="${matchRule}==null?'':${matchRule.matchName}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="matchHost" class="col-sm-4 control-label">承办单位</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="matchHost">
+                    <input type="text" class="form-control" th:name="matchHost" id="matchHost" th:value="${matchRule}==null?'':${matchRule.matchHost}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="matchAddress" class="col-sm-4 control-label">比赛地点</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="matchAddress">
+                    <input type="text" class="form-control" th:name="matchAddress" id="matchAddress" th:value="${matchRule}==null?'':${matchRule.matchAddress}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="matchReferee" class="col-sm-4 control-label">裁判长</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="matchReferee">
+                    <input type="text" class="form-control" th:name="matchReferee" id="matchReferee" th:value="${matchRule}==null?'':${matchRule.matchReferee}">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="matchLogo" class="col-sm-4 control-label">logo</label>
+                <label class="col-sm-4 control-label">logo</label>
                 <div class="col-sm-8">
+                    <input type="hidden" th:name="matchChampionImg" class="uploadImgUrl">
+                    <div class="input-group upload" >
+
+                    </div>
                     <div class="input-group">
-                          <span class="input-group-btn">
-                            <span class="btn btn-primary btn-file">
-                              <i class="fa fa-upload"></i><input type="file" multiple="" id="matchLogo">
-                            </span>
-                          </span>
-                        <input type="text" class="form-control" readonly="">
+
+                    </div>
+                    <div class="input-group reviewUploadImg">
+
                     </div>
                 </div>
             </div>
@@ -59,7 +96,7 @@
             <div class="form-group">
                 <label for="matchTechnology" class="col-sm-4 control-label">技术支持</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="matchTechnology">
+                    <input type="text" class="form-control" th:name="matchTechnology" id="matchTechnology" th:value="${matchRule}==null?'':${matchRule.matchTechnology}">
                 </div>
             </div>
 
@@ -67,21 +104,49 @@
                 <label class="col-sm-4 control-label">奖品设置</label>
                 <div class="col-sm-8">
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
                             <label for="matchChampion">一等奖</label>
-                            <input type="text" class="form-control" id="matchChampion">
+                            <input type="text" class="form-control" th:name="matchChampion" id="matchChampion" th:value="${matchRule}==null?'':${matchRule.matchChampion}">
+                            <input type="hidden" th:name="matchChampionImg" class="uploadImgUrl">
+                        </div>
+                        <div class="form-group upload">
+
+                        </div>
+                        <div class="input-group" >
+
+                        </div>
+                        <div class="input-group reviewUploadImg">
+
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
                             <label for="matchSecond">二等奖</label>
-                            <input type="text" class="form-control" id="matchSecond">
+                            <input type="text" class="form-control" th:name="matchSecond" id="matchSecond" th:value="${matchRule}==null?'':${matchRule.matchSecond}">
+                        </div>
+                        <div class="form-group upload">
+
+                        </div>
+                        <div class="input-group" style="margin-left:16px">
+
+                        </div>
+                        <div class="input-group reviewUploadImg">
+
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px">
+                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
                             <label for="matchThird">三等奖</label>
-                            <input type="text" class="form-control" id="matchThird">
+                            <input type="text" class="form-control input-group mb-3" th:name="matchThird" id="matchThird" th:value="${matchRule}==null?'':${matchRule.matchThird}">
+                        </div>
+                        <div class="form-group upload" >
+
+                        </div>
+                        <div class="input-group" style="margin-left:16px">
+
+                        </div>
+                        <div class="input-group reviewUploadImg">
+
                         </div>
                     </div>
                 </div>
@@ -89,8 +154,10 @@
 
             <div class="form-group form-footer" style="margin-bottom: -28px;">
                 <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
-                    <button type="submit" class="btn btn-primary">保存</button>
-                    <button type="reset" class="btn btn-default">重置</button>
+                    <input type="hidden" th:name="token" th:value="${token}">
+                    <input type="hidden" th:name="id" th:value="${matchRule}==null?'':${matchRule.id}">
+                    <button type="submit" class="btn btn-primary" id="updateMatchInfo">保存</button>
+                    <button type="reset" class="btn btn-default" id="resettingMatchInfo">重置</button>
                 </div>
             </div>
         </form>

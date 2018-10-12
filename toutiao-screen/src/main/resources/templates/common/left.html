@@ -1805,8 +1805,6 @@
 
 
 <section class="videocontent" id="video"></section>
-
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.js'}"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -1870,14 +1868,14 @@
 
         //比赛设置
         $("#matchSetting").click(function(){
-            $("#row").load("/sys/matchSetting/index?token="+token,function(){
+            $("#row").load("/sys/matchSetting/index?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
 
             });
         });
 
         //座位设置
         $("#seatSetting").click(function(){
-            $("#row").load("/sys/seatSetting/index",function(){
+            $("#row").load("/sys/seatSetting/index?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
 
             });
         });
