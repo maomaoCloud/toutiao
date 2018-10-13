@@ -116,6 +116,7 @@ public class MatchSettingController {
     }
 
     @RequestMapping("save")
+    @ResponseBody
     public JsonResult save(MatchRule matchRule) {
         JsonResult jsonResult;
         try {

@@ -1,6 +1,8 @@
 package com.tiaotiaopoker;
 
 
+import org.omg.CORBA.INTERNAL;
+
 /**
  * Created by xiekang on 17/4/18.
  */
@@ -49,5 +51,11 @@ public class Constants {
         public static final String LOGIN_STEP_1 = "WAIT_SCAN";
         public static final String LOGIN_STEP_2 = "HAS_SCAN";
         public static final String LOGIN_STEP_3 = "HAS_LOGIN";
+    }
+
+    public static final class ruleSeat {
+        public static final Integer SORT_NEAR = 1;
+        public static final Integer SORT_BEGIN_END = 2;
+        public static final Integer SRTT_MIDDLE = 3;
     }
 }

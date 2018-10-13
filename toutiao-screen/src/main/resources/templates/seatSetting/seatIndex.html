@@ -62,7 +62,6 @@
         }
 
         #sign-list {
-            overflow: scroll;
             display: flex;
             flex-wrap: wrap;
         }
@@ -108,25 +107,20 @@
         }
     </style>
 </head>
-<!-- Page content -->
-<div id="content" class="col-md-12">
-    <!-- content main container -->
-    <div class="main">
-        <!-- row -->
-        <div class="row" id="multi">
-            <!-- col 12 -->
-            <div class="col-lg-12 col-md-12">
                 <!-- tile -->
                 <section class="tile transparent">
                     <div class="tile-header color transparent-black textured rounded-top-corners">
                         <h1 class="box-title">座位编排</h1>
                     </div>
                     <!-- /tile header -->
-                    <div class="row tile-widget color transparent-black textured" style="padding:0; margin:0;max-height: 520px; overflow: scroll;">
+                    <div class="row tile-widget color transparent-black textured" style="padding:0; margin:0;">
                         <div class="col-lg-2 col-md-2" style="padding-right:0;">
                             <div class="title-zh">
                                 <div class="first">桌号</div>
                                 <div class="zh">1</div><div class="space"></div>
+                                <div class="zh">2</div><div class="space"></div>
+                                <div class="zh">2</div><div class="space"></div>
+                                <div class="zh">2</div><div class="space"></div>
                                 <div class="zh">2</div>
                             </div>
                         </div>
@@ -174,6 +168,39 @@
                                     <span class="user-name">彼得8</span>
                                 </div>
 
+                                <div class="user move-user" data-id="7">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得7</span>
+                                </div>
+                                <div class="user move-user" data-id="8">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得8</span>
+                                </div>
+                                <div class="user move-user" data-id="7">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得7</span>
+                                </div>
+                                <div class="user move-user" data-id="8">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得8</span>
+                                </div>
+                                <div class="user move-user" data-id="7">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得7</span>
+                                </div>
+                                <div class="user move-user" data-id="8">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得8</span>
+                                </div>
+                                <div class="user move-user" data-id="7">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得7</span>
+                                </div>
+                                <div class="user move-user" data-id="8">
+                                    <img src="assets/images/peter-avatar.jpg">
+                                    <span class="user-name">彼得8</span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -185,13 +212,6 @@
                 <button type="button" id="reset" class="btn btn-danger margin-bottom-20">重新排列</button>
             </div>
             <!-- /操作按钮 -->
-        </div>
-        <!-- /col 12 -->
-    </div>
-    <!-- /row -->
-</div>
-<!-- /content container -->
-
 <script>
     var ell = document.getElementById('sign-list');
     Sortable.create(ell, {

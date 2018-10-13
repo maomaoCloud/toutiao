@@ -24,15 +24,7 @@ public class MatchRuleServiceImpl implements MatchRuleService {
 
     @Override
     public int saveBySelective(MatchRule matchRule) {
-        int result = 0;
-        MatchWithBLOBs match = matchService.selectMatchById(matchRule.getMatchId());
-        if (null == match) {
-            matchRule.setId(StringUtils.generateShortUUID());
-            result = matchRuleMapper.insert(matchRule);
-        } else {
-            result = matchRuleMapper.updateByPrimaryKeySelective(matchRule);
-        }
-        return result;
+        return matchRuleMapper.updateByPrimaryKeySelective(matchRule);
     }
 
     @Override
@@ -60,13 +52,13 @@ public class MatchRuleServiceImpl implements MatchRuleService {
             matchRule.setMatchId(myMatch.getId());
             matchRule.setId(StringUtils.generateShortUUID());
             matchRule.setMatchName(myMatch.getTheme());
-            matchRule.setMatchAddress(myMatch.getCity()+myMatch.getArea()+myMatch.getAddress());
+            matchRule.setMatchAddress(myMatch.getCity() + myMatch.getArea() + myMatch.getAddress());
             matchRule.setRuleTurn(3);
             matchRule.setRuleWin(2);
             matchRule.setRuleDraw(1);
             matchRule.setRuleFail(0);
             matchRuleMapper.insertSelective(matchRule);
-        }else {
+        } else {
             return;
         }
     }

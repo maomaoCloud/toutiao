@@ -88,7 +88,6 @@
                     return arr;
                 },
                 onSelect: option.onSelect || function (files) {
-                    alert(2);
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         var html = option.itemTemplate;
@@ -110,7 +109,8 @@
                     });
                 },
                 onDelete: function (index) {
-                    _this.next().find('#' + index + 'file').remove();
+                    //_this.next().find('#' + index + 'file').remove();
+                    _this.parent().find("input[name='fileselect[]']").val("");
                     _this.parent().find(".filelist").html("");
                     _this.parent().find(".uploadImgUrl").val("");
                 },
@@ -179,7 +179,7 @@
                                             ZXXFILE.onDelete(file.index);
                                         }, option.removeTimeout);
                                         //图片回显
-                                        _this.parent().find(".filelist").append('<div id="imgDiv"><img style="height:200px;width:300px;float:left" src="' + xhr.responseText + '"></div>');
+                                        _this.parent().find(".filelist").append('<div id="imgDiv"><img style="height:150px;width:250px;float:left" src="' + xhr.responseText + '"></div>');
                                         self.onUploadComplete();
                                     } else {
                                         self.onUploadError(file, xhr.responseText);
@@ -188,6 +188,7 @@
                             };
                             var fd = new FormData();
                             fd.append("upload",_this.parent().find("input[name='fileselect[]']")[0].files[0]);
+                            fd.append("token",$("#infoToken").val())
                             option.onUploadStart();
                             xhr.open("POST", self.url, true);
                             xhr.setRequestHeader("X_FILENAME", file.name);
@@ -205,13 +206,10 @@
                         }, false);
                     }
                     _this.find('.chooseFile').on('click', function () {
-                        /*var liList = $(".filelist").find("li");
+                        var liList = _this.parent().find(".filelist").find("li");
                         if (liList.size()>0){
-                            dialogAlert("提示","只能上传一张封面图！",function () {
-                            })
                             return;
-                        }*/
-                        alert(1);
+                        }
                         _this.find('.uploadfile').trigger('click');
                     });
                     option.onInit();

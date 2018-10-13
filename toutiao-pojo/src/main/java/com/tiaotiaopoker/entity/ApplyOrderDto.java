@@ -6,15 +6,15 @@ import java.util.Date;
 
 public class ApplyOrderDto extends ApplyOrder {
 
-    private  String matchTheme;
+    private String matchTheme;
 
-    private  String matchAddress;
+    private String matchAddress;
 
-    private  String matchBannerImg;
+    private String matchBannerImg;
 
     private Date matchStartDate;
 
-    private  Date matchEndDate;
+    private Date matchEndDate;
 
     public Date getMatchStartDate() {
         return matchStartDate;

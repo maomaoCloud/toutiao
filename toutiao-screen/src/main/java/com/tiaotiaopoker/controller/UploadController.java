@@ -32,35 +32,16 @@ public class UploadController {
     /*
      * 上传图片
      */
-    @RequestMapping(value = "uplodaHeadlineImg")
+    @RequestMapping(value = "uploadImg")
     @ResponseBody
-    public String uplodaHeadlineImg(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+    public String uplodaHeadlineImg(@RequestParam("upload") MultipartFile file, @RequestParam("token") String token, HttpServletRequest request, HttpServletResponse response) {
         try {
-            Map<String, Object> resultMap = fileLogService.saveFile("admin", file);
+            Map<String, Object> resultMap = fileLogService.saveFile(token, file);
             return resultMap.get("fileUrl").toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
-    }
-
-    /*
-     * 上传图片
-     */
-    @RequestMapping(value = "uploadImg")
-    public void uplodaImg(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Map<String, Object> resultMap = fileLogService.saveFile("admin", file);
-            String imgUrl = resultMap.get("fileUrl").toString();
-            String callback = request.getParameter("CKEditorFuncNum");
-            String fullContentType = "text/html;charset=UTF-8";
-            response.setContentType(fullContentType);
-            printResponse(response,"<script>window.parent.CKEDITOR.tools.callFunction("
-                    + callback + ",'" + imgUrl.replaceAll("\r|\n", "")+ "',''" + ")" + "</script>");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void printResponse(HttpServletResponse response, String responseStr) {
