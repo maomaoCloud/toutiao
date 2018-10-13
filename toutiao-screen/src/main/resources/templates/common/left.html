@@ -335,6 +335,8 @@
             $("#sign-list").height(getClientHeight() - 70);
         });
 
+        $("#row").load("/sys/matchSetting/index?token="+token,function(){});
+
         //现场投屏
         $("#liveScreen").click(function () {
             isStop = true;
