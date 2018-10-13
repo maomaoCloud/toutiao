@@ -35,6 +35,4 @@ public interface MatchMapper {
     List<Match> queryMatchByCondition(Map<String,Object> paramMap);
 
     Integer countMatchByCondition(Map<String,Object> paramMap);
-
-    MatchWithBLOBs selectMatchById(String id);
 }

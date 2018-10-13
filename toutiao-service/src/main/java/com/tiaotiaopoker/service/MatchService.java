@@ -34,4 +34,6 @@ public interface MatchService {
     List<Match> getMatchByKeyWord(String kw);
 
     Map<String, Object> getMatchListManage(String userId);
+
+    MatchWithBLOBs checkIsValidate(String matchId);
 }

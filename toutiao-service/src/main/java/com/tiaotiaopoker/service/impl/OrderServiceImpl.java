@@ -4,14 +4,18 @@ import com.tiaotiaopoker.XmlUtils;
 import com.tiaotiaopoker.dao.ApplyOrderMapper;
 import com.tiaotiaopoker.dao.CustomerDaoMapper;
 import com.tiaotiaopoker.dao.WxPayLogMapper;
+import com.tiaotiaopoker.entity.ApiSimpleUserInfo;
 import com.tiaotiaopoker.entity.MatchApplyUser;
 import com.tiaotiaopoker.pojo.ApplyOrder;
+import com.tiaotiaopoker.pojo.ApplyOrderExample;
 import com.tiaotiaopoker.pojo.WxPayLog;
 import com.tiaotiaopoker.service.OrderService;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +62,89 @@ public class OrderServiceImpl implements OrderService {
             wxPayLog.setTransactionId( transaction_id );
             wxPayLogMapper.insert( wxPayLog );
         }
+    }
+
+    @Override
+    public ApplyOrder getUserApplyData(String userId,
+                                       String matchId) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        example.createCriteria().andUserIdEqualTo( userId ).andMatchIdEqualTo( matchId ).andPayStatueEqualTo( 1 );
+        List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample( example );
+        if( applyOrders != null && applyOrders.size() > 0 ) return applyOrders.get( 0 );
+        return null;
+    }
+
+    @Override
+    public List<ApiSimpleUserInfo> getUnsignAUsers(String matchId) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        //已经支付 有搭档   搭档未签到
+        example.createCriteria().andMatchIdEqualTo( matchId ).andHasPartnerEqualTo( 1 ).andPayStatueEqualTo(
+                1 ).andPartnerSignStatueEqualTo( 0 );
+        List<ApiSimpleUserInfo> resultList = new ArrayList<>();
+        List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample( example );
+        if( applyOrders != null && applyOrders.size() > 0 ) {
+            ApiSimpleUserInfo info;
+            for( ApplyOrder order : applyOrders ) {
+                info = new ApiSimpleUserInfo();
+                info.setHead( order.getUserHead() );
+                info.setName( order.getUserName() );
+                info.setPhone( order.getUserPhone() );
+                info.setUserId( order.getUserId() );
+                info.setPartnerName( order.getPartnerName() );
+                info.setPartnerPhone( order.getPartnerPhone() );
+                info.setPartnerUserId( order.getPartnerId() );
+
+                resultList.add( info );
+            }
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public ApplyOrder updateUserASignStatue(String matchId,
+                                            String userId) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        example.createCriteria().andUserIdEqualTo( userId ).andMatchIdEqualTo( matchId );
+
+        ApplyOrder order = new ApplyOrder();
+        order.setUserSignDatetime( new Date() );
+        order.setUserSignStatus( 1 );
+
+        applyOrderMapper.updateByExampleSelective( order, example );
+
+        return applyOrderMapper.selectByExample( example ).get( 0 );
+    }
+
+    @Override
+    public ApplyOrder updateUserBSignStatue(String matchId,
+                                            String aId,
+                                            String userId,
+                                            String userHead) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        example.createCriteria().andUserIdEqualTo( aId ).andMatchIdEqualTo( matchId );
+
+        ApplyOrder order = new ApplyOrder();
+        order.setPartnerSignStatue( 1 );
+        order.setPartnerSignDatetime( new Date() );
+        order.setPartnerId( userId );
+        order.setPartnerHead( userHead );
+
+        applyOrderMapper.updateByExampleSelective( order, example );
+
+        return applyOrderMapper.selectByExample( example ).get( 0 );
+    }
+
+    @Override
+    public ApplyOrder getUserBData(String userId,
+                                   String matchId) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        example.createCriteria().andMatchIdEqualTo( matchId ).andPartnerIdEqualTo( userId ).andPartnerSignStatueEqualTo(
+                1 );
+        List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample( example );
+        if( applyOrders != null && applyOrders.size() > 0 ) return applyOrders.get( 0 );
+
+        return null;
     }
 
     private void updateOrderPaySuccess(String orderId,

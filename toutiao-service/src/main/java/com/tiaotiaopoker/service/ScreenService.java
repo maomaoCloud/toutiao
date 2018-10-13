@@ -1,6 +1,7 @@
 package com.tiaotiaopoker.service;
 
 import com.tiaotiaopoker.pojo.AppUser;
+import com.tiaotiaopoker.pojo.MatchWithBLOBs;
 
 import java.util.Map;
 
@@ -28,4 +29,22 @@ public interface ScreenService {
     void login(String userId);
 
     AppUser getLoginUser(String token);
+
+    /**
+     * 保存签到二维码的信息
+     */
+    void genSignCode(MatchWithBLOBs matchData,
+                     String id);
+
+    Map<String, Object> loadUserSignInfo(String id,
+                                         String userId);
+
+    Map<String, Object> confirmSign(String id,
+                                    String userId);
+
+    Map<String, Object> confirmBUserSign(String id,
+                                         String userId,
+                                         String aId);
+
+    String genSignDataKey(String id);
 }

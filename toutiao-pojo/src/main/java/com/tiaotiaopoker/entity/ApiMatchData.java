@@ -135,10 +135,7 @@ public class ApiMatchData {
             res.setFee( 0 );
         }
 
-        String location = md.getProvince();
-        if( !md.getProvince().equals( md.getCity() ) ) {
-            location += md.getCity();
-        }
+        String location = md.getCity();
         location += md.getArea();
         res.setLocation( location );
         res.setStartDate( new DateTime( md.getStartDate() ).toString( "yyyy-MM-dd HH:mm" ) );

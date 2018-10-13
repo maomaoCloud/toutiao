@@ -8,6 +8,7 @@ import com.tiaotiaopoker.entity.ApiMatchData;
 import com.tiaotiaopoker.entity.ApplyOrderDto;
 import com.tiaotiaopoker.pojo.*;
 import com.tiaotiaopoker.service.AppUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,16 @@ public class AppUserServiceImpl implements AppUserService {
         user.setUpdateInfoDate( new Date() );
         user.setLastLoginDateTime( new Date() );
         appUserMapper.updateByPrimaryKeySelective( user );
+
+        if( StringUtils.isNotBlank( user.getAvatarUrl() ) ) {
+            //更新用户头像
+            ApplyOrderExample example = new ApplyOrderExample();
+            example.createCriteria().andIdEqualTo( user.getId() );
+
+            ApplyOrder order = new ApplyOrder();
+            order.setUserHead( user.getAvatarUrl() );
+            applyOrderMapper.updateByExampleSelective( order, example );
+        }
     }
 
     @Override
@@ -154,16 +165,16 @@ public class AppUserServiceImpl implements AppUserService {
                                              String matchId) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> paramMap = new HashMap<>();
-        BigDecimal hundred = new BigDecimal(100);
+        BigDecimal hundred = new BigDecimal( 100 );
         //累计收益
-        paramMap.put("userId", userId);
-        BigDecimal sumPayMoney = applyOrderMapper.sumPayMoneyByCondition(paramMap);
-        if (!"0".equals(matchId)) {
+        paramMap.put( "userId", userId );
+        BigDecimal sumPayMoney = applyOrderMapper.sumPayMoneyByCondition( paramMap );
+        if( !"0".equals( matchId ) ) {
             //需要查出该用户本场比赛收益
-            paramMap.put("matchId", matchId);
-            BigDecimal sumPayMoneyByMatch = applyOrderMapper.sumPayMoneyByCondition(paramMap);
-            resultMap.put("sumMoneyMatch", sumPayMoneyByMatch.divide(hundred));
-            resultMap.put("sumMoney", sumPayMoney.divide(hundred));
+            paramMap.put( "matchId", matchId );
+            BigDecimal sumPayMoneyByMatch = applyOrderMapper.sumPayMoneyByCondition( paramMap );
+            resultMap.put( "sumMoneyMatch", sumPayMoneyByMatch.divide( hundred ) );
+            resultMap.put( "sumMoney", sumPayMoney.divide( hundred ) );
         }
 
         paramMap.clear();
@@ -172,17 +183,18 @@ public class AppUserServiceImpl implements AppUserService {
         //今日报名数
         int sumSignUpToday = applyOrderMapper.sumSignUpNumByCondition( paramMap );
         //今日报名费
-        BigDecimal sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        BigDecimal sumPayMoneyToday = applyOrderMapper.sumPayMoneyByCondition( paramMap );
         //已提现
         int alreadyWithdraw = withdrawLogMapper.sumMoneyByUserId( userId );
         //累计可提现收益
-        paramMap.put("signState", Constants.Order.USER_SIGN_STATUS_END);
-        BigDecimal sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition(paramMap);
+        paramMap.put( "signState", Constants.Order.USER_SIGN_STATUS_END );
+        BigDecimal sumAvailableWithdraw = applyOrderMapper.sumPayMoneyByCondition( paramMap );
         //可提现
-        BigDecimal availableWithdraw = (sumAvailableWithdraw.subtract(new BigDecimal(alreadyWithdraw))).divide(hundred);
-        resultMap.put("sumSignUpToday", sumSignUpToday);
-        resultMap.put("sumMoneyToday", sumPayMoneyToday.divide(hundred));
-        resultMap.put("availableWithdraw", availableWithdraw);
+        BigDecimal availableWithdraw = ( sumAvailableWithdraw.subtract( new BigDecimal( alreadyWithdraw ) ) ).divide(
+                hundred );
+        resultMap.put( "sumSignUpToday", sumSignUpToday );
+        resultMap.put( "sumMoneyToday", sumPayMoneyToday.divide( hundred ) );
+        resultMap.put( "availableWithdraw", availableWithdraw );
         return resultMap;
     }
 }

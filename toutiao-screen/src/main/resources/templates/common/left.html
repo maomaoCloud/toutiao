@@ -28,6 +28,7 @@
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/html5shiv.js'}"></script>
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/respond.min.js'}"></script>
     <![endif]-->
+    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/global.js'}"></script>
 
     <style>
         body {
@@ -101,6 +102,9 @@
             letter-spacing: 1px;
         }
 
+        .scroll-view{
+            overflow-y: scroll;
+        }
     </style>
 </head>
 <body class="bg-1" id="body">
@@ -151,7 +155,7 @@
                     </li>
 
                     <li class="divided">
-                        <a href="#">签到设置</a>
+                        <a href="javascript:;" th:id="signSetting">签到设置</a>
                     </li>
 
                     <li class="divided">
@@ -1859,22 +1863,33 @@
 
         //现场投屏
         $("#liveScreen").click(function () {
+            isStop = true;
             var matchId = $("#nowSettingMatch").val();
             window.location.href = "/sys/index?token="+token+"&matchId="+matchId;
         });
 
         //比赛设置
         $("#matchSetting").click(function(){
-            $("#row").load("/sys/matchSetting/index?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+            isStop = true;
+            $("#row").load("/sys/matchSetting/index?token="+token,function(){
 
             });
         });
 
         //座位设置
         $("#seatSetting").click(function(){
-            $("#row").load("/sys/seatSetting/index?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+            isStop = true;
+            $("#row").load("/sys/seatSetting/index",function(){
 
             });
+        });
+
+        //签到设置
+        $("#signSetting").click(function(){
+            //var matchId = $("#nowSettingMatch").val();
+            isStop = false;
+            var matchId =  "JJX390iH";
+            $("#row").load("/sys/sign/match/"+matchId+"?token="+token,function(){});
         });
     })
 

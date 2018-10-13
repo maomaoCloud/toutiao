@@ -1,0 +1,319 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    $(function () {
+        var token = [[${token}]];
+    })
+    /* ]]> */
+</script>
+
+<style>
+    body {
+        width: 100%;
+        font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+    }
+
+    .full-screen {
+        padding-left: 15px !important;
+    }
+
+    .body_full {
+        position: absolute !important;
+        top: 0;
+    }
+
+    .box-title {
+        text-align: center;
+        width: 100%;
+        font-weight: 500;
+        font-size: 18px !important;
+        font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+        border-bottom: 1px solid rgba(200, 200, 200, .2);
+        padding-bottom: 10px !important;
+    }
+
+    .tile-body {
+        width: 100%;
+        text-align: center;
+    }
+
+    .user-group {
+        width: 45%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    .user-group img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .user-group .user-a {
+        width: 100%;
+        background-color: rgba(150, 150, 150, 0.4);
+    }
+
+    .user-group .da {
+        height: 30px;
+        width: 30px;
+        background-color: rgba(150, 150, 150, 0.8);
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .user-group .user-b {
+        width: 100%;
+        background-color: rgba(150, 150, 150, 0.4);
+    }
+
+    .user-group .user-name {
+        margin-left: 40%;
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    #sign-list {
+        display: flex;
+        flex-wrap: wrap;
+        max-height: 490px;
+    }
+
+    .unsign {
+        opacity: 0.5;
+    }
+
+    .unsign .user-name {
+        text-decoration: line-through;
+    }
+
+    .waitList {
+        width: 100%;
+        max-height: 170px;
+    }
+
+    .wait-item {
+        display: flex;
+        color: #FFF;
+        font-size: 14px;
+        background-color: rgba(150, 150, 150, 0.5);
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        padding: 5px 0;
+    }
+
+    .wait-item img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .wait-item span {
+        margin-left: 10px;
+        text-align: center;
+    }
+
+    .wait-item .name {
+        width: 30%;
+    }
+
+    .wait-item .btn-approve {
+        cursor: pointer;
+        border: 1px solid #e1e1e1;
+        padding: 5px;
+    }
+
+    .wait-item .btn-disapprove {
+        cursor: pointer;
+        border: 1px solid #e1e1e1;
+        padding: 5px;
+    }
+
+</style>
+<div class="pageheader" style="margin-left: 15px;">
+    <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i> 签到 <span>// Sign...</span>
+    </h2>
+</div>
+
+<!-- col 8 -->
+<div class="col-lg-8 col-md-8">
+
+    <!-- tile -->
+    <section class="tile transparent">
+        <div class="tile-header color transparent-black textured rounded-top-corners">
+            <h1 class="box-title">已签到人员</h1>
+        </div>
+        <!-- /tile header -->
+
+
+        <!-- tile widget -->
+        <div class="tile-widget color transparent-black textured scroll-view" id="sign-list">
+
+            <div th:each="user,userStat : ${signUsers}" class="user-group">
+                <div th:data-id="${user.userId}" th:id="${user.userId}" class="user-a unsign">
+                    <img src="/images/unsign.png">
+                    <span class="user-name" th:text="${user.name}"></span>
+                </div>
+            </div>
+
+            <div th:each="user,userStat : ${partnerUsers}" class="user-group">
+                <div th:data-id="${user.userId}" th:id="'partner-'+${user.userId}" th:data-myId="${user.partnerUserId}"
+                     class="user-a unsign user-partner">
+                    <img src="/images/unsign.png">
+                    <span class="user-name" th:text="${user.partnerName}"></span>
+                </div>
+            </div>
+        </div>
+        <!-- /tile widget -->
+    </section>
+    <!-- /tile -->
+
+</div>
+<!-- /col 8 -->
+
+
+<!-- col 4 -->
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+
+    <!-- tile -->
+    <section class="tile color transparent-black">
+
+
+        <!-- tile header -->
+        <div class="tile-header">
+            <h1 class="box-title">打开微信，扫一扫签到</h1>
+        </div>
+        <!-- /tile header -->
+
+        <!-- tile body -->
+        <div class="tile-body">
+            <img style="padding-bottom: 20px;" width="250" th:src="${qrcode_url}">
+        </div>
+        <!-- /tile body -->
+
+
+    </section>
+    <!-- /tile -->
+
+    <div class="waitList scroll-view">
+        <div th:each="user,userStat : ${waitApprove}" class="wait-item">
+            <img th:src="${user.head}" src="/images/head.png">
+            <span class="name" th:text="${user.name}"></span>
+            <span th:data-id="${user.userId}" onclick="doApprove(0,this)" class="btn-disapprove">不同意</span>
+            <span th:data-id="${user.userId}" onclick="doApprove(1,this)" class="btn-approve">同意</span>
+        </div>
+
+    </div>
+</div>
+
+<!-- /col 4 -->
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    //var matchId = $("#nowSettingMatch").val();
+    var matchId = "JJX390iH";
+
+    $(function () {
+        var datePoint = "2018-10-10";
+        var option = {
+            url: "/sys/sign/match/" + matchId + "/new?token=D9VdGMRA",
+            method: "post",
+            data: {
+                datePoint: datePoint
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.success) {
+                    //更新aUser
+                    var item = null;
+                    for (var i = 0; i < res.resData.aUsers.length; i++) {
+                        item = $("#" + res.resData.aUsers[i].userId);
+                        item.removeClass("unsign");
+                        item.find("img").attr("src", res.resData.aUsers[i].head);
+                    }
+
+                    //更新bUser
+                    for (var i = 0; i < res.resData.bUsers.length; i++) {
+                        item = $("#partner-" + res.resData.bUsers[i].userId);
+                        item.removeClass("unsign");
+                        item.find("img").attr("src", res.resData.bUsers[i].head);
+                    }
+
+                    var html = '';
+                    for (var i = 0; i < res.resData.cUsers.length; i++) {
+                        html += '<div class="wait-item"><img src="' + res.resData.cUsers[i].head + '">';
+                        html += '<span class="name">' + res.resData.cUsers[i].name + '</span>';
+                        html += ' <span data-id="' + res.resData.cUsers[i].userId + '" onclick="doApprove(0,this)" class="btn-disapprove">不同意</span>';
+                        html += ' <span data-id="' + res.resData.cUsers[i].userId + '" onclick="doApprove(1,this)" class="btn-approve">同意</span>';
+                        html += '</div>';
+                    }
+
+                    $(".waitList").html(html);
+
+                    option.data.datePoint = res.resData.datePoint;
+                    if (isStop) return;
+                    setTimeout(function () {
+                        $.ajax(option);
+                    }, 5000)
+                }
+            }
+        }
+
+        setTimeout(function () {
+            isStop = false;
+            $.ajax(option);
+        }, 5000);
+
+        var down = true;
+        setInterval(function () {
+            var div = document.getElementById('sign-list');
+            if (down && div.scrollHeight - div.scrollTop === div.clientHeight) {
+                //到底了
+                down = false; //向上
+            } else if (!down && div.scrollTop === 0) {
+                down = true;
+            }
+
+            div.scrollBy(0, down ? 480 : -480);
+        }, 10000);
+
+    })
+
+    function doApprove(type, obj) {
+        var _obj = $(obj);
+        var id = $(obj).attr("data-id");
+
+        $.post("/sys/sign/wait/approve?token=D9VdGMRA", {
+                doType: type, userId: id, matchId: matchId
+            }, function (res) {
+                var pObj = _obj.parent();
+                if (res.success) {
+                    if (type == 1) {
+                        //通过
+                        var img = pObj.find("img").attr("src");
+                        var name = pObj.find(".name").html();
+                        var html = ' <div class="user-group"> <div data-id="' + id + '" class="user-a"> <img src="' + img + '"> <span class="user-name">' + name + '</span> </div> </div>';
+                        $("#sign-list").append(html);
+                    }
+
+                    pObj.remove();
+                } else {
+                    alert("操作失败，请联系管理员!");
+                }
+            }
+        );
+
+    }
+    /* ]]> */
+</script>
+
+
+

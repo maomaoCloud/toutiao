@@ -1,16 +1,15 @@
 package com.tiaotiaopoker.controller;
 
 import com.tiaotiaopoker.StringUtils;
+import com.tiaotiaopoker.config.ViewConstants;
 import com.tiaotiaopoker.pojo.AppUser;
 import com.tiaotiaopoker.pojo.MatchRule;
-import com.tiaotiaopoker.pojo.MatchWithBLOBs;
 import com.tiaotiaopoker.service.MatchRuleService;
-import com.tiaotiaopoker.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -68,5 +67,10 @@ public class SysController extends BaseController {
         }
         mv.setViewName("common/left");
         return mv;
+    }
+
+    @RequestMapping("layout")
+    public String scr(Model model) {
+        return ViewConstants.LAYOUT;
     }
 }
