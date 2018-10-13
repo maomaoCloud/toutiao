@@ -352,7 +352,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-  <select id="queryTeamUserByMatchId" parameterType="java,lang.string">
+  <select id="queryTeamUserByMatchId" parameterType="java.lang.String">
       SELECT
        *
       FROM

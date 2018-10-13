@@ -48,22 +48,12 @@
 <!-- col 12 -->
 <div class="col-md-12">
     <section class="tile color transparent-black">
-        <!-- tile header -->
-        <div class="tile-header">
-            <h1><strong th:id="matchName">Vertical</strong></h1>
-            <div class="controls">
-                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
-                <a href="#" class="remove"><i class="fa fa-times"></i></a>
-            </div>
-        </div>
-        <!-- /tile header -->
-
         <!-- tile body -->
         <div class="tile-body">
             <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">我的比赛</label>
-                    <div class="col-sm-8">
+                <div class="form-group" style="display: flex;justify-content: center;align-items: center; margin-bottom: 0">
+                    <label class="col-sm-2 control-label">我的比赛</label>
+                    <div class="col-sm-10">
                         <select class="chosen-select chosen-transparent form-control" id="selectMatch" th:value="${matchId}">
                             <option th:value="0">————————————请选择比赛————————————</option>
                             <option th:each="match:${matchList}" th:value="${match.id}" th:text="${match.theme}"></option>
