@@ -11,6 +11,6 @@ function showLoading() {
 }
 
 function closeLoading() {
-    $("#loader").fadeOut(300);
-    $(".mask").fadeOut(300);
+    $("#loader").delay(1000).fadeOut(300);
+    $(".mask").delay(1000).fadeOut(300);
 }
