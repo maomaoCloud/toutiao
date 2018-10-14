@@ -207,8 +207,10 @@
 </div>
 <!-- /col 4 -->
 
-<a href="#modalDialog" style="display: none;" id="showMessage" role="button" class="btn btn-cyan" data-toggle="modal"></a>
-<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
+<a href="#modalDialog" style="display: none;" id="showMessage" role="button" class="btn btn-cyan"
+   data-toggle="modal"></a>
+<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -226,12 +228,12 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     //var matchId = $("#nowSettingMatch").val();
-    var matchId = "JJX390iH";
+    var matchId = getMatchId();
 
     $(function () {
         var datePoint = "2018-10-10";
         var option = {
-            url: "/sys/sign/match/" + matchId + "/new?token=D9VdGMRA",
+            url: "/sys/sign/match/" + matchId + "/new?token=" + getToken(),
             method: "post",
             data: {
                 datePoint: datePoint
@@ -265,7 +267,7 @@
                     $(".waitList").html(html);
 
                     if ($(".unsign").length <= 0) {
-                        showNotification("提示","已全部签到完毕！");
+                        showNotification("提示", "已全部签到完毕！");
                         $("#showMessage").click();
                         return;
                     }

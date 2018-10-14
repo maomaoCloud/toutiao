@@ -1,22 +1,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <style>
+    html {
+        overflow: unset !important;
+        height: auto !important;
+    }
+
     body {
         width: 100%;
         font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
     }
 
-    .no-left-border{
+    .no-left-border {
         border-left: 0 !important;
     }
 
-    table td{
+    table td {
         vertical-align: middle;
         text-align: center;
         font-size: 16px;
         color: #ffffff;
     }
 
-    .head-title{
+    .head-title {
         font-size: 20px;
     }
 </style>
@@ -68,11 +73,9 @@
     $(function () {
         $("#print").click(function () {
             $(this).addClass("hide");
-            $("html").attr("style","overflow:auto;height: auto;");
             hideNav();
             window.print();
             showNav();
-            $("html").removeAttr("style");
             $(this).removeClass("hide");
         });
     });

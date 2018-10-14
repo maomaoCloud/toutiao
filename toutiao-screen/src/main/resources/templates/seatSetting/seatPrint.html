@@ -1,22 +1,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <style>
+    html {
+        overflow: unset !important;
+        height: auto !important;
+    }
+
     body {
         width: 100%;
         font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
     }
 
-    .no-left-border{
+    .no-left-border {
         border-left: 0 !important;
     }
 
-    table td{
+    table td {
         vertical-align: middle;
         text-align: center;
         font-size: 16px;
         color: #ffffff;
     }
 
-    .head-title{
+    .head-title {
         font-size: 20px;
     }
 
@@ -25,7 +30,8 @@
     <!-- tile body -->
     <div class="tile-body">
         <table th:each="data:${dataList }"
-                class="table table-bordered label-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
+               class="table table-bordered label-table"
+               style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
             <tr>
                 <td class="head-title" colspan="6">跳跳掼蛋线下赛 —— 2018年8月5日</td>
             </tr>
@@ -71,9 +77,7 @@
         $("#print").click(function () {
             $(this).addClass("hide");
             hideNav();
-            $("html").attr("style","overflow: unset !important;height: auto !important;");
             window.print();
-            $("html").removeAttr("style");
             showNav();
             $(this).removeClass("hide");
         });

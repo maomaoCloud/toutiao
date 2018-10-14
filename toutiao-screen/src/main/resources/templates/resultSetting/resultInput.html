@@ -210,7 +210,11 @@
             showLoading();
             $.post("/sys/resultSetting/save?token=" + getToken(), $("#teamResultForm").serialize(), function (data) {
                 closeLoading();
-                $.post("/sys/seatSetting/saveNext",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:$("#resultTurnSelect").val()+1},function(){
+                $.post("/sys/seatSetting/saveNext", {
+                    matchId: $("#nowSettingMatch").val(),
+                    token: getToken(),
+                    turnNumber: $("#resultTurnSelect").val() + 1
+                }, function () {
 
                 });
             });
@@ -219,9 +223,11 @@
 
     function loadData(index) {
         //var matchId = $("#nowSettingMatch").val();
-        var matchId = "JJX390iH";
+        var matchId = getMatchId();
+        _destory();
+        showLoading();
         $("#enter-data-list").load("/sys/resultSetting/resultInputLoad?matchId=" + matchId + "&token=" + getToken() + "&ruleTurn=" + index, function () {
-
+            closeLoading();
         });
     }
 </script>

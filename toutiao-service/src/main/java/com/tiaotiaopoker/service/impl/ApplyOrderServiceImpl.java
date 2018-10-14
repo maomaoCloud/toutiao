@@ -105,6 +105,9 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             applyOrderMapper.insertSelective( order );
         }
 
+        //更新一下用户新信息
+        appUserService.updateUserApplyInfo( params.getUserId(), params.getUserName(), params.getUserPhone() );
+
         if( order.getPayStatue().equals( 1 ) ) {
             resultMap.put( "needPay", false );//是否需要支付
             return resultMap;
@@ -120,9 +123,6 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         if( params.getHasPartner() ) {
             resultMap.put( "partnerCode", order.getPatnerCode() );//如果有partner，返回code
         }
-
-        //更新一下用户新信息
-        appUserService.updateUserApplyInfo( params.getUserId(), params.getUserName(), params.getUserPhone() );
 
         if( needPay ) {
             //接下来需要统一下单了

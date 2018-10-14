@@ -291,8 +291,7 @@
 
         //现场投屏
         $("#liveScreen").click(function () {
-            //var matchId = $("#nowSettingMatch").val();
-            var matchId = "JJX390iH";
+            var matchId = getMatchId();
             _destory();
             showLoading();
             $("#row").load("/sys/countDown/" + matchId + "?token=" + token, function () {
@@ -312,20 +311,18 @@
         //座位设置
         $("#seatSetting").click(function () {
             _destory();
-            //var matchId = $("#nowSettingMatch").val();
             showLoading();
-            var matchId = "JJX390iH";
-            $("#row").load("/sys/seatSetting/index?token="+token +"&matchId="+matchId, function () {
+            var matchId = getMatchId();
+            $("#row").load("/sys/seatSetting/index?token=" + token + "&matchId=" + matchId, function () {
                 closeLoading();
             });
         });
 
         //签到设置
         $("#signSetting").click(function () {
-            //var matchId = $("#nowSettingMatch").val();
             showLoading();
             _destory();
-            var matchId = "JJX390iH";
+            var matchId = getMatchId();
             $("#row").load("/sys/sign/match/" + matchId + "?token=" + token, function () {
                 closeLoading();
             });
@@ -333,10 +330,9 @@
 
         //参赛人员
         $("#users").click(function () {
-            //var matchId = $("#nowSettingMatch").val();
             showLoading();
             _destory();
-            var matchId = "JJX390iH";
+            var matchId = getMatchId();
             $("#row").load("/sys/sign/users/" + matchId + "?token=" + token, function () {
                 closeLoading();
             });
@@ -344,10 +340,9 @@
 
         //成绩录入
         $("#resultSetting").click(function () {
-            //var matchId = $("#nowSettingMatch").val();
             showLoading();
             _destory();
-            var matchId = "JJX390iH";
+            var matchId = getMatchId();
             $("#row").load("/sys/resultSetting/resultInput?matchId=" + matchId + "&token=" + token, function () {
                 closeLoading();
             });
@@ -355,10 +350,9 @@
 
         //比赛规则展示
         $("#turnBefore").click(function () {
-            //var matchId = $("#nowSettingMatch").val();
             showLoading();
             _destory();
-            var matchId = "JJX390iH";
+            var matchId = getMatchId();
             $("#row").load("/sys/rule/" + matchId + "?token=" + token, function () {
                 closeLoading();
             });
@@ -368,7 +362,13 @@
     //座位详情
     function seatShowDetail(turnNumber) {
         showLoading();
-        $("#row").load("/sys/seatSetting/showDetail",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+        _destory();
+        var matchId = getMatchId();
+        $("#row").load("/sys/seatSetting/showDetail", {
+            matchId: matchId,
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
             closeLoading();
         });
     }

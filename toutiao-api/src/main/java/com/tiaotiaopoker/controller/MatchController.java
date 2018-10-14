@@ -95,7 +95,9 @@ public class MatchController extends BaseController {
         return JsonResult.FAILED( "报名失败！" );
     }
 
-    /**签到的时候的报名*/
+    /**
+     * 签到的时候的报名
+     */
     @RequestMapping("sign/apply")
     public JsonResult signApply(@RequestBody ApiApplyParams params) {
         try {

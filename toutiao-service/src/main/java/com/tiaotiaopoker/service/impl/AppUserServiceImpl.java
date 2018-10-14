@@ -58,7 +58,7 @@ public class AppUserServiceImpl implements AppUserService {
         if( StringUtils.isNotBlank( user.getAvatarUrl() ) ) {
             //更新用户头像
             ApplyOrderExample example = new ApplyOrderExample();
-            example.createCriteria().andIdEqualTo( user.getId() );
+            example.createCriteria().andUserIdEqualTo( user.getId() );
 
             ApplyOrder order = new ApplyOrder();
             order.setUserHead( user.getAvatarUrl() );
