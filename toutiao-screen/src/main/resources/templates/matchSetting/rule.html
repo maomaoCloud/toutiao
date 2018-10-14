@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    /* ]]> */
+</script>
+
+<style type="text/css">
+    table{
+        color: #FFF;
+        font-size: 30px;
+    }
+
+    table td span{
+        padding: 20px 0;
+        display: -webkit-box;
+    }
+</style>
+
+<div class="col-lg-12 col-md-12">
+    <div class="bg-transparent-black-3" style="padding: 15px 0;">
+        <div class="tile-header" style="text-align:center; margin-bottom: 20px;">
+            <h1><strong>比赛规则</strong></h1>
+        </div>
+
+
+        <table class="table" id="user-table">
+            <tr>
+                <td colspan="2" width="20%" align="right"><span>总轮次:</span></td>
+                <td colspan="2" width="30%" align="left"><span th:text="${totalTurn}"></span></td>
+                <td  colspan="2" width="20%" align="right"><span>每轮副数:</span></td>
+                <td colspan="2" width="30%" align="left"><span th:text="${data.rulePair}"></span></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" width="20%" align="right"><span>每轮时间:</span></td>
+                <td colspan="2" width="30%" align="left"><span th:text="${data.ruleTime}+'分钟'">200分钟</span></td>
+                <td colspan="2" width="20%" align="right"><span>是否平局:</span></td>
+                <td colspan="2" width="30%" align="left"><span th:text="${canDraw}">是</span></td>
+            </tr>
+
+            <tr>
+                <td colspan="4" width="40%" align="right"><span>首轮座位编排规则:</span></td>
+                <td colspan="4" width="60%" align="left"><span th:text="${firstSeatRuleName}">临近编排</span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td width="15%" align="right"><span>胜得分:</span></td>
+                <td width="18.33%" align="left"><span th:text="${data.ruleWin}"></span></td>
+                <td width="15%" align="right"><span>负得分:</span></td>
+                <td width="18.33%" align="left"><span th:text="${data.ruleFail}"></span></td>
+                <td width="15%" align="right"><span>平得分:</span></td>
+                <td width="18.33%" align="left"><span th:text="${draw}"></span></td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+</div>

@@ -40,6 +40,7 @@ public class LoginIntercepter implements HandlerInterceptor {
             } else {
                 response.sendRedirect( "/public/login?r=" + request.getRequestURL() );
             }
+            return  false;
         }
 
         return true;

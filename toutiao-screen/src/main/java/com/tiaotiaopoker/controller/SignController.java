@@ -6,6 +6,7 @@ import com.tiaotiaopoker.SecurityFactory;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.config.ViewConstants;
 import com.tiaotiaopoker.entity.ApiSimpleUserInfo;
+import com.tiaotiaopoker.entity.UserInfo;
 import com.tiaotiaopoker.pojo.ApplyOrder;
 import com.tiaotiaopoker.service.ApplyOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,5 +100,22 @@ public class SignController extends BaseController {
         } catch (Exception e) {
         }
         return JsonResult.FAILED();
+    }
+
+    @RequestMapping("users/{matchId}")
+    public ModelAndView users(ModelAndView mv,
+                              @PathVariable("matchId") String matchId) {
+        List<ApplyOrder> signData = applyOrderService.getSignData( matchId );
+        List<UserInfo> datas = new ArrayList<>();
+        for( ApplyOrder order : signData ) {
+            datas.add( UserInfo.genFromApplyOrder( order ) );
+            if( order.getHasPartner().equals( 1 ) ) {
+                datas.add( UserInfo.genFromApplyOrderBUser( order ) );
+            }
+        }
+
+        mv.addObject( "datas", datas );
+        mv.setViewName( ViewConstants.USERS );
+        return mv;
     }
 }

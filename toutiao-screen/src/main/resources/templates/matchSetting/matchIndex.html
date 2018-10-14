@@ -2,24 +2,27 @@
 
 <script th:inline="javascript">
     /* <![CDATA[ */
-    $(function(){
+    $(function () {
         var token = [[${token}]];
         //将当前设置的比赛id放在left页面
-        $("#selectMatch").change(function(){
+        $("#selectMatch").change(function () {
             $("#nowSettingMatch").val($("#selectMatch").val());
             //重置左侧轮次
-            $.post("/sys/matchSetting/matchTurn",{token:token,matchId:$("#nowSettingMatch").val()},function(data){
+            $.post("/sys/matchSetting/matchTurn", {
+                token: token,
+                matchId: $("#nowSettingMatch").val()
+            }, function (data) {
                 //移除旧轮次
                 $("#navigation").find(".turn").each(function () {
                     $(this).remove();
                 });
                 //拼接新轮次
                 var li = '';
-                for (var i = 0; i< data.length; i ++){
+                for (var i = 0; i < data.length; i++) {
                     var turn = data[i];
                     li += '<li class="dropdown turn">';
-                    li += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:data="'+(i+1)+'" >';
-                    li += '<i class="fa fa-list"></i> 第'+turn+'轮<b class="fa fa-plus dropdown-plus"></b>';
+                    li += '<a href="#" class="dropdown-toggle" data-toggle="dropdown" th:data="' + (i + 1) + '" >';
+                    li += '<i class="fa fa-list"></i> 第' + turn + '轮<b class="fa fa-plus dropdown-plus"></b>';
                     li += '</a>';
                     li += '<ul class="dropdown-menu">';
                     li += '<li><a href="form-elements.html"><i class="fa fa-caret-right"></i> 座位</a></li>';
@@ -30,11 +33,11 @@
                 $("#turnBefore").after(li);
             });
             //重置比赛信息
-            $("#matchInfo").load("/sys/matchSetting/matchInfo?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+            $("#matchInfo").load("/sys/matchSetting/matchInfo?token=" + token + "&matchId=" + $("#nowSettingMatch").val(), function () {
 
             });
             //重置基础规则设置
-            $("#matchRule").load("/sys/matchSetting/matchRule?token="+token+"&matchId="+$("#nowSettingMatch").val(),function(){
+            $("#matchRule").load("/sys/matchSetting/matchRule?token=" + token + "&matchId=" + $("#nowSettingMatch").val(), function () {
 
             });
         });
@@ -51,12 +54,15 @@
         <!-- tile body -->
         <div class="tile-body">
             <div class="row">
-                <div class="form-group" style="display: flex;justify-content: center;align-items: center; margin-bottom: 0">
+                <div class="form-group"
+                     style="display: flex;justify-content: center;align-items: center; margin-bottom: 0">
                     <label class="col-sm-2 control-label">我的比赛</label>
                     <div class="col-sm-10">
-                        <select class="chosen-select chosen-transparent form-control" id="selectMatch" th:value="${matchId}">
+                        <select class="chosen-select chosen-transparent form-control" id="selectMatch"
+                                th:value="${matchId}">
                             <option th:value="0">————————————请选择比赛————————————</option>
-                            <option th:each="match:${matchList}" th:value="${match.id}" th:text="${match.theme}"></option>
+                            <option th:each="match:${matchList}" th:value="${match.id}"
+                                    th:text="${match.theme}"></option>
                         </select>
                     </div>
                 </div>
@@ -77,14 +83,17 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     $(function () {
+        hideNav();
+
         //chosen select input
         $(".chosen-select").chosen({disable_search_threshold: 10});
         var nowMatchId = $("#nowSettingMatch").val();
-        $("#selectMatch").find("option").each(function(){
-            if ($(this).val()==nowMatchId){
+        $("#selectMatch").find("option").each(function () {
+            if ($(this).val() == nowMatchId) {
                 $("#selectMatch_chosen").find("span").html($(this).html());
             }
         });
+
     })
     /* ]]> */
 </script>

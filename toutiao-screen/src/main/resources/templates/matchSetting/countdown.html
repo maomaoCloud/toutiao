@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    var intDiff = parseInt([[${totalSeconds}]]);//倒计时总秒数量
+
+    function timer(intDiff) {
+        _t = window.setInterval(function () {
+            initTimer(intDiff--);
+        }, 1000);
+    }
+
+    function initTimer(intDiff) {
+        var day = 0,
+            hour = 0,
+            minute = 0,
+            second = 0;//时间默认值
+        if (intDiff > 0) {
+            day = Math.floor(intDiff / (60 * 60 * 24));
+            hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+            minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+            second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+        }
+        if (minute <= 9) minute = '0' + minute;
+        if (second <= 9) second = '0' + second;
+        $('#hour_show').html('<s id="h"></s>' + hour + '时');
+        $('#minute_show').html('<s></s>' + minute + '分');
+        $('#second_show').html('<s></s>' + second + '秒');
+    }
+
+    $(function () {
+        initTimer(intDiff);
+
+        var _h = getClientHeight() - 100;
+        $("#main").attr("style", "height: " + _h + "px;");
+
+        $(".start").click(function () {
+            _full_screen();
+            $(this).fadeOut(1000, function () {
+                timer(intDiff);
+            });
+        });
+    });
+    /* ]]> */
+</script>
+
+<style type="text/css">
+    .time-item {
+        text-align: center;
+    }
+
+    #main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .time-item strong {
+        background: #C71C60;
+        color: #fff;
+        font-size: 110px;
+        padding: 0 10px;
+        border-radius: 5px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .time-item #minute_show {
+        margin: 0 55px;
+    }
+
+    #theme {
+        font-size: 40px;
+        color: #FFF;
+        margin-bottom: 50px;
+        letter-spacing: 2px;
+    }
+
+    #host{
+        color: #E5E5E5;
+        font-size: 30px;
+        letter-spacing: 2px;
+        margin-bottom: 30px;
+        margin-top: -30px;
+    }
+
+    .start {
+        font-size: 20px;
+        font-weight: 700;
+        color: #FFF;
+        border: 2px solid #e1e1e1;
+        padding: 10px 50px;
+        margin-top: 40px;
+        cursor: pointer;
+    }
+
+    .start:hover {
+        background: #C71C60;
+        border: 2px solid #CC1C60;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<div class="col-lg-12 col-md-12">
+    <div id="main">
+        <div th:if="${hasLogo}" id="logo">
+            <img th:src="${logo}" src="">
+        </div>
+        <div id="theme" th:text="${theme}"></div>
+        <div th:if="${hasHost}" id="host" th:text="'主办方：'+${host}"></div>
+        <div class="time-item">
+            <strong id="hour_show">0时</strong>
+            <strong id="minute_show">0分</strong>
+            <strong id="second_show">0秒</strong>
+        </div>
+        <div class="start">开始</div>
+    </div>
+</div>

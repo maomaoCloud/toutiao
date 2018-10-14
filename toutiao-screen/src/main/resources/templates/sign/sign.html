@@ -1,13 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<script th:inline="javascript">
-    /* <![CDATA[ */
-    $(function () {
-        var token = [[${token}]];
-    })
-    /* ]]> */
-</script>
-
 <style>
     body {
         width: 100%;
@@ -213,8 +205,23 @@
 
     </div>
 </div>
-
 <!-- /col 4 -->
+
+<a href="#modalDialog" style="display: none;" id="showMessage" role="button" class="btn btn-cyan" data-toggle="modal"></a>
+<div class="modal fade" id="modalDialog" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                <h3 class="modal-title" id="modalDialogLabel"><strong>状态提示</strong></h3>
+            </div>
+            <div class="modal-body">
+                <p>所有报名用户已签到完毕！</p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <script th:inline="javascript">
     /* <![CDATA[ */
@@ -230,7 +237,6 @@
                 datePoint: datePoint
             },
             success: function (res) {
-                console.log(res);
                 if (res.success) {
                     //更新aUser
                     var item = null;
@@ -258,22 +264,26 @@
 
                     $(".waitList").html(html);
 
+                    if ($(".unsign").length <= 0) {
+                        showNotification("提示","已全部签到完毕！");
+                        $("#showMessage").click();
+                        return;
+                    }
+
                     option.data.datePoint = res.resData.datePoint;
-                    if (isStop) return;
-                    setTimeout(function () {
+
+                    _sign_t = setTimeout(function () {
                         $.ajax(option);
                     }, 5000)
                 }
             }
         }
 
-        setTimeout(function () {
-            isStop = false;
-            $.ajax(option);
-        }, 5000);
+        $.ajax(option);
+
 
         var down = true;
-        setInterval(function () {
+        _sign_i = setInterval(function () {
             var div = document.getElementById('sign-list');
             if (down && div.scrollHeight - div.scrollTop === div.clientHeight) {
                 //到底了
@@ -285,7 +295,7 @@
             div.scrollBy(0, down ? 480 : -480);
         }, 10000);
 
-    })
+    });
 
     function doApprove(type, obj) {
         var _obj = $(obj);

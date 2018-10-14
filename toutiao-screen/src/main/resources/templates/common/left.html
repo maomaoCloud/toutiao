@@ -1,11 +1,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Minimal 1.0 - Dashboard</title>
+    <title>跳跳掼蛋官方线下活动辅助系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8"/>
-    <link rel="shortcut icon" href="http://www.17sucai.com/static/images/favicon.ico" type="image/x-icon"/>
     <!-- Bootstrap -->
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css?v=2.0'}"
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css?v=1.0'}"
           rel="stylesheet">
     <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/font-awesome.css'}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/animate/animate.min.css'}">
@@ -30,7 +29,7 @@
     <link rel="stylesheet"
           th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen-bootstrap.css'}">
 
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=1.0'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=2.0'}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js} IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js} doesn't work if you view the page via file:// -->
@@ -48,6 +47,11 @@
 
         .full-screen {
             padding-left: 15px !important;
+        }
+
+        .full-screen-btn {
+            position: relative;
+            top: 15px;
         }
 
         .body_full {
@@ -86,18 +90,16 @@
             <!-- Branding -->
             <div class="navbar-header col-md-2">
                 <a class="navbar-brand" href="index.html">
-                    跳跳棋趣
+                    跳跳掼蛋官方提供
                 </a>
                 <input type="hidden" id="nowSettingMatch" th:value="${matchId}">
-                <div class="sidebar-collapse">
+                <div class="sidebar-collapse" style="position: relative; top:13px;">
                     <a href="#">
                         <i class="fa fa-bars"></i>
                     </a>
                 </div>
             </div>
             <!-- Branding end -->
-            <div class="copyrights">Collect from <a href="http://www.17sucai.com/" title="网站模板">网站模板</a></div>
-
 
             <!-- .nav-collapse -->
             <div class="navbar-collapse">
@@ -109,15 +111,11 @@
                     </li>
 
                     <li class="divided">
-                        <a href="javascript:;" th:id="signSetting">签到设置</a>
-                    </li>
-
-                    <li class="divided">
                         <a href="javascript:;" th:id="matchSetting">比赛设置</a>
                     </li>
 
                     <li class="divided">
-                        <a href="#">参赛人员</a>
+                        <a href="javascript:;" th:id="users">参赛人员</a>
                     </li>
 
                     <li class="divided">
@@ -126,10 +124,6 @@
 
                     <li class="divided">
                         <a href="#">成绩录入</a>
-                    </li>
-
-                    <li class="divided">
-                        <a href="#">历史赛事</a>
                     </li>
 
                     <li class="divided">
@@ -155,14 +149,14 @@
                         <ul class="menu">
 
                             <li class="">
-                                <a href="index.html">
-                                    <i class="fa fa-tachometer"></i> 签到
+                                <a href="javascript:void(0);" id="signSetting">
+                                    <i class="fa fa-sign-in"></i> 签到
                                 </a>
                             </li>
 
                             <li class="" id="turnBefore">
-                                <a href="index.html">
-                                    <i class="fa fa-tachometer"></i> 规则
+                                <a href="javascript:void(0);">
+                                    <i class="fa fa-random"></i> 规则
                                 </a>
                             </li>
 
@@ -175,17 +169,17 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="form-elements.html">
-                                            <i class="fa fa-caret-right"></i> 座位
+                                            <i class="fa fa-group"></i> 座位
                                         </a>
                                     </li>
                                     <li>
                                         <a href="validation-elements.html">
-                                            <i class="fa fa-caret-right"></i> 比赛
+                                            <i class="fa fa-hourglass-1"></i> 比赛
                                         </a>
                                     </li>
                                     <li>
                                         <a href="form-wizard.html">
-                                            <i class="fa fa-caret-right"></i> 成绩
+                                            <i class="fa fa-adjust"></i> 成绩
                                         </a>
                                     </li>
                                 </ul>
@@ -193,12 +187,13 @@
 
                             <li class="">
                                 <a href="index.html">
-                                    <i class="fa fa-tachometer"></i> 总成绩
+                                    <i class="fa fa-glass"></i> 总成绩
                                 </a>
                             </li>
                         </ul>
 
                     </li>
+
                 </ul>
                 <!-- Sidebar end -->
 
@@ -269,30 +264,25 @@
 
 <script th:inline="javascript">
     /* <![CDATA[ */
-    function requestFullScreen() {
-        var element = document.getElementsByTagName("html")[0];
-        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-        if (requestMethod) {
-            requestMethod.call(element);
-        } else if (typeof window.ActiveXObject !== "undefined") {
-            var wscript = new ActiveXObject("WScript.Shell");
-            if (wscript !== null) {
-                wscript.SendKeys("{F11}");
-            }
-        }
-    }
+
 
     $(function () {
-        var token = [[${token}]];
+        var token = [[${token}]]
+
+        hideNav();
 
         $("#sign-list").height(getClientHeight() - 140);
 
         $(".full-screen-btn").click(function () {
-            $("#navbar").addClass("hide");
-            $("#content").addClass("full-screen");
-            $("#body").addClass("body_full");
-            requestFullScreen();
+            _full_screen();
             $("#sign-list").height(getClientHeight() - 70);
+        });
+
+        $(document).keydown(function (e) {
+            if (e.keyCode == 27) {
+                showNav();
+                $("#sign-list").height(getClientHeight() - 140);
+            }
         });
 
         $("#row").load("/sys/matchSetting/index?token=" + token, function () {
@@ -300,22 +290,27 @@
 
         //现场投屏
         $("#liveScreen").click(function () {
-            isStop = true;
-            var matchId = $("#nowSettingMatch").val();
-            window.location.href = "/sys/index?token=" + token + "&matchId=" + matchId;
+            //var matchId = $("#nowSettingMatch").val();
+            var matchId = "JJX390iH";
+            _destory();
+            showLoading();
+            $("#row").load("/sys/countDown/" + matchId + "?token=" + token, function () {
+                closeLoading();
+            });
         });
 
         //比赛设置
         $("#matchSetting").click(function () {
-            isStop = true;
+            _destory();
+            showLoading();
             $("#row").load("/sys/matchSetting/index?token=" + token, function () {
-
+                closeLoading();
             });
         });
 
         //座位设置
         $("#seatSetting").click(function () {
-            isStop = true;
+            _destory();
             $("#row").load("/sys/seatSetting/index", function () {
 
             });
@@ -324,26 +319,37 @@
         //签到设置
         $("#signSetting").click(function () {
             //var matchId = $("#nowSettingMatch").val();
-            showNotification("错误","非法操作！");
             showLoading();
-            isStop = false;
+            _destory();
             var matchId = "JJX390iH";
             $("#row").load("/sys/sign/match/" + matchId + "?token=" + token, function () {
                 closeLoading();
             });
         });
-    })
 
-    function getClientHeight() {
-        var clientHeight = 0;
-        if (document.body.clientHeight && document.documentElement.clientHeight) {
-            var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
-        }
-        else {
-            var clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
-        }
-        return clientHeight;
-    }
+        //参赛人员
+        $("#users").click(function () {
+            //var matchId = $("#nowSettingMatch").val();
+            showLoading();
+            _destory();
+            var matchId = "JJX390iH";
+            $("#row").load("/sys/sign/users/" + matchId + "?token=" + token, function () {
+                closeLoading();
+            });
+        });
+
+        //比赛规则展示
+        $("#turnBefore").click(function () {
+            //var matchId = $("#nowSettingMatch").val();
+            showLoading();
+            _destory();
+            var matchId = "JJX390iH";
+            $("#row").load("/sys/rule/" + matchId + "?token=" + token, function () {
+                closeLoading();
+            });
+        });
+    });
+
     /* ]]> */
 </script>
 </body>

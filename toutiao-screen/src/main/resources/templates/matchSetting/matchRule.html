@@ -20,6 +20,14 @@
                 $("#ruleSeat_chosen").find("span").html($(this).html());
             }
         });
+
+        $("#next-step").click(function () {
+            //do something
+
+            //去签到页面
+            $("#signSetting").click();
+            showNav();
+        });
     })
 
     function resetMatchRule() {
@@ -160,3 +168,9 @@
     </div>
     <!-- /tile body -->
 </section>
+
+<div class="next-btn-box" style="text-align: center">
+    <button type="button" id="next-step" style="font-size: 18px; padding: 10px 20px;"
+            class="btn btn-green margin-bottom-20">设置完成，下一步
+    </button>
+</div>
