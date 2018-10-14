@@ -14,6 +14,7 @@
             vertical-align: middle !important;
             text-align: center;
             font-size: 16px;
+            color: #ffffff;
         }
 
         .head-title{
@@ -25,7 +26,7 @@
 
     <!-- tile body -->
     <div class="tile-body">
-        <table class="table table-bordered" class="label-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
+        <table class="table table-bordered label-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
             <tr>
                 <td class="head-title" colspan="7">跳跳掼蛋线下赛 —— 第一轮成绩单</td>
             </tr>
@@ -46,25 +47,16 @@
             </tr>
 
 
-            <tr>
-                <td>第1名</td>
-                <td>20</td>
-                <td>刘卓</td>
-                <td>张晓明</td>
-                <td>1</td>
-                <td>A+</td>
-                <td>6</td>
+            <tr th:each="result:${resultlist }">
+                <td th:text="'第'+${resultStat.index+1}+'名'"></td>
+                <td th:text="${result.teamNumber}"></td>
+                <td th:text="${result.userOne }"></td>
+                <td th:text="${result.userTwo }"></td>
+                <td th:text="${result.tableNumber }">1
+                <td th:text="${result.score }"></td>
+                <td th:text="${result.disparity }">6</td>
             </tr>
 
-            <tr>
-                <td>第2名</td>
-                <td>21</td>
-                <td>张三</td>
-                <td>李四</td>
-                <td>1</td>
-                <td>K</td>
-                <td>3</td>
-            </tr>
         </table>
 
     </div>

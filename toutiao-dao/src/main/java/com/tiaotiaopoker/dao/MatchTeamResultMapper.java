@@ -1,11 +1,13 @@
 package com.tiaotiaopoker.dao;
 
+import com.tiaotiaopoker.entity.MatchTeamResultDto;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
 import com.tiaotiaopoker.pojo.MatchTeamResultExample;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component("matchTeamResultMapper")
 public interface MatchTeamResultMapper {
@@ -22,4 +24,6 @@ public interface MatchTeamResultMapper {
     int updateByExampleSelective(@Param("record") MatchTeamResult record, @Param("example") MatchTeamResultExample example);
 
     int updateByExample(@Param("record") MatchTeamResult record, @Param("example") MatchTeamResultExample example);
+
+    List<MatchTeamResultDto> queryResultWithTableNumber(Map<String, Object> paramMap);
 }

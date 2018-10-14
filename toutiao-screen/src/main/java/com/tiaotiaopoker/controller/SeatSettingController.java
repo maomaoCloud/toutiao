@@ -126,6 +126,17 @@ public class SeatSettingController {
         return mv;
     }
 
+    @RequestMapping("seatPrint")
+    public  ModelAndView seatPrint(ModelAndView mv, String matchId, int turnNumber){
+        MatchTeamData data = new MatchTeamData();
+        data.setMatchId(matchId);
+        data.setTurnNumber(turnNumber);
+        List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
+        mv.addObject("dataList", dataList);
+        mv.setViewName("seatSetting/seatPrint");
+        return mv;
+    }
+
     private List<AppUser> getUserList(MatchTeamDataDto data) {
         List<AppUser> userList = new ArrayList<>();
         AppUser user1 = new AppUser();

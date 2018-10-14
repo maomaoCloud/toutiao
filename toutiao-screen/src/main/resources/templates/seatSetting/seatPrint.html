@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    body {
+        width: 100%;
+        font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+    }
+
+    .no-left-border{
+        border-left: 0 !important;
+    }
+
+    table td{
+        vertical-align: middle;
+        text-align: center;
+        font-size: 16px;
+        color: #ffffff;
+    }
+
+    .head-title{
+        font-size: 20px;
+    }
+
+</style>
+<section class="tile color transparent-black">
+    <!-- tile body -->
+    <div class="tile-body">
+        <table th:each="data:${dataList }"
+                class="table table-bordered label-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
+            <tr>
+                <td class="head-title" colspan="6">跳跳掼蛋线下赛 —— 2018年8月5日</td>
+            </tr>
+            <tr>
+                <td>桌卡</td>
+                <td colspan="3">选手姓名</td>
+                <td>级数</td>
+                <td>胜负平</td>
+            </tr>
+            <tr>
+                <td th:text="'第'+${data.turnNumber}+'轮'"></td>
+                <td th:text="${data.teamOneUserOneName}"></td>
+                <td>搭</td>
+                <td th:text="${data.teamOneUserTwoName}"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td th:text="'第'+${data.tableNumber}+'桌'"></td>
+                <td th:text="${data.teamTwoUserOneName}"></td>
+                <td>搭</td>
+                <td th:text="${data.teamTwoUserTwoName}"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>选手签字</td>
+                <td colspan="5"></td>
+            </tr>
+            <tr>
+                <td colspan="6">备注：级数相同，填写胜负；级数不同，可不填。</td>
+            </tr>
+        </table>
+    </div>
+    <!-- /tile body -->
+    <div style="text-align:center;">
+        <button type="button" id="print" class="btn btn-green margin-bottom-20">打印座位表</button>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $("#print").click(function () {
+            $(this).addClass("hide");
+            hideNav();
+            $("html").attr("style","overflow: unset !important;height: auto !important;");
+            window.print();
+            $("html").removeAttr("style");
+            showNav();
+            $(this).removeClass("hide");
+        });
+    });
+</script>
+</html>
+

@@ -4,6 +4,7 @@ import com.tiaotiaopoker.ChineseNum;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.MatchTeamDataDto;
+import com.tiaotiaopoker.entity.MatchTeamResultDto;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchTeamData;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
@@ -61,7 +62,7 @@ public class ResultSettingController {
         List<MatchTeamResult> resultList = matchTeamResultService.queryMatchTeamResultByCondition(matchTeamResult);
         if (resultList != null && resultList.size() > 0) {
             mv.addObject("showFlag", 1);
-        }else {
+        } else {
             mv.addObject("showFlag", 0);
         }
         mv.addObject("list", list);
@@ -87,5 +88,18 @@ public class ResultSettingController {
             e.printStackTrace();
         }
         return jsonResult;
+    }
+
+    @RequestMapping("resultDetail")
+    public ModelAndView resultDetail(ModelAndView mv, String matchId, int turnNumber) {
+
+        MatchTeamResult result = new MatchTeamResult();
+        result.setMatchId(matchId);
+        result.setTurnNumber(turnNumber);
+        List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
+
+        mv.addObject("resultlist", resultlist);
+        mv.setViewName("resultSetting/resultShow");
+        return mv;
     }
 }

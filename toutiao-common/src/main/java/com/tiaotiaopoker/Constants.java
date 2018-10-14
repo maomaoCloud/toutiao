@@ -5,7 +5,7 @@ package com.tiaotiaopoker;
  * Created by xiekang on 17/4/18.
  */
 public class Constants {
-    public static final String NUM_CH[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+    public static final String NUM_CH[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九"};
 
     public final static class ApiCode {
         public static final Integer SUCCESS = 200;
@@ -54,9 +54,9 @@ public class Constants {
     }
 
     public static final class ruleSeat {
-        public static final Integer SORT_NEAR      = 1;
+        public static final Integer SORT_NEAR = 1;
         public static final Integer SORT_BEGIN_END = 2;
-        public static final Integer SRTT_MIDDLE    = 3;
+        public static final Integer SRTT_MIDDLE = 3;
     }
 
     public static final class result {
@@ -65,10 +65,7 @@ public class Constants {
         public static final Integer FAIL = 0;
         public static final Integer DRAW = 1;
         public static final Integer TURN_FIRST = 1;
-        public static final String TOTAL_EXFIRST = "totalExfirst";
-        public static final String TOTAL_POINT = "totalPoint";
-        public static final String TOTAL_DISPARITY = "totalDisparity";
-        public static final String TOTAL_EXFIRST_ALL = "totalExfirstAll";
+        public static final String[] SCORE = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "A+"};
 
     }
 }
