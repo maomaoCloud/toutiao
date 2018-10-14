@@ -1,7 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script type="text/javascript"
-            th:src="@{${#httpServletRequest.getContextPath()} + '/js/Sortable.js'}"></script>
     <style>
         body {
             width: 100%;
@@ -40,7 +38,6 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
-            cursor: move;
         }
 
         .user:nth-child(2n+1) {
@@ -130,47 +127,20 @@
             </div>
             <!-- tile widget -->
             <div class="" id="sign-list">
-                <div class="user move-user" th:each="user:${userList}" th:data-id="${user.id}">
-                    <img th:src="${user.avatarUrl}">
-                    <span class="user-name" th:text="${user.nickName}"></span>
+                <div class="user move-user" th:each="user:${userList }">
+                    <img th:src="${user.avatarUrl}== null? '/images/head.png':${user.avatarUrl} ">
+                    <span class="user-name" th:text="${user.trueName }"></span>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
-<!-- 操作按钮 -->
-<div class="col-lg-12 col-md-12" style="text-align: center;">
-    <button type="button" id="over" class="btn btn-success margin-bottom-20">保存排列结果</button>
-    <button type="button" id="reset" class="btn btn-danger margin-bottom-20">重新排列</button>
-</div>
 <!-- /操作按钮 -->
 <script>
     var ell = document.getElementById('sign-list');
-    Sortable.create(ell, {
-        animation: 150,
-        group: "user"
-    });
 
     $(function () {
-        $("#over").click(function () {
-            var sortResult = new Array();
-            $(".user").each(function () {
-                var id = $(this).attr("data-id");
-                sortResult.push(id);
-            });
-
-            //打印排序结果
-            console.log(sortResult);
-            //保存首轮座位
-            $.post("/sys/seatSetting/save?token=" + getToken() + "&matchId=" + $("#nowSettingMatch").val() + "&userIds=" + sortResult + "&turnNumber=1", function (data) {
-
-            });
-        });
-
-        //重新排序，就是刷新页面重新进入
-        $("#reset").click(function () {
-            window.location.reload();
-        });
     });
 </script>
 </html>

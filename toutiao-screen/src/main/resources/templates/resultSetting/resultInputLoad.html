@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<form id="teamResultForm">
+    <input type="hidden" th:value="${matchId }" name="matchId">
+    <input type="hidden" th:value="${ruleTurn }" name="turnNumber">
+    <div class="user-group" th:each="team:${list}">
+        <div class="zh"><span th:text="${team.tableNumber }"></span></div>
+        <input type="hidden" name="id" th:value="${team.id }">
+        <div class="g g-a">
+            <input type="hidden" name="teamOneId" th:value="${team.teamOneId }">
+            <div class="user-a">
+                <img th:src="${team.teamOneUserOneHead}">
+                <span class="user-name" th:text="${team.teamOneUserOneName}"></span>
+            </div>
+            <div class="da">搭</div>
+            <div class="user-b">
+                <img th:src="${team.teamOneUserTwoHead}">
+                <span class="user-name" th:text="${team.teamOneUserTwoName}"></span>
+            </div>
+            <div class="score">
+                <span>级数：</span>
+                <select class="score-slt" name="teamOneScore" th:value="${team.teamOneScore}">
+                    <option th:value="0"></option>
+                    <option th:value="2">2</option>
+                    <option th:value="3">3</option>
+                    <option th:value="4">4</option>
+                    <option th:value="5">5</option>
+                    <option th:value="6">6</option>
+                    <option th:value="7">7</option>
+                    <option th:value="8">8</option>
+                    <option th:value="9">9</option>
+                    <option th:value="10">10</option>
+                    <option th:value="11">J</option>
+                    <option th:value="12">Q</option>
+                    <option th:value="13">K</option>
+                    <option th:value="14">A</option>
+                    <option th:value="15">过A</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="g g-b">
+            <div class="score">
+                <span>级数：</span>
+                <select class="score-slt" name="teamTwoScore" th:value="${team.teamOneScore}">
+                    <option th:value="0"></option>
+                    <option th:value="2">2</option>
+                    <option th:value="3">3</option>
+                    <option th:value="4">4</option>
+                    <option th:value="5">5</option>
+                    <option th:value="6">6</option>
+                    <option th:value="7">7</option>
+                    <option th:value="8">8</option>
+                    <option th:value="9">9</option>
+                    <option th:value="10">10</option>
+                    <option th:value="11">J</option>
+                    <option th:value="12">Q</option>
+                    <option th:value="13">K</option>
+                    <option th:value="14">A</option>
+                    <option th:value="15">过A</option>
+                </select>
+            </div>
+            <input type="hidden" name="teamTwoId" th:value="${team.teamTwoId }">
+            <div class="user-a">
+                <img th:src="${team.teamTwoUserOneHead}">
+                <span class="user-name" th:text="${team.teamTwoUserOneName}"></span>
+            </div>
+            <div class="da">搭</div>
+            <div class="user-b">
+                <img th:src="${team.teamTwoUserTwoHead}">
+                <span class="user-name" th:text="${team.teamTwoUserTwoName}"></span>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(function () {
+        var showFlag = [[${showFlag}]];
+        if (showFlag == 1) {
+            $("#saveResultBtn").html("已提交");
+            $("#saveResultBtn").unbind("click");
+        } else {
+            $("#saveResultBtn").html("保存");
+            $("#saveResultBtn").click(function () {
+                showLoading();
+                $.post("/sys/resultSetting/save?token=" + getToken(), $("#teamResultForm").serialize(), function (data) {
+                    closeLoading();
+                });
+            })
+        }
+    });
+</script>

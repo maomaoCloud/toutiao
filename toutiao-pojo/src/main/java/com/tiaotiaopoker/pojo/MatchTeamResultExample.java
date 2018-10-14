@@ -3,14 +3,14 @@ package com.tiaotiaopoker.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchTeamDataExample {
+public class MatchTeamResultExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public MatchTeamDataExample() {
+    public MatchTeamResultExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -244,6 +244,76 @@ public class MatchTeamDataExample {
             return (Criteria) this;
         }
 
+        public Criteria andTeamIdIsNull() {
+            addCriterion("team_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIsNotNull() {
+            addCriterion("team_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdEqualTo(String value) {
+            addCriterion("team_id =", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotEqualTo(String value) {
+            addCriterion("team_id <>", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThan(String value) {
+            addCriterion("team_id >", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThanOrEqualTo(String value) {
+            addCriterion("team_id >=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThan(String value) {
+            addCriterion("team_id <", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThanOrEqualTo(String value) {
+            addCriterion("team_id <=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLike(String value) {
+            addCriterion("team_id like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotLike(String value) {
+            addCriterion("team_id not like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIn(List<String> values) {
+            addCriterion("team_id in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotIn(List<String> values) {
+            addCriterion("team_id not in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdBetween(String value1, String value2) {
+            addCriterion("team_id between", value1, value2, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotBetween(String value1, String value2) {
+            addCriterion("team_id not between", value1, value2, "teamId");
+            return (Criteria) this;
+        }
+
         public Criteria andTurnNumberIsNull() {
             addCriterion("turn_number is null");
             return (Criteria) this;
@@ -304,343 +374,433 @@ public class MatchTeamDataExample {
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberIsNull() {
-            addCriterion("table_number is null");
+        public Criteria andScoreIsNull() {
+            addCriterion("score is null");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberIsNotNull() {
-            addCriterion("table_number is not null");
+        public Criteria andScoreIsNotNull() {
+            addCriterion("score is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberEqualTo(Integer value) {
-            addCriterion("table_number =", value, "tableNumber");
+        public Criteria andScoreEqualTo(String value) {
+            addCriterion("score =", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberNotEqualTo(Integer value) {
-            addCriterion("table_number <>", value, "tableNumber");
+        public Criteria andScoreNotEqualTo(String value) {
+            addCriterion("score <>", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberGreaterThan(Integer value) {
-            addCriterion("table_number >", value, "tableNumber");
+        public Criteria andScoreGreaterThan(String value) {
+            addCriterion("score >", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberGreaterThanOrEqualTo(Integer value) {
-            addCriterion("table_number >=", value, "tableNumber");
+        public Criteria andScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("score >=", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberLessThan(Integer value) {
-            addCriterion("table_number <", value, "tableNumber");
+        public Criteria andScoreLessThan(String value) {
+            addCriterion("score <", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberLessThanOrEqualTo(Integer value) {
-            addCriterion("table_number <=", value, "tableNumber");
+        public Criteria andScoreLessThanOrEqualTo(String value) {
+            addCriterion("score <=", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberIn(List<Integer> values) {
-            addCriterion("table_number in", values, "tableNumber");
+        public Criteria andScoreLike(String value) {
+            addCriterion("score like", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberNotIn(List<Integer> values) {
-            addCriterion("table_number not in", values, "tableNumber");
+        public Criteria andScoreNotLike(String value) {
+            addCriterion("score not like", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberBetween(Integer value1, Integer value2) {
-            addCriterion("table_number between", value1, value2, "tableNumber");
+        public Criteria andScoreIn(List<String> values) {
+            addCriterion("score in", values, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTableNumberNotBetween(Integer value1, Integer value2) {
-            addCriterion("table_number not between", value1, value2, "tableNumber");
+        public Criteria andScoreNotIn(List<String> values) {
+            addCriterion("score not in", values, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdIsNull() {
-            addCriterion("team_one_id is null");
+        public Criteria andScoreBetween(String value1, String value2) {
+            addCriterion("score between", value1, value2, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdIsNotNull() {
-            addCriterion("team_one_id is not null");
+        public Criteria andScoreNotBetween(String value1, String value2) {
+            addCriterion("score not between", value1, value2, "score");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdEqualTo(String value) {
-            addCriterion("team_one_id =", value, "teamOneId");
+        public Criteria andPointIsNull() {
+            addCriterion("point is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdNotEqualTo(String value) {
-            addCriterion("team_one_id <>", value, "teamOneId");
+        public Criteria andPointIsNotNull() {
+            addCriterion("point is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdGreaterThan(String value) {
-            addCriterion("team_one_id >", value, "teamOneId");
+        public Criteria andPointEqualTo(Integer value) {
+            addCriterion("point =", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdGreaterThanOrEqualTo(String value) {
-            addCriterion("team_one_id >=", value, "teamOneId");
+        public Criteria andPointNotEqualTo(Integer value) {
+            addCriterion("point <>", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdLessThan(String value) {
-            addCriterion("team_one_id <", value, "teamOneId");
+        public Criteria andPointGreaterThan(Integer value) {
+            addCriterion("point >", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdLessThanOrEqualTo(String value) {
-            addCriterion("team_one_id <=", value, "teamOneId");
+        public Criteria andPointGreaterThanOrEqualTo(Integer value) {
+            addCriterion("point >=", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdLike(String value) {
-            addCriterion("team_one_id like", value, "teamOneId");
+        public Criteria andPointLessThan(Integer value) {
+            addCriterion("point <", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdNotLike(String value) {
-            addCriterion("team_one_id not like", value, "teamOneId");
+        public Criteria andPointLessThanOrEqualTo(Integer value) {
+            addCriterion("point <=", value, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdIn(List<String> values) {
-            addCriterion("team_one_id in", values, "teamOneId");
+        public Criteria andPointIn(List<Integer> values) {
+            addCriterion("point in", values, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdNotIn(List<String> values) {
-            addCriterion("team_one_id not in", values, "teamOneId");
+        public Criteria andPointNotIn(List<Integer> values) {
+            addCriterion("point not in", values, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdBetween(String value1, String value2) {
-            addCriterion("team_one_id between", value1, value2, "teamOneId");
+        public Criteria andPointBetween(Integer value1, Integer value2) {
+            addCriterion("point between", value1, value2, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneIdNotBetween(String value1, String value2) {
-            addCriterion("team_one_id not between", value1, value2, "teamOneId");
+        public Criteria andPointNotBetween(Integer value1, Integer value2) {
+            addCriterion("point not between", value1, value2, "point");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreIsNull() {
-            addCriterion("team_one_score is null");
+        public Criteria andDisparityIsNull() {
+            addCriterion("disparity is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreIsNotNull() {
-            addCriterion("team_one_score is not null");
+        public Criteria andDisparityIsNotNull() {
+            addCriterion("disparity is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreEqualTo(String value) {
-            addCriterion("team_one_score =", value, "teamOneScore");
+        public Criteria andDisparityEqualTo(Integer value) {
+            addCriterion("disparity =", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreNotEqualTo(String value) {
-            addCriterion("team_one_score <>", value, "teamOneScore");
+        public Criteria andDisparityNotEqualTo(Integer value) {
+            addCriterion("disparity <>", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreGreaterThan(String value) {
-            addCriterion("team_one_score >", value, "teamOneScore");
+        public Criteria andDisparityGreaterThan(Integer value) {
+            addCriterion("disparity >", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreGreaterThanOrEqualTo(String value) {
-            addCriterion("team_one_score >=", value, "teamOneScore");
+        public Criteria andDisparityGreaterThanOrEqualTo(Integer value) {
+            addCriterion("disparity >=", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreLessThan(String value) {
-            addCriterion("team_one_score <", value, "teamOneScore");
+        public Criteria andDisparityLessThan(Integer value) {
+            addCriterion("disparity <", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreLessThanOrEqualTo(String value) {
-            addCriterion("team_one_score <=", value, "teamOneScore");
+        public Criteria andDisparityLessThanOrEqualTo(Integer value) {
+            addCriterion("disparity <=", value, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreLike(String value) {
-            addCriterion("team_one_score like", value, "teamOneScore");
+        public Criteria andDisparityIn(List<Integer> values) {
+            addCriterion("disparity in", values, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreNotLike(String value) {
-            addCriterion("team_one_score not like", value, "teamOneScore");
+        public Criteria andDisparityNotIn(List<Integer> values) {
+            addCriterion("disparity not in", values, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreIn(List<String> values) {
-            addCriterion("team_one_score in", values, "teamOneScore");
+        public Criteria andDisparityBetween(Integer value1, Integer value2) {
+            addCriterion("disparity between", value1, value2, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreNotIn(List<String> values) {
-            addCriterion("team_one_score not in", values, "teamOneScore");
+        public Criteria andDisparityNotBetween(Integer value1, Integer value2) {
+            addCriterion("disparity not between", value1, value2, "disparity");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreBetween(String value1, String value2) {
-            addCriterion("team_one_score between", value1, value2, "teamOneScore");
+        public Criteria andTotalExfirstIsNull() {
+            addCriterion("total_exfirst is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamOneScoreNotBetween(String value1, String value2) {
-            addCriterion("team_one_score not between", value1, value2, "teamOneScore");
+        public Criteria andTotalExfirstIsNotNull() {
+            addCriterion("total_exfirst is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdIsNull() {
-            addCriterion("team_two_id is null");
+        public Criteria andTotalExfirstEqualTo(Integer value) {
+            addCriterion("total_exfirst =", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdIsNotNull() {
-            addCriterion("team_two_id is not null");
+        public Criteria andTotalExfirstNotEqualTo(Integer value) {
+            addCriterion("total_exfirst <>", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdEqualTo(String value) {
-            addCriterion("team_two_id =", value, "teamTwoId");
+        public Criteria andTotalExfirstGreaterThan(Integer value) {
+            addCriterion("total_exfirst >", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdNotEqualTo(String value) {
-            addCriterion("team_two_id <>", value, "teamTwoId");
+        public Criteria andTotalExfirstGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_exfirst >=", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdGreaterThan(String value) {
-            addCriterion("team_two_id >", value, "teamTwoId");
+        public Criteria andTotalExfirstLessThan(Integer value) {
+            addCriterion("total_exfirst <", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdGreaterThanOrEqualTo(String value) {
-            addCriterion("team_two_id >=", value, "teamTwoId");
+        public Criteria andTotalExfirstLessThanOrEqualTo(Integer value) {
+            addCriterion("total_exfirst <=", value, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdLessThan(String value) {
-            addCriterion("team_two_id <", value, "teamTwoId");
+        public Criteria andTotalExfirstIn(List<Integer> values) {
+            addCriterion("total_exfirst in", values, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdLessThanOrEqualTo(String value) {
-            addCriterion("team_two_id <=", value, "teamTwoId");
+        public Criteria andTotalExfirstNotIn(List<Integer> values) {
+            addCriterion("total_exfirst not in", values, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdLike(String value) {
-            addCriterion("team_two_id like", value, "teamTwoId");
+        public Criteria andTotalExfirstBetween(Integer value1, Integer value2) {
+            addCriterion("total_exfirst between", value1, value2, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdNotLike(String value) {
-            addCriterion("team_two_id not like", value, "teamTwoId");
+        public Criteria andTotalExfirstNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_exfirst not between", value1, value2, "totalExfirst");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdIn(List<String> values) {
-            addCriterion("team_two_id in", values, "teamTwoId");
+        public Criteria andTotalPointIsNull() {
+            addCriterion("total_point is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdNotIn(List<String> values) {
-            addCriterion("team_two_id not in", values, "teamTwoId");
+        public Criteria andTotalPointIsNotNull() {
+            addCriterion("total_point is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdBetween(String value1, String value2) {
-            addCriterion("team_two_id between", value1, value2, "teamTwoId");
+        public Criteria andTotalPointEqualTo(Integer value) {
+            addCriterion("total_point =", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoIdNotBetween(String value1, String value2) {
-            addCriterion("team_two_id not between", value1, value2, "teamTwoId");
+        public Criteria andTotalPointNotEqualTo(Integer value) {
+            addCriterion("total_point <>", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreIsNull() {
-            addCriterion("team_two_score is null");
+        public Criteria andTotalPointGreaterThan(Integer value) {
+            addCriterion("total_point >", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreIsNotNull() {
-            addCriterion("team_two_score is not null");
+        public Criteria andTotalPointGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_point >=", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreEqualTo(String value) {
-            addCriterion("team_two_score =", value, "teamTwoScore");
+        public Criteria andTotalPointLessThan(Integer value) {
+            addCriterion("total_point <", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreNotEqualTo(String value) {
-            addCriterion("team_two_score <>", value, "teamTwoScore");
+        public Criteria andTotalPointLessThanOrEqualTo(Integer value) {
+            addCriterion("total_point <=", value, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreGreaterThan(String value) {
-            addCriterion("team_two_score >", value, "teamTwoScore");
+        public Criteria andTotalPointIn(List<Integer> values) {
+            addCriterion("total_point in", values, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreGreaterThanOrEqualTo(String value) {
-            addCriterion("team_two_score >=", value, "teamTwoScore");
+        public Criteria andTotalPointNotIn(List<Integer> values) {
+            addCriterion("total_point not in", values, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreLessThan(String value) {
-            addCriterion("team_two_score <", value, "teamTwoScore");
+        public Criteria andTotalPointBetween(Integer value1, Integer value2) {
+            addCriterion("total_point between", value1, value2, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreLessThanOrEqualTo(String value) {
-            addCriterion("team_two_score <=", value, "teamTwoScore");
+        public Criteria andTotalPointNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_point not between", value1, value2, "totalPoint");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreLike(String value) {
-            addCriterion("team_two_score like", value, "teamTwoScore");
+        public Criteria andTotalExfirstAllIsNull() {
+            addCriterion("total_exfirst_all is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreNotLike(String value) {
-            addCriterion("team_two_score not like", value, "teamTwoScore");
+        public Criteria andTotalExfirstAllIsNotNull() {
+            addCriterion("total_exfirst_all is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreIn(List<String> values) {
-            addCriterion("team_two_score in", values, "teamTwoScore");
+        public Criteria andTotalExfirstAllEqualTo(Integer value) {
+            addCriterion("total_exfirst_all =", value, "totalExfirstAll");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreNotIn(List<String> values) {
-            addCriterion("team_two_score not in", values, "teamTwoScore");
+        public Criteria andTotalExfirstAllNotEqualTo(Integer value) {
+            addCriterion("total_exfirst_all <>", value, "totalExfirstAll");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreBetween(String value1, String value2) {
-            addCriterion("team_two_score between", value1, value2, "teamTwoScore");
+        public Criteria andTotalExfirstAllGreaterThan(Integer value) {
+            addCriterion("total_exfirst_all >", value, "totalExfirstAll");
             return (Criteria) this;
         }
 
-        public Criteria andTeamTwoScoreNotBetween(String value1, String value2) {
-            addCriterion("team_two_score not between", value1, value2, "teamTwoScore");
+        public Criteria andTotalExfirstAllGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_exfirst_all >=", value, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllLessThan(Integer value) {
+            addCriterion("total_exfirst_all <", value, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllLessThanOrEqualTo(Integer value) {
+            addCriterion("total_exfirst_all <=", value, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllIn(List<Integer> values) {
+            addCriterion("total_exfirst_all in", values, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllNotIn(List<Integer> values) {
+            addCriterion("total_exfirst_all not in", values, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllBetween(Integer value1, Integer value2) {
+            addCriterion("total_exfirst_all between", value1, value2, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalExfirstAllNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_exfirst_all not between", value1, value2, "totalExfirstAll");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityIsNull() {
+            addCriterion("total_disparity is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityIsNotNull() {
+            addCriterion("total_disparity is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityEqualTo(Integer value) {
+            addCriterion("total_disparity =", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityNotEqualTo(Integer value) {
+            addCriterion("total_disparity <>", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityGreaterThan(Integer value) {
+            addCriterion("total_disparity >", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_disparity >=", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityLessThan(Integer value) {
+            addCriterion("total_disparity <", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityLessThanOrEqualTo(Integer value) {
+            addCriterion("total_disparity <=", value, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityIn(List<Integer> values) {
+            addCriterion("total_disparity in", values, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityNotIn(List<Integer> values) {
+            addCriterion("total_disparity not in", values, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityBetween(Integer value1, Integer value2) {
+            addCriterion("total_disparity between", value1, value2, "totalDisparity");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_disparity not between", value1, value2, "totalDisparity");
             return (Criteria) this;
         }
     }

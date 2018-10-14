@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    body {
+        width: 100%;
+        font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+    }
+
+    .no-left-border{
+        border-left: 0 !important;
+    }
+
+    table td{
+        vertical-align: middle;
+        text-align: center;
+        font-size: 16px;
+        color: #ffffff;
+    }
+
+    .head-title{
+        font-size: 20px;
+    }
+</style>
+<!-- tile -->
+<section class="tile color transparent-black">
+
+    <!-- tile body -->
+    <div class="tile-body">
+
+        <table class="table table-bordered" id="seat-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
+            <tr>
+                <td class="head-title" colspan="8">
+                    <div style="margin-top:10px;">跳跳掼蛋线下赛</div>
+                    <div style="font-size:16px; margin:10px;" th:text="'第'+${turnNumChines}+'轮 座位表'"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="8%" class="color-1">桌号</td>
+                <td class="color-2">东</td>
+                <td width="5%" class="color-2 no-left-border"></td>
+                <td class="color-2 no-left-border">西</td>
+                <td width="5%" class="vs"></td>
+                <td class="color-3">南</td>
+                <td width="5%" class="color-3 no-left-border"></td>
+                <td class="color-3 no-left-border">北</td>
+            </tr>
+
+            <tr th:each="data:${dataList}">
+                <td th:text="${data.tableNumber}"></td>
+                <td th:text="${data.teamOneUserOneName}"></td>
+                <td>搭</td>
+                <td th:text="${data.teamOneUserTwoName}"></td>
+                <td>VS</td>
+                <td th:text="${data.teamTwoUserOneName}"></td>
+                <td>搭</td>
+                <td th:text="${data.teamTwoUserTwoName}"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- /tile body -->
+
+    <div style="text-align:center;">
+        <button type="button" id="print" class="btn btn-green margin-bottom-20">打印座位表</button>
+    </div>
+
+</section>
+<script>
+    $(function () {
+        $("#print").click(function () {
+            $(this).addClass("hide");
+            $("html").attr("style","overflow:auto;height: auto;");
+            hideNav();
+            window.print();
+            showNav();
+            $("html").removeAttr("style");
+            $(this).removeClass("hide");
+        });
+    });
+</script>
+</html>
+

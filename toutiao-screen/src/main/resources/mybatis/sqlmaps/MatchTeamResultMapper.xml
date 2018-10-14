@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiaotiaopoker.dao.MatchTeamResultMapper">
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.MatchTeamResult">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="match_id" jdbcType="VARCHAR" property="matchId" />
+    <result column="team_id" jdbcType="VARCHAR" property="teamId" />
+    <result column="turn_number" jdbcType="INTEGER" property="turnNumber" />
+    <result column="score" jdbcType="VARCHAR" property="score" />
+    <result column="point" jdbcType="INTEGER" property="point" />
+    <result column="disparity" jdbcType="INTEGER" property="disparity" />
+    <result column="total_exfirst" jdbcType="INTEGER" property="totalExfirst" />
+    <result column="total_point" jdbcType="INTEGER" property="totalPoint" />
+    <result column="total_exfirst_all" jdbcType="INTEGER" property="totalExfirstAll" />
+    <result column="total_disparity" jdbcType="INTEGER" property="totalDisparity" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, match_id, team_id, turn_number, score, point, disparity, total_exfirst, total_point, 
+    total_exfirst_all, total_disparity
+  </sql>
+  <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from match_team_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamResultExample">
+    delete from match_team_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchTeamResult">
+    insert into match_team_result (id, match_id, team_id, 
+      turn_number, score, point, 
+      disparity, total_exfirst, total_point, 
+      total_exfirst_all, total_disparity)
+    values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{teamId,jdbcType=VARCHAR}, 
+      #{turnNumber,jdbcType=INTEGER}, #{score,jdbcType=VARCHAR}, #{point,jdbcType=INTEGER}, 
+      #{disparity,jdbcType=INTEGER}, #{totalExfirst,jdbcType=INTEGER}, #{totalPoint,jdbcType=INTEGER}, 
+      #{totalExfirstAll,jdbcType=INTEGER}, #{totalDisparity,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamResult">
+    insert into match_team_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="matchId != null">
+        match_id,
+      </if>
+      <if test="teamId != null">
+        team_id,
+      </if>
+      <if test="turnNumber != null">
+        turn_number,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="point != null">
+        point,
+      </if>
+      <if test="disparity != null">
+        disparity,
+      </if>
+      <if test="totalExfirst != null">
+        total_exfirst,
+      </if>
+      <if test="totalPoint != null">
+        total_point,
+      </if>
+      <if test="totalExfirstAll != null">
+        total_exfirst_all,
+      </if>
+      <if test="totalDisparity != null">
+        total_disparity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="matchId != null">
+        #{matchId,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null">
+        #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="turnNumber != null">
+        #{turnNumber,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null">
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="disparity != null">
+        #{disparity,jdbcType=INTEGER},
+      </if>
+      <if test="totalExfirst != null">
+        #{totalExfirst,jdbcType=INTEGER},
+      </if>
+      <if test="totalPoint != null">
+        #{totalPoint,jdbcType=INTEGER},
+      </if>
+      <if test="totalExfirstAll != null">
+        #{totalExfirstAll,jdbcType=INTEGER},
+      </if>
+      <if test="totalDisparity != null">
+        #{totalDisparity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamResultExample" resultType="java.lang.Integer">
+    select count(*) from match_team_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update match_team_result
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.matchId != null">
+        match_id = #{record.matchId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamId != null">
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turnNumber != null">
+        turn_number = #{record.turnNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=VARCHAR},
+      </if>
+      <if test="record.point != null">
+        point = #{record.point,jdbcType=INTEGER},
+      </if>
+      <if test="record.disparity != null">
+        disparity = #{record.disparity,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalExfirst != null">
+        total_exfirst = #{record.totalExfirst,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalPoint != null">
+        total_point = #{record.totalPoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalExfirstAll != null">
+        total_exfirst_all = #{record.totalExfirstAll,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalDisparity != null">
+        total_disparity = #{record.totalDisparity,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update match_team_result
+    set id = #{record.id,jdbcType=VARCHAR},
+      match_id = #{record.matchId,jdbcType=VARCHAR},
+      team_id = #{record.teamId,jdbcType=VARCHAR},
+      turn_number = #{record.turnNumber,jdbcType=INTEGER},
+      score = #{record.score,jdbcType=VARCHAR},
+      point = #{record.point,jdbcType=INTEGER},
+      disparity = #{record.disparity,jdbcType=INTEGER},
+      total_exfirst = #{record.totalExfirst,jdbcType=INTEGER},
+      total_point = #{record.totalPoint,jdbcType=INTEGER},
+      total_exfirst_all = #{record.totalExfirstAll,jdbcType=INTEGER},
+      total_disparity = #{record.totalDisparity,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -13,21 +13,9 @@ public class MatchTeamData {
 
     private String teamOneScore;
 
-    private Integer teamOnePoint;
-
-    private Integer teamOneDisparity;
-
-    private Integer teamOneTotalExfirst;
-
     private String teamTwoId;
 
     private String teamTwoScore;
-
-    private Integer teamTwoPoint;
-
-    private Integer teamTwoDisparity;
-
-    private Integer teamTwoTotalExfirst;
 
     public String getId() {
         return id;
@@ -77,30 +65,6 @@ public class MatchTeamData {
         this.teamOneScore = teamOneScore == null ? null : teamOneScore.trim();
     }
 
-    public Integer getTeamOnePoint() {
-        return teamOnePoint;
-    }
-
-    public void setTeamOnePoint(Integer teamOnePoint) {
-        this.teamOnePoint = teamOnePoint;
-    }
-
-    public Integer getTeamOneDisparity() {
-        return teamOneDisparity;
-    }
-
-    public void setTeamOneDisparity(Integer teamOneDisparity) {
-        this.teamOneDisparity = teamOneDisparity;
-    }
-
-    public Integer getTeamOneTotalExfirst() {
-        return teamOneTotalExfirst;
-    }
-
-    public void setTeamOneTotalExfirst(Integer teamOneTotalExfirst) {
-        this.teamOneTotalExfirst = teamOneTotalExfirst;
-    }
-
     public String getTeamTwoId() {
         return teamTwoId;
     }
@@ -115,29 +79,5 @@ public class MatchTeamData {
 
     public void setTeamTwoScore(String teamTwoScore) {
         this.teamTwoScore = teamTwoScore == null ? null : teamTwoScore.trim();
-    }
-
-    public Integer getTeamTwoPoint() {
-        return teamTwoPoint;
-    }
-
-    public void setTeamTwoPoint(Integer teamTwoPoint) {
-        this.teamTwoPoint = teamTwoPoint;
-    }
-
-    public Integer getTeamTwoDisparity() {
-        return teamTwoDisparity;
-    }
-
-    public void setTeamTwoDisparity(Integer teamTwoDisparity) {
-        this.teamTwoDisparity = teamTwoDisparity;
-    }
-
-    public Integer getTeamTwoTotalExfirst() {
-        return teamTwoTotalExfirst;
-    }
-
-    public void setTeamTwoTotalExfirst(Integer teamTwoTotalExfirst) {
-        this.teamTwoTotalExfirst = teamTwoTotalExfirst;
     }
 }

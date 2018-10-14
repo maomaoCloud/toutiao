@@ -3,6 +3,8 @@ package com.tiaotiaopoker.pojo;
 public class MatchTeamMember {
     private String id;
 
+    private String matchId;
+
     private Integer teamNumber;
 
     private String teamMemberOne;
@@ -15,6 +17,14 @@ public class MatchTeamMember {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(String matchId) {
+        this.matchId = matchId == null ? null : matchId.trim();
     }
 
     public Integer getTeamNumber() {

@@ -123,7 +123,7 @@
                     </li>
 
                     <li class="divided">
-                        <a href="#">成绩录入</a>
+                        <a href="javascript:;" th:id="resultSetting">成绩录入</a>
                     </li>
 
                     <li class="divided">
@@ -168,7 +168,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="form-elements.html">
+                                        <a href="'javascript:seatShowDetail('+${turnStat.index+1}+')'">
                                             <i class="fa fa-group"></i> 座位
                                         </a>
                                     </li>
@@ -269,6 +269,7 @@
     $(function () {
         var token = [[${token}]]
 
+        updateToken(token);
         hideNav();
 
         $("#sign-list").height(getClientHeight() - 140);
@@ -311,8 +312,11 @@
         //座位设置
         $("#seatSetting").click(function () {
             _destory();
-            $("#row").load("/sys/seatSetting/index", function () {
-
+            //var matchId = $("#nowSettingMatch").val();
+            showLoading();
+            var matchId = "JJX390iH";
+            $("#row").load("/sys/seatSetting/index?token="+token +"&matchId="+matchId, function () {
+                closeLoading();
             });
         });
 
@@ -338,6 +342,17 @@
             });
         });
 
+        //成绩录入
+        $("#resultSetting").click(function () {
+            //var matchId = $("#nowSettingMatch").val();
+            showLoading();
+            _destory();
+            var matchId = "JJX390iH";
+            $("#row").load("/sys/resultSetting/resultInput?matchId=" + matchId + "&token=" + token, function () {
+                closeLoading();
+            });
+        });
+
         //比赛规则展示
         $("#turnBefore").click(function () {
             //var matchId = $("#nowSettingMatch").val();
@@ -349,6 +364,13 @@
             });
         });
     });
+
+    function seatShowDetail(turnNumber) {
+        showLoading();
+        $("#row").load("/sys/seatSetting/showDetail",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+            closeLoading();
+        });
+    }
 
     /* ]]> */
 </script>

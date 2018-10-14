@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.dao;
 
+import com.tiaotiaopoker.entity.MatchTeamDataDto;
 import com.tiaotiaopoker.pojo.AppUser;
 import com.tiaotiaopoker.pojo.MatchTeamData;
 import com.tiaotiaopoker.pojo.MatchTeamDataExample;
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component("matchTeamDataMapper")
 public interface MatchTeamDataMapper {
@@ -33,4 +35,6 @@ public interface MatchTeamDataMapper {
     int updateByPrimaryKey(MatchTeamData record);
 
     List<AppUser> queryTeamUserByMatchId(String matchId);
+
+    List<MatchTeamDataDto> queryTeamDataByCondition(Map<String, Object> paramMap);
 }

@@ -174,6 +174,76 @@ public class MatchTeamMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andMatchIdIsNull() {
+            addCriterion("match_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdIsNotNull() {
+            addCriterion("match_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdEqualTo(String value) {
+            addCriterion("match_id =", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdNotEqualTo(String value) {
+            addCriterion("match_id <>", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdGreaterThan(String value) {
+            addCriterion("match_id >", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdGreaterThanOrEqualTo(String value) {
+            addCriterion("match_id >=", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdLessThan(String value) {
+            addCriterion("match_id <", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdLessThanOrEqualTo(String value) {
+            addCriterion("match_id <=", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdLike(String value) {
+            addCriterion("match_id like", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdNotLike(String value) {
+            addCriterion("match_id not like", value, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdIn(List<String> values) {
+            addCriterion("match_id in", values, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdNotIn(List<String> values) {
+            addCriterion("match_id not in", values, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdBetween(String value1, String value2) {
+            addCriterion("match_id between", value1, value2, "matchId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMatchIdNotBetween(String value1, String value2) {
+            addCriterion("match_id not between", value1, value2, "matchId");
+            return (Criteria) this;
+        }
+
         public Criteria andTeamNumberIsNull() {
             addCriterion("team_number is null");
             return (Criteria) this;
