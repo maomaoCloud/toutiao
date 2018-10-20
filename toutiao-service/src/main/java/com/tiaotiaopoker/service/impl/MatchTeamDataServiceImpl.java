@@ -251,7 +251,7 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
         //积分和
         result.setTotalPoint(turnNumber.equals(Constants.result.TURN_FIRST) ? result.getPoint() : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalPoint() + result.getPoint());
         //极差和
-        result.setTotalDisparity(turnNumber.equals(Constants.result.TURN_FIRST) ? result.getDisparity() : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getDisparity() + result.getDisparity());
+        result.setTotalDisparity(turnNumber.equals(Constants.result.TURN_FIRST) ? result.getDisparity() : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalDisparity() + result.getDisparity());
         //去首轮积分
         result.setTotalExfirst(turnNumber.equals(Constants.result.TURN_FIRST) ? 0 : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalExfirst() + result.getPoint());
         //去首轮积分和

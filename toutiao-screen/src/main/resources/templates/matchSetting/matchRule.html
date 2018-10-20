@@ -3,7 +3,7 @@
     /* <![CDATA[ */
     $(function () {
         //chosen select input
-        $(".chosen-select").chosen({disable_search_threshold: 10});
+        //$(".chosen-select").chosen({disable_search_threshold: 10});
 
         $("#updateMatchRule").click(function () {
             $.post("/sys/matchSetting/save", $("#matchRuleForm").serialize(), function (data) {
@@ -22,12 +22,51 @@
         });
 
         $("#next-step").click(function () {
-            var matchId = "JJX390iH";
-            updateMatchId(matchId);
+            //do something
+            var selectMatch = $("#selectMatch").val();
+            if (selectMatch== null || selectMatch == 0){
+                showNotification("提示","请选择比赛！");
+                return;
+            }
+            var ruleTurn = $("#ruleTurn").val();
+            if (ruleTurn== null || ruleTurn== ''||isNaN(ruleTurn)){
+                showNotification("提示","请填写轮次！");
+                return;
+            }
+            var rulePair = $("#rulePair").val();
+            if (rulePair == null||rulePair == '' || isNaN(rulePair)){
+                showNotification("提示","请填写副数！");
+                return;
+            }
+            var ruleSeat= $("#ruleSeat").val();
+            console.log(ruleSeat);
+            if(ruleSeat == null || ruleSeat == '' || ruleSeat == '0' || isNaN(ruleSeat)){
+                showNotification("提示","请选择首轮座位规则！");
+                return;
+            }
+            var ruleWin= $("#ruleWin").val();
+            if(ruleWin == null || ruleWin == ''|| isNaN(ruleWin)){
+                showNotification("提示","请填写胜得分！");
+                return;
+            }
+            var ruleFail= $("#ruleFail").val();
+            if(ruleFail == null || ruleFail == '' || isNaN(ruleFail)){
+                showNotification("提示","请填写负得分！");
+                return;
+            }
+            //保存
+            $("#updateMatchRule").click();
+            $("#updateMatchInfo").click();
             //去签到页面
             $("#signSetting").click();
             showNav();
         });
+
+        var sVal = $("#ruleSeat").attr("value");
+        if(sVal != null && sVal != ""){
+            $("#ruleSeat").val(sVal);
+        }
+
     })
 
     function resetMatchRule() {
@@ -65,16 +104,14 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label">总轮次</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" name="ruleTurn"
-                           th:value="${matchRule}==null?'':${matchRule.ruleTurn}">
+                    <input type="text" class="form-control" id="ruleTurn" name="ruleTurn" th:value="${matchRule}==null?'':${matchRule.ruleTurn}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-4 control-label">每轮副数</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" name="rulePair"
-                           th:value="${matchRule}==null?'':${matchRule.rulePair}">
+                    <input type="text" class="form-control" id="rulePair" name="rulePair" th:value="${matchRule}==null?'':${matchRule.rulePair}">
                 </div>
             </div>
 
@@ -124,15 +161,13 @@
                     <div class="row">
                         <div class="form-group col-sm-6" style="margin-left: 0px">
                             <label>胜</label>
-                            <input type="text" class="form-control" name="ruleWin"
-                                   th:value="${matchRule}==null?'':${matchRule.ruleWin}">
+                            <input type="text" class="form-control" id="ruleWin" name="ruleWin" th:value="${matchRule}==null?'':${matchRule.ruleWin}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6" style="margin-left: 0px">
                             <label>负</label>
-                            <input type="text" class="form-control" name="ruleFail"
-                                   th:value="${matchRule}==null?'':${matchRule.ruleFail}">
+                            <input type="text" class="form-control" id="ruleFail" name="ruleFail" th:value="${matchRule}==null?'':${matchRule.ruleFail}">
                         </div>
                     </div>
                     <div class="row" id="drawShow" th:if="${matchRule.ruleDraw!=1}">

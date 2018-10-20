@@ -93,11 +93,16 @@ public class ResultSettingController {
     @RequestMapping("resultDetail")
     public ModelAndView resultDetail(ModelAndView mv, String matchId, int turnNumber) {
 
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        if (turnNumber > matchRule.getRuleTurn()) {
+            turnNumber = matchRule.getRuleTurn();
+        }
+
         MatchTeamResult result = new MatchTeamResult();
         result.setMatchId(matchId);
         result.setTurnNumber(turnNumber);
         List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
-
+        mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("resultlist", resultlist);
         mv.setViewName("resultSetting/resultShow");
         return mv;

@@ -6,18 +6,18 @@
             font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
         }
 
-        .no-left-border{
+        .no-left-border {
             border-left: 0 !important;
         }
 
-        table td{
+        table td {
             vertical-align: middle !important;
             text-align: center;
             font-size: 16px;
             color: #ffffff;
         }
 
-        .head-title{
+        .head-title {
             font-size: 20px;
         }
     </style>
@@ -26,9 +26,10 @@
 
     <!-- tile body -->
     <div class="tile-body">
-        <table class="table table-bordered label-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
+        <table class="table table-bordered label-table"
+               style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
             <tr>
-                <td class="head-title" colspan="7">跳跳掼蛋线下赛 —— 第一轮成绩单</td>
+                <td class="head-title" colspan="7" th:text="'跳跳掼蛋线下赛 —— 第'+${turnNumber}+'轮成绩单'"></td>
             </tr>
 
             <tr>

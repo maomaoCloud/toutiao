@@ -191,10 +191,6 @@
     <div class="tile-widget color transparent-black textured" id="enter-data-list">
 
     </div>
-    <!-- /tile widget -->
-    <div class="col-lg-12 col-md-12 op-box">
-        <button type="button" class="btn btn-cyan margin-bottom-20" id="saveResultBtn">保存</button>
-    </div>
 </section>
 <!-- /tile -->
 <script>
@@ -205,20 +201,6 @@
 
         //加载第一轮数据
         loadData(1);
-
-        $("#saveResultBtn").click(function () {
-            showLoading();
-            $.post("/sys/resultSetting/save?token=" + getToken(), $("#teamResultForm").serialize(), function (data) {
-                closeLoading();
-                $.post("/sys/seatSetting/saveNext", {
-                    matchId: $("#nowSettingMatch").val(),
-                    token: getToken(),
-                    turnNumber: $("#resultTurnSelect").val() + 1
-                }, function () {
-
-                });
-            });
-        });
     });
 
     function loadData(index) {

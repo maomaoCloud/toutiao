@@ -186,7 +186,7 @@
                             </li>
 
                             <li class="">
-                                <a href="index.html">
+                                <a href="javascript:resultShowDetail(999999)">
                                     <i class="fa fa-glass"></i> 总成绩
                                 </a>
                             </li>
@@ -303,7 +303,7 @@
         $("#matchSetting").click(function () {
             _destory();
             showLoading();
-            $("#row").load("/sys/matchSetting/index?token=" + token, function () {
+            $("#row").load("/sys/matchSetting/index?token=" + token+"&matchId="+getMatchId(), function () {
                 closeLoading();
             });
         });

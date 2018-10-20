@@ -158,12 +158,20 @@
                 var id = $(this).attr("data-id");
                 sortResult.push(id);
             });
-
+            showLoading()
             //打印排序结果
             console.log(sortResult);
             //保存首轮座位
             $.post("/sys/seatSetting/save?token=" + getToken() + "&matchId=" + $("#nowSettingMatch").val() + "&userIds=" + sortResult + "&turnNumber=1", function (data) {
-
+                closeLoading();
+                showNotification("提示","保存成功！");
+                $("#row").load("/sys/seatSetting/showDetail", {
+                    matchId: getMatchId(),
+                    token: getToken(),
+                    turnNumber: 1
+                }, function () {
+                    closeLoading();
+                });
             });
         });
 
