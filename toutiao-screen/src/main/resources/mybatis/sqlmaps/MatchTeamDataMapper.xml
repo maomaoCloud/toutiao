@@ -258,6 +258,8 @@
   </update>
 
     <resultMap extends="BaseResultMap" id="matchTeamDataDto" type="com.tiaotiaopoker.entity.MatchTeamDataDto">
+        <result column="teamOneNum" jdbcType="VARCHAR" property="teamOneNum" />
+        <result column="teamTwoNum" jdbcType="VARCHAR" property="teamTwoNum" />
         <result column="teamOneUserOneHead" jdbcType="VARCHAR" property="teamOneUserOneHead" />
         <result column="teamOneUserOneName" jdbcType="VARCHAR" property="teamOneUserOneName" />
         <result column="teamOneUserTwoHead" jdbcType="VARCHAR" property="teamOneUserTwoHead" />
@@ -281,6 +283,8 @@
     <select id="queryTeamDataByCondition" parameterType="java.util.Map" resultMap="matchTeamDataDto">
       SELECT
         mtd.id, mtd.match_id, turn_number, table_number, team_one_id, team_one_score, team_two_id, team_two_score,
+        getTeamNum(mtm1.id) as teamOneNum,
+        getTeamNum(mtm2.id) as teamTwoNum,
         getUserName (mtm1.team_member_one) as teamOneUserOneName,
         getUserHead (mtm1.team_member_one) as teamOneUserOneHead,
         getUserName (mtm1.team_member_two) as teamOneUserTwoName,

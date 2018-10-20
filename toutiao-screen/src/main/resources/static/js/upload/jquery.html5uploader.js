@@ -110,8 +110,11 @@
                 },
                 onDelete: function (index) {
                     //_this.next().find('#' + index + 'file').remove();
+                    //input[file]删除，否则无法触发change事件
                     _this.parent().find("input[name='fileselect[]']").val("");
+                    //图片回显删除
                     _this.parent().find(".filelist").html("");
+                    //路径input删除
                     _this.parent().find(".uploadImgUrl").val("");
                 },
                 onProgress: function (file, loaded, total) {

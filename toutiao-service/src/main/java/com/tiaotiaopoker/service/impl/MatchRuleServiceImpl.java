@@ -53,6 +53,7 @@ public class MatchRuleServiceImpl implements MatchRuleService {
             matchRule.setId(StringUtils.generateShortUUID());
             matchRule.setMatchName(myMatch.getTheme());
             matchRule.setMatchAddress(myMatch.getCity() + myMatch.getArea() + myMatch.getAddress());
+            matchRule.setMatchDate(myMatch.getStartDate().toString() + "——" + myMatch.getEndDate().toString());
             matchRule.setRuleTurn(3);
             matchRule.setRuleWin(2);
             matchRule.setRuleDraw(1);

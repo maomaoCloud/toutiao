@@ -102,6 +102,7 @@ public class ResultSettingController {
         result.setMatchId(matchId);
         result.setTurnNumber(turnNumber);
         List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
+        mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("resultlist", resultlist);
         mv.setViewName("resultSetting/resultShow");

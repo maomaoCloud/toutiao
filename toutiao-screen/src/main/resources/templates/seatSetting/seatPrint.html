@@ -33,16 +33,18 @@
                class="table table-bordered label-table"
                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
             <tr>
-                <td class="head-title" colspan="6">跳跳掼蛋线下赛 —— 2018年8月5日</td>
+                <td class="head-title" colspan="6" th:text="${matchName}+' —— '+${matchDate}"></td>
             </tr>
             <tr>
                 <td>桌卡</td>
+                <td>小组编号</td>
                 <td colspan="3">选手姓名</td>
                 <td>级数</td>
                 <td>胜负平</td>
             </tr>
             <tr>
                 <td th:text="'第'+${data.turnNumber}+'轮'"></td>
+                <td th:text="${data.teamOneNum}"></td>
                 <td th:text="${data.teamOneUserOneName}"></td>
                 <td>搭</td>
                 <td th:text="${data.teamOneUserTwoName}"></td>
@@ -51,6 +53,7 @@
             </tr>
             <tr>
                 <td th:text="'第'+${data.tableNumber}+'桌'"></td>
+                <td th:text="${data.teamTwoNum}"></td>
                 <td th:text="${data.teamTwoUserOneName}"></td>
                 <td>搭</td>
                 <td th:text="${data.teamTwoUserTwoName}"></td>
@@ -59,10 +62,10 @@
             </tr>
             <tr>
                 <td>选手签字</td>
-                <td colspan="5"></td>
+                <td colspan="6"></td>
             </tr>
             <tr>
-                <td colspan="6">备注：级数相同，填写胜负；级数不同，可不填。</td>
+                <td colspan="7">备注：级数相同，填写胜负；级数不同，可不填。</td>
             </tr>
         </table>
     </div>

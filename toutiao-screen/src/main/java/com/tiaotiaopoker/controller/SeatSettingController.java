@@ -119,7 +119,9 @@ public class SeatSettingController {
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
+        mv.addObject("matchName",matchRule.getMatchName());
         mv.addObject("turnNumChines", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("dataList", dataList);
         mv.setViewName("seatSetting/seatShowDetail");
@@ -127,11 +129,14 @@ public class SeatSettingController {
     }
 
     @RequestMapping("seatPrint")
-    public  ModelAndView seatPrint(ModelAndView mv, String matchId, int turnNumber){
+    public ModelAndView seatPrint(ModelAndView mv, String matchId, int turnNumber) {
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
+        mv.addObject("matchDate", matchRule.getMatchDate());
+        mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("dataList", dataList);
         mv.setViewName("seatSetting/seatPrint");
         return mv;

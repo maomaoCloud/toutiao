@@ -15,6 +15,25 @@ public class MatchTeamDataDto extends MatchTeamData {
     private String teamTwoUserTwoHead;
     private String teamTwoUserTwoName;
 
+    private String teamOneNum;
+    private String teamTwoNum;
+
+    public String getTeamOneNum() {
+        return teamOneNum;
+    }
+
+    public void setTeamOneNum(String teamOneNum) {
+        this.teamOneNum = teamOneNum;
+    }
+
+    public String getTeamTwoNum() {
+        return teamTwoNum;
+    }
+
+    public void setTeamTwoNum(String teamTwoNum) {
+        this.teamTwoNum = teamTwoNum;
+    }
+
     public String getTeamOneUserOneHead() {
         return teamOneUserOneHead;
     }
