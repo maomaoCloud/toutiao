@@ -1,0 +1,220 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    $(function () {
+        var __item__h = 130;
+        var _cnt1 = $('.prize-1').find(".prize-item").length;
+        var _cnt2 = $('.prize-2').find(".prize-item").length;
+        var _cnt3 = $('.prize-3').find(".prize-item").length;
+
+        var y_prize_1 = $('.prize-1').position().top;
+        var y_prize_2 = $('.prize-2').position().top;
+        var y_prize_3 = $('.prize-3').position().top;
+        var y_bg = $(".prize-bg").position().top;
+        var diff1 = parseInt(y_bg) - parseInt(y_prize_1) + 120;
+        var diff2 = parseInt(y_bg) - parseInt(y_prize_2);
+        var diff3 = parseInt(y_bg) - parseInt(y_prize_3) + 150;
+
+        $(".prize-1").attr("style", "top:" + (diff1 - (__item__h * _cnt1)) + "px");
+        $(".prize-2").attr("style", "top:" + (diff2 - (__item__h * _cnt2)) + "px");
+        $(".prize-3").attr("style", "top:" + (diff3 - (__item__h * _cnt3)) + "px");
+
+        if (_cnt2 < _cnt1 || _cnt2 < _cnt3) {
+            $("#prize-box").attr("style", "top:" + (-1 * __item__h) + "px");
+        }
+    });
+    /* ]]> */
+</script>
+
+<style type="text/css">
+    #main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #logo {
+        margin: 10px 0;
+    }
+
+    #theme {
+        font-size: 40px;
+        color: #FFF;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+    }
+
+    #prize-box {
+        width: 852px;
+        position: relative;
+    }
+
+    #prize-box .prize-data {
+        width: 100%;
+        display: flex;
+    }
+
+    #prize-box .prize-bg {
+        width: 852px;
+    }
+
+    .prize-user-box {
+        display: flex;
+        flex-direction: column;
+        width: 33.33333%;
+        align-items: center;
+        position: relative;
+    }
+
+    .prize-user-box:last-child {
+        border: none;
+    }
+
+    .prize-user-box .prize-item {
+        display: flex;
+        width: 245px;
+        padding: 10px;
+        border-bottom: 3px dotted #e9e9e9;
+    }
+
+    .prize-user-box .prize-item:last-child {
+        border: none;
+    }
+
+    .prize-user-box .prize-item .prize-user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #FFF;
+        width: 50%;
+    }
+
+    .prize-user-box .prize-item .prize-user .prize-user-head {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 5px;
+    }
+
+    .prize-user-box .prize-item .prize-user .prize-user-name {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .prize-2 {
+        left: 20px;
+    }
+
+    .prize-3 {
+        left: 20px;
+    }
+
+    .moto {
+        font-size: 60px;
+        color: red;
+        margin-bottom: 50px;
+        background: #FFF;
+        border-radius: 50px;
+        padding: 5px 100px;
+    }
+
+    .prizes {
+        width: 852px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFF;
+        font-size: 15px;
+    }
+
+    .prizes .prizes-item {
+        width: 33.33333%;
+        text-align: center;
+    }
+
+    .prizes .prizes-item img {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="col-lg-12 col-md-12">
+    <div id="main">
+        <div th:if="${hasLogo}" id="logo">
+            <img th:src="${logo}" src="">
+        </div>
+        <div id="theme" th:text="${theme}"></div>
+        <div class="moto">本次活动获奖名单</div>
+        <div id="prize-box">
+            <div class="prize-data">
+                <div class="prize-1 prize-user-box">
+                    <div class="prize-item">
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">张晓明</span>
+                        </div>
+
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">刘卓</span>
+                        </div>
+                    </div>
+
+                    <div class="prize-item">
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">张晓明</span>
+                        </div>
+
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">刘卓</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="prize-2 prize-user-box">
+                    <div class="prize-item">
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">张晓明</span>
+                        </div>
+
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">刘卓</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prize-3 prize-user-box">
+                    <div class="prize-item">
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">张晓明</span>
+                        </div>
+
+                        <div class="prize-user">
+                            <img class="prize-user-head" src="/images/george-avatar.jpg">
+                            <span class="prize-user-name">刘卓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img class="prize-bg" src="/images/prize.png">
+            <div class="prizes">
+                <div class="prizes-item">
+                    <img width="95%" th:if="${hasPImg2}" th:src="${data.matchSecondImg}"/>
+                    <span th:text="'二等奖：'+${data.matchSecond}"></span>
+                </div>
+                <div class="prizes-item">
+                    <img width="95%" th:if="${hasPImg1}" th:src="${data.matchChampionImg}"/>
+                    <span th:text="'一等奖：'+${data.matchChampion}"></span>
+                </div>
+                <div class="prizes-item">
+                    <img width="95%" th:if="${hasPImg3}" th:src="${data.matchThirdImg}"/>
+                    <span th:text="'三等奖：'+${data.matchThird}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

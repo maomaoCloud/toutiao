@@ -21,83 +21,116 @@ import java.util.List;
  * Created by xiekang on 2018/9/29.
  */
 @Controller
-@Scope("prototype")
-@RequestMapping("sys")
+@Scope ("prototype")
+@RequestMapping ("sys")
 public class SysController extends BaseController {
 
     @Autowired
     private MatchRuleService matchRuleService;
 
-    @RequestMapping("index")
-    public ModelAndView index(ModelAndView mv,
-                              String matchId) {
-        AppUser user = getLoginUser();
-        String token = user.getId();
-        mv.addObject( "token", token );
+    @RequestMapping ("index")
+    public ModelAndView index (ModelAndView mv,
+                               String matchId) {
+        AppUser user  = getLoginUser();
+        String  token = user.getId();
+        mv.addObject("token", token);
 
         //根据matchId查出比赛规则（轮次）
-        if( !StringUtils.isBlank( matchId ) ) {
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId( matchId );
-            int ruleTurn = ( null == matchRule ? 2 : matchRule.getRuleTurn() );
+        if (!StringUtils.isBlank(matchId)) {
+            MatchRule    matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
+            int          ruleTurn     = (null == matchRule ? 2 : matchRule.getRuleTurn());
             List<String> ruleTurnList = new ArrayList<>();
-            for( int i = 1; i <= ruleTurn; i++ ) {
-                ruleTurnList.add( Constants.NUM_CH[i - 1] );
+            for (int i = 1; i <= ruleTurn; i++) {
+                ruleTurnList.add(Constants.NUM_CH[i - 1]);
             }
-            mv.addObject( "matchId", matchId );
-            mv.addObject( "ruleTurnList", ruleTurnList );
+            mv.addObject("matchId", matchId);
+            mv.addObject("ruleTurnList", ruleTurnList);
         }
-        mv.setViewName( "common/left" );
+        mv.setViewName("common/left");
         return mv;
     }
 
-    @RequestMapping("layout")
-    public String scr(Model model) {
+    @RequestMapping ("layout")
+    public String scr (Model model) {
         return ViewConstants.LAYOUT;
     }
 
-    @RequestMapping("countDown/{matchId}")
-    public ModelAndView countDown(ModelAndView mv,
-                                  @PathVariable("matchId") String matchId) {
+    @RequestMapping ("countDown/{matchId}")
+    public ModelAndView countDown (ModelAndView mv,
+                                   @PathVariable ("matchId") String matchId) {
 
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId( matchId );
-        Integer totalSeconds = matchRule.getRuleTime() * 60;
-        mv.addObject( "totalSeconds", totalSeconds );
+        MatchRule matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
+        Integer   totalSeconds = matchRule.getRuleTime()*60;
+        mv.addObject("totalSeconds", totalSeconds);
 
-        String logo = matchRule.getMatchLogo();
-        Boolean hasLogo = StringUtils.isNotBlank( logo );
-        mv.addObject( "logo", logo );
-        mv.addObject( "hasLogo", hasLogo );
+        String  logo    = matchRule.getMatchLogo();
+        Boolean hasLogo = StringUtils.isNotBlank(logo);
+        mv.addObject("logo", logo);
+        mv.addObject("hasLogo", hasLogo);
 
-        String host = matchRule.getMatchHost();
-        Boolean hasHost = StringUtils.isNotBlank( host );
-        mv.addObject( "host", host );
-        mv.addObject( "hasHost", hasHost );
+        String  host    = matchRule.getMatchHost();
+        Boolean hasHost = StringUtils.isNotBlank(host);
+        mv.addObject("host", host);
+        mv.addObject("hasHost", hasHost);
 
         String theme = matchRule.getMatchName();
-        mv.addObject( "theme", theme );
+        mv.addObject("theme", theme);
 
-        mv.setViewName( ViewConstants.COUNTDOWN );
+        String  matchReferee    = matchRule.getMatchReferee();
+        Boolean hasMatchReferee = !StringUtils.isBlank(matchReferee);
+        mv.addObject("matchReferee", matchReferee);
+        mv.addObject("hasMatchReferee", hasMatchReferee);
+
+        mv.setViewName(ViewConstants.COUNTDOWN);
         return mv;
     }
 
-    @RequestMapping("rule/{matchId}")
-    public ModelAndView rule(ModelAndView mv,
-                             @PathVariable("matchId") String matchId) {
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId( matchId );
-        String totalTurn = Constants.NUM_CH[matchRule.getRuleTurn() - 1];
-        Integer ruleDraw = matchRule.getRuleDraw();
-        String canDraw = ruleDraw.equals( 1 ) ? "否" : "是";
-        String draw = ruleDraw.equals( 1 ) ? "不可平" : ruleDraw.toString();
-        String rules[] = { " 临近编排", "首尾编排", " 拦腰编排" };
-        String firstSeatRuleName = rules[matchRule.getRuleSeat() - 1];
+    @RequestMapping ("rule/{matchId}")
+    public ModelAndView rule (ModelAndView mv,
+                              @PathVariable ("matchId") String matchId) {
+        MatchRule matchRule         = matchRuleService.selectMatchRuleByMatchId(matchId);
+        String    totalTurn         = Constants.NUM_CH[matchRule.getRuleTurn() - 1];
+        Integer   ruleDraw          = matchRule.getRuleDraw();
+        String    canDraw           = ruleDraw.equals(1) ? "否" : "是";
+        String    draw              = ruleDraw.equals(1) ? "不可平" : ruleDraw.toString();
+        String    rules[]           = {" 临近编排", "首尾编排", " 拦腰编排"};
+        String    firstSeatRuleName = rules[matchRule.getRuleSeat() - 1];
 
-        mv.addObject( "totalTurn", totalTurn );
-        mv.addObject( "draw", draw );
-        mv.addObject( "canDraw", canDraw );
-        mv.addObject( "firstSeatRuleName", firstSeatRuleName );
-        mv.addObject( "data", matchRule );
+        mv.addObject("totalTurn", totalTurn);
+        mv.addObject("draw", draw);
+        mv.addObject("canDraw", canDraw);
+        mv.addObject("firstSeatRuleName", firstSeatRuleName);
+        mv.addObject("data", matchRule);
 
-        mv.setViewName( ViewConstants.RULE );
+        mv.setViewName(ViewConstants.RULE);
         return mv;
     }
+
+    @RequestMapping ("prize/{matchId}")
+    public ModelAndView prize (ModelAndView mv,
+                               @PathVariable ("matchId") String matchId) {
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+
+        String  logo    = matchRule.getMatchLogo();
+        Boolean hasLogo = StringUtils.isNotBlank(logo);
+        mv.addObject("logo", logo);
+        mv.addObject("hasLogo", hasLogo);
+
+        String theme = matchRule.getMatchName();
+        mv.addObject("theme", theme);
+
+        String  matchReferee    = matchRule.getMatchReferee();
+        Boolean hasMatchReferee = !StringUtils.isBlank(matchReferee);
+        mv.addObject("matchReferee", matchReferee);
+        mv.addObject("hasMatchReferee", hasMatchReferee);
+
+        mv.addObject("hasPImg1", StringUtils.isNotBlank(matchRule.getMatchChampionImg()));
+        mv.addObject("hasPImg2", StringUtils.isNotBlank(matchRule.getMatchSecondImg()));
+        mv.addObject("hasPImg3", StringUtils.isNotBlank(matchRule.getMatchThirdImg()));
+
+        mv.addObject("data", matchRule);
+        mv.setViewName(ViewConstants.PRIZE);
+        return mv;
+    }
+
 }

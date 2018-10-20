@@ -181,7 +181,7 @@
 
         <!-- tile header -->
         <div class="tile-header">
-            <h1 class="box-title">打开微信，扫一扫签到</h1>
+            <h1 class="box-title">打开微信小程序:&nbsp;竞技来了<br/>扫一扫签到</h1>
         </div>
         <!-- /tile header -->
 
@@ -195,7 +195,7 @@
     </section>
     <!-- /tile -->
 
-    <div class="waitList scroll-view">
+    <div class="waitList my-scroll scroll-view" id="waitList">
         <div th:each="user,userStat : ${waitApprove}" class="wait-item">
             <img th:src="${user.head}" src="/images/head.png">
             <span class="name" th:text="${user.name}"></span>
@@ -231,6 +231,28 @@
     var matchId = getMatchId();
 
     $(function () {
+        $("#sign-list").niceScroll({
+            cursorcolor: "rgb(220,220,220)",
+            zindex: 999999,
+            bouncescroll: true,
+            cursoropacitymax: 0.4,
+            cursorborder: "",
+            cursorborderradius: 7,
+            cursorwidth: "7px",
+            railalign: "right"
+        });
+
+        $("#waitList").niceScroll({
+            cursorcolor: "rgb(220,220,220)",
+            zindex: 999999,
+            bouncescroll: true,
+            cursoropacitymax: 0.4,
+            cursorborder: "",
+            cursorborderradius: 7,
+            cursorwidth: "7px",
+            railalign: "right"
+        });
+
         var datePoint = "2018-10-10";
         var option = {
             url: "/sys/sign/match/" + matchId + "/new?token=" + getToken(),
@@ -267,7 +289,6 @@
                     $(".waitList").html(html);
 
                     if ($(".unsign").length <= 0) {
-                        showNotification("提示", "已全部签到完毕！");
                         $("#showMessage").click();
                         return;
                     }
@@ -324,6 +345,7 @@
         );
 
     }
+
     /* ]]> */
 </script>
 
