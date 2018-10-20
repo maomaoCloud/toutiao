@@ -11,6 +11,10 @@
 </style>
 <script th:inline="javascript">
     /* <![CDATA[ */
+
+    window.localStorage.setItem("IS_LOGIN_ENTER", "0");
+    window.localStorage.setItem("CURRENT_MATCH_ID", "");
+
     $(function () {
         var token = [[${token}]];
         //将当前设置的比赛id放在left页面

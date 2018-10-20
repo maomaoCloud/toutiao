@@ -127,7 +127,7 @@
                     </li>
 
                     <li class="divided">
-                        <a href="#">帮助中心</a>
+                        <a href="javascript:void(0);" th:id="helpLink">帮助中心</a>
                     </li>
 
                     <li class="divided">
@@ -148,13 +148,13 @@
                     <li class="navigation" id="navigation">
                         <ul class="menu">
 
-                            <li class="">
+                            <li class="nav-item">
                                 <a href="javascript:void(0);" id="signSetting">
                                     <i class="fa fa-sign-in"></i> 签到
                                 </a>
                             </li>
 
-                            <li class="" id="turnBefore">
+                            <li class="nav-item" id="turnBefore">
                                 <a href="javascript:void(0);">
                                     <i class="fa fa-random"></i> 规则
                                 </a>
@@ -185,12 +185,12 @@
                                 </ul>
                             </li>
 
-                            <li class="">
+                            <li class="nav-item">
                                 <a href="javascript:resultShowDetail(999999)">
                                     <i class="fa fa-glass"></i> 总成绩
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="nav-item">
                                 <a href="javascript:void(0)" id="prize">
                                     <i class="fa fa-bullhorn"></i> 获奖名单
                                 </a>
@@ -265,7 +265,7 @@
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/tabdrop/bootstrap-tabdrop.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/summernote.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/chosen.jquery.min.js'}"></script>
-<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js?v=3.5'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js?v=3.6'}"></script>
 
 <script th:inline="javascript">
     /* <![CDATA[ */
@@ -275,7 +275,7 @@
         var token = [[${token}]]
 
         updateToken(token);
-        hideNav();
+
 
         $("#sign-list").height(getClientHeight() - 140);
 
@@ -291,8 +291,17 @@
             }
         });
 
-        $("#row").load("/sys/matchSetting/index?token=" + token, function () {
-        });
+        if (window.localStorage.getItem("IS_LOGIN_ENTER") == "1" || window.localStorage.getItem("CURRENT_MATCH_ID") == "") {
+            hideNav();
+            $("#row").load("/sys/matchSetting/index?token=" + token, function () {
+            });
+        } else {
+            var matchId = window.localStorage.getItem("CURRENT_MATCH_ID");
+            updateMatchId(matchId);
+            $("#row").load("/sys/sign/match/" + matchId + "?token=" + token, function () {
+            });
+        }
+
 
         //现场投屏
         $("#liveScreen").click(function () {
@@ -308,7 +317,7 @@
         $("#matchSetting").click(function () {
             _destory();
             showLoading();
-            $("#row").load("/sys/matchSetting/index?token=" + token+"&matchId="+getMatchId(), function () {
+            $("#row").load("/sys/matchSetting/index?token=" + token + "&matchId=" + getMatchId(), function () {
                 closeLoading();
             });
         });
@@ -364,9 +373,9 @@
         });
 
         //获奖名单
-        showLoading();
-        _destory();
         $("#prize").click(function () {
+            showLoading();
+            _destory();
             var matchId = getMatchId();
             $("#row").load("/sys/prize/" + matchId + "?token=" + token, function () {
                 closeLoading();
@@ -374,13 +383,13 @@
         });
     });
 
-    function openAndDown(obj){
+    function openAndDown(obj) {
         $(obj).parent().siblings().removeClass("hovered open");
         $(obj).parent().addClass("hovered open");
     }
 
     //座位详情
-    function seatShowDetail(turnNumber,obj) {
+    function seatShowDetail(turnNumber, obj) {
         showLoading();
         _destory();
         var matchId = getMatchId();
@@ -392,13 +401,18 @@
             closeLoading();
             $(obj).parent().parent().parent().siblings().removeClass("hovered open")
             $(obj).parent().parent().parent().addClass("hovered open");
-    });
+        });
     }
 
     //成绩详情
-    function resultShowDetail(turnNumber,obj){
+    function resultShowDetail(turnNumber, obj) {
         showLoading();
-        $("#row").load("/sys/resultSetting/resultDetail",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+        _destory();
+        $("#row").load("/sys/resultSetting/resultDetail", {
+            matchId: $("#nowSettingMatch").val(),
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
             closeLoading();
             $(obj).parent().parent().parent().siblings().removeClass("hovered open")
             $(obj).parent().parent().parent().addClass("hovered open");
@@ -406,14 +420,36 @@
     }
 
     //打印座位
-    function printSeat(turnNumber,obj){
+    function printSeat(turnNumber, obj) {
         showLoading();
-        $("#row").load("/sys/seatSetting/seatPrint",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+        _destory();
+        $("#row").load("/sys/seatSetting/seatPrint", {
+            matchId: $("#nowSettingMatch").val(),
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
             closeLoading();
             $(obj).parent().parent().parent().siblings().removeClass("hovered open")
             $(obj).parent().parent().parent().addClass("hovered open");
         });
     }
+
+    $("#helpLink").click(function () {
+        showLoading();
+        _destory();
+        $("#row").load("/sys/help?token=" + getToken(), function () {
+            closeLoading();
+        });
+
+
+    });
+
+    $(".nav-item").click(function () {
+        $(".open").removeClass("open");
+        $(".hovered").removeClass("hovered");
+
+        $(this).addClass("hovered");
+    });
 
     /* ]]> */
 </script>

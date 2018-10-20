@@ -133,4 +133,11 @@ public class SysController extends BaseController {
         return mv;
     }
 
+    @RequestMapping ("help")
+    public ModelAndView prize (ModelAndView mv) {
+
+        mv.setViewName(ViewConstants.HELP);
+        return mv;
+    }
+
 }

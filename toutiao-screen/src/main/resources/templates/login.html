@@ -14,8 +14,8 @@
     <![endif]-->
 </head>
 <style>
-    body{
-        background-color: rgb(241,196,162);
+    body {
+        background-color: rgb(241, 196, 162);
     }
 </style>
 <body class="bg-1">
@@ -33,9 +33,9 @@
 </div>
 </body>
 <script th:src="@{/js/jquery.js}" src="static/js/jquery.js"></script>
+<script th:src="@{/js/global.js}" src="static/js/global.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-
     $(function () {
         var hasChange = false;
         var data = {
@@ -66,8 +66,10 @@
                     }, 2000);
                 } else if (res.indexOf("HAS_LOGIN") != -1) {
                     var token = res.split(":")[1];
-                    window.location.href = "/sys/index?token=" + token;
-                    console.log(token);
+                    window.localStorage.setItem("IS_LOGIN_ENTER", "1");
+                    window.localStorage.setItem("CURRENT_MATCH_ID", "");
+                    setCookie("__token", token, 1);
+                    window.location.href = "/sys/index";
                 } else {
                     setTimeout(function () {
                         data.t = new Date().getTime();

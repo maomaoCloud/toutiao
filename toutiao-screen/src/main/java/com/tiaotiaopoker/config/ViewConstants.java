@@ -10,5 +10,6 @@ public final class ViewConstants {
     public static final String COUNTDOWN = "matchSetting/countdown";
     public static final String RULE      = "matchSetting/rule";
     public static final String PRIZE     = "matchSetting/prize";
+    public static final String HELP      = "help";
 
 }
