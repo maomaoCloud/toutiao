@@ -190,6 +190,11 @@
                                     <i class="fa fa-glass"></i> 总成绩
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="javascript:void(0)" id="prize">
+                                    <i class="fa fa-bullhorn"></i> 获奖名单
+                                </a>
+                            </li>
                         </ul>
 
                     </li>
@@ -260,7 +265,7 @@
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/tabdrop/bootstrap-tabdrop.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/summernote.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/chosen.jquery.min.js'}"></script>
-<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js?v=3.1'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js?v=3.5'}"></script>
 
 <script th:inline="javascript">
     /* <![CDATA[ */
@@ -357,6 +362,16 @@
                 closeLoading();
             });
         });
+
+        //获奖名单
+        showLoading();
+        _destory();
+        $("#prize").click(function () {
+            var matchId = getMatchId();
+            $("#row").load("/sys/prize/" + matchId + "?token=" + token, function () {
+                closeLoading();
+            });
+        });
     });
 
     //座位详情
@@ -374,17 +389,25 @@
     }
 
     //成绩详情
-    function resultShowDetail(turnNumber){
+    function resultShowDetail(turnNumber) {
         showLoading();
-        $("#row").load("/sys/resultSetting/resultDetail",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+        $("#row").load("/sys/resultSetting/resultDetail", {
+            matchId: $("#nowSettingMatch").val(),
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
             closeLoading();
         });
     }
 
     //打印座位
-    function printSeat(turnNumber){
+    function printSeat(turnNumber) {
         showLoading();
-        $("#row").load("/sys/seatSetting/seatPrint",{matchId:$("#nowSettingMatch").val(),token:getToken(),turnNumber:turnNumber}, function () {
+        $("#row").load("/sys/seatSetting/seatPrint", {
+            matchId: $("#nowSettingMatch").val(),
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
             closeLoading();
         });
     }

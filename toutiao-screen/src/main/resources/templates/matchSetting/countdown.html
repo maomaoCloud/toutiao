@@ -76,7 +76,7 @@
     }
 
     #host{
-        color: #E5E5E5;
+        color: #E9E9E9;
         font-size: 30px;
         letter-spacing: 2px;
         margin-bottom: 30px;
@@ -98,6 +98,10 @@
         border: 2px solid #CC1C60;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     }
+
+    #referee{
+        margin-left: 20px;
+    }
 </style>
 
 <div class="col-lg-12 col-md-12">
@@ -106,7 +110,10 @@
             <img th:src="${logo}" src="">
         </div>
         <div id="theme" th:text="${theme}"></div>
-        <div th:if="${hasHost}" id="host" th:text="'主办方：'+${host}"></div>
+        <div th:if="${hasHost ||  hasMatchReferee}" id="host">
+            <span th:if="${hasHost}" th:text="'主办方：'+${host}"></span>
+            <span th:if="${hasMatchReferee}" id="referee" th:text="'裁判长：'+${matchReferee}"></span>
+        </div>
         <div class="time-item">
             <strong id="hour_show">0时</strong>
             <strong id="minute_show">0分</strong>

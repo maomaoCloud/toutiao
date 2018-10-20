@@ -9,4 +9,6 @@ public final class ViewConstants {
     public static final String USERS     = "sign/users";
     public static final String COUNTDOWN = "matchSetting/countdown";
     public static final String RULE      = "matchSetting/rule";
+    public static final String PRIZE     = "matchSetting/prize";
+
 }
