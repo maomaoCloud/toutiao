@@ -5,12 +5,16 @@
 </script>
 
 <style type="text/css">
-    table{
+    table {
         color: #FFF;
         font-size: 30px;
     }
 
-    table td span{
+    .td-title {
+        font-weight: 700;
+    }
+
+    table td span {
         padding: 20px 0;
         display: -webkit-box;
     }
@@ -25,34 +29,21 @@
 
         <table class="table" id="user-table">
             <tr>
-                <td colspan="2" width="20%" align="right"><span>总轮次:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${totalTurn}"></span></td>
-                <td  colspan="2" width="20%" align="right"><span>每轮副数:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${data.rulePair}"></span></td>
+                <td width="25%" align="right"><span class="td-title">基本规则:</span></td>
+                <td width="75%" align="left"><span
+                        th:text="'共计'+${totalTurn}+'轮，每轮'+${data.rulePair}+'副牌，每轮限时'+${data.ruleTime}+'分钟'"></span></td>
             </tr>
 
             <tr>
-                <td colspan="2" width="20%" align="right"><span>每轮时间:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${data.ruleTime}+'分钟'">200分钟</span></td>
-                <td colspan="2" width="20%" align="right"><span>是否平局:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${canDraw}">是</span></td>
+                <td width="25%" align="right"><span class="td-title">座位编排规则:</span></td>
+                <td width="75%" align="left"><span th:text="${firstSeatRuleName}"></span></td>
             </tr>
 
             <tr>
-                <td colspan="2" width="20%" align="right"><span>胜得分:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${data.ruleWin}"></span></td>
-                <td colspan="2" width="20%" align="right"><span>负得分:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${draw}"></span></td>
+                <td width="25%" align="right"><span class="td-title">得分:</span></td>
+                <td width="75%" align="left"><span th:text="'胜'+${data.ruleWin}+'负'+${data.ruleFail}+${draw}"></span>
+                </td>
             </tr>
-
-            <tr>
-                <td colspan="2" align="right"><span>平得分:</span></td>
-                <td colspan="2" align="left"><span th:text="${draw}"></span></td>
-                <td colspan="2" width="20%" align="right"><span>首轮座位编排规则:</span></td>
-                <td colspan="2" width="30%" align="left"><span th:text="${firstSeatRuleName}">临近编排</span></td>
-            </tr>
-
         </table>
     </div>
-</div>
 </div>

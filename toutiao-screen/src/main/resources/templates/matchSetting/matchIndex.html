@@ -1,11 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <style>
-    select{
+    select {
         background-color: transparent !important;
         color: #FFF !important;
     }
 
-    select option{
+    select option {
         background-color: #2b542c;
     }
 </style>
@@ -22,6 +22,7 @@
             var matchId = $("#selectMatch").val();
             $("#nowSettingMatch").val(matchId);
             updateMatchId(matchId);
+            setCookie("__matchId", matchId, 1);
             //重置左侧轮次
             $.post("/sys/matchSetting/matchTurn", {
                 token: token,
@@ -40,9 +41,9 @@
                     li += '<i class="fa fa-list"></i> 第' + turn + '轮<b class="fa fa-plus dropdown-plus"></b>';
                     li += '</a>';
                     li += '<ul class="dropdown-menu">';
-                    li += '<li><a href="#" onclick="'+'seatShowDetail('+(i+1)+',this'+')"><i class="fa fa-caret-right"></i> 座位</a></li>';
-                    li += '<li><a href="#" onclick="'+'resultShowDetail('+(i+1)+',this'+')"><i class="fa fa-caret-right"></i> 成绩</a></li>';
-                    li += '<li><a href="#" onclick="'+'printSeat('+(i+1)+',this'+')"><i class="fa fa-caret-right"></i> 打印座位</a></li>';
+                    li += '<li><a href="#" onclick="' + 'seatShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 座位</a></li>';
+                    li += '<li><a href="#" onclick="' + 'resultShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 成绩</a></li>';
+                    li += '<li><a href="#" onclick="' + 'printSeat(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 打印座位</a></li>';
                     li += '</ul></li>';
                 }
                 $("#turnBefore").after(li);
@@ -100,7 +101,7 @@
     $(function () {
         hideNav();
         //chosen select input
-        if (getMatchId()!= null){
+        if (getMatchId() != null) {
             //$(".chosen-select").chosen({disable_search_threshold: 10});
             $("#selectMatch").val(getMatchId());
         }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +30,21 @@ public class SysController extends BaseController {
     private MatchRuleService matchRuleService;
 
     @RequestMapping ("index")
-    public ModelAndView index (ModelAndView mv,
-                               String matchId) {
+    public ModelAndView index (ModelAndView mv) {
         AppUser user  = getLoginUser();
         String  token = user.getId();
         mv.addObject("token", token);
 
+        String   matchId = null;
+        Cookie[] cookies = getRequest().getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equalsIgnoreCase("__matchId")) {
+                matchId = cookie.getValue();
+            }
+        }
+
         //根据matchId查出比赛规则（轮次）
-        if (!StringUtils.isBlank(matchId)) {
+        if (StringUtils.isNotBlank(matchId)) {
             MatchRule    matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
             int          ruleTurn     = (null == matchRule ? 2 : matchRule.getRuleTurn());
             List<String> ruleTurnList = new ArrayList<>();
@@ -92,7 +100,7 @@ public class SysController extends BaseController {
         String    totalTurn         = Constants.NUM_CH[matchRule.getRuleTurn() - 1];
         Integer   ruleDraw          = matchRule.getRuleDraw();
         String    canDraw           = ruleDraw.equals(1) ? "否" : "是";
-        String    draw              = ruleDraw.equals(1) ? "不可平" : ruleDraw.toString();
+        String    draw              = ruleDraw.equals(1) ? "，不可平" : "平" + ruleDraw.toString();
         String    rules[]           = {" 临近编排", "首尾编排", " 拦腰编排"};
         String    firstSeatRuleName = rules[matchRule.getRuleSeat() - 1];
 

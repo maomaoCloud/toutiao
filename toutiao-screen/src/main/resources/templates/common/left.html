@@ -37,7 +37,7 @@
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/html5shiv.js'}"></script>
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/respond.min.js'}"></script>
     <![endif]-->
-    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/global.js'}"></script>
+    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/global.js?V=1.0'}"></script>
 
     <style>
         body {
@@ -63,6 +63,89 @@
             overflow-y: scroll;
         }
 
+        #bottom-info {
+            width: 100%;
+            height: 60px;
+            background-color: rgb(185, 150, 133);
+            position: fixed;
+            bottom: 0;
+            color: #FFF;
+            border-top: 1px solid rgba(200, 200, 200, 0.5);
+            opacity: .9;
+            z-index: 99999;
+        }
+
+        #bottom-info .info-name {
+            font-size: 20px;
+            line-height: 60px;
+            margin-left: 100px;
+            float: left;
+        }
+
+        #bottom-info .info-op-box {
+            float: right;
+            margin-right: 100px;
+            line-height: 30px;
+            padding: 15px 0;
+        }
+
+        #bottom-info .info-op-box li {
+            float: left;
+            list-style: none;
+            font-size: 20px;
+            border-right: 2px solid #888888;
+            padding: 0 20px;
+        }
+
+        #bottom-info .info-op-box li a {
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        #bottom-info .info-op-box li a:hover {
+            color: #EEE;
+        }
+
+        #bottom-info .info-op-box li:first-child {
+            border-left: 2px solid #888888;
+        }
+
+        #bottom-info .info-op-box li .full-screen-img {
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        #bottom-info .info-op-box li .exit-full-screen-img {
+            height: 30px;
+            width: 30px;
+            cursor: pointer;
+        }
+
+        #row {
+            margin-bottom: 100px;
+        }
+
+        .qr-mask {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-mask #qr-img {
+            width: 400px;
+            height: 400px;
+            border-radius: 10px;
+            margin-bottom: 50px;
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-1" id="body">
@@ -73,6 +156,10 @@
     <div id="loader"></div>
 </div>
 <!--/Preloader -->
+
+<div class="qr-mask">
+    <img id="qr-img" src="/images/qr.jpg">
+</div>
 
 <!-- Wrap all page content here -->
 <div id="wrap">
@@ -128,10 +215,6 @@
 
                     <li class="divided">
                         <a href="javascript:void(0);" th:id="helpLink">帮助中心</a>
-                    </li>
-
-                    <li class="divided">
-                        <a href="#" class="full-screen-btn"><i class="fa fa-arrows-alt"></i></a>
                     </li>
                 </ul>
                 <!-- /Page refresh -->
@@ -275,6 +358,7 @@
         var token = [[${token}]]
 
         updateToken(token);
+        $(".qr-mask").fadeOut(1);
 
 
         $("#sign-list").height(getClientHeight() - 140);
@@ -381,6 +465,45 @@
                 closeLoading();
             });
         });
+
+        $("#helpLink").click(function () {
+            showLoading();
+            _destory();
+            $("#row").load("/sys/help?token=" + getToken(), function () {
+                closeLoading();
+            });
+
+
+        });
+
+        $(".nav-item").click(function () {
+            $(".open").removeClass("open");
+            $(".hovered").removeClass("hovered");
+
+            $(this).addClass("hovered");
+        });
+
+        $(".full-screen-img").click(function () {
+            $(this).addClass("hide");
+            $(".exit-full-screen-img").removeClass("hide");
+            _full_screen();
+        });
+
+        $(".exit-full-screen-img").click(function () {
+            $(this).addClass("hide");
+            $(".full-screen-img").removeClass("hide");
+            _exit_full_screen();
+        });
+
+        $("#showQr").click(function () {
+            $(".qr-mask").fadeIn(500, function () {
+                $("#qr-img").fadeIn(500);
+            });
+        });
+
+        $(".qr-mask").click(function () {
+            $(this).fadeOut(100);
+        });
     });
 
     function openAndDown(obj) {
@@ -434,25 +557,23 @@
         });
     }
 
-    $("#helpLink").click(function () {
-        showLoading();
-        _destory();
-        $("#row").load("/sys/help?token=" + getToken(), function () {
-            closeLoading();
-        });
-
-
-    });
-
-    $(".nav-item").click(function () {
-        $(".open").removeClass("open");
-        $(".hovered").removeClass("hovered");
-
-        $(this).addClass("hovered");
-    });
-
     /* ]]> */
 </script>
+<div id="bottom-info">
+    <div class="info-name">本工具技术支持：跳跳掼蛋官方 &nbsp;&nbsp;&nbsp;&nbsp;请先关注微信小程序：竞技来了</div>
+
+    <ul class="info-op-box">
+        <li>
+            <a id="showQr" href="javascript:void(0);">小程序二维码</a>
+        </li>
+        <li>
+            <div>
+                <img class="full-screen-img" alt="全屏" src="/images/full.png">
+                <img class="exit-full-screen-img hide" alt="退出全屏" src="/images/exit.png">
+            </div>
+        </li>
+    </ul>
+</div>
 </body>
 </html>
 

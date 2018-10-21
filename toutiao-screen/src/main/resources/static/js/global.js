@@ -83,6 +83,23 @@ function _full_screen() {
     requestFullScreen();
 }
 
+function _exit_full_screen() {
+    var exitMethod = document.exitFullscreen || //W3C
+        document.mozCancelFullScreen || //Chrome等
+        document.webkitExitFullscreen || //FireFox
+        document.webkitExitFullscreen; //IE11
+    if (exitMethod) {
+        exitMethod.call(document);
+    }
+    else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+            wscript.SendKeys("{F11}");
+        }
+    }
+    showNav();
+}
+
 function setCookie(c_name, value, expiredays) {
     var exdate = new Date()
     exdate.setDate(exdate.getDate() + expiredays)
