@@ -31,6 +31,10 @@
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/sea.js'}"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/DialogBySHF.js'}"></script>
     <!--弹窗end-->
+    <!--颜色选择器start-->
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/colpick.js'}"></script>
+    <link rel="Stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/colpick.css'}" />
+    <!--颜色选择器end-->
     <title>编辑</title>
     <style>
         input {
@@ -39,6 +43,31 @@
     </style>
     <script type="text/javascript">
         $(function () {
+
+            var btnColor;
+            var imageColor = $("#btnColor").val();
+            if (!imageColor)
+                imageColor = "ffffff"
+            else {
+                $("#btnSecondTitleDiv #colorDiv").css("background-color", "#" + imageColor)
+            }
+            btnColor = $('#btnSecondTitleDiv #picker').colpick({
+                flat: true,
+                layout: 'hex',
+                color: imageColor,
+                onSubmit: function (hsb, hex, rgb, el, bySetColor) {
+                    console.log(hex)
+                    $("#btnSecondTitleDiv #colorDiv").css("background-color", "#" + hex)
+                    $("#btnSecondTitleDiv #picker").hide()
+                    $("#btnColor").val(hex)
+                }
+            });
+
+            $("#btnSecondTitle").on('click', function() {
+
+                $("#btnSecondTitleDiv #picker").show()
+
+            })
 
             //页面初始化时加载富文本编辑器
             var editor = CKEDITOR.replace('helpContent');
@@ -126,6 +155,25 @@
                     <input th:id="helpTitle" name="helpTitle" type="text" class="input-text w510" maxlength="20"
                            th:value="${help.helpTitle}"/>
                     <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>按钮颜色:</td>
+                <td>
+                    <div id="btnSecondTitleDiv" style="float:left;margin-top:5px;">
+                        <div class="clearfix">
+                            <div id="colorDiv"
+                                 style="float: left;width: 40px;height: 28px;border: 1px solid #262626;"></div>
+                            <button id="btnSecondTitle" type="button"
+                                    style="float: left;width: 80px;height: 30px;line-height: 30px;text-align: center;">
+                                选择颜色
+                            </button>
+                        </div>
+                        <div id="picker" style="display: none;"></div>
+                        <input id="btnColor" name="helpColor" type="hidden" th:value="${help.helpColor }"/>
+                    </div>
+                    <div style="cleat:both;"></div>
                 </td>
             </tr>
 
