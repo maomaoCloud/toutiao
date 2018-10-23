@@ -2,25 +2,30 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     $(function () {
-        var __item__h = 130;
-        var _cnt1 = $('.prize-1').find(".prize-item").length;
-        var _cnt2 = $('.prize-2').find(".prize-item").length;
-        var _cnt3 = $('.prize-3').find(".prize-item").length;
+        var bossThree = [[${bossThree}]];
+        if(bossThree!=null && bossThree.length>=3){
+            var __item__h = 130;
+            var _cnt1 = $('.prize-1').find(".prize-item").length;
+            var _cnt2 = $('.prize-2').find(".prize-item").length;
+            var _cnt3 = $('.prize-3').find(".prize-item").length;
 
-        var y_prize_1 = $('.prize-1').position().top;
-        var y_prize_2 = $('.prize-2').position().top;
-        var y_prize_3 = $('.prize-3').position().top;
-        var y_bg = $(".prize-bg").position().top;
-        var diff1 = parseInt(y_bg) - parseInt(y_prize_1) + 120;
-        var diff2 = parseInt(y_bg) - parseInt(y_prize_2);
-        var diff3 = parseInt(y_bg) - parseInt(y_prize_3) + 150;
+            var y_prize_1 = $('.prize-1').position().top;
+            var y_prize_2 = $('.prize-2').position().top;
+            var y_prize_3 = $('.prize-3').position().top;
+            var y_bg = $(".prize-bg").position().top;
+            var diff1 = parseInt(y_bg) - parseInt(y_prize_1) + 120;
+            var diff2 = parseInt(y_bg) - parseInt(y_prize_2);
+            var diff3 = parseInt(y_bg) - parseInt(y_prize_3) + 150;
 
-        $(".prize-1").attr("style", "top:" + (diff1 - (__item__h * _cnt1)) + "px");
-        $(".prize-2").attr("style", "top:" + (diff2 - (__item__h * _cnt2)) + "px");
-        $(".prize-3").attr("style", "top:" + (diff3 - (__item__h * _cnt3)) + "px");
+            $(".prize-1").attr("style", "top:" + (diff1 - (__item__h * _cnt1)) + "px");
+            $(".prize-2").attr("style", "top:" + (diff2 - (__item__h * _cnt2)) + "px");
+            $(".prize-3").attr("style", "top:" + (diff3 - (__item__h * _cnt3)) + "px");
 
-        if (_cnt2 < _cnt1 || _cnt2 < _cnt3) {
-            $("#prize-box").attr("style", "top:" + (-1 * __item__h) + "px");
+            if (_cnt2 < _cnt1 || _cnt2 < _cnt3) {
+                $("#prize-box").attr("style", "top:" + (-1 * __item__h) + "px");
+            }
+        }else {
+            showNotification("提示","排名尚未产生！");
         }
     });
     /* ]]> */
@@ -145,57 +150,44 @@
         </div>
         <div id="theme" th:text="${theme}"></div>
         <div class="moto">本次活动获奖名单</div>
-        <div id="prize-box">
+        <div id="prize-box" th:if="${bossThree !=null }">
             <div class="prize-data">
                 <div class="prize-1 prize-user-box">
-                    <div class="prize-item">
+                    <div class="prize-item" th:if="${bossThree.get(1)!=null}">
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">张晓明</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(1).userOneHead}">
+                            <span class="prize-user-name" th:text="${bossThree.get(1).userOne}"></span>
                         </div>
 
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">刘卓</span>
-                        </div>
-                    </div>
-
-                    <div class="prize-item">
-                        <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">张晓明</span>
-                        </div>
-
-                        <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">刘卓</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(1).userTwoHead }">
+                            <span class="prize-user-name" th:text="${bossThree.get(1).userTwo}"></span>
                         </div>
                     </div>
-
                 </div>
                 <div class="prize-2 prize-user-box">
-                    <div class="prize-item">
+                    <div class="prize-item" th:if="${bossThree.get(0)!=null}">
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">张晓明</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(0).userOneHead}">
+                            <span class="prize-user-name" th:text="${bossThree.get(0).userOne}"></span>
                         </div>
 
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">刘卓</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(0).userTwoHead}">
+                            <span class="prize-user-name" th:text="${bossThree.get(0).userTwo}"></span>
                         </div>
                     </div>
                 </div>
                 <div class="prize-3 prize-user-box">
-                    <div class="prize-item">
+                    <div class="prize-item" th:if="${bossThree.get(2)!=null}">
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">张晓明</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(2).userOneHead}">
+                            <span class="prize-user-name" th:text="${bossThree.get(2).userOne}"></span>
                         </div>
 
                         <div class="prize-user">
-                            <img class="prize-user-head" src="/images/george-avatar.jpg">
-                            <span class="prize-user-name">刘卓</span>
+                            <img class="prize-user-head" th:src="${bossThree.get(2).userTwoHead }">
+                            <span class="prize-user-name" th:text="${bossThree.get(2).userTwo}"></span>
                         </div>
                     </div>
                 </div>

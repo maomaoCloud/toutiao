@@ -10,7 +10,27 @@ public class MatchTeamResultDto extends MatchTeamResult {
 
     private String userTwo;
 
+    private String userOneHead;
+
+    private String userTwoHead;
+
     private int teamNumber;
+
+    public String getUserOneHead() {
+        return userOneHead;
+    }
+
+    public void setUserOneHead(String userOneHead) {
+        this.userOneHead = userOneHead;
+    }
+
+    public String getUserTwoHead() {
+        return userTwoHead;
+    }
+
+    public void setUserTwoHead(String userTwoHead) {
+        this.userTwoHead = userTwoHead;
+    }
 
     public String getUserOne() {
         return userOne;

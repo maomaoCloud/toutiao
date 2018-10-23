@@ -1,0 +1,152 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + 'css/style.css'}"/>
+    <!--富文本编辑器 start-->
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/sample.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.uploadify-3.1.min.js'}"></script>
+    <!--富文本编辑器 end-->
+    <!--上传start-->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
+    <!--上传end-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/main.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/common.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/base.js'}"></script>
+    <!--弹窗start-->
+    <link rel="Stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/DialogBySHF.css'}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/dialog-back.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/dialog-min.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/sea.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/DialogBySHF.js'}"></script>
+    <!--弹窗end-->
+    <title>编辑</title>
+    <style>
+        input {
+            box-sizing: content-box !important;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+            //页面初始化时加载富文本编辑器
+            var editor = CKEDITOR.replace('helpContent');
+
+            //页面初始化时加载上传插件
+            $('#upload').html5uploader({
+                auto: false,
+                multi: false,
+                removeTimeout: 9999999,
+                url: '/upload/uplodaHeadlineImg',
+                onUploadStart: function () {
+
+                },
+                onInit: function () {
+
+                },
+                onUploadComplete: function () {
+                    //form表单值
+                    $("#helpCoverImg").val($("#uploadImg").val());
+                    //图片回显
+                    $("#helpCoverImgLabel").append('<div id="imgDiv"><img style="height:400px;width:600px" src="' + $("#uploadImg").val() + '"></div>');
+                }
+            });
+
+            //回显删除按钮
+            $("#deleteBtn").on("click", function () {
+                $("#reviewUl").remove();
+            });
+        });
+
+        //前端校验数据
+        function addhelp() {
+
+            var helpTitle = $("#helpTitle").val();
+            $('#helpContent').val(CKEDITOR.instances.helpContent.getData());
+            var helpContent = CKEDITOR.instances.helpContent.getData();
+
+            if (helpTitle == undefined || helpTitle == "") {
+                removeMsg("titleLabel");
+                appendMsg("titleLabel", "标题不能为空!");
+                $("#titleLabel").focus();
+                window.location.hash = "#titleLabel";
+                return;
+            } else {
+                removeMsg("titleLabel");
+            }
+
+            if (helpContent == undefined || helpContent == "") {
+                removeMsg("helpContentLabel");
+                appendMsg("helpContentLabel", "详情信息不能为空!");
+                $('#helpContentLabel').focus();
+                window.location.hash = "#helpContentLabel";
+                return;
+            } else {
+                removeMsg("helpContentLabel");
+            }
+
+            $.post("/help/addOrEdit", $('#infoForm').serialize(), function (data) {
+                if (data != null && data.success) {
+                    dialogAlert("提示", "保存成功！", function () {
+                        window.location.href = "/help/helpListPage";
+                    });
+                } else if (data == "nologin") {
+                    dialogConfirm("提示", "请先登录！", function () {
+                        window.location.href = "/login";
+                    });
+                } else {
+                    dialogConfirm("提示", "保存失败！")
+                }
+            });
+        }
+    </script>
+</head>
+<body style="background: #FFFFFF;">
+<div class="site">
+    <em>您现在所在的位置：添加帮助</em>
+</div>
+<div class="site-title">发布</div>
+<div class="main-publish">
+    <form th:id="infoForm" method="post" th:action="@{${#httpServletRequest.getContextPath()} + '/help/helpLstPage'}">
+        <table width="100%" class="form-table">
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>标题：</td>
+                <td class="td-input" th:id="titleLabel">
+                    <input th:id="helpTitle" name="helpTitle" type="text" class="input-text w510" maxlength="20"
+                           th:value="${help.helpTitle}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red" th:id="spanred">*</span>详细描述：</td>
+                <td class="td-content" th:id="helpContentLabel">
+                    <div class="editor-box">
+                        <textarea name="helpContent" th:id="helpContent" th:text="${help.helpContent }"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"></td>
+                <td class="td-btn">
+                    <input type="hidden" name="helpId" th:id="infoId" th:value="${help.helpId }"/>
+                    <input th:id="btnPublish" class="btn-publish" type="button" onclick="addhelp()" value="保存并发布"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

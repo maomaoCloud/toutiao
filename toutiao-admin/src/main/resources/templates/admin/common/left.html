@@ -85,6 +85,20 @@
 
                 <li>
                     <a href="javascript:;" class="tree-node">
+                        <span class="tree-icon tree-collapsed"></span><span class="tree-title">帮助中心</span>
+                    </a>
+                    <ul class="tree-child" style="display: none;">
+                        <li><a th:href="@{'/help/addAndEditPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">新建帮助</span></a></li>
+                        <li><a th:href="@{'/help/helpListPage'}" th:target="content"><span
+                                class="tree-line"></span><span class="tree-icon"></span><span
+                                class="tree-title">帮助列表</span></a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;" class="tree-node">
                         <span class="tree-icon tree-collapsed"></span><span class="tree-title">站点管理</span>
                     </a>
                     <ul class="tree-child" style="display: none;">

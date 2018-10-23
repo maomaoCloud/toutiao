@@ -1,0 +1,235 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>列表页</title>
+    <!--通用页面-->
+    <div th:replace="admin/common/commonPage :: html"></div>
+    <!--分页插件start-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/page.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/page.min.js'}"></script>
+    <!--分页插件end-->
+    <script th:inline="javascript">
+        ctxPath = /*[[@{/}]]*/ '';
+
+        $(function () {
+            //调用下拉列表js
+            selectModel();
+
+            //分页插件初始化
+            kkpager.generPageHtml({
+                pno: [[${page.page}]],
+                total: [[${page.countPage}]],
+                totalRecords: [[${page.total}]],
+                mode: 'click',//默认值是link，可选link或者click
+                click: function (n) {
+                    this.selectPage(n);
+                    $("#page").val(n);
+                    formSub('#form');
+                    return false;
+                }
+            });
+
+            infoTitle = $("#infoTitle").val();
+            if (infoTitle == "输入标题名称") {
+                infoTitle = "";
+            }
+            infotype = $("#infotype").val();
+            infoStatus = $("#infoStatus").val();
+            infoType = $("#infoType").val();
+
+        });
+
+        //搜索
+        function formSub(formName) {
+            var infoTitle = $('#infoTitle').val();
+            if (infoTitle != undefined && infoTitle == '输入标题名称') {
+                $('#infoTitle').val("");
+            }
+            $(formName).submit();
+        }
+
+        //上下架+删除
+        function changehelpStatus(status, id, title) {
+            if (status == "1") {
+                var msg = "上架成功！";
+                var html = "您确定要发布“" + title + "”吗？";
+                var error = "上架失败！";
+            }
+            if (status == "2") {
+                var msg = "下架成功！";
+                var html = "您确定要下架“" + title + "”吗？";
+                var error = "下架失败";
+            }
+            if (status == "0") {
+                var msg = "删除成功！";
+                var html = "您确定要删除“" + title + "”吗？";
+                var error = "删除失败";
+            }
+            dialogConfirm("提示", html, function () {
+                $.post("/help/update", {
+                    "helpId": id,
+                    "helpStatus": status
+                }, function (data) {
+                    if (data != null && data.success) {
+                        dialogAlert("提示", msg, function () {
+                            formSub('#form');
+                        });
+                    } else if (data.msg == "nologin") {
+                        dialogConfirm("提示", "请先登录！", function () {
+                            window.location.href = "/login";
+                        });
+                    } else {
+                        dialogConfirm("提示", error);
+                    }
+                });
+            });
+        }
+
+        //取消置顶+设置排序
+        function changehelpSort(sort, id, title) {
+            if (sort == "1") {
+                var msg = "置顶成功！";
+                var html = "您确定要置顶“" + title + "”吗？";
+                var error = "置顶失败！";
+            }else if (sort == "0") {
+                var msg = "取消置顶成功！";
+                var html = "您确定要取消置顶“" + title + "”吗？";
+                var error = "取消置顶失败";
+            }else {
+                var msg = "排序成功！";
+                var html = "您确定要设置“" + title + "”的位置为"+ sort +"吗？";
+                var error = "排序失败";
+            }
+            dialogConfirm("提示", html, function () {
+                $.post("/help/setTop", {
+                    "helpId": id,
+                    "helpSort": sort
+                }, function (data) {
+                    if (data != null && data.success) {
+                        dialogAlert("提示", msg, function () {
+                            formSub('#form');
+                        });
+                    } else if (data.msg == "nologin") {
+                        dialogConfirm("提示", "请先登录！", function () {
+                            window.location.href = "/login";
+                        });
+                    } else {
+                        dialogConfirm("提示", error);
+                    }
+                });
+            });
+        }
+
+        //初始化dialog
+        seajs.config({
+            alias: {
+                "jquery": "/js/dialog/lib/jquery-1.10.2.js"
+            }
+        });
+        seajs.use(['/js/dialogBack/src/dialog-plus'], function (dialog) {
+            window.dialog = dialog;
+        });
+        window.console = window.console || {
+            log: function () {
+            }
+        }
+
+        //添加click事件
+        /*seajs.use(['jquery'], function ($) {
+            $('._edit').on('click', function () {
+                var type = $(this).attr("data-type");
+                var id = $(this).attr("data-id");
+                dialog({
+                    url: '${path}/info/preRecommendInfo.do?infotype=' + type + '&infoId=' + id,
+                    title: '运营位排序',
+                    width: 460,
+                    height: 350,
+                    fixed: true
+                }).showModal();
+                return false;
+            });
+        });*/
+
+    </script>
+</head>
+<body>
+<form th:id="form" th:action="@{${#httpServletRequest.getContextPath()} + '/help/helpListPage'}" method="post">
+    <div class="site">
+        <em>您现在所在的位置：帮助列表</em>
+    </div>
+    <div class="search">
+        <div class="search-box">
+            <i></i><input type="text" th:id="infoTitle" th:name="helpTitle" th:value="${help.helpTitle}" data-val="输入标题名称"
+                          class="input-text"/>
+        </div>
+
+        <div class="select-box w135">
+            <input type="hidden" th:id="infoStatus" th:name="helpStatus" th:value="${help.helpStatus}"/>
+            <div th:id="bookStatusDiv" class="select-text" data-value="">
+                <div th:switch="${help.helpStatus}">
+                    <div th:case="1">已下架</div>
+                    <div th:case="2">已发布</div>
+                    <div th:case="*">全部状态</div>
+                </div>
+            </div>
+            <ul class="select-option">
+                <li data-option="">全部状态</li>
+                <li data-option="2">已下架</li>
+                <li data-option="1">已发布</li>
+            </ul>
+        </div>
+        <div class="select-btn">
+            <input type="button" onclick="$('#page').val(1);formSub('#form');" value="搜索"/>
+        </div>
+    </div>
+    <div class="main-content">
+        <table width="100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th class="title">标题</th>
+                <th>最新操作人</th>
+                <th>创建时间</th>
+                <th>最新操作时间</th>
+                <th>排序</th>
+                <th>状态</th>
+                <th>管理</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="help,helpStat: ${list}">
+                <td th:text="${helpStat.index+1}"></td>
+                <td class="title" th:text="${help.helpTitle}"></td>
+                <td th:text="${help.helpUpdateUser}"></td>
+                <td th:text="${#dates.format(help.helpCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#dates.format(help.helpUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <!--置顶状态-->
+                <td th:if="${help.helpSort==0}">未置顶</td>
+                <td th:if="${help.helpSort!=0}" th:text="${help.helpSort}"></td>
+                <!--发布状态-->
+                <td th:if="${help.helpStatus==1}">已发布</td>
+                <td th:if="${help.helpStatus==2}">未发布</td>
+
+                <td>
+                    <!--上下架操作-->
+                    <a th:if="${help.helpStatus==2}" th:onclick="'changehelpStatus(\'1\',\''+${help.helpId}+'\',\''+${help.helpTitle}+'\')'">发布  |</a>
+                    <a th:if="${help.helpStatus==1}" th:onclick="'changehelpStatus(\'2\',\''+${help.helpId}+'\',\''+${help.helpTitle}+'\')'">下架  |</a>
+                    <a th:href="'/help/addAndEditPage?helpId='+${help.helpId}">编辑</a> |
+                    <a th:onclick="'changehelpStatus(\'0\',\''+${help.helpId}+'\',\''+${help.helpTitle}+'\')'">删除</a> |
+                    <!--置顶操作-->
+                    <a th:onclick="'changehelpSort(\'1\',\''+${help.helpId}+'\',\''+${help.helpTitle}+'\')'" th:if="${help.helpSort==0}">置顶</a>
+                    <a th:onclick="'changehelpSort(\'0\',\''+${help.helpId}+'\',\''+${help.helpTitle}+'\')'" th:if="${help.helpSort!=0}">取消置顶</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(list)}">
+                <td colspan="8"><h4 style="color:#DC590C">暂无数据!</h4></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" th:id="page" name="page" value="1"/>
+        <div th:id="kkpager"></div>
+    </div>
+</form>
+</body>
+</html>

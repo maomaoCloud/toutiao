@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiaotiaopoker.dao.SysHelpMapper" >
+    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.SysHelp" >
+        <id column="HELP_ID" property="helpId" jdbcType="VARCHAR" />
+        <result column="HELP_TITLE" property="helpTitle" jdbcType="VARCHAR" />
+        <result column="HELP_STATUS" property="helpStatus" jdbcType="INTEGER" />
+        <result column="HELP_COLOR" property="helpColor" jdbcType="VARCHAR" />
+        <result column="HELP_SORT" property="helpSort" jdbcType="INTEGER" />
+        <result column="HELP_CREATE_TIME" property="helpCreateTime" jdbcType="TIMESTAMP" />
+        <result column="HELP_CREATE_USER" property="helpCreateUser" jdbcType="VARCHAR" />
+        <result column="HELP_UPDATE_TIME" property="helpUpdateTime" jdbcType="TIMESTAMP" />
+        <result column="HELP_UPDATE_USER" property="helpUpdateUser" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.SysHelp" extends="BaseResultMap" >
+        <result column="HELP_CONTENT" property="helpContent" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+    HELP_ID, HELP_TITLE, HELP_STATUS, HELP_COLOR, HELP_SORT, HELP_CREATE_TIME, HELP_CREATE_USER,
+    HELP_UPDATE_TIME, HELP_UPDATE_USER
+  </sql>
+    <sql id="Blob_Column_List" >
+    HELP_CONTENT
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tiaotiaopoker.pojo.SysHelpExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from sys_help
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.SysHelpExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from sys_help
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from sys_help
+        where HELP_ID = #{helpId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_help
+    where HELP_ID = #{helpId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.SysHelpExample" >
+        delete from sys_help
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.SysHelp" >
+    insert into sys_help (HELP_ID, HELP_TITLE, HELP_STATUS,
+      HELP_COLOR, HELP_SORT, HELP_CREATE_TIME,
+      HELP_CREATE_USER, HELP_UPDATE_TIME, HELP_UPDATE_USER,
+      HELP_CONTENT)
+    values (#{helpId,jdbcType=VARCHAR}, #{helpTitle,jdbcType=VARCHAR}, #{helpStatus,jdbcType=INTEGER},
+      #{helpColor,jdbcType=VARCHAR}, #{helpSort,jdbcType=INTEGER}, #{helpCreateTime,jdbcType=TIMESTAMP},
+      #{helpCreateUser,jdbcType=VARCHAR}, #{helpUpdateTime,jdbcType=TIMESTAMP}, #{helpUpdateUser,jdbcType=VARCHAR},
+      #{helpContent,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.SysHelp" >
+        insert into sys_help
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="helpId != null" >
+                HELP_ID,
+            </if>
+            <if test="helpTitle != null" >
+                HELP_TITLE,
+            </if>
+            <if test="helpStatus != null" >
+                HELP_STATUS,
+            </if>
+            <if test="helpColor != null" >
+                HELP_COLOR,
+            </if>
+            <if test="helpSort != null" >
+                HELP_SORT,
+            </if>
+            <if test="helpCreateTime != null" >
+                HELP_CREATE_TIME,
+            </if>
+            <if test="helpCreateUser != null" >
+                HELP_CREATE_USER,
+            </if>
+            <if test="helpUpdateTime != null" >
+                HELP_UPDATE_TIME,
+            </if>
+            <if test="helpUpdateUser != null" >
+                HELP_UPDATE_USER,
+            </if>
+            <if test="helpContent != null" >
+                HELP_CONTENT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="helpId != null" >
+                #{helpId,jdbcType=VARCHAR},
+            </if>
+            <if test="helpTitle != null" >
+                #{helpTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="helpStatus != null" >
+                #{helpStatus,jdbcType=INTEGER},
+            </if>
+            <if test="helpColor != null" >
+                #{helpColor,jdbcType=VARCHAR},
+            </if>
+            <if test="helpSort != null" >
+                #{helpSort,jdbcType=INTEGER},
+            </if>
+            <if test="helpCreateTime != null" >
+                #{helpCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="helpCreateUser != null" >
+                #{helpCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="helpUpdateTime != null" >
+                #{helpUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="helpUpdateUser != null" >
+                #{helpUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="helpContent != null" >
+                #{helpContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.SysHelpExample" resultType="java.lang.Integer" >
+        select count(*) from sys_help
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+        update sys_help
+        <set >
+            <if test="record.helpId != null" >
+                HELP_ID = #{record.helpId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.helpTitle != null" >
+                HELP_TITLE = #{record.helpTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.helpStatus != null" >
+                HELP_STATUS = #{record.helpStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.helpColor != null" >
+                HELP_COLOR = #{record.helpColor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.helpSort != null" >
+                HELP_SORT = #{record.helpSort,jdbcType=INTEGER},
+            </if>
+            <if test="record.helpCreateTime != null" >
+                HELP_CREATE_TIME = #{record.helpCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.helpCreateUser != null" >
+                HELP_CREATE_USER = #{record.helpCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="record.helpUpdateTime != null" >
+                HELP_UPDATE_TIME = #{record.helpUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.helpUpdateUser != null" >
+                HELP_UPDATE_USER = #{record.helpUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="record.helpContent != null" >
+                HELP_CONTENT = #{record.helpContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map" >
+        update sys_help
+        set HELP_ID = #{record.helpId,jdbcType=VARCHAR},
+        HELP_TITLE = #{record.helpTitle,jdbcType=VARCHAR},
+        HELP_STATUS = #{record.helpStatus,jdbcType=INTEGER},
+        HELP_COLOR = #{record.helpColor,jdbcType=VARCHAR},
+        HELP_SORT = #{record.helpSort,jdbcType=INTEGER},
+        HELP_CREATE_TIME = #{record.helpCreateTime,jdbcType=TIMESTAMP},
+        HELP_CREATE_USER = #{record.helpCreateUser,jdbcType=VARCHAR},
+        HELP_UPDATE_TIME = #{record.helpUpdateTime,jdbcType=TIMESTAMP},
+        HELP_UPDATE_USER = #{record.helpUpdateUser,jdbcType=VARCHAR},
+        HELP_CONTENT = #{record.helpContent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update sys_help
+        set HELP_ID = #{record.helpId,jdbcType=VARCHAR},
+        HELP_TITLE = #{record.helpTitle,jdbcType=VARCHAR},
+        HELP_STATUS = #{record.helpStatus,jdbcType=INTEGER},
+        HELP_COLOR = #{record.helpColor,jdbcType=VARCHAR},
+        HELP_SORT = #{record.helpSort,jdbcType=INTEGER},
+        HELP_CREATE_TIME = #{record.helpCreateTime,jdbcType=TIMESTAMP},
+        HELP_CREATE_USER = #{record.helpCreateUser,jdbcType=VARCHAR},
+        HELP_UPDATE_TIME = #{record.helpUpdateTime,jdbcType=TIMESTAMP},
+        HELP_UPDATE_USER = #{record.helpUpdateUser,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.SysHelp" >
+        update sys_help
+        <set >
+            <if test="helpTitle != null" >
+                HELP_TITLE = #{helpTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="helpStatus != null" >
+                HELP_STATUS = #{helpStatus,jdbcType=INTEGER},
+            </if>
+            <if test="helpColor != null" >
+                HELP_COLOR = #{helpColor,jdbcType=VARCHAR},
+            </if>
+            <if test="helpSort != null" >
+                HELP_SORT = #{helpSort,jdbcType=INTEGER},
+            </if>
+            <if test="helpCreateTime != null" >
+                HELP_CREATE_TIME = #{helpCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="helpCreateUser != null" >
+                HELP_CREATE_USER = #{helpCreateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="helpUpdateTime != null" >
+                HELP_UPDATE_TIME = #{helpUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="helpUpdateUser != null" >
+                HELP_UPDATE_USER = #{helpUpdateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="helpContent != null" >
+                HELP_CONTENT = #{helpContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where HELP_ID = #{helpId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiaotiaopoker.pojo.SysHelp" >
+    update sys_help
+    set HELP_TITLE = #{helpTitle,jdbcType=VARCHAR},
+      HELP_STATUS = #{helpStatus,jdbcType=INTEGER},
+      HELP_COLOR = #{helpColor,jdbcType=VARCHAR},
+      HELP_SORT = #{helpSort,jdbcType=INTEGER},
+      HELP_CREATE_TIME = #{helpCreateTime,jdbcType=TIMESTAMP},
+      HELP_CREATE_USER = #{helpCreateUser,jdbcType=VARCHAR},
+      HELP_UPDATE_TIME = #{helpUpdateTime,jdbcType=TIMESTAMP},
+      HELP_UPDATE_USER = #{helpUpdateUser,jdbcType=VARCHAR},
+      HELP_CONTENT = #{helpContent,jdbcType=LONGVARCHAR}
+    where HELP_ID = #{helpId,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.SysHelp" >
+    update sys_help
+    set HELP_TITLE = #{helpTitle,jdbcType=VARCHAR},
+      HELP_STATUS = #{helpStatus,jdbcType=INTEGER},
+      HELP_COLOR = #{helpColor,jdbcType=VARCHAR},
+      HELP_SORT = #{helpSort,jdbcType=INTEGER},
+      HELP_CREATE_TIME = #{helpCreateTime,jdbcType=TIMESTAMP},
+      HELP_CREATE_USER = #{helpCreateUser,jdbcType=VARCHAR},
+      HELP_UPDATE_TIME = #{helpUpdateTime,jdbcType=TIMESTAMP},
+      HELP_UPDATE_USER = #{helpUpdateUser,jdbcType=VARCHAR}
+    where HELP_ID = #{helpId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="queryHelpByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        sh.HELP_ID,
+        sh.HELP_TITLE,
+        sh.HELP_CREATE_TIME,
+        sh.HELP_UPDATE_TIME,
+        sh.HELP_SORT,
+        sh.HELP_STATUS,
+        su.USER_ACCOUNT as HELP_UPDATE_USER
+        from sys_help as sh
+        left join
+        sys_user as su
+        on
+        sh.HELP_UPDATE_USER = su.USER_ID
+        where
+        1=1
+        and
+        HELP_STATUS != 0
+        <if test="helpStatus != '' and helpStatus != null">
+            and HELP_STATUS= #{helpStatus,jdbcType=INTEGER}
+        </if>
+        <if test="helpTitle != '' and helpTitle != null">
+            and HELP_TITLE like CONCAT('%',#{helpTitle,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startSort != null">
+            and HELP_SORT &gt;= #{startSort,jdbcType=INTEGER}
+        </if>
+        <if test="endSort != null">
+            and HELP_SORT &lt;= #{endSort,jdbcType=INTEGER}
+        </if>
+        order by
+        HELP_STATUS ASC,
+        CASE
+        WHEN HELP_SORT = 0 THEN
+        1000000
+        ELSE
+        HELP_SORT
+        END ASC ,HELP_UPDATE_TIME DESC
+
+    </select>
+
+    <select id="countHelpByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(HELP_ID)
+        from
+        sys_help
+        where
+        1=1
+        and
+        HELP_STATUS != 0
+        <if test="helpStatus != '' and helpStatus != null">
+            and HELP_STATUS= #{helpStatus,jdbcType=INTEGER}
+        </if>
+        <if test="helpTitle != '' and helpTitle != null">
+            and HELP_TITLE like CONCAT('%',#{helpTitle,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

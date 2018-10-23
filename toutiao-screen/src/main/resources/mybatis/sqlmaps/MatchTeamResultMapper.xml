@@ -249,6 +249,8 @@
       mtm.team_number as teamNumber,
       getUserName (mtm.team_member_one) AS userOne,
       getUserName (mtm.team_member_two) AS userTwo,
+      getUserHead (mtm.team_member_one) AS userOneHead,
+      getUserHead (mtm.team_member_two) AS userTwoHead,
       mtr.score,
       mtr.total_point as totalPoint,
       mtr.total_disparity as totalDisparity,

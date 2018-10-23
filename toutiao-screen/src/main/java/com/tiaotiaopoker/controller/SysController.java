@@ -2,9 +2,12 @@ package com.tiaotiaopoker.controller;
 
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.config.ViewConstants;
+import com.tiaotiaopoker.entity.MatchTeamResultDto;
 import com.tiaotiaopoker.pojo.AppUser;
 import com.tiaotiaopoker.pojo.MatchRule;
+import com.tiaotiaopoker.pojo.MatchTeamResult;
 import com.tiaotiaopoker.service.MatchRuleService;
+import com.tiaotiaopoker.service.MatchTeamResultService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +31,9 @@ public class SysController extends BaseController {
 
     @Autowired
     private MatchRuleService matchRuleService;
+
+    @Autowired
+    private  MatchTeamResultService matchTeamResultService;
 
     @RequestMapping ("index")
     public ModelAndView index (ModelAndView mv) {
@@ -136,6 +142,15 @@ public class SysController extends BaseController {
         mv.addObject("hasPImg2", StringUtils.isNotBlank(matchRule.getMatchSecondImg()));
         mv.addObject("hasPImg3", StringUtils.isNotBlank(matchRule.getMatchThirdImg()));
 
+        //前三名
+        Integer ruleTurn = matchRule.getRuleTurn();
+        MatchTeamResult matchTeamResult = new MatchTeamResult();
+        matchTeamResult.setTurnNumber(ruleTurn);
+        matchTeamResult.setMatchId(matchId);
+        List<MatchTeamResultDto> matchTeamResults = matchTeamResultService.sortMatchTeamResult(matchTeamResult);
+        if (matchTeamResults.size() >= 3) {
+            mv.addObject("bossThree", matchTeamResults.subList(0, 3));
+        }
         mv.addObject("data", matchRule);
         mv.setViewName(ViewConstants.PRIZE);
         return mv;
