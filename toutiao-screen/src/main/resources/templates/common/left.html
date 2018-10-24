@@ -244,25 +244,25 @@
                             </li>
 
                             <li th:each="turn,turnStat: ${ruleTurnList}" class="dropdown turn">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                <a href="#" onclick="openAndDown(this)" class="dropdown-toggle" data-toggle="dropdown"
                                    th:data="${turnStat.index+1}">
                                     <i class="fa fa-list"></i> <span th:text="'第'+${turn}+'轮'"></span> <b
                                         class="fa fa-plus dropdown-plus"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="'javascript:seatShowDetail('+${turnStat.index+1}+')'">
-                                            <i class="fa fa-group"></i> 座位
+                                        <a href="#" th:onclick="'seatShowDetail(\''+ ${turnStat.index+1} +'\',this)'">
+                                            <i class="fa fa-caret-right"></i> 座位
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="'javascript:resultShowDetail('+${turnStat.index+1}+')'">
-                                            <i class="fa fa-adjust"></i> 成绩
+                                        <a href="#" th:onclick="'resultShowDetail(\''+ ${turnStat.index+1} +'\',this)'">
+                                            <i class="fa fa-caret-right"></i> 成绩
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="'javascript:printSeat('+${turnStat.index+1}+')'">
-                                            <i class="fa fa-hourglass-1"></i> 比赛
+                                        <a href="#" th:onclick="'printSeat(\''+ ${turnStat.index+1} +'\',this)'">
+                                            <i class="fa fa-caret-right"></i> 比赛
                                         </a>
                                     </li>
                                 </ul>

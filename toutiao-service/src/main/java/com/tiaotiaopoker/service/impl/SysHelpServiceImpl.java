@@ -28,8 +28,11 @@ public class SysHelpServiceImpl implements SysHelpService {
         if (null != Help.getHelpStatus()) {
             paramMap.put("HelpStatus", Help.getHelpStatus());
         }
+        if (null != page) {
+            page.setTotal(sysHelpMapper.countHelpByCondition(paramMap));
+        }
         List<SysHelp> list = sysHelpMapper.queryHelpByCondition(paramMap);
-        page.setTotal(sysHelpMapper.countHelpByCondition(paramMap));
+
         return list;
     }
 

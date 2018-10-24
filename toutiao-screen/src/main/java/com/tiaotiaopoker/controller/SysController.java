@@ -6,8 +6,10 @@ import com.tiaotiaopoker.entity.MatchTeamResultDto;
 import com.tiaotiaopoker.pojo.AppUser;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
+import com.tiaotiaopoker.pojo.SysHelp;
 import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchTeamResultService;
+import com.tiaotiaopoker.service.SysHelpService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,23 +27,26 @@ import java.util.List;
  * Created by xiekang on 2018/9/29.
  */
 @Controller
-@Scope ("prototype")
-@RequestMapping ("sys")
+@Scope("prototype")
+@RequestMapping("sys")
 public class SysController extends BaseController {
 
     @Autowired
     private MatchRuleService matchRuleService;
 
     @Autowired
-    private  MatchTeamResultService matchTeamResultService;
+    private MatchTeamResultService matchTeamResultService;
 
-    @RequestMapping ("index")
-    public ModelAndView index (ModelAndView mv) {
-        AppUser user  = getLoginUser();
-        String  token = user.getId();
+    @Autowired
+    private SysHelpService sysHelpService;
+
+    @RequestMapping("index")
+    public ModelAndView index(ModelAndView mv) {
+        AppUser user = getLoginUser();
+        String token = user.getId();
         mv.addObject("token", token);
 
-        String   matchId = null;
+        String matchId = null;
         Cookie[] cookies = getRequest().getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equalsIgnoreCase("__matchId")) {
@@ -51,8 +56,8 @@ public class SysController extends BaseController {
 
         //根据matchId查出比赛规则（轮次）
         if (StringUtils.isNotBlank(matchId)) {
-            MatchRule    matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
-            int          ruleTurn     = (null == matchRule ? 2 : matchRule.getRuleTurn());
+            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+            int ruleTurn = (null == matchRule ? 2 : matchRule.getRuleTurn());
             List<String> ruleTurnList = new ArrayList<>();
             for (int i = 1; i <= ruleTurn; i++) {
                 ruleTurnList.add(Constants.NUM_CH[i - 1]);
@@ -64,25 +69,25 @@ public class SysController extends BaseController {
         return mv;
     }
 
-    @RequestMapping ("layout")
-    public String scr (Model model) {
+    @RequestMapping("layout")
+    public String scr(Model model) {
         return ViewConstants.LAYOUT;
     }
 
-    @RequestMapping ("countDown/{matchId}")
-    public ModelAndView countDown (ModelAndView mv,
-                                   @PathVariable ("matchId") String matchId) {
+    @RequestMapping("countDown/{matchId}")
+    public ModelAndView countDown(ModelAndView mv,
+                                  @PathVariable("matchId") String matchId) {
 
-        MatchRule matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
-        Integer   totalSeconds = matchRule.getRuleTime()*60;
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        Integer totalSeconds = matchRule.getRuleTime() * 60;
         mv.addObject("totalSeconds", totalSeconds);
 
-        String  logo    = matchRule.getMatchLogo();
+        String logo = matchRule.getMatchLogo();
         Boolean hasLogo = StringUtils.isNotBlank(logo);
         mv.addObject("logo", logo);
         mv.addObject("hasLogo", hasLogo);
 
-        String  host    = matchRule.getMatchHost();
+        String host = matchRule.getMatchHost();
         Boolean hasHost = StringUtils.isNotBlank(host);
         mv.addObject("host", host);
         mv.addObject("hasHost", hasHost);
@@ -90,7 +95,7 @@ public class SysController extends BaseController {
         String theme = matchRule.getMatchName();
         mv.addObject("theme", theme);
 
-        String  matchReferee    = matchRule.getMatchReferee();
+        String matchReferee = matchRule.getMatchReferee();
         Boolean hasMatchReferee = !StringUtils.isBlank(matchReferee);
         mv.addObject("matchReferee", matchReferee);
         mv.addObject("hasMatchReferee", hasMatchReferee);
@@ -99,16 +104,16 @@ public class SysController extends BaseController {
         return mv;
     }
 
-    @RequestMapping ("rule/{matchId}")
-    public ModelAndView rule (ModelAndView mv,
-                              @PathVariable ("matchId") String matchId) {
-        MatchRule matchRule         = matchRuleService.selectMatchRuleByMatchId(matchId);
-        String    totalTurn         = Constants.NUM_CH[matchRule.getRuleTurn() - 1];
-        Integer   ruleDraw          = matchRule.getRuleDraw();
-        String    canDraw           = ruleDraw.equals(1) ? "否" : "是";
-        String    draw              = ruleDraw.equals(1) ? "，不可平" : "平" + ruleDraw.toString();
-        String    rules[]           = {" 临近编排", "首尾编排", " 拦腰编排"};
-        String    firstSeatRuleName = rules[matchRule.getRuleSeat() - 1];
+    @RequestMapping("rule/{matchId}")
+    public ModelAndView rule(ModelAndView mv,
+                             @PathVariable("matchId") String matchId) {
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        String totalTurn = Constants.NUM_CH[matchRule.getRuleTurn() - 1];
+        Integer ruleDraw = matchRule.getRuleDraw();
+        String canDraw = ruleDraw.equals(1) ? "否" : "是";
+        String draw = ruleDraw.equals(1) ? "，不可平" : "平" + ruleDraw.toString();
+        String rules[] = {" 临近编排", "首尾编排", " 拦腰编排"};
+        String firstSeatRuleName = rules[matchRule.getRuleSeat() - 1];
 
         mv.addObject("totalTurn", totalTurn);
         mv.addObject("draw", draw);
@@ -120,12 +125,12 @@ public class SysController extends BaseController {
         return mv;
     }
 
-    @RequestMapping ("prize/{matchId}")
-    public ModelAndView prize (ModelAndView mv,
-                               @PathVariable ("matchId") String matchId) {
+    @RequestMapping("prize/{matchId}")
+    public ModelAndView prize(ModelAndView mv,
+                              @PathVariable("matchId") String matchId) {
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
 
-        String  logo    = matchRule.getMatchLogo();
+        String logo = matchRule.getMatchLogo();
         Boolean hasLogo = StringUtils.isNotBlank(logo);
         mv.addObject("logo", logo);
         mv.addObject("hasLogo", hasLogo);
@@ -133,7 +138,7 @@ public class SysController extends BaseController {
         String theme = matchRule.getMatchName();
         mv.addObject("theme", theme);
 
-        String  matchReferee    = matchRule.getMatchReferee();
+        String matchReferee = matchRule.getMatchReferee();
         Boolean hasMatchReferee = !StringUtils.isBlank(matchReferee);
         mv.addObject("matchReferee", matchReferee);
         mv.addObject("hasMatchReferee", hasMatchReferee);
@@ -156,9 +161,13 @@ public class SysController extends BaseController {
         return mv;
     }
 
-    @RequestMapping ("help")
-    public ModelAndView prize (ModelAndView mv) {
+    @RequestMapping("help")
+    public ModelAndView help(ModelAndView mv) {
 
+        SysHelp sysHelp = new SysHelp();
+        sysHelp.setHelpStatus(1);
+        List<SysHelp> list = sysHelpService.queryHelpByCondition(sysHelp, null);
+        mv.addObject("list", list);
         mv.setViewName(ViewConstants.HELP);
         return mv;
     }
