@@ -34,7 +34,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<MatchApplyUser> getApplyUserByMatchId(String matchId) {
-
         return customerDaoMapper.getMatchApplyUserList( matchId );
     }
 

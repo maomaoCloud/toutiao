@@ -26,22 +26,18 @@
             <h1><strong>比赛规则</strong></h1>
         </div>
 
-
         <table class="table" id="user-table">
             <tr>
-                <td width="25%" align="right"><span class="td-title">基本规则:</span></td>
-                <td width="75%" align="left"><span
+                <td align="left"><span style="font-weight: 700;float: left;">基本规则:&nbsp;&nbsp;</span><span
                         th:text="'共计'+${totalTurn}+'轮，每轮'+${data.rulePair}+'副牌，每轮限时'+${data.ruleTime}+'分钟'"></span></td>
             </tr>
 
             <tr>
-                <td width="25%" align="right"><span class="td-title">座位编排规则:</span></td>
-                <td width="75%" align="left"><span th:text="${firstSeatRuleName}"></span></td>
+                <td align="left"><span style="font-weight: 700;float: left;">座位编排规则:&nbsp;&nbsp;</span><span th:text="${firstSeatRuleName}"></span></td>
             </tr>
 
             <tr>
-                <td width="25%" align="right"><span class="td-title">得分:</span></td>
-                <td width="75%" align="left"><span th:text="'胜'+${data.ruleWin}+'负'+${data.ruleFail}+${draw}"></span>
+                <td align="left"><span style="font-weight: 700;float: left;">得分:&nbsp;&nbsp;</span><span th:text="'胜'+${data.ruleWin}+'负'+${data.ruleFail}+${draw}"></span>
                 </td>
             </tr>
         </table>

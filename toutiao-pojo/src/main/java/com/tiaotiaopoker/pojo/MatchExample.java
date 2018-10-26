@@ -1424,6 +1424,136 @@ public class MatchExample {
             addCriterion("order_no not between", value1, value2, "orderNo");
             return (Criteria) this;
         }
+
+        public Criteria andOperateUserIsNull() {
+            addCriterion("operate_user is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserIsNotNull() {
+            addCriterion("operate_user is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserEqualTo(String value) {
+            addCriterion("operate_user =", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserNotEqualTo(String value) {
+            addCriterion("operate_user <>", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserGreaterThan(String value) {
+            addCriterion("operate_user >", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserGreaterThanOrEqualTo(String value) {
+            addCriterion("operate_user >=", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserLessThan(String value) {
+            addCriterion("operate_user <", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserLessThanOrEqualTo(String value) {
+            addCriterion("operate_user <=", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserLike(String value) {
+            addCriterion("operate_user like", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserNotLike(String value) {
+            addCriterion("operate_user not like", value, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserIn(List<String> values) {
+            addCriterion("operate_user in", values, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserNotIn(List<String> values) {
+            addCriterion("operate_user not in", values, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserBetween(String value1, String value2) {
+            addCriterion("operate_user between", value1, value2, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateUserNotBetween(String value1, String value2) {
+            addCriterion("operate_user not between", value1, value2, "operateUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitIsNull() {
+            addCriterion("user_limit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitIsNotNull() {
+            addCriterion("user_limit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitEqualTo(Integer value) {
+            addCriterion("user_limit =", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitNotEqualTo(Integer value) {
+            addCriterion("user_limit <>", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitGreaterThan(Integer value) {
+            addCriterion("user_limit >", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_limit >=", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitLessThan(Integer value) {
+            addCriterion("user_limit <", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitLessThanOrEqualTo(Integer value) {
+            addCriterion("user_limit <=", value, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitIn(List<Integer> values) {
+            addCriterion("user_limit in", values, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitNotIn(List<Integer> values) {
+            addCriterion("user_limit not in", values, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitBetween(Integer value1, Integer value2) {
+            addCriterion("user_limit between", value1, value2, "userLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserLimitNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_limit not between", value1, value2, "userLimit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

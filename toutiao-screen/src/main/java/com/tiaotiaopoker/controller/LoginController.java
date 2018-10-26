@@ -1,6 +1,5 @@
 package com.tiaotiaopoker.controller;
 
-import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.SecurityFactory;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.service.ScreenService;
@@ -16,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Created by xiekang on 2018/9/26.
  */
-@Controller
+@Controller("screenLoginController")
 @Scope("prototype")
 @RequestMapping("public")
 public class LoginController {

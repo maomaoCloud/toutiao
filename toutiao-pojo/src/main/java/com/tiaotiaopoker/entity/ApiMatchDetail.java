@@ -15,153 +15,163 @@ public class ApiMatchDetail {
     private List<MatchApplyUser> applyList;
     private Boolean              hasApply;
     private Boolean              isMine;//当前比赛是否是我自己发布的，如果是我自己发布的，就不能报名
+    private Boolean              hasLimit;
 
-    public ApiMatchDetail() {
+    public ApiMatchDetail () {
         super();
     }
 
-    public ApiMatchDetail(List<MatchApplyUser> applyList) {
+    public ApiMatchDetail (List<MatchApplyUser> applyList) {
         this.applyList = applyList;
     }
 
-    public String getHeadImg() {
+    public String getHeadImg () {
         return headImg;
     }
 
-    public void setHeadImg(String headImg) {
+    public void setHeadImg (String headImg) {
         this.headImg = headImg;
     }
 
-    public void setStartDateTime(String startDateTime) {
+    public void setStartDateTime (String startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public void setTheme(String theme) {
+    public void setTheme (String theme) {
         this.theme = theme;
     }
 
-    public String getTheme() {
+    public String getTheme () {
         return theme;
     }
 
-    public String getStartDateTime() {
+    public String getStartDateTime () {
         return startDateTime;
     }
 
-    public void setEndDateTime(String endDateTime) {
+    public void setEndDateTime (String endDateTime) {
         this.endDateTime = endDateTime;
     }
 
-    public String getEndDateTime() {
+    public String getEndDateTime () {
         return endDateTime;
     }
 
-    public String getAddress() {
+    public String getAddress () {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress (String address) {
         this.address = address;
     }
 
-    public String getActiveContent() {
+    public String getActiveContent () {
         return activeContent;
     }
 
-    public void setActiveContent(String activeContent) {
+    public void setActiveContent (String activeContent) {
         this.activeContent = activeContent;
     }
 
-    public String getRewardsContent() {
+    public String getRewardsContent () {
         return rewardsContent;
     }
 
-    public void setRewardsContent(String rewardsContent) {
+    public void setRewardsContent (String rewardsContent) {
         this.rewardsContent = rewardsContent;
     }
 
-    public String getContactName() {
+    public String getContactName () {
         return contactName;
     }
 
-    public void setContactName(String contactName) {
+    public void setContactName (String contactName) {
         this.contactName = contactName;
     }
 
-    public String getContactPhone() {
+    public String getContactPhone () {
         return contactPhone;
     }
 
-    public void setContactPhone(String contactPhone) {
+    public void setContactPhone (String contactPhone) {
         this.contactPhone = contactPhone;
     }
 
-    public String getWxHead() {
+    public String getWxHead () {
         return wxHead;
     }
 
-    public void setWxHead(String wxHead) {
+    public void setWxHead (String wxHead) {
         this.wxHead = wxHead;
     }
 
-    public Float getFee() {
+    public Float getFee () {
         return fee;
     }
 
-    public void setFee(Float fee) {
+    public void setFee (Float fee) {
         this.fee = fee;
     }
 
-    public List<MatchApplyUser> getApplyList() {
+    public List<MatchApplyUser> getApplyList () {
         return applyList;
     }
 
-    public void setApplyList(List<MatchApplyUser> applyList) {
+    public void setApplyList (List<MatchApplyUser> applyList) {
         this.applyList = applyList;
     }
 
-    public static ApiMatchDetail genFromMatch(MatchWithBLOBs m) {
+    public static ApiMatchDetail genFromMatch (MatchWithBLOBs m) {
         ApiMatchDetail data = new ApiMatchDetail();
-        data.setHeadImg( m.getBannerImg() );
-        data.setActiveContent( m.getActiveContent() );
-        data.setContactName( m.getContactName() );
-        data.setContactPhone( m.getPhone() );
-        data.setStartDateTime( new DateTime( m.getStartDate() ).toString( "yyyy-MM-dd HH:mm" ) );
-        data.setEndDateTime( new DateTime( m.getEndDate() ).toString( "yyyy-MM-dd HH:mm" ) );
-        data.setFee( m.getFee() );
-        data.setRewardsContent( m.getRewardsContent() );
-        data.setWxHead( m.getWxHead() );
-        data.setTheme( m.getTheme() );
-        data.setId( m.getId() );
+        data.setHeadImg(m.getBannerImg());
+        data.setActiveContent(m.getActiveContent());
+        data.setContactName(m.getContactName());
+        data.setContactPhone(m.getPhone());
+        data.setStartDateTime(new DateTime(m.getStartDate()).toString("yyyy-MM-dd HH:mm"));
+        data.setEndDateTime(new DateTime(m.getEndDate()).toString("yyyy-MM-dd HH:mm"));
+        data.setFee(m.getFee());
+        data.setRewardsContent(m.getRewardsContent());
+        data.setWxHead(m.getWxHead());
+        data.setTheme(m.getTheme());
+        data.setId(m.getId());
 
         StringBuffer sbStress = new StringBuffer();
-        sbStress.append( m.getProvince() ).append( m.getCity() ).append( m.getArea() ).append( m.getAddress() );
-        data.setAddress( sbStress.toString() );
+        sbStress.append(m.getProvince()).append(m.getCity()).append(m.getArea()).append(m.getAddress());
+        data.setAddress(sbStress.toString());
 
         return data;
     }
 
-    public Boolean getHasApply() {
+    public Boolean getHasApply () {
         return hasApply;
     }
 
-    public void setHasApply(Boolean hasApply) {
+    public void setHasApply (Boolean hasApply) {
         this.hasApply = hasApply;
     }
 
-    public String getId() {
+    public String getId () {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId (String id) {
         this.id = id;
     }
 
-    public Boolean getIsMine() {
+    public Boolean getIsMine () {
         return isMine;
     }
 
-    public void setIsMine(Boolean mine) {
+    public void setIsMine (Boolean mine) {
         isMine = mine;
     }
+
+    public Boolean getHasLimit () {
+        return hasLimit;
+    }
+
+    public void setHasLimit (Boolean hasLimit) {
+        this.hasLimit = hasLimit;
+    }
+
 }

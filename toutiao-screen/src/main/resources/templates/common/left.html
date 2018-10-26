@@ -29,7 +29,8 @@
     <link rel="stylesheet"
           th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen-bootstrap.css'}">
 
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=2.0'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=3.7'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/layer/theme/default/layer.css'}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js} IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js} doesn't work if you view the page via file:// -->
@@ -66,7 +67,7 @@
         #bottom-info {
             width: 100%;
             height: 60px;
-            background-color: rgb(185, 150, 133);
+            background-color: rgba(0, 0, 0, .5);
             position: fixed;
             bottom: 0;
             color: #FFF;
@@ -145,6 +146,10 @@
             border-radius: 10px;
             margin-bottom: 50px;
             display: none;
+        }
+
+        #content {
+            overflow: scroll !important;
         }
     </style>
 </head>
@@ -262,7 +267,7 @@
                                     </li>
                                     <li>
                                         <a href="#" th:onclick="'printSeat(\''+ ${turnStat.index+1} +'\',this)'">
-                                            <i class="fa fa-caret-right"></i> 比赛
+                                            <i class="fa fa-caret-right"></i> 座位标签
                                         </a>
                                     </li>
                                 </ul>
@@ -349,6 +354,7 @@
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/summernote/summernote.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/chosen.jquery.min.js'}"></script>
 <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/minimal.min.js?v=3.6'}"></script>
+<script th:src="@{${#httpServletRequest.getContextPath()} + '/layer/layer.js'}"></script>
 
 <script th:inline="javascript">
     /* <![CDATA[ */
@@ -386,9 +392,8 @@
             });
         }
 
-
         //现场投屏
-        $("#liveScreen").click(function () {
+        $(document).on("click", "#liveScreen", function () {
             var matchId = getMatchId();
             _destory();
             showLoading();
@@ -398,7 +403,7 @@
         });
 
         //比赛设置
-        $("#matchSetting").click(function () {
+        $(document).on("click", "#matchSetting", function () {
             _destory();
             showLoading();
             $("#row").load("/sys/matchSetting/index?token=" + token + "&matchId=" + getMatchId(), function () {
@@ -407,17 +412,17 @@
         });
 
         //座位设置
-        $("#seatSetting").click(function () {
+        $(document).on("click", "#seatSetting", function () {
             _destory();
             showLoading();
             var matchId = getMatchId();
-            $("#row").load("/sys/seatSetting/index?token=" + token + "&matchId=" + matchId, function () {
+            $("#row").load("/sys/seatSetting/index?t=" + (new Date()).valueOf() + "&token=" + token + "&matchId=" + matchId, function () {
                 closeLoading();
             });
         });
 
         //签到设置
-        $("#signSetting").click(function () {
+        $(document).on("click", "#signSetting", function () {
             showLoading();
             _destory();
             var matchId = getMatchId();
@@ -427,7 +432,7 @@
         });
 
         //参赛人员
-        $("#users").click(function () {
+        $(document).on("click", "#users", function () {
             showLoading();
             _destory();
             var matchId = getMatchId();
@@ -437,7 +442,7 @@
         });
 
         //成绩录入
-        $("#resultSetting").click(function () {
+        $(document).on("click", "#resultSetting", function () {
             showLoading();
             _destory();
             var matchId = getMatchId();
@@ -447,7 +452,7 @@
         });
 
         //比赛规则展示
-        $("#turnBefore").click(function () {
+        $(document).on("click", "#turnBefore", function () {
             showLoading();
             _destory();
             var matchId = getMatchId();
@@ -457,7 +462,7 @@
         });
 
         //获奖名单
-        $("#prize").click(function () {
+        $(document).on("click", "#prize", function () {
             showLoading();
             _destory();
             var matchId = getMatchId();
@@ -466,7 +471,7 @@
             });
         });
 
-        $("#helpLink").click(function () {
+        $(document).on("click", "#helpLink", function () {
             showLoading();
             _destory();
             $("#row").load("/sys/help?token=" + getToken(), function () {
@@ -476,33 +481,95 @@
 
         });
 
-        $(".nav-item").click(function () {
-            $(".open").removeClass("open");
-            $(".hovered").removeClass("hovered");
-
-            $(this).addClass("hovered");
-        });
-
-        $(".full-screen-img").click(function () {
+        $(document).on("click", ".full-screen-img", function () {
             $(this).addClass("hide");
             $(".exit-full-screen-img").removeClass("hide");
             _full_screen();
         });
 
-        $(".exit-full-screen-img").click(function () {
+        $(document).on("click", ".exit-full-screen-img", function () {
             $(this).addClass("hide");
             $(".full-screen-img").removeClass("hide");
             _exit_full_screen();
         });
 
-        $("#showQr").click(function () {
+        $(document).on("click", "#showQr", function () {
             $(".qr-mask").fadeIn(500, function () {
                 $("#qr-img").fadeIn(500);
             });
         });
 
-        $(".qr-mask").click(function () {
+        $(document).on("click", ".qr-mask", function () {
             $(this).fadeOut(100);
+        });
+
+        var current_select_obj = null;
+        var layer_index = 0;
+
+        $(document).on("click", ".remove", function () {
+            if ($(this).attr("data-op") == "-") {
+                var id = $(this).attr("data-id");
+                var name = $(this).attr("data-name");
+                var src = $(this).attr("data-src");
+                var html = '<tr>\n' +
+                    '<td>\n' +
+                    '<div data-id="' + id + '" data-name="' + name + '" data-src="'
+                    + src +
+                    '" class="data-item">\n' +
+                    '<img class="head" src="' + src + '">\n' +
+                    '<span class="name">' + name + '</span>\n' +
+                    '</div>\n' +
+                    '</td>\n' +
+                    '</tr>';
+
+                var html_no = ' <div class="data-item">\n' +
+                    '<img class="head">\n' +
+                    '<span class="name"></span>\n' +
+                    '</div>\n' +
+                    '<div data-op="+" class="remove hide">\n' +
+                    '+\n' +
+                    '</div>';
+
+                $(this).parent().html(html_no);
+
+                $("#unseat-data").append(html);
+            } else {
+                var datas = new Array();
+                $("#unseat-data").find(".data-item").each(function () {
+                    var id = $(this).attr("data-id");
+                    var name = $(this).attr("data-name");
+                    var src = $(this).attr("data-src");
+                    var dataItem = new Object();
+                    dataItem.id = id;
+                    dataItem.name = name;
+                    dataItem.src = src;
+                    datas.push(dataItem);
+                });
+
+                console.log(datas);
+
+                current_select_obj = $(this);
+
+                layer_index = layer.open({
+                    title: "请选择玩家",
+                    type: 1,
+                    anim: 2,
+                    closeBtn: 0, //不显示关闭按钮
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: 'html内容'
+                });
+
+                console.log(current_select_obj.parent().html());
+            }
+        });
+
+        $(document).on("mouseenter", ".data-td", function () {
+            $(this).find(".remove").removeClass("hide");
+        });
+
+        $(document).on("mouseleave", ".data-td", function () {
+            $(this).find(".remove").addClass("hide");
         });
     });
 
@@ -546,8 +613,9 @@
     function printSeat(turnNumber, obj) {
         showLoading();
         _destory();
+        var matchId = getMatchId();
         $("#row").load("/sys/seatSetting/seatPrint", {
-            matchId: $("#nowSettingMatch").val(),
+            matchId: matchId,
             token: getToken(),
             turnNumber: turnNumber
         }, function () {

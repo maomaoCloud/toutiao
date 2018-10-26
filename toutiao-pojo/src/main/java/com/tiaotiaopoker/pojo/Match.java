@@ -51,6 +51,8 @@ public class Match {
 
     private String operateUser;
 
+    private Integer userLimit;
+
     public String getOperateUser() {
         return operateUser;
     }
@@ -229,4 +231,13 @@ public class Match {
     public int getApplyCount() {
         return applyCount;
     }
+
+    public Integer getUserLimit () {
+        return userLimit;
+    }
+
+    public void setUserLimit (Integer userLimit) {
+        this.userLimit = userLimit;
+    }
+
 }

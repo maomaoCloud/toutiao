@@ -12,18 +12,21 @@ import java.util.List;
 /**
  * Created by xiekang on 2018/9/22.
  */
-@Component("customerDaoMapper")
+@Component ("customerDaoMapper")
 public interface CustomerDaoMapper {
     @Deprecated
-    List<String> checkUserHasApply(@Param("userId") String userId,
-                                   @Param("ids") List<String> ids);
+    List<String> checkUserHasApply (@Param ("userId") String userId,
+                                    @Param ("ids") List<String> ids);
 
-    List<ApiMatchData> getMatchOtherInfo(@Param("userId") String userId,
-                                         @Param("ids") List<String> ids);
+    List<ApiMatchData> getMatchOtherInfo (@Param ("userId") String userId,
+                                          @Param ("ids") List<String> ids);
 
-    List<MatchApplyUser> getMatchApplyUserList(@Param("matchId") String matchId);
+    List<MatchApplyUser> getMatchApplyUserList (@Param ("matchId") String matchId);
 
-    List<String> getMatchHotKeyWords();
+    List<String> getMatchHotKeyWords ();
 
-    WithdrawLimit getTodayWithdrawTimes(@Param("userId") String userId);
+    WithdrawLimit getTodayWithdrawTimes (@Param ("userId") String userId);
+
+    Integer checkUserHasApplyByNameAndPhone (@Param ("matchId") String id, @Param ("name") String userName, @Param ("phone") String userPhone);
+
 }

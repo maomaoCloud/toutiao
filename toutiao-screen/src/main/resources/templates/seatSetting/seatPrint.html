@@ -1,39 +1,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<style>
-    html {
-        overflow: unset !important;
-        height: auto !important;
-    }
-
-    body {
-        width: 100%;
-        font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
-    }
-
-    .no-left-border {
-        border-left: 0 !important;
-    }
-
-    table td {
-        vertical-align: middle;
-        text-align: center;
-        font-size: 16px;
-        color: #ffffff;
-    }
-
-    .head-title {
-        font-size: 20px;
-    }
-
-</style>
 <section class="tile color transparent-black">
     <!-- tile body -->
-    <div class="tile-body">
+    <div class="tile-body" id="pTable">
+        <style>
+            html {
+                overflow: unset !important;
+                height: auto !important;
+            }
+
+            body {
+                width: 100%;
+                font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
+            }
+
+            .no-left-border {
+                border-left: 0 !important;
+            }
+
+            table td {
+                vertical-align: middle;
+                text-align: center;
+                font-size: 16px;
+                color: #ffffff;
+            }
+
+            .head-title {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+        </style>
         <table th:each="data:${dataList }"
                class="table table-bordered label-table"
-               style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
+               style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:80px;">
             <tr>
-                <td class="head-title" colspan="6" th:text="${matchName}+' —— '+${matchDate}"></td>
+                <td class="head-title" colspan="7" th:text="${matchName}+' —— '+${matchDate}"></td>
             </tr>
             <tr>
                 <td>桌卡</td>
@@ -77,12 +78,14 @@
 
 <script>
     $(function () {
-        $("#print").click(function () {
-            $(this).addClass("hide");
-            hideNav();
+        $("#print").on("click",function () {
+            var headstr = "<html><head><title></title></head><body>";
+            var footstr = "</body>";
+            var newstr = document.getElementById("pTable").innerHTML;
+            var oldstr = document.body.innerHTML;
+            document.body.innerHTML = headstr+newstr+footstr;
             window.print();
-            showNav();
-            $(this).removeClass("hide");
+            document.body.innerHTML = oldstr;
         });
     });
 </script>

@@ -24,144 +24,158 @@ public class ApiMatchData {
     private int        signInNum;
     private BigDecimal sumMoney;
     private Boolean    isMine;
+    private Boolean    hasLimit;
 
-    public BigDecimal getSumMoney() {
+    public BigDecimal getSumMoney () {
         return sumMoney;
     }
 
-    public void setSumMoney(BigDecimal sumMoney) {
+    public void setSumMoney (BigDecimal sumMoney) {
         this.sumMoney = sumMoney;
     }
 
-    public int getSignInNum() {
+    public int getSignInNum () {
         return signInNum;
     }
 
-    public void setSignInNum(int signInNum) {
+    public void setSignInNum (int signInNum) {
         this.signInNum = signInNum;
     }
 
-    public int getSignUpNum() {
+    public int getSignUpNum () {
         return signUpNum;
     }
 
-    public void setSignUpNum(int signUpNum) {
+    public void setSignUpNum (int signUpNum) {
         this.signUpNum = signUpNum;
     }
 
-    public String getMatchState() {
+    public String getMatchState () {
         return matchState;
     }
 
-    public void setMatchState(String matchState) {
+    public void setMatchState (String matchState) {
         this.matchState = matchState;
     }
 
-    public String getId() {
+    public String getId () {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId (String id) {
         this.id = id;
     }
 
-    public String getTheme() {
+    public String getTheme () {
         return theme;
     }
 
-    public void setTheme(String theme) {
+    public void setTheme (String theme) {
         this.theme = theme;
     }
 
-    public String getStartDate() {
+    public String getStartDate () {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate (String startDate) {
         this.startDate = startDate;
     }
 
-    public String getLocation() {
+    public String getLocation () {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation (String location) {
         this.location = location;
     }
 
-    public Integer getApplyCount() {
+    public Integer getApplyCount () {
         return applyCount;
     }
 
-    public void setApplyCount(Integer applyCount) {
+    public void setApplyCount (Integer applyCount) {
         this.applyCount = applyCount;
     }
 
-    public Integer getFee() {
+    public Integer getFee () {
         return fee;
     }
 
-    public void setFee(Integer fee) {
+    public void setFee (Integer fee) {
         this.fee = fee;
     }
 
-    public String getBannerImg() {
+    public String getBannerImg () {
         return bannerImg;
     }
 
-    public void setBannerImg(String bannerImg) {
+    public void setBannerImg (String bannerImg) {
         this.bannerImg = bannerImg;
     }
 
-    public void setHasApply(boolean hasApply) {
+    public void setHasApply (boolean hasApply) {
         this.hasApply = hasApply;
     }
 
-    public Boolean getHasApply() {
+    public Boolean getHasApply () {
         return hasApply;
     }
 
-    public static ApiMatchData genFromMatch(Match md,
-                                            String myUserId) {
+    public Boolean getIsMine () {
+        return isMine;
+    }
+
+    public void setIsMine (Boolean mine) {
+        isMine = mine;
+    }
+
+    public Boolean getHasLimit () {
+        return hasLimit;
+    }
+
+    public void setHasLimit (Boolean hasLimit) {
+        this.hasLimit = hasLimit;
+    }
+
+    public static ApiMatchData genFromMatch (Match md,
+                                             String myUserId) {
         ApiMatchData res = new ApiMatchData();
-        res.setId( md.getId() );
-        res.setBannerImg( md.getBannerImg() );
-        res.setApplyCount( md.getApplyCount() );
-        res.setIsMine( md.getUserId().equals( myUserId ) );
+        res.setId(md.getId());
+        res.setBannerImg(md.getBannerImg());
+        res.setApplyCount(md.getApplyCount());
+        res.setIsMine(md.getUserId().equals(myUserId));
 
         try {
-            res.setFee( (int) ( (float) md.getFee() ) );
+            res.setFee((int) ((float) md.getFee()));
         } catch (Exception e) {
-            res.setFee( 0 );
+            res.setFee(0);
         }
+
+
+        res.setHasLimit(md.getUserLimit() != null && !md.getUserLimit().equals(-1) && md.getApplyCount() >= md.getUserLimit());
 
         String location = md.getCity();
         location += md.getArea();
-        res.setLocation( location );
-        res.setStartDate( new DateTime( md.getStartDate() ).toString( "yyyy-MM-dd HH:mm" ) );
-        res.setTheme( md.getTheme() );
+        res.setLocation(location);
+        res.setStartDate(new DateTime(md.getStartDate()).toString("yyyy-MM-dd HH:mm"));
+        res.setTheme(md.getTheme());
 
         //比赛状态
-        DateTime nowDate = new DateTime( new Date() );
-        DateTime startDate = new DateTime( md.getStartDate() );
-        DateTime endDate = new DateTime( md.getEndDate() );
-        if( nowDate.compareTo( startDate ) < 0 ) {
-            res.setMatchState( Constants.Match.NOT_START );
-        } else if( nowDate.compareTo( endDate ) > 0 ) {
-            res.setMatchState( Constants.Match.END );
+        DateTime nowDate   = new DateTime(new Date());
+        DateTime startDate = new DateTime(md.getStartDate());
+        DateTime endDate   = new DateTime(md.getEndDate());
+        if (nowDate.compareTo(startDate) < 0) {
+            res.setMatchState(Constants.Match.NOT_START);
+        } else if (nowDate.compareTo(endDate) > 0) {
+            res.setMatchState(Constants.Match.END);
         } else {
-            res.setMatchState( Constants.Match.UNDER_WAY );
+            res.setMatchState(Constants.Match.UNDER_WAY);
         }
 
         return res;
     }
 
-    public Boolean getIsMine() {
-        return isMine;
-    }
 
-    public void setIsMine(Boolean mine) {
-        isMine = mine;
-    }
 }
 

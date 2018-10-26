@@ -60,10 +60,10 @@ body.modal-open {
 }
 
 body.bg-1 {
-    background-image: url(../images/backgrounds/1.jpg);
+    background-image: url(../images/backgrounds/b3.jpg);
     background-repeat: repeat, no-repeat;
     background-position: left top;
-    background-size: auto, cover;
+    background-size: cover;
 }
 
 body.bg-2 {
@@ -204,7 +204,7 @@ h1.underline, h2.underline, h3.underline, h4.underline, h5.underline, h6.underli
 /**********************************/
 body .navbar {
     min-height: 45px;
-    height: 45px;
+    height: 60px;
 }
 
 body .navbar.navbar-default {
@@ -220,7 +220,7 @@ body .navbar.navbar-transparent-white .navbar-header {
 }
 
 body .navbar.navbar-transparent-black {
-    background-color: rgba(215, 147, 130, 1);
+    background-color: rgba(0, 0, 0, .6);
 }
 
 body .navbar.navbar-transparent-black .navbar-header {
@@ -235,13 +235,13 @@ body .navbar .navbar-header {
 
 body .navbar .navbar-header .navbar-brand {
     font-weight: 300;
-    font-size: 18px;
+    font-size: 25px;
     font-family: "Roboto Condensed", sans-serif;
     color: white;
     padding: 0;
     padding-left: 20px;
-    height: 45px;
-    line-height: 45px;
+    height: 60px;
+    line-height: 60px;
     background: url(../images/minimal-logo.png) no-repeat 0 16px;
 }
 
@@ -266,8 +266,8 @@ body .navbar .navbar-header .sidebar-collapse a:hover {
 }
 
 body .navbar .navbar-nav > li > a {
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 45px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 60px;
     padding: 0 15px;
     -webkit-transition: all 0.2s linear;
     -moz-transition: all 0.2s linear;
@@ -281,6 +281,7 @@ body .navbar .navbar-nav > li > a:hover, body .navbar .navbar-nav > li > a:focus
 body .navbar .navbar-nav > li.divided > a {
     display: inline-block;
     vertical-align: top;
+    font-size: 25px;
 }
 
 body .navbar .navbar-nav > li.divided:after {
@@ -711,7 +712,7 @@ body .navbar.collapsed .navbar-header .sidebar-collapse a {
 body .navbar .navbar-nav.side-nav {
     width: 250px;
     position: fixed;
-    margin-top: 45px;
+    margin-top: 60px;
     padding-bottom: 0;
     top: 0;
     height: 100%;
