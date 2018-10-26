@@ -505,6 +505,7 @@
 
         var current_select_obj = null;
         var layer_index = 0;
+        var selected_data_item = null;
 
         $(document).on("click", ".remove", function () {
             if ($(this).attr("data-op") == "-") {
@@ -546,21 +547,56 @@
                     datas.push(dataItem);
                 });
 
-                console.log(datas);
+
+                var d_html = "<div class='s-data'>";
+                if (datas.length > 1) {
+                    for (var i = 1; i < datas.length; i++) {
+                        d_html += '<div data-name="' + datas[i].name + '" data-id="' + datas[i].id + '" data-src="' + datas[i].src + '" class="s-data-item">' +
+                            '<img src="' + datas[i].src + '">' +
+                            '<div class="name">' + datas[i].name + '</div>' +
+                            '</div>';
+                    }
+                }
+
+                d_html += '</div>';
 
                 current_select_obj = $(this);
 
                 layer_index = layer.open({
                     title: "请选择玩家",
                     type: 1,
+                    btn: ['确认选择'],
                     anim: 2,
                     closeBtn: 0, //不显示关闭按钮
                     skin: 'layui-layer-rim', //加上边框
-                    area: ['420px', '240px'], //宽高
-                    content: 'html内容'
+                    area: ['650px', '450px'], //宽高
+                    content: d_html,
+                    yes: function (index, layero) {
+                        if (selected_data_item == null) {
+                            layer.msg('前选择玩家！');
+                            return;
+                        }
+
+                        var s_html = '<div class="data-item">\n' +
+                            '<img class="head" src="' + selected_data_item.src + '">\n' +
+                            '<span class="name">' + selected_data_item.name + '</span></div>' +
+                            '<div data-id="' + selected_data_item.id + '" data-name="' + selected_data_item.name + '" data-src="' + selected_data_item.src + '" data-op="-" class="remove hide">-</div>';
+
+
+                        current_select_obj.parent().html(s_html);
+
+                        $("#unseat-data").find(".data-item").each(function () {
+                            var id = $(this).attr("data-id");
+                            if (id == selected_data_item.id) {
+                                $(this).parent().remove();
+                                return;
+                            }
+                        });
+                        layer.close(index);
+                    }
                 });
 
-                console.log(current_select_obj.parent().html());
+                selected_data_item = null;
             }
         });
 
@@ -570,6 +606,15 @@
 
         $(document).on("mouseleave", ".data-td", function () {
             $(this).find(".remove").addClass("hide");
+        });
+
+        $(document).on("click", ".s-data-item", function () {
+            $(".s-active").removeClass("s-active");
+            $(this).addClass("s-active");
+            selected_data_item = new Object();
+            selected_data_item.id = $(this).attr("data-id");
+            selected_data_item.src = $(this).attr("data-src");
+            selected_data_item.name = $(this).attr("data-name");
         });
     });
 

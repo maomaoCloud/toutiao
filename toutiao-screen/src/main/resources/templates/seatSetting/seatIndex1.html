@@ -153,6 +153,42 @@
             font-weight: 500;
             border-bottom: 2px solid #FFF;
         }
+
+        .s-data {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .s-data .s-active {
+            border: 2px solid coral !important;
+        }
+
+        .s-data .s-data-item {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #CCCCCC;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .s-data .s-data-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px 0;
+
+        }
+
+        .s-data .s-data-item .name {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <!-- tile -->
@@ -177,14 +213,14 @@
             </div>
             <!-- tile widget -->
             <div class="" id="sign-list">
-                <table class="s-data-tab">
+                <table class="s-data-tab" id="res-table">
                     <tr>
                         <td width="25%" class="data-td">
                             <div class="data-item">
                                 <img class="head" src="/images/george-avatar.jpg">
                                 <span class="name">谢康</span>
                             </div>
-                            <div data-id="123" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div data-id="1" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
@@ -194,7 +230,7 @@
                                 <img class="head" src="/images/george-avatar.jpg">
                                 <span class="name">谢康</span>
                             </div>
-                            <div data-id="123" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div data-id="2" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
@@ -204,19 +240,103 @@
                                 <img class="head" src="/images/george-avatar.jpg">
                                 <span class="name">谢康</span>
                             </div>
-                            <div data-id="123" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div data-id="3" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
                         </td>
                         <td width="25%" class="data-td">
                             <div class="data-item">
-                                <img class="head">
-                                <span class="name"></span>
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
                             </div>
-                            <div data-id="123" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="+"
+                            <div data-id="4" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
                                  class="remove hide">
-                                +
+                                -
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="11" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="21" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="31" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="41" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="12" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="22" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="32" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="25%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" src="/images/george-avatar.jpg">
+                                <span class="name">谢康</span>
+                            </div>
+                            <div data-id="42" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                                 class="remove hide">
+                                -
                             </div>
                         </td>
                     </tr>
@@ -248,14 +368,20 @@
 <script>
     $(function () {
         $("#over").click(function () {
+            if ($("#unseat-data").find(".data-item").length > 1) {
+                layer.msg("还有未入座人员！");
+                return;
+            }
+
             var sortResult = new Array();
-            $(".user").each(function () {
-                var id = $(this).attr("data-id");
+            $("#res-table").find(".data-td").each(function () {
+                var id = $(this).find(".remove").attr("data-id");
                 sortResult.push(id);
             });
-            showLoading()
-            //打印排序结果
             console.log(sortResult);
+            showLoading();
+            //打印排序结果
+            return;
             //保存首轮座位
             $.post("/sys/seatSetting/save?token=" + getToken() + "&matchId=" + $("#nowSettingMatch").val() + "&userIds=" + sortResult + "&turnNumber=1", function (data) {
                 closeLoading();
