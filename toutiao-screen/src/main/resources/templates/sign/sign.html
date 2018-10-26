@@ -141,7 +141,7 @@
     <!-- tile -->
     <section class="tile transparent">
         <div class="tile-header color transparent-black textured rounded-top-corners">
-            <h1 class="box-title">已签到人员</h1>
+            <h1 class="box-title" id="sign-data-title">已签到人员(0)</h1>
         </div>
         <!-- /tile header -->
 
@@ -277,6 +277,8 @@
                         item.find("img").attr("src", res.resData.bUsers[i].head);
                     }
 
+                    var total_sign = res.resData.aUsers.length + res.resData.cUsers.length;
+                    $("#sign-data-title").html("已签到人员(" + total_sign + ")");
                     var html = '';
                     for (var i = 0; i < res.resData.cUsers.length; i++) {
                         html += '<div class="wait-item"><img src="' + res.resData.cUsers[i].head + '">';

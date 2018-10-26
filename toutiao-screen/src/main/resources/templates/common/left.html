@@ -507,7 +507,7 @@
         var layer_index = 0;
         var selected_data_item = null;
 
-        $(document).on("click", ".remove", function () {
+        $(document).on("click", "#res-table .remove", function () {
             if ($(this).attr("data-op") == "-") {
                 var id = $(this).attr("data-id");
                 var name = $(this).attr("data-name");
@@ -600,6 +600,125 @@
             }
         });
 
+        $(document).on("click", "#res-table-p .remove", function () {
+            if ($(this).attr("data-op") == "-") {
+                var id = $(this).attr("data-id");
+                var name = $(this).attr("data-name");
+                var src = $(this).attr("data-src");
+                var name_p = $(this).attr("data-name-p");
+                var src_p = $(this).attr("data-src-p");
+                var zh = $(this).attr("data-zh");
+
+                var html = '<tr>\n' +
+                    '<td data-zh="' + zh + '" data-id="' + id + '" data-name="' + name + '" data-src="' + src + '" data-name-p="' + name_p + '" data-src-p="' + src_p + '">' +
+                    '<div class="data-item">\n' +
+                    '<img class="head" src="' + src + '">\n' +
+                    '<span class="name">' + name + '</span>\n' +
+                    '</div>\n' +
+                    '<div class="data-item">' + zh + '</div>' +
+                    '<div class="data-item">\n' +
+                    '<img class="head" src="' + src_p + '">\n' +
+                    '<span class="name">' + name_p + '</span>\n' +
+                    '</div>\n' +
+                    '</td>\n' +
+                    '</tr>';
+
+                var html_no = '<div class="data-item">\n' +
+                    '<img class="head">\n' +
+                    '<span class="name"></span>\n' +
+                    '</div>\n' +
+                    '<div class="data-item"></div>' +
+                    '<div class="data-item">\n' +
+                    '<img class="head">\n' +
+                    '<span class="name"></span>\n' +
+                    '</div>\n' +
+                    '<div data-op="+" class="remove hide">\n' +
+                    '+\n' +
+                    '</div>';
+
+                $(this).parent().html(html_no);
+
+                $("#unseat-data-p").append(html);
+            } else {
+                var datas = new Array();
+                $("#unseat-data-p").find("td").each(function () {
+                    var id = $(this).attr("data-id");
+                    var name = $(this).attr("data-name");
+                    var src = $(this).attr("data-src");
+                    var name_p = $(this).attr("data-name-p");
+                    var src_p = $(this).attr("data-src-p");
+                    var zh = $(this).attr("data-zh");
+                    var dataItem = new Object();
+                    dataItem.id = id;
+                    dataItem.name = name;
+                    dataItem.src = src;
+                    dataItem.name_p = name_p;
+                    dataItem.src_p = src_p;
+                    dataItem.zh = zh;
+                    datas.push(dataItem);
+                });
+
+
+                var d_html = "<div class='s-data-p'>";
+                if (datas.length > 1) {
+                    for (var i = 1; i < datas.length; i++) {
+                        d_html += '<div class="s-data-p-item" data-name="' + datas[i].name + '" data-name-p="' + datas[i].name_p + '" data-src-p="' + datas[i].src_p + '" data-zh="' + datas[i].zh + '" data-id="' + datas[i].id + '" data-src="' + datas[i].src + '"><div class="s-data-item">' +
+                            '<img src="' + datas[i].src + '">' +
+                            '<div class="name">' + datas[i].name + '</div>' +
+                            '</div>' +
+                            '<div class="s-data-item">' + datas[i].zh + '</div>' +
+                            '<div class="s-data-item"><img src="' + datas[i].src_p + '">' +
+                            '<div class="name">' + datas[i].name_p + '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                }
+
+                d_html += '</div>';
+
+                current_select_obj = $(this);
+
+                layer_index = layer.open({
+                    title: "请选择组合",
+                    type: 1,
+                    btn: ['确认选择'],
+                    anim: 2,
+                    closeBtn: 0, //不显示关闭按钮
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['650px', '450px'], //宽高
+                    content: d_html,
+                    yes: function (index, layero) {
+                        if (selected_data_item == null) {
+                            layer.msg('前选择组合！');
+                            return;
+                        }
+
+                        var s_html = '<div class="data-item">\n' +
+                            '<img class="head" src="' + selected_data_item.src + '">\n' +
+                            '<span class="name">' + selected_data_item.name + '</span></div>' +
+                            '<div class="data-item">' + selected_data_item.zh + '</div>' +
+                            '<div class="data-item">\n' +
+                            '<img class="head" src="' + selected_data_item.src_p + '">\n' +
+                            '<span class="name">' + selected_data_item.name_p + '</span></div>' +
+                            '<div data-name-p="' + selected_data_item.name_p + '" data-src-p="' + selected_data_item.src_p + '" data-zh="' + selected_data_item.zh + '" data-id="' + selected_data_item.id + '" data-name="' + selected_data_item.name + '" data-src="' + selected_data_item.src + '" data-op="-" class="remove hide">-</div>';
+
+                        current_select_obj.parent().html(s_html);
+
+                        $("#unseat-data-p").find("td").each(function () {
+                            var id = $(this).attr("data-id");
+                            if (id == selected_data_item.id) {
+                                $(this).parent().remove();
+                                return;
+                            }
+                        });
+                        layer.close(index);
+                    }
+                });
+
+                selected_data_item = null;
+            }
+        });
+
         $(document).on("mouseenter", ".data-td", function () {
             $(this).find(".remove").removeClass("hide");
         });
@@ -615,6 +734,18 @@
             selected_data_item.id = $(this).attr("data-id");
             selected_data_item.src = $(this).attr("data-src");
             selected_data_item.name = $(this).attr("data-name");
+        });
+
+        $(document).on("click", ".s-data-p-item", function () {
+            $(".s-active").removeClass("s-active");
+            $(this).addClass("s-active");
+            selected_data_item = new Object();
+            selected_data_item.id = $(this).attr("data-id");
+            selected_data_item.src = $(this).attr("data-src");
+            selected_data_item.name = $(this).attr("data-name");
+            selected_data_item.name_p = $(this).attr("data-name-p");
+            selected_data_item.src_p = $(this).attr("data-src-p");
+            selected_data_item.zh = $(this).attr("data-zh");
         });
     });
 

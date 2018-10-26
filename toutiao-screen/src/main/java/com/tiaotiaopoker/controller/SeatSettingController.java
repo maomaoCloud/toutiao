@@ -33,7 +33,7 @@ public class SeatSettingController {
 
     @RequestMapping ("index")
     public ModelAndView seatIndex (ModelAndView mv, String matchId) {
-        mv.setViewName("seatSetting/seatIndex1");
+        mv.setViewName("seatSetting/seatIndex2");
         if (1 == 1) return mv;
         if (!StringUtils.isBlank(matchId) && !matchId.equals("0")) {
             MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
