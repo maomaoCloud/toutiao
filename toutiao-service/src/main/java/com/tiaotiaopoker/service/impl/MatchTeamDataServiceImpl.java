@@ -5,8 +5,8 @@ import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.dao.*;
 import com.tiaotiaopoker.entity.MatchTeamDataDto;
 import com.tiaotiaopoker.pojo.*;
+import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchTeamDataService;
-import com.tiaotiaopoker.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +31,9 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
 
     @Autowired
     private MatchTeamResultMapper matchTeamResultMapper;
+
+    @Autowired
+    private MatchRuleService matchRuleService;
 
     @Override
     public List<AppUser> sortMatchTeamByRuleSeat(Integer ruleSeat, String matchId) {
@@ -93,7 +96,7 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
     }
 
     @Override
-    public int saveMatchTeamDataAndMember(String[] userIds, String matchId, Integer turnNumber) {
+    public int saveMatchTeamDataAndMember(String[] userIds, String[] userNames, String[] userHeads, String matchId, Integer turnNumber) {
         for (int i = 0; i < userIds.length; i += 4) {
             MatchTeamData matchTeamData = new MatchTeamData();
             matchTeamData.setId(StringUtils.generateShortUUID());
@@ -105,15 +108,25 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
             teamOne.setTeamNumber(i / 2 + 1);
             teamOne.setId(StringUtils.generateShortUUID());
             teamOne.setMatchId(matchId);
-            teamOne.setTeamMemberOne(setMember(i, userIds));
-            teamOne.setTeamMemberTwo(setMember(i + 1, userIds));
+            //设置东西队伍队员id，姓名，头像
+            teamOne.setTeamMemberOne(setMemberId(i, userIds));
+            teamOne.setTeamMemberOneName(setMemberName(i, userNames));
+            teamOne.setTeamMemberOneHead(setMemberHead(i, userHeads));
+            teamOne.setTeamMemberTwo(setMemberId(i + 1, userIds));
+            teamOne.setTeamMemberTwoName(setMemberName(i + 1, userNames));
+            teamOne.setTeamMemberTwoHead(setMemberHead(i + 1, userHeads));
             //南北队伍
             MatchTeamMember teamTwo = new MatchTeamMember();
             teamTwo.setTeamNumber(i / 2 + 2);
             teamTwo.setId(StringUtils.generateShortUUID());
             teamTwo.setMatchId(matchId);
-            teamTwo.setTeamMemberOne(setMember(i + 2, userIds));
-            teamTwo.setTeamMemberTwo(setMember(i + 3, userIds));
+            //设置南北队伍队员id，姓名，头像
+            teamTwo.setTeamMemberOne(setMemberId(i + 2, userIds));
+            teamTwo.setTeamMemberOneName(setMemberName(i + 2, userNames));
+            teamTwo.setTeamMemberOneHead(setMemberHead(i + 2, userHeads));
+            teamTwo.setTeamMemberTwo(setMemberId(i + 3, userIds));
+            teamTwo.setTeamMemberTwoName(setMemberName(i + 3, userNames));
+            teamTwo.setTeamMemberTwoHead(setMemberHead(i + 3, userHeads));
             //设置对战双方
             matchTeamData.setTeamOneId(teamOne.getId());
             matchTeamData.setTeamTwoId(teamTwo.getId());
@@ -213,8 +226,8 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
                 teamTwoResult.setPoint(disparity > 0 ? resultFail : resultWin);
             }
             //设置去首轮积分+积分和+极差和
-            setTeamResult(lastResultMap, turnNumber, teamOneResult);
-            setTeamResult(lastResultMap, turnNumber, teamTwoResult);
+            setTeamResult(lastResultMap, turnNumber, teamOneResult, teamTwoResult, disparity > 0 ? 1 : 0);
+            setTeamResult(lastResultMap, turnNumber, teamTwoResult, teamOneResult, disparity < 0 ? 1 : 0);
             //保存
             matchTeamResultMapper.insert(teamOneResult);
             matchTeamResultMapper.insert(teamTwoResult);
@@ -225,12 +238,19 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
     //设置下轮座位（根据成绩）
     @Override
     public int saveMatchTeamDataAndMemberNext(String matchId, Integer turnNumber) {
+        //查询比赛规则
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         //查询上轮成绩
         MatchTeamResultExample example = new MatchTeamResultExample();
         MatchTeamResultExample.Criteria criteria = example.createCriteria();
         criteria.andMatchIdEqualTo(matchId);
         criteria.andTurnNumberEqualTo(turnNumber - 1);
         List<MatchTeamResult> matchTeamDataListLastTurn = matchTeamResultMapper.selectByExample(example);
+        for (MatchTeamResult
+                teamResult :
+                matchTeamDataListLastTurn) {
+            teamResult.setResultRule(matchRule.getRuleResult());
+        }
         //排序
         Collections.sort(matchTeamDataListLastTurn);
 
@@ -247,20 +267,71 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
         return 1;
     }
 
-    private void setTeamResult(HashMap lastTurnResultMap, Integer turnNumber, MatchTeamResult result) {
-        //积分和
-        result.setTotalPoint(turnNumber.equals(Constants.result.TURN_FIRST) ? result.getPoint() : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalPoint() + result.getPoint());
-        //极差和
-        result.setTotalDisparity(turnNumber.equals(Constants.result.TURN_FIRST) ? result.getDisparity() : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalDisparity() + result.getDisparity());
-        //去首轮积分
-        result.setTotalExfirst(turnNumber.equals(Constants.result.TURN_FIRST) ? 0 : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalExfirst() + result.getPoint());
-        //去首轮积分和
-        result.setTotalExfirstAll(turnNumber.equals(Constants.result.TURN_FIRST) ? 0 : ((MatchTeamResult) lastTurnResultMap.get(result.getTeamId())).getTotalExfirstAll() + result.getPoint());
+    @Override
+    public int getNowTurn(String matchId) {
+        return matchTeamDataMapper.getNowTurn(matchId);
     }
 
-    private String setMember(int index, String[] userIds) {
+    @Override
+    public int updateMatchTeamData(String[] split, String matchId, Integer turnNumber) {
+        //删除旧座位
+        MatchTeamDataExample delExample = new MatchTeamDataExample();
+        delExample.createCriteria().andMatchIdEqualTo(matchId).andTurnNumberEqualTo(turnNumber);
+        matchTeamDataMapper.deleteByExample(delExample);
+        //新增新座位
+        for (int i = 0; i < split.length; i += 2) {
+            MatchTeamData teamData = new MatchTeamData();
+            teamData.setTableNumber(i / 2 + 1);
+            teamData.setId(StringUtils.generateShortUUID());
+            teamData.setMatchId(matchId);
+            teamData.setTurnNumber(turnNumber);
+            teamData.setTeamOneId(split[i]);
+            teamData.setTeamTwoId(split[i + 1]);
+            matchTeamDataMapper.insertSelective(teamData);
+        }
+        return 1;
+    }
+
+    private void setTeamResult(HashMap lastTurnResultMap, Integer turnNumber, MatchTeamResult result, MatchTeamResult opponentResult, int winCount) {
+        MatchTeamResult lastResult = (MatchTeamResult) lastTurnResultMap.get(result.getTeamId());
+        boolean isFirst = turnNumber.equals(Constants.result.TURN_FIRST);
+        //积分和
+        result.setTotalPoint(isFirst ? result.getPoint() : lastResult.getTotalPoint() + result.getPoint());
+        //极差和
+        result.setTotalDisparity(isFirst ? result.getDisparity() : lastResult.getTotalDisparity() + result.getDisparity());
+        //去首轮积分(累进分)
+        result.setTotalExfirst(isFirst ? 0 : lastResult.getTotalExfirst() + result.getPoint());
+        //去首轮积分和（累进分和）
+        result.setTotalExfirstAll(isFirst ? 0 : lastResult.getTotalExfirstAll() + result.getTotalExfirst());
+        //累计胜轮次
+        result.setTotalWin(isFirst ? winCount : lastResult.getTotalWin() + winCount);
+        //累计总升级数
+        result.setTotalScore(isFirst ? new Integer(result.getScore()) - 2 : lastResult.getTotalScore() + new Integer(result.getScore()) - 2);
+        //累计对手极差分
+        result.setTotalDisparityOpponent(isFirst ? opponentResult.getDisparity() : lastResult.getTotalDisparityOpponent() + opponentResult.getDisparity());
+        //累计过A数
+        result.setTotalOverA(isFirst ? (result.getScore().equals(Constants.result.OVER_A) ? 1 : 0) : lastResult.getTotalOverA() + (result.getScore().equals(Constants.result.OVER_A) ? 1 : 0));
+    }
+
+    private String setMemberId(int index, String[] userIds) {
         if (index < userIds.length) {
             return userIds[index];
+        } else {
+            return "";
+        }
+    }
+
+    private String setMemberName(int index, String[] userNames) {
+        if (index < userNames.length) {
+            return userNames[index];
+        } else {
+            return "";
+        }
+    }
+
+    private String setMemberHead(int index, String[] userHeads) {
+        if (index < userHeads.length) {
+            return userHeads[index];
         } else {
             return "";
         }

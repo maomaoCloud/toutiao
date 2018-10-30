@@ -1,6 +1,9 @@
 package com.tiaotiaopoker;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by xiekang on 17/4/18.
  */
@@ -66,6 +69,28 @@ public class Constants {
         public static final Integer DRAW = 1;
         public static final Integer TURN_FIRST = 1;
         public static final String[] SCORE = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "A+"};
+        public static final String OVER_A = "15";
+        public static final String MSG_SEAT_SETTING = "请先进行座位编排";
+        public static final String MSG_FINANL_TURN = "最后一轮成绩已录入";
+        public static final String DEFAULT_RESULT_RULE = "TotalPoint,TotalExfirstAll,TotalWin,TotalDisparity,TotalScore";
+    }
 
+    public static final class user {
+        public static final String HEAD_IMG_URL = "/images/george-avatar.jpg";
+    }
+
+    public static final class resultRule {
+        public static final Map<String, Object> resultRuleMap = new HashMap<String, Object>() {
+            {
+                put("TotalPoint", "总积分");
+                put("TotalWin", "胜轮次");
+                put("TotalDisparity", "累计级差分");
+                put("TotalScore", "累计升级数");
+                put("TotalOverA", "累计过A数");
+                put("TotalDisparityOpponent", "累计对手级差分");
+                put("TotalExfirst", "去首累进分");
+                put("TotalExfirstAll", "去首累进分和");
+            }
+        };
     }
 }

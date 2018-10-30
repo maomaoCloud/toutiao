@@ -385,72 +385,72 @@ public class MatchRuleExample {
         }
 
         public Criteria andMatchAddressIsNull() {
-            addCriterion("match-address is null");
+            addCriterion("match_address is null");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressIsNotNull() {
-            addCriterion("match-address is not null");
+            addCriterion("match_address is not null");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressEqualTo(String value) {
-            addCriterion("match-address =", value, "matchAddress");
+            addCriterion("match_address =", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressNotEqualTo(String value) {
-            addCriterion("match-address <>", value, "matchAddress");
+            addCriterion("match_address <>", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressGreaterThan(String value) {
-            addCriterion("match-address >", value, "matchAddress");
+            addCriterion("match_address >", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressGreaterThanOrEqualTo(String value) {
-            addCriterion("match-address >=", value, "matchAddress");
+            addCriterion("match_address >=", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressLessThan(String value) {
-            addCriterion("match-address <", value, "matchAddress");
+            addCriterion("match_address <", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressLessThanOrEqualTo(String value) {
-            addCriterion("match-address <=", value, "matchAddress");
+            addCriterion("match_address <=", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressLike(String value) {
-            addCriterion("match-address like", value, "matchAddress");
+            addCriterion("match_address like", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressNotLike(String value) {
-            addCriterion("match-address not like", value, "matchAddress");
+            addCriterion("match_address not like", value, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressIn(List<String> values) {
-            addCriterion("match-address in", values, "matchAddress");
+            addCriterion("match_address in", values, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressNotIn(List<String> values) {
-            addCriterion("match-address not in", values, "matchAddress");
+            addCriterion("match_address not in", values, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressBetween(String value1, String value2) {
-            addCriterion("match-address between", value1, value2, "matchAddress");
+            addCriterion("match_address between", value1, value2, "matchAddress");
             return (Criteria) this;
         }
 
         public Criteria andMatchAddressNotBetween(String value1, String value2) {
-            addCriterion("match-address not between", value1, value2, "matchAddress");
+            addCriterion("match_address not between", value1, value2, "matchAddress");
             return (Criteria) this;
         }
 
@@ -525,72 +525,72 @@ public class MatchRuleExample {
         }
 
         public Criteria andMatchRefereeIsNull() {
-            addCriterion("match-referee is null");
+            addCriterion("match_referee is null");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeIsNotNull() {
-            addCriterion("match-referee is not null");
+            addCriterion("match_referee is not null");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeEqualTo(String value) {
-            addCriterion("match-referee =", value, "matchReferee");
+            addCriterion("match_referee =", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeNotEqualTo(String value) {
-            addCriterion("match-referee <>", value, "matchReferee");
+            addCriterion("match_referee <>", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeGreaterThan(String value) {
-            addCriterion("match-referee >", value, "matchReferee");
+            addCriterion("match_referee >", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeGreaterThanOrEqualTo(String value) {
-            addCriterion("match-referee >=", value, "matchReferee");
+            addCriterion("match_referee >=", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeLessThan(String value) {
-            addCriterion("match-referee <", value, "matchReferee");
+            addCriterion("match_referee <", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeLessThanOrEqualTo(String value) {
-            addCriterion("match-referee <=", value, "matchReferee");
+            addCriterion("match_referee <=", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeLike(String value) {
-            addCriterion("match-referee like", value, "matchReferee");
+            addCriterion("match_referee like", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeNotLike(String value) {
-            addCriterion("match-referee not like", value, "matchReferee");
+            addCriterion("match_referee not like", value, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeIn(List<String> values) {
-            addCriterion("match-referee in", values, "matchReferee");
+            addCriterion("match_referee in", values, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeNotIn(List<String> values) {
-            addCriterion("match-referee not in", values, "matchReferee");
+            addCriterion("match_referee not in", values, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeBetween(String value1, String value2) {
-            addCriterion("match-referee between", value1, value2, "matchReferee");
+            addCriterion("match_referee between", value1, value2, "matchReferee");
             return (Criteria) this;
         }
 
         public Criteria andMatchRefereeNotBetween(String value1, String value2) {
-            addCriterion("match-referee not between", value1, value2, "matchReferee");
+            addCriterion("match_referee not between", value1, value2, "matchReferee");
             return (Criteria) this;
         }
 
@@ -1571,6 +1571,76 @@ public class MatchRuleExample {
 
         public Criteria andRuleSeatNotBetween(Integer value1, Integer value2) {
             addCriterion("rule_seat not between", value1, value2, "ruleSeat");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultIsNull() {
+            addCriterion("rule_result is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultIsNotNull() {
+            addCriterion("rule_result is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultEqualTo(String value) {
+            addCriterion("rule_result =", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultNotEqualTo(String value) {
+            addCriterion("rule_result <>", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultGreaterThan(String value) {
+            addCriterion("rule_result >", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultGreaterThanOrEqualTo(String value) {
+            addCriterion("rule_result >=", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultLessThan(String value) {
+            addCriterion("rule_result <", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultLessThanOrEqualTo(String value) {
+            addCriterion("rule_result <=", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultLike(String value) {
+            addCriterion("rule_result like", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultNotLike(String value) {
+            addCriterion("rule_result not like", value, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultIn(List<String> values) {
+            addCriterion("rule_result in", values, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultNotIn(List<String> values) {
+            addCriterion("rule_result not in", values, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultBetween(String value1, String value2) {
+            addCriterion("rule_result between", value1, value2, "ruleResult");
+            return (Criteria) this;
+        }
+
+        public Criteria andRuleResultNotBetween(String value1, String value2) {
+            addCriterion("rule_result not between", value1, value2, "ruleResult");
             return (Criteria) this;
         }
     }

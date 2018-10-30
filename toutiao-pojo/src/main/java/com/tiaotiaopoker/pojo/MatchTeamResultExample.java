@@ -803,6 +803,246 @@ public class MatchTeamResultExample {
             addCriterion("total_disparity not between", value1, value2, "totalDisparity");
             return (Criteria) this;
         }
+
+        public Criteria andTotalWinIsNull() {
+            addCriterion("total_win is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinIsNotNull() {
+            addCriterion("total_win is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinEqualTo(Integer value) {
+            addCriterion("total_win =", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinNotEqualTo(Integer value) {
+            addCriterion("total_win <>", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinGreaterThan(Integer value) {
+            addCriterion("total_win >", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_win >=", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinLessThan(Integer value) {
+            addCriterion("total_win <", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinLessThanOrEqualTo(Integer value) {
+            addCriterion("total_win <=", value, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinIn(List<Integer> values) {
+            addCriterion("total_win in", values, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinNotIn(List<Integer> values) {
+            addCriterion("total_win not in", values, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinBetween(Integer value1, Integer value2) {
+            addCriterion("total_win between", value1, value2, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalWinNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_win not between", value1, value2, "totalWin");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreIsNull() {
+            addCriterion("total_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreIsNotNull() {
+            addCriterion("total_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreEqualTo(Integer value) {
+            addCriterion("total_score =", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreNotEqualTo(Integer value) {
+            addCriterion("total_score <>", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreGreaterThan(Integer value) {
+            addCriterion("total_score >", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_score >=", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreLessThan(Integer value) {
+            addCriterion("total_score <", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("total_score <=", value, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreIn(List<Integer> values) {
+            addCriterion("total_score in", values, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreNotIn(List<Integer> values) {
+            addCriterion("total_score not in", values, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreBetween(Integer value1, Integer value2) {
+            addCriterion("total_score between", value1, value2, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_score not between", value1, value2, "totalScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentIsNull() {
+            addCriterion("total_disparity_opponent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentIsNotNull() {
+            addCriterion("total_disparity_opponent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentEqualTo(Integer value) {
+            addCriterion("total_disparity_opponent =", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentNotEqualTo(Integer value) {
+            addCriterion("total_disparity_opponent <>", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentGreaterThan(Integer value) {
+            addCriterion("total_disparity_opponent >", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_disparity_opponent >=", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentLessThan(Integer value) {
+            addCriterion("total_disparity_opponent <", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentLessThanOrEqualTo(Integer value) {
+            addCriterion("total_disparity_opponent <=", value, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentIn(List<Integer> values) {
+            addCriterion("total_disparity_opponent in", values, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentNotIn(List<Integer> values) {
+            addCriterion("total_disparity_opponent not in", values, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentBetween(Integer value1, Integer value2) {
+            addCriterion("total_disparity_opponent between", value1, value2, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalDisparityOpponentNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_disparity_opponent not between", value1, value2, "totalDisparityOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAIsNull() {
+            addCriterion("total_over_a is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAIsNotNull() {
+            addCriterion("total_over_a is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAEqualTo(Integer value) {
+            addCriterion("total_over_a =", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverANotEqualTo(Integer value) {
+            addCriterion("total_over_a <>", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAGreaterThan(Integer value) {
+            addCriterion("total_over_a >", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_over_a >=", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverALessThan(Integer value) {
+            addCriterion("total_over_a <", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverALessThanOrEqualTo(Integer value) {
+            addCriterion("total_over_a <=", value, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverAIn(List<Integer> values) {
+            addCriterion("total_over_a in", values, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverANotIn(List<Integer> values) {
+            addCriterion("total_over_a not in", values, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverABetween(Integer value1, Integer value2) {
+            addCriterion("total_over_a between", value1, value2, "totalOverA");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalOverANotBetween(Integer value1, Integer value2) {
+            addCriterion("total_over_a not between", value1, value2, "totalOverA");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

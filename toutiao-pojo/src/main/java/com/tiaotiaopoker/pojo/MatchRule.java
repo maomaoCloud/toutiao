@@ -45,6 +45,8 @@ public class MatchRule {
 
     private Integer ruleSeat;
 
+    private String ruleResult;
+
     public String getId() {
         return id;
     }
@@ -219,5 +221,13 @@ public class MatchRule {
 
     public void setRuleSeat(Integer ruleSeat) {
         this.ruleSeat = ruleSeat;
+    }
+
+    public String getRuleResult() {
+        return ruleResult;
+    }
+
+    public void setRuleResult(String ruleResult) {
+        this.ruleResult = ruleResult == null ? null : ruleResult.trim();
     }
 }

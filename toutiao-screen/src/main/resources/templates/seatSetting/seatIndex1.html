@@ -201,8 +201,8 @@
         <div class="col-lg-2 col-md-2" style="padding-right:0;">
             <div class="title-zh">
                 <div class="first">桌号</div>
-                <div class="zh">1</div>
-                <div class="zh">2</div>
+                <div class="zh" th:each="user:${userList }" th:if="${userStat.index%4==0}"
+                     th:text="${userStat.index/4}+1"></div>
             </div>
         </div>
 
@@ -214,127 +214,51 @@
             <!-- tile widget -->
             <div class="" id="sign-list">
                 <table class="s-data-tab" id="res-table">
-                    <tr>
+                    <tr th:each="user:${userList }" th:if="${userStat.index%4==0}">
                         <td width="25%" class="data-td">
                             <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
+                                <img class="head" th:src="${userList[userStat.index].avatarUrl }">
+                                <span class="name" th:text="${userList[userStat.index].nickName }"></span>
                             </div>
-                            <div data-id="1" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div th:data-id="${userList[userStat.index].id }"
+                                 th:data-name="${userList[userStat.index].nickName }"
+                                 th:data-src="${userList[userStat.index].avatarUrl }" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
                         </td>
                         <td width="25%" class="data-td">
                             <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
+                                <img class="head" th:src="${userList[userStat.index+1].avatarUrl }">
+                                <span class="name" th:text="${userList[userStat.index+1].nickName }"></span>
                             </div>
-                            <div data-id="2" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div th:data-id="${userList[userStat.index+1].id }"
+                                 th:data-name="${userList[userStat.index+1].nickName }"
+                                 th:data-src="${userList[userStat.index+1].avatarUrl }" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
                         </td>
                         <td width="25%" class="data-td">
                             <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
+                                <img class="head" th:src="${userList[userStat.index+2].avatarUrl }">
+                                <span class="name" th:text="${userList[userStat.index+2].nickName }"></span>
                             </div>
-                            <div data-id="3" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div th:data-id="${userList[userStat.index+2].id }"
+                                 th:data-name="${userList[userStat.index+2].nickName }"
+                                 th:data-src="${userList[userStat.index+2].avatarUrl }" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
                         </td>
                         <td width="25%" class="data-td">
                             <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
+                                <img class="head" th:src="${userList[userStat.index+3].avatarUrl }">
+                                <span class="name" th:text="${userList[userStat.index+3].nickName }"></span>
                             </div>
-                            <div data-id="4" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="11" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="21" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="31" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="41" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="12" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="22" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="32" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
-                                 class="remove hide">
-                                -
-                            </div>
-                        </td>
-                        <td width="25%" class="data-td">
-                            <div class="data-item">
-                                <img class="head" src="/images/george-avatar.jpg">
-                                <span class="name">谢康</span>
-                            </div>
-                            <div data-id="42" data-name="谢康" data-src="/images/george-avatar.jpg" data-op="-"
+                            <div th:data-id="${userList[userStat.index+3].id }"
+                                 th:data-name="${userList[userStat.index+3].nickName }"
+                                 th:data-src="${userList[userStat.index+3].avatarUrl }" data-op="-"
                                  class="remove hide">
                                 -
                             </div>
@@ -373,32 +297,56 @@
                 return;
             }
 
-            var sortResult = new Array();
+            var userIds = new Array();
             $("#res-table").find(".data-td").each(function () {
                 var id = $(this).find(".remove").attr("data-id");
-                sortResult.push(id);
+                userIds.push(id);
             });
-            console.log(sortResult);
+
+            var userNames = new Array();
+            $("#res-table").find(".data-td").each(function () {
+                var name = $(this).find(".remove").attr("data-name");
+                userNames.push(name);
+            });
+
+            var userHeads = new Array();
+            $("#res-table").find(".data-td").each(function () {
+                var head = $(this).find(".remove").attr("data-src");
+                userHeads.push(head);
+            });
+
+            console.log(userIds);
+            console.log(userNames);
+            console.log(userHeads);
             showLoading();
-            //打印排序结果
-            return;
             //保存首轮座位
-            $.post("/sys/seatSetting/save?token=" + getToken() + "&matchId=" + $("#nowSettingMatch").val() + "&userIds=" + sortResult + "&turnNumber=1", function (data) {
-                closeLoading();
-                showNotification("提示", "保存成功！");
-                $("#row").load("/sys/seatSetting/showDetail", {
-                    matchId: getMatchId(),
+            $.post("/sys/seatSetting/save", {
                     token: getToken(),
+                    matchId: $("#nowSettingMatch").val(),
+                    userIds: userIds.join(","),
+                    userNames: userNames.join(","),
+                    userHeads: userHeads.join(","),
                     turnNumber: 1
-                }, function () {
+                },
+
+                function (data) {
                     closeLoading();
-                });
-            });
+                    showNotification("提示", "保存成功！");
+                    $("#row").load("/sys/seatSetting/showDetail", {
+                        matchId: getMatchId(),
+                        token: getToken(),
+                        turnNumber: 1
+                    }, function () {
+                        closeLoading();
+                    });
+                }
+            )
+            ;
         });
 
         //重新排序，就是刷新页面重新进入
         $("#reset").click(function () {
-            window.location.reload();
+            $("#seatSetting").click();
         });
     });
 </script>

@@ -37,4 +37,6 @@ public interface MatchTeamDataMapper {
     List<AppUser> queryTeamUserByMatchId(String matchId);
 
     List<MatchTeamDataDto> queryTeamDataByCondition(Map<String, Object> paramMap);
+
+    int getNowTurn(String matchId);
 }

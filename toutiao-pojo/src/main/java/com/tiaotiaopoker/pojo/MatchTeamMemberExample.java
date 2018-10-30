@@ -374,6 +374,146 @@ public class MatchTeamMemberExample {
             return (Criteria) this;
         }
 
+        public Criteria andTeamMemberOneNameIsNull() {
+            addCriterion("team_member_one_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameIsNotNull() {
+            addCriterion("team_member_one_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameEqualTo(String value) {
+            addCriterion("team_member_one_name =", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameNotEqualTo(String value) {
+            addCriterion("team_member_one_name <>", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameGreaterThan(String value) {
+            addCriterion("team_member_one_name >", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameGreaterThanOrEqualTo(String value) {
+            addCriterion("team_member_one_name >=", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameLessThan(String value) {
+            addCriterion("team_member_one_name <", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameLessThanOrEqualTo(String value) {
+            addCriterion("team_member_one_name <=", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameLike(String value) {
+            addCriterion("team_member_one_name like", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameNotLike(String value) {
+            addCriterion("team_member_one_name not like", value, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameIn(List<String> values) {
+            addCriterion("team_member_one_name in", values, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameNotIn(List<String> values) {
+            addCriterion("team_member_one_name not in", values, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameBetween(String value1, String value2) {
+            addCriterion("team_member_one_name between", value1, value2, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneNameNotBetween(String value1, String value2) {
+            addCriterion("team_member_one_name not between", value1, value2, "teamMemberOneName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadIsNull() {
+            addCriterion("team_member_one_head is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadIsNotNull() {
+            addCriterion("team_member_one_head is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadEqualTo(String value) {
+            addCriterion("team_member_one_head =", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadNotEqualTo(String value) {
+            addCriterion("team_member_one_head <>", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadGreaterThan(String value) {
+            addCriterion("team_member_one_head >", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadGreaterThanOrEqualTo(String value) {
+            addCriterion("team_member_one_head >=", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadLessThan(String value) {
+            addCriterion("team_member_one_head <", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadLessThanOrEqualTo(String value) {
+            addCriterion("team_member_one_head <=", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadLike(String value) {
+            addCriterion("team_member_one_head like", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadNotLike(String value) {
+            addCriterion("team_member_one_head not like", value, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadIn(List<String> values) {
+            addCriterion("team_member_one_head in", values, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadNotIn(List<String> values) {
+            addCriterion("team_member_one_head not in", values, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadBetween(String value1, String value2) {
+            addCriterion("team_member_one_head between", value1, value2, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberOneHeadNotBetween(String value1, String value2) {
+            addCriterion("team_member_one_head not between", value1, value2, "teamMemberOneHead");
+            return (Criteria) this;
+        }
+
         public Criteria andTeamMemberTwoIsNull() {
             addCriterion("team_member_two is null");
             return (Criteria) this;
@@ -441,6 +581,146 @@ public class MatchTeamMemberExample {
 
         public Criteria andTeamMemberTwoNotBetween(String value1, String value2) {
             addCriterion("team_member_two not between", value1, value2, "teamMemberTwo");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameIsNull() {
+            addCriterion("team_member_two_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameIsNotNull() {
+            addCriterion("team_member_two_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameEqualTo(String value) {
+            addCriterion("team_member_two_name =", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameNotEqualTo(String value) {
+            addCriterion("team_member_two_name <>", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameGreaterThan(String value) {
+            addCriterion("team_member_two_name >", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameGreaterThanOrEqualTo(String value) {
+            addCriterion("team_member_two_name >=", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameLessThan(String value) {
+            addCriterion("team_member_two_name <", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameLessThanOrEqualTo(String value) {
+            addCriterion("team_member_two_name <=", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameLike(String value) {
+            addCriterion("team_member_two_name like", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameNotLike(String value) {
+            addCriterion("team_member_two_name not like", value, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameIn(List<String> values) {
+            addCriterion("team_member_two_name in", values, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameNotIn(List<String> values) {
+            addCriterion("team_member_two_name not in", values, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameBetween(String value1, String value2) {
+            addCriterion("team_member_two_name between", value1, value2, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoNameNotBetween(String value1, String value2) {
+            addCriterion("team_member_two_name not between", value1, value2, "teamMemberTwoName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadIsNull() {
+            addCriterion("team_member_two_head is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadIsNotNull() {
+            addCriterion("team_member_two_head is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadEqualTo(String value) {
+            addCriterion("team_member_two_head =", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadNotEqualTo(String value) {
+            addCriterion("team_member_two_head <>", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadGreaterThan(String value) {
+            addCriterion("team_member_two_head >", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadGreaterThanOrEqualTo(String value) {
+            addCriterion("team_member_two_head >=", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadLessThan(String value) {
+            addCriterion("team_member_two_head <", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadLessThanOrEqualTo(String value) {
+            addCriterion("team_member_two_head <=", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadLike(String value) {
+            addCriterion("team_member_two_head like", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadNotLike(String value) {
+            addCriterion("team_member_two_head not like", value, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadIn(List<String> values) {
+            addCriterion("team_member_two_head in", values, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadNotIn(List<String> values) {
+            addCriterion("team_member_two_head not in", values, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadBetween(String value1, String value2) {
+            addCriterion("team_member_two_head between", value1, value2, "teamMemberTwoHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamMemberTwoHeadNotBetween(String value1, String value2) {
+            addCriterion("team_member_two_head not between", value1, value2, "teamMemberTwoHead");
             return (Criteria) this;
         }
     }

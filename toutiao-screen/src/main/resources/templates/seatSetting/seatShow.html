@@ -1,5 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/Sortable.js'}"></script>
     <style>
         body {
             width: 100%;
@@ -38,6 +40,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 10px;
+            cursor: move;
         }
 
         .user:nth-child(2n+1) {
@@ -57,11 +60,6 @@
             letter-spacing: 1px;
             margin-top: 5px;
             margin-bottom: 10px;
-        }
-
-        #sign-list {
-            display: flex;
-            flex-wrap: wrap;
         }
 
         .title-name {
@@ -93,7 +91,7 @@
         }
 
         .title-zh .zh {
-            height: 133px;
+            height: 132px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -103,45 +101,246 @@
         .title-zh .space {
             height: 20px;
         }
+
+        .s-data-tab {
+            width: 100%;
+            color: #FFF;
+        }
+
+        .s-data-tab td {
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .s-data-tab td .remove {
+            position: absolute;
+            width: 100%;
+            height: 128px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.8);
+            top: 0px;
+        }
+
+        .s-data-tab td .data-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 33.33333%;
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            flex-direction: column;
+            height: 128px;
+            float: left;
+        }
+
+        .s-data-tab td {
+            border: 2px solid #e1e1e1;
+        }
+
+        .s-data-tab td .data-item .head {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .s-data-tab td .data-head {
+            font-weight: 500;
+            border-bottom: 2px solid #FFF;
+            padding: 15px 0;
+        }
+
+        .s-data-p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .s-data-p .s-active {
+            border: 2px solid coral !important;
+        }
+
+        .s-data-p .s-data-p-item {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #CCCCCC;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .s-data-p .s-data-p-item .s-data-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            width: 33.3333%;
+        }
+
+        .s-data-p .s-data-p-item .s-data-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 10px 0;
+
+        }
+
+        .s-data-p .s-data-p-item .s-data-item .name {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <!-- tile -->
-<section class="tile transparent">
+<section class="tile transparent" th:if="not ${#lists.isEmpty(matchDataList)}">
     <div class="tile-header color transparent-black textured rounded-top-corners">
-        <h1 class="box-title">座位编排</h1>
+        <h1 class="box-title" th:text="'第'+${nowTurn}+'轮座位编排'"></h1>
     </div>
     <!-- /tile header -->
     <div class="row tile-widget color transparent-black textured" style="padding:0; margin:0;">
         <div class="col-lg-2 col-md-2" style="padding-right:0;">
             <div class="title-zh">
                 <div class="first">桌号</div>
-                <div th:each="divIndex:${divList}" class="zh" th:text="${divIndex}"></div>
-                <div class="space"></div>
+                <div class="zh" th:each="data:${matchDataList}" th:text="${dataStat.index + 1}"></div>
             </div>
         </div>
 
-        <div class="col-lg-10 col-md-10" style="padding-left:0;">
+        <div class="col-lg-7 col-md-7" style="padding-left:0;">
             <div class="title-name">
                 <div>先手队伍</div>
                 <div>后手队伍</div>
             </div>
             <!-- tile widget -->
             <div class="" id="sign-list">
-                <div class="user move-user" th:each="user:${userList }">
-                    <img th:src="${user.avatarUrl}== null? '/images/head.png':${user.avatarUrl} ">
-                    <span class="user-name" th:text="${user.trueName }"></span>
-                </div>
+                <table class="s-data-tab" id="res-table-p">
+                    <tr th:each="data:${matchDataList}">
+                        <td width="50%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" th:src="${data.teamOneUserOneHead}">
+                                <span class="name" th:text="${data.teamOneUserOneName}"></span>
+                            </div>
+                            <div class="data-item"></div>
+                            <div class="data-item">
+                                <img class="head" th:src="${data.teamOneUserTwoHead}">
+                                <span class="name" th:text="${data.teamOneUserTwoName}"></span>
+                            </div>
+                            <div th:data-id="${data.teamOneId}" th:data-name="${data.teamOneUserOneName}"
+                                 th:data-src="${data.teamOneUserOneHead}"
+                                 th:data-name-p="${data.teamOneUserTwoName}" th:data-src-p="${data.teamOneUserTwoHead}"
+                                 data-zh="" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                        <td width="50%" class="data-td">
+                            <div class="data-item">
+                                <img class="head" th:src="${data.teamTwoUserOneHead}">
+                                <span class="name" th:text="${data.teamTwoUserOneName}"></span>
+                            </div>
+                            <div class="data-item"></div>
+                            <div class="data-item">
+                                <img class="head" th:src="${data.teamTwoUserTwoHead}">
+                                <span class="name" th:text="${data.teamTwoUserTwoName}"></span>
+                            </div>
+                            <div th:data-id="${data.teamTwoId}" th:data-name="${data.teamTwoUserOneName}"
+                                 th:data-src="${data.teamTwoUserOneHead}"
+                                 th:data-name-p="${data.teamTwoUserTwoName}" th:data-src-p="${data.teamTwoUserTwoHead}"
+                                 data-zh="" data-op="-"
+                                 class="remove hide">
+                                -
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
-
         </div>
+
+
+        <div class="col-lg-3 col-md-3">
+            <table class="s-data-tab">
+                <tbody id="unseat-data-p">
+                <tr>
+                    <td>
+                        <div style="width: 100%;" class="data-head">未入座队伍</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 操作按钮 -->
+    <div class="col-lg-12 col-md-12" style="text-align: center;" >
+        <button type="button" id="over" class="btn btn-success margin-bottom-20">保存排列结果</button>
+        <button type="button" id="reset" class="btn btn-danger margin-bottom-20">重新排列</button>
     </div>
 </section>
 <!-- /操作按钮 -->
+<div class="col-lg-12 col-md-12" th:if="${#lists.isEmpty(matchDataList)}">
+    <div id="main" style="display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;">
+        <div id="theme" style="font-size: 40px;
+        margin-top: 100px;
+        color: #FFF;
+        margin-bottom: 20px;
+        letter-spacing: 2px;" th:text="${msg}"></div>
+    </div>
+</div>
 <script>
-    var ell = document.getElementById('sign-list');
-
     $(function () {
-    });
+        $("#over").click(function () {
+            if ($("#unseat-data-p").find("td").length > 1) {
+                layer.msg("还有未入座人员！");
+                return;
+            }
+
+            var sortResult = new Array();
+            $("#res-table-p").find(".data-td").each(function () {
+                var id = $(this).find(".remove").attr("data-id");
+                sortResult.push(id);
+            });
+            console.log(sortResult);
+            showLoading();
+            //打印排序结果
+            //保存首轮座位
+            $.post("/sys/seatSetting/update", {
+                token: getToken(),
+                matchId:
+                    $("#nowSettingMatch").val(),
+                teamIds:
+                    sortResult.join(","),
+                turnNumber:
+                    "[[${nowTurn}]]"
+            }, function (data) {
+                closeLoading();
+                showNotification("提示", "保存成功！");
+                $("#row").load("/sys/seatSetting/showDetail", {
+                    matchId: getMatchId(),
+                    token: getToken(),
+                    turnNumber: "[[${nowTurn}]]"
+                }, function () {
+                    closeLoading();
+                });
+            });
+        });
+
+        //重新排序，就是刷新页面重新进入
+        $("#reset").click(function () {
+            $("#seatSetting").click();
+        });
+    })
+    ;
 </script>
 </html>
 

@@ -1,5 +1,8 @@
 package com.tiaotiaopoker.pojo;
 
+import com.tiaotiaopoker.Constants;
+import com.tiaotiaopoker.StringUtils;
+
 public class MatchTeamResult implements Comparable<MatchTeamResult> {
     private String id;
 
@@ -22,6 +25,24 @@ public class MatchTeamResult implements Comparable<MatchTeamResult> {
     private Integer totalExfirstAll;
 
     private Integer totalDisparity;
+
+    private Integer totalWin;
+
+    private Integer totalScore;
+
+    private Integer totalDisparityOpponent;
+
+    private Integer totalOverA;
+
+    private String resultRule;
+
+    public String getResultRule() {
+        return resultRule;
+    }
+
+    public void setResultRule(String resultRule) {
+        this.resultRule = resultRule;
+    }
 
     public String getId() {
         return id;
@@ -111,14 +132,60 @@ public class MatchTeamResult implements Comparable<MatchTeamResult> {
         this.totalDisparity = totalDisparity;
     }
 
+    public Integer getTotalWin() {
+        return totalWin;
+    }
+
+    public void setTotalWin(Integer totalWin) {
+        this.totalWin = totalWin;
+    }
+
+    public Integer getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Integer getTotalDisparityOpponent() {
+        return totalDisparityOpponent;
+    }
+
+    public void setTotalDisparityOpponent(Integer totalDisparityOpponent) {
+        this.totalDisparityOpponent = totalDisparityOpponent;
+    }
+
+    public Integer getTotalOverA() {
+        return totalOverA;
+    }
+
+    public void setTotalOverA(Integer totalOverA) {
+        this.totalOverA = totalOverA;
+    }
+
     @Override
     public int compareTo(MatchTeamResult o) {
-        if (!this.totalPoint.equals(o.getTotalPoint())) {
-            return o.getTotalPoint() - this.totalPoint;
+        String rule = this.resultRule;
+        if (StringUtils.isBlank(rule)) {
+            rule = Constants.result.DEFAULT_RESULT_RULE;
         }
-        if (!this.totalExfirstAll.equals(o.getTotalExfirstAll())) {
-            return o.getTotalExfirstAll() - this.totalExfirstAll;
+        String[] ruleItem = rule.split(",");
+        if (ruleItem.length > 0) {
+            Class clazz = this.getClass();
+            Object thisValue, oValue;
+            for (int i = 0; i < ruleItem.length; i++) {
+                try {
+                    thisValue = clazz.getMethod("get" + ruleItem[i]).invoke(this);
+                    oValue = clazz.getMethod("get" + ruleItem[i]).invoke(o);
+                    if ((int) thisValue != (int) oValue) {
+                        return (int) oValue - (int) thisValue;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return o.getTotalDisparity() - this.totalDisparity;
+        return 0;
     }
 }

@@ -1,6 +1,7 @@
 package com.tiaotiaopoker.controller;
 
 import com.tiaotiaopoker.ChineseNum;
+import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.MatchTeamDataDto;
@@ -37,13 +38,29 @@ public class ResultSettingController {
     public ModelAndView resultInput(ModelAndView mv, String matchId) {
         //根据matchId查出比赛规则（轮次）
         if (!StringUtils.isBlank(matchId)) {
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-            int ruleTurn = (null == matchRule ? 0 : matchRule.getRuleTurn());
-            List<String> ruleTurnList = new ArrayList<>();
-            for (int i = 1; i <= ruleTurn; i++) {
-                ruleTurnList.add("第" + ChineseNum.getChineseNum(i) + "轮");
+            MatchTeamData matchTeamData = new MatchTeamData();
+            matchTeamData.setMatchId(matchId);
+            List<MatchTeamDataDto> matchDataList = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
+            if (matchDataList.size() == 0) {
+                //查找当前比赛是否存在对局数据，若不存在需要提示先进行座位排序
+                mv.addObject("msg", Constants.result.MSG_SEAT_SETTING);
+                mv.addObject("turn", Constants.result.TURN_FIRST);
+            } else {
+                //查找当前比赛轮次
+                int nowTurn = matchTeamDataService.getNowTurn(matchId);
+                if (nowTurn == 0) {
+                    //最终成绩已生成，不得重新排座位
+                    mv.addObject("msg", Constants.result.MSG_FINANL_TURN);
+                    mv.addObject("turn", nowTurn);
+                } else {
+                    //最终成绩未生成
+                    matchTeamData.setTurnNumber(nowTurn);
+                    matchDataList = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
+                    mv.addObject("matchDataList", matchDataList);
+                    mv.addObject("matchId", matchId);
+                    mv.addObject("turn", nowTurn);
+                }
             }
-            mv.addObject("ruleTurnList", ruleTurnList);
         }
         mv.setViewName("resultSetting/resultInput");
         return mv;
@@ -97,11 +114,31 @@ public class ResultSettingController {
         if (turnNumber > matchRule.getRuleTurn()) {
             turnNumber = matchRule.getRuleTurn();
         }
-
+        //成绩td标题
+        List<String> tdList = new ArrayList<>();
+        String resultRule = matchRule.getRuleResult() == null ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+        for (String title : resultRule.split(",")) {
+            tdList.add((String) Constants.resultRule.resultRuleMap.get(title));
+        }
+        mv.addObject("tdList", tdList);
+        //成绩数据
         MatchTeamResult result = new MatchTeamResult();
         result.setMatchId(matchId);
         result.setTurnNumber(turnNumber);
         List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
+        //根据规则显示相应的成绩
+        try {
+            for (MatchTeamResultDto resultDto : resultlist) {
+                String resultString = "";
+                Class clazz = resultDto.getClass();
+                for (String getNmae : resultRule.split(",")) {
+                    resultString += clazz.getMethod("get" + getNmae).invoke(resultDto) + ",";
+                }
+                resultDto.setResultString(resultString.substring(0, resultString.length() - 1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("resultlist", resultlist);

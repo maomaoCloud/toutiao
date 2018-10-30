@@ -6,7 +6,11 @@
     <result column="match_id" jdbcType="VARCHAR" property="matchId" />
     <result column="team_number" jdbcType="INTEGER" property="teamNumber" />
     <result column="team_member_one" jdbcType="VARCHAR" property="teamMemberOne" />
+    <result column="team_member_one_name" jdbcType="VARCHAR" property="teamMemberOneName" />
+    <result column="team_member_one_head" jdbcType="VARCHAR" property="teamMemberOneHead" />
     <result column="team_member_two" jdbcType="VARCHAR" property="teamMemberTwo" />
+    <result column="team_member_two_name" jdbcType="VARCHAR" property="teamMemberTwoName" />
+    <result column="team_member_two_head" jdbcType="VARCHAR" property="teamMemberTwoHead" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, match_id, team_number, team_member_one, team_member_two
+    id, match_id, team_number, team_member_one, team_member_one_name, team_member_one_head, 
+    team_member_two, team_member_two_name, team_member_two_head
   </sql>
   <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" resultMap="BaseResultMap">
     select
@@ -101,9 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
     insert into match_team_member (id, match_id, team_number, 
-      team_member_one, team_member_two)
+      team_member_one, team_member_one_name, team_member_one_head, 
+      team_member_two, team_member_two_name, team_member_two_head
+      )
     values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{teamNumber,jdbcType=INTEGER}, 
-      #{teamMemberOne,jdbcType=VARCHAR}, #{teamMemberTwo,jdbcType=VARCHAR})
+      #{teamMemberOne,jdbcType=VARCHAR}, #{teamMemberOneName,jdbcType=VARCHAR}, #{teamMemberOneHead,jdbcType=VARCHAR}, 
+      #{teamMemberTwo,jdbcType=VARCHAR}, #{teamMemberTwoName,jdbcType=VARCHAR}, #{teamMemberTwoHead,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
     insert into match_team_member
@@ -120,8 +129,20 @@
       <if test="teamMemberOne != null">
         team_member_one,
       </if>
+      <if test="teamMemberOneName != null">
+        team_member_one_name,
+      </if>
+      <if test="teamMemberOneHead != null">
+        team_member_one_head,
+      </if>
       <if test="teamMemberTwo != null">
         team_member_two,
+      </if>
+      <if test="teamMemberTwoName != null">
+        team_member_two_name,
+      </if>
+      <if test="teamMemberTwoHead != null">
+        team_member_two_head,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -137,8 +158,20 @@
       <if test="teamMemberOne != null">
         #{teamMemberOne,jdbcType=VARCHAR},
       </if>
+      <if test="teamMemberOneName != null">
+        #{teamMemberOneName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberOneHead != null">
+        #{teamMemberOneHead,jdbcType=VARCHAR},
+      </if>
       <if test="teamMemberTwo != null">
         #{teamMemberTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberTwoName != null">
+        #{teamMemberTwoName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberTwoHead != null">
+        #{teamMemberTwoHead,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -163,8 +196,20 @@
       <if test="record.teamMemberOne != null">
         team_member_one = #{record.teamMemberOne,jdbcType=VARCHAR},
       </if>
+      <if test="record.teamMemberOneName != null">
+        team_member_one_name = #{record.teamMemberOneName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamMemberOneHead != null">
+        team_member_one_head = #{record.teamMemberOneHead,jdbcType=VARCHAR},
+      </if>
       <if test="record.teamMemberTwo != null">
         team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamMemberTwoName != null">
+        team_member_two_name = #{record.teamMemberTwoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamMemberTwoHead != null">
+        team_member_two_head = #{record.teamMemberTwoHead,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,7 +222,11 @@
       match_id = #{record.matchId,jdbcType=VARCHAR},
       team_number = #{record.teamNumber,jdbcType=INTEGER},
       team_member_one = #{record.teamMemberOne,jdbcType=VARCHAR},
-      team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR}
+      team_member_one_name = #{record.teamMemberOneName,jdbcType=VARCHAR},
+      team_member_one_head = #{record.teamMemberOneHead,jdbcType=VARCHAR},
+      team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR},
+      team_member_two_name = #{record.teamMemberTwoName,jdbcType=VARCHAR},
+      team_member_two_head = #{record.teamMemberTwoHead,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -194,8 +243,20 @@
       <if test="teamMemberOne != null">
         team_member_one = #{teamMemberOne,jdbcType=VARCHAR},
       </if>
+      <if test="teamMemberOneName != null">
+        team_member_one_name = #{teamMemberOneName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberOneHead != null">
+        team_member_one_head = #{teamMemberOneHead,jdbcType=VARCHAR},
+      </if>
       <if test="teamMemberTwo != null">
         team_member_two = #{teamMemberTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberTwoName != null">
+        team_member_two_name = #{teamMemberTwoName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamMemberTwoHead != null">
+        team_member_two_head = #{teamMemberTwoHead,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -205,7 +266,11 @@
     set match_id = #{matchId,jdbcType=VARCHAR},
       team_number = #{teamNumber,jdbcType=INTEGER},
       team_member_one = #{teamMemberOne,jdbcType=VARCHAR},
-      team_member_two = #{teamMemberTwo,jdbcType=VARCHAR}
+      team_member_one_name = #{teamMemberOneName,jdbcType=VARCHAR},
+      team_member_one_head = #{teamMemberOneHead,jdbcType=VARCHAR},
+      team_member_two = #{teamMemberTwo,jdbcType=VARCHAR},
+      team_member_two_name = #{teamMemberTwoName,jdbcType=VARCHAR},
+      team_member_two_head = #{teamMemberTwoHead,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

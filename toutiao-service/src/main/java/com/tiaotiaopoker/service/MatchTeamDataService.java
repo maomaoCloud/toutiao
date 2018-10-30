@@ -11,11 +11,15 @@ public interface MatchTeamDataService {
 
     List<AppUser> queryTeamUserByMatchId(String matchId);
 
-    int saveMatchTeamDataAndMember(String[] userIds, String matchId, Integer turnNumber);
+    int saveMatchTeamDataAndMember(String[] ids, String[] userNames, String[] userHeads, String matchId, Integer turnNumber);
 
     List<MatchTeamDataDto> queryTeamDataByCondition(MatchTeamData matchTeamData);
 
     int saveMatchTeamData(MatchTeamData matchTeamData);
 
     int saveMatchTeamDataAndMemberNext(String matchId, Integer turnNumber);
+
+    int getNowTurn(String matchId);
+
+    int updateMatchTeamData(String[] split, String matchId, Integer turnNumber);
 }

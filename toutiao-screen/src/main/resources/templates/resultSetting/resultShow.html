@@ -29,13 +29,14 @@
         <table class="table table-bordered label-table"
                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
             <tr>
-                <td class="head-title" colspan="7" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
+                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
             </tr>
 
             <tr>
                 <td valign="middle" rowspan="2">名次</td>
                 <td colspan="4">选手信息</td>
-                <td colspan="2">成绩</td>
+                <td colspan="3">本轮成绩</td>
+                <td colspan="5">总成绩</td>
             </tr>
 
             <tr>
@@ -45,17 +46,20 @@
                 <td>桌号</td>
                 <td>级数</td>
                 <td>级差分</td>
+                <td>对手级差分</td>
+                <td th:each="title:${tdList}" th:text="${title}"></td>
             </tr>
-
 
             <tr th:each="result:${resultlist }">
                 <td th:text="'第'+${resultStat.index+1}+'名'"></td>
                 <td th:text="${result.teamNumber}"></td>
                 <td th:text="${result.userOne }"></td>
                 <td th:text="${result.userTwo }"></td>
-                <td th:text="${result.tableNumber }">1
+                <td th:text="${result.tableNumber }"></td>
                 <td th:text="${result.score }"></td>
-                <td th:text="${result.disparity }">6</td>
+                <td th:text="${result.disparity }"></td>
+                <td th:text="${26 - result.disparity }"></td>
+                <td th:each="value:${result.resultString.split(',')}" th:text="${value}"></td>
             </tr>
 
         </table>

@@ -16,6 +16,16 @@ public class MatchTeamResultDto extends MatchTeamResult {
 
     private int teamNumber;
 
+    private String resultString;
+
+    public String getResultString() {
+        return resultString;
+    }
+
+    public void setResultString(String resultString) {
+        this.resultString = resultString;
+    }
+
     public String getUserOneHead() {
         return userOneHead;
     }

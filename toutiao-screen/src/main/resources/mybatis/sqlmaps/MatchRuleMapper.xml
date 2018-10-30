@@ -24,6 +24,7 @@
     <result column="rule_fail" jdbcType="INTEGER" property="ruleFail" />
     <result column="rule_draw" jdbcType="INTEGER" property="ruleDraw" />
     <result column="rule_seat" jdbcType="INTEGER" property="ruleSeat" />
+    <result column="rule_result" jdbcType="VARCHAR" property="ruleResult" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -87,7 +88,7 @@
     id, match_id, match_name, match_host, match_address, match_date, match_referee, match_logo, 
     match_technology, match_champion_img, match_champion, match_second_img, match_second, 
     match_third_img, match_third, rule_turn, rule_pair, rule_time, rule_win, rule_fail, 
-    rule_draw, rule_seat
+    rule_draw, rule_seat, rule_result
   </sql>
   <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" resultMap="BaseResultMap">
     select
@@ -127,7 +128,7 @@
       match_second, match_third_img, match_third, 
       rule_turn, rule_pair, rule_time, 
       rule_win, rule_fail, rule_draw, 
-      rule_seat)
+      rule_seat, rule_result)
     values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{matchName,jdbcType=VARCHAR}, 
       #{matchHost,jdbcType=VARCHAR}, #{matchAddress,jdbcType=VARCHAR}, #{matchDate,jdbcType=VARCHAR}, 
       #{matchReferee,jdbcType=VARCHAR}, #{matchLogo,jdbcType=VARCHAR}, #{matchTechnology,jdbcType=VARCHAR}, 
@@ -135,7 +136,7 @@
       #{matchSecond,jdbcType=VARCHAR}, #{matchThirdImg,jdbcType=VARCHAR}, #{matchThird,jdbcType=VARCHAR}, 
       #{ruleTurn,jdbcType=INTEGER}, #{rulePair,jdbcType=INTEGER}, #{ruleTime,jdbcType=INTEGER}, 
       #{ruleWin,jdbcType=INTEGER}, #{ruleFail,jdbcType=INTEGER}, #{ruleDraw,jdbcType=INTEGER}, 
-      #{ruleSeat,jdbcType=INTEGER})
+      #{ruleSeat,jdbcType=INTEGER}, #{ruleResult,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchRule">
     insert into match_rule
@@ -206,6 +207,9 @@
       <if test="ruleSeat != null">
         rule_seat,
       </if>
+      <if test="ruleResult != null">
+        rule_result,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -273,6 +277,9 @@
       </if>
       <if test="ruleSeat != null">
         #{ruleSeat,jdbcType=INTEGER},
+      </if>
+      <if test="ruleResult != null">
+        #{ruleResult,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -351,6 +358,9 @@
       <if test="record.ruleSeat != null">
         rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
       </if>
+      <if test="record.ruleResult != null">
+        rule_result = #{record.ruleResult,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -379,7 +389,8 @@
       rule_win = #{record.ruleWin,jdbcType=INTEGER},
       rule_fail = #{record.ruleFail,jdbcType=INTEGER},
       rule_draw = #{record.ruleDraw,jdbcType=INTEGER},
-      rule_seat = #{record.ruleSeat,jdbcType=INTEGER}
+      rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
+      rule_result = #{record.ruleResult,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -450,6 +461,9 @@
       <if test="ruleSeat != null">
         rule_seat = #{ruleSeat,jdbcType=INTEGER},
       </if>
+      <if test="ruleResult != null">
+        rule_result = #{ruleResult,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -475,7 +489,8 @@
       rule_win = #{ruleWin,jdbcType=INTEGER},
       rule_fail = #{ruleFail,jdbcType=INTEGER},
       rule_draw = #{ruleDraw,jdbcType=INTEGER},
-      rule_seat = #{ruleSeat,jdbcType=INTEGER}
+      rule_seat = #{ruleSeat,jdbcType=INTEGER},
+      rule_result = #{ruleResult,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

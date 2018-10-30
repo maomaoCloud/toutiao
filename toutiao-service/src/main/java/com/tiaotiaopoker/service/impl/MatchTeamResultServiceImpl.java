@@ -3,8 +3,10 @@ package com.tiaotiaopoker.service.impl;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.dao.MatchTeamResultMapper;
 import com.tiaotiaopoker.entity.MatchTeamResultDto;
+import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
 import com.tiaotiaopoker.pojo.MatchTeamResultExample;
+import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchTeamResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class MatchTeamResultServiceImpl implements MatchTeamResultService {
     @Autowired
     private MatchTeamResultMapper matchTeamResultMapper;
 
+    @Autowired
+    private MatchRuleService matchRuleService;
+
     @Override
     public List<MatchTeamResult> queryMatchTeamResultByCondition(MatchTeamResult matchTeamResult) {
         MatchTeamResultExample example = new MatchTeamResultExample();
@@ -33,10 +38,16 @@ public class MatchTeamResultServiceImpl implements MatchTeamResultService {
 
     @Override
     public List<MatchTeamResultDto> sortMatchTeamResult(MatchTeamResult result) {
+        //查询比赛规则
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(result.getMatchId());
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("matchId", result.getMatchId());
         paramMap.put("turnNumber", result.getTurnNumber());
         List<MatchTeamResultDto> matchTeamResultDtos = matchTeamResultMapper.queryResultWithTableNumber(paramMap);
+        //排名规则
+        for (MatchTeamResultDto teamResult : matchTeamResultDtos) {
+            teamResult.setResultRule(matchRule.getRuleResult());
+        }
         Collections.sort(matchTeamResultDtos);
         for (MatchTeamResultDto resultDto : matchTeamResultDtos) {
             resultDto.setScore(Constants.result.SCORE[new Integer(resultDto.getScore()) - 2]);

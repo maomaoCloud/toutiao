@@ -11,6 +11,8 @@ import com.tiaotiaopoker.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,7 +55,8 @@ public class MatchRuleServiceImpl implements MatchRuleService {
             matchRule.setId(StringUtils.generateShortUUID());
             matchRule.setMatchName(myMatch.getTheme());
             matchRule.setMatchAddress(myMatch.getCity() + myMatch.getArea() + myMatch.getAddress());
-            matchRule.setMatchDate(myMatch.getStartDate().toString() + "——" + myMatch.getEndDate().toString());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            matchRule.setMatchDate(formatter.format(myMatch.getStartDate()) + "——" + formatter.format(myMatch.getEndDate()));
             matchRule.setRuleTurn(3);
             matchRule.setRuleWin(2);
             matchRule.setRuleDraw(1);

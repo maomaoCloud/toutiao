@@ -177,30 +177,135 @@
     </style>
 </head>
 <!-- tile -->
-<section class="tile transparent">
+<section class="tile transparent" th:if="not ${#lists.isEmpty(matchDataList)}">
     <div class="tile-header color transparent-black textured rounded-top-corners myHead">
         <h1 class="box-title">
-            <span>成绩录入：</span>
-            <select class="slt" id="resultTurnSelect">
-                <option th:each="turn,turnStat:${ruleTurnList}" th:value="${turnStat.index+1}" th:text="${turn }">第一轮
-                </option>
-            </select></h1>
+            <span th:text="'第'+${turn}+'轮成绩录入'"></span>
+        </h1>
     </div>
 
     <!-- tile widget -->
     <div class="tile-widget color transparent-black textured" id="enter-data-list">
+        <form id="teamResultForm">
+            <input type="hidden" th:value="${matchId }" name="matchId">
+            <input type="hidden" th:value="${turn }" name="turnNumber">
+            <div class="user-group" th:each="team:${matchDataList }">
+                <div class="zh"><span th:text="${team.tableNumber }"></span></div>
+                <input type="hidden" name="id" th:value="${team.id }">
+                <div class="g g-a">
+                    <input type="hidden" name="teamOneId" th:value="${team.teamOneId }">
+                    <div class="user-a">
+                        <img th:src="${team.teamOneUserOneHead}">
+                        <span class="user-name" th:text="${team.teamOneUserOneName}"></span>
+                    </div>
+                    <div class="da">搭</div>
+                    <div class="user-b">
+                        <img th:src="${team.teamOneUserTwoHead}">
+                        <span class="user-name" th:text="${team.teamOneUserTwoName}"></span>
+                    </div>
+                    <div class="score">
+                        <span>级数：</span>
+                        <select class="score-slt" name="teamOneScore" th:value="${team.teamOneScore}">
+                            <option th:value="0"></option>
+                            <option th:value="2">2</option>
+                            <option th:value="3">3</option>
+                            <option th:value="4">4</option>
+                            <option th:value="5">5</option>
+                            <option th:value="6">6</option>
+                            <option th:value="7">7</option>
+                            <option th:value="8">8</option>
+                            <option th:value="9">9</option>
+                            <option th:value="10">10</option>
+                            <option th:value="11">J</option>
+                            <option th:value="12">Q</option>
+                            <option th:value="13">K</option>
+                            <option th:value="14">A</option>
+                            <option th:value="15">过A</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="g g-b">
+                    <div class="score">
+                        <span>级数：</span>
+                        <select class="score-slt" name="teamTwoScore" th:value="${team.teamOneScore}">
+                            <option th:value="0"></option>
+                            <option th:value="2">2</option>
+                            <option th:value="3">3</option>
+                            <option th:value="4">4</option>
+                            <option th:value="5">5</option>
+                            <option th:value="6">6</option>
+                            <option th:value="7">7</option>
+                            <option th:value="8">8</option>
+                            <option th:value="9">9</option>
+                            <option th:value="10">10</option>
+                            <option th:value="11">J</option>
+                            <option th:value="12">Q</option>
+                            <option th:value="13">K</option>
+                            <option th:value="14">A</option>
+                            <option th:value="15">过A</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="teamTwoId" th:value="${team.teamTwoId }">
+                    <div class="user-a">
+                        <img th:src="${team.teamTwoUserOneHead}">
+                        <span class="user-name" th:text="${team.teamTwoUserOneName}"></span>
+                    </div>
+                    <div class="da">搭</div>
+                    <div class="user-b">
+                        <img th:src="${team.teamTwoUserTwoHead}">
+                        <span class="user-name" th:text="${team.teamTwoUserTwoName}"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- /tile widget -->
+            <div class="col-lg-12 col-md-12 op-box">
+                <button type="button" class="btn btn-cyan margin-bottom-20" id="saveResultBtn">保存</button>
+            </div>
+        </form>
     </div>
 </section>
 <!-- /tile -->
+<div class="col-lg-12 col-md-12" th:if="${#lists.isEmpty(matchDataList)}">
+    <div id="main" style="display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;">
+        <div id="theme" style="font-size: 40px;
+        margin-top: 100px;
+        color: #FFF;
+        margin-bottom: 20px;
+        letter-spacing: 2px;" th:text="${msg}"></div>
+    </div>
+</div>
 <script>
     $(function () {
-        $("#resultTurnSelect").change(function () {
+        /*$("#resultTurnSelect").change(function () {
             loadData($("#resultTurnSelect").val());
         });
 
         //加载第一轮数据
-        loadData(1);
+        loadData(1);*/
+
+        $("#saveResultBtn").click(function () {
+            showLoading();
+            $.post("/sys/resultSetting/save?token=" + getToken(), $("#teamResultForm").serialize(), function (data) {
+                if (data.success) {
+                    closeLoading();
+                    $.post("/sys/seatSetting/saveNext", {
+                        matchId: getMatchId(),
+                        token: getToken(),
+                        turnNumber: [[${turn}]] + 1
+                    }, function () {
+                        $("#row").load("/sys/resultSetting/resultDetail", {
+                            matchId: getMatchId(),
+                            token: getToken(),
+                            turnNumber: [[${turn}]]
+                        });
+                    });
+                }
+            });
+        });
     });
 
     function loadData(index) {
