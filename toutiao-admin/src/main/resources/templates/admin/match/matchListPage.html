@@ -80,6 +80,7 @@
             });
         }
 
+        //设置备注
         function updateMatchRemark(id){
             dialog({
                 url: '/match/remarkPage?id=' + id,
@@ -90,6 +91,12 @@
             }).showModal();
             return false;
         }
+
+        //编辑比赛
+        function editMatch(id){
+            window.location.href="/match/addAndEditPage?id="+id;
+        }
+
 
         //初始化dialog
         seajs.config({
@@ -162,8 +169,8 @@
                 <th>ID</th>
                 <th class="title">比赛名称</th>
                 <th>最新操作人</th>
-                <th>创建时间</th>
-                <th>最新操作时间</th>
+                <th>开始时间</th>
+                <th>结束</th>
                 <th>状态</th>
                 <th>管理</th>
             </tr>
@@ -174,13 +181,14 @@
                     <td th:text="${matchStat.index+1}"></td>
                     <td class="title" th:text="${match.theme}"></td>
                     <td th:text="${match.operateUser}"></td>
-                    <td th:text="${#dates.format(match.startDate, 'yyyy-MM-dd')}"></td>
-                    <td th:text="${#dates.format(match.endDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#dates.format(match.startDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#dates.format(match.endDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <!--发布状态-->
                     <td th:if="${match.statue==0}">等待审核</td>
                     <td th:if="${match.statue==1}">已通过</td>
                     <td th:if="${match.statue==2}">未通过</td>
                     <td>
+                        <a th:onclick="'editMatch(\''+${match.id}+'\')'">编辑</a>
                         <a th:if="${match.statue==0}" th:onclick="'changeMatchStatus(\'1\',\''+${match.id}+'\',\''+${match.theme}+'\')'">审核通过  |</a>
                         <a th:if="${match.statue==0}" th:onclick="'changeMatchStatus(\'2\',\''+${match.id}+'\',\''+${match.theme}+'\')'">审核不通过  |</a>
                         <a th:if="${match.statue==2}" th:onclick="'changeMatchStatus(\'1\',\''+${match.id}+'\',\''+${match.theme}+'\')'">审核通过  |</a>

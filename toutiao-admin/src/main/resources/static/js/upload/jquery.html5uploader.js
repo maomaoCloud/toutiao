@@ -7,7 +7,7 @@
             multi: false,
             buttonText: '选择文件',
             removeTimeout: 1000,
-            itemTemplate: '<li id="${fileID}file"><div class="progress"><div class="progressbar"></div></div><span class="filename">${fileName}</span><span class="progressnum">0/${fileSize}</span><a class="uploadbtn">上传</a><a class="delfilebtn">删除</a></li>',
+            itemTemplate: '<li id="${fileID}file"><div class="progress"><div class="progressbar"></div></div><span class="filename">${fileName}</span><span class="progressnum">0/${fileSize}</span><a class="btn btn-default delUpload" style="float:right;margin-right:20px">删除</a><a class="btn btn-primary beginUpload" style="float:right">上传</a></li>',
             onUploadStart: function () {
             },
             onUploadSuccess: function () {
@@ -50,12 +50,13 @@
                 inputstr += 'multiple';
             }
             inputstr += '/>';
-            inputstr += '<a href="javascript:void(0)" class="uploadfilebtn">';
+            inputstr += '<a href="javascript:void(0)" class="btn btn-primary chooseFile" style="float: left">';
             inputstr += option.buttonText;
             inputstr += '</a>';
             var fileInputButton = $(inputstr);
             var uploadFileList = $('<ul class="filelist"></ul>');
-            _this.append(fileInputButton, uploadFileList);
+            _this.append(fileInputButton);
+            _this.next().append(uploadFileList);
             var ZXXFILE = {
                 fileInput: fileInputButton.get(0),
                 upButton: null,
@@ -97,22 +98,27 @@
                         }
                     }
                     if (!option.auto) {
-                        _this.find('.uploadbtn').die().live('click', function () {
+                        _this.next().find('.beginUpload').off().on('click', function () {
                             var index = parseInt($(this).parents('li').attr('id'));
                             ZXXFILE.funUploadFile(getFile(index, files));
                         });
                     }
-                    _this.find('.delfilebtn').live('click', function () {
+                    _this.next().find('.delUpload').on('click', function () {
                         var index = parseInt($(this).parents('li').attr('id'));
                         ZXXFILE.funDeleteFile(index);
                     });
                 },
                 onDelete: function (index) {
-                    //_this.find('#' + index + 'file').remove();
-                    $(".filelist").html("");
+                    //_this.next().find('#' + index + 'file').remove();
+                    //input[file]删除，否则无法触发change事件
+                    _this.parent().find("input[name='fileselect[]']").val("");
+                    //图片回显删除
+                    _this.parent().find(".filelist").html("");
+                    //路径input删除
+                    _this.parent().find(".uploadImgUrl").val("");
                 },
                 onProgress: function (file, loaded, total) {
-                    var eleProgress = _this.find('#' + file.index + 'file .progress'),
+                    var eleProgress = _this.next().find('#' + file.index + 'file .progress'),
                         percent = (loaded / total * 100).toFixed(2) + '%';
                     eleProgress.find('.progressbar').css('width', percent);
                     if (total - loaded < 500000) {
@@ -131,7 +137,7 @@
                     return this;
                 },
                 funDealFiles: function (files) {
-                    var fileCount = _this.find('.filelist li').length;
+                    var fileCount = _this.next().find('.filelist li').length;
                     for (var i = 0; i < this.fileFilter.length; i++) {
                         for (var j = 0; j < this.fileFilter[i].length; j++) {
                             var file = this.fileFilter[i][j];
@@ -154,10 +160,8 @@
                             }
                         }
                     }
-                    $("#newsCoverImg").val("");
-                    $("#imgDiv").remove();
-                    $("#upload").html("");
-                    _this.append(fileInputButton, uploadFileList);
+                    _this.append(fileInputButton);
+                    _this.next().append(uploadFileList);
                     return this;
                 },
                 funUploadFile: function (file) {
@@ -171,11 +175,14 @@
                             xhr.onreadystatechange = function (e) {
                                 if (xhr.readyState == 4) {
                                     if (xhr.status == 200) {
-                                        $("#uploadImg").val(xhr.responseText);
+                                        console.log(xhr.responseText);
+                                        _this.parent().find(".uploadImgUrl").val(xhr.responseText);
                                         self.onUploadSuccess(file, xhr.responseText);
                                         setTimeout(function () {
                                             ZXXFILE.onDelete(file.index);
                                         }, option.removeTimeout);
+                                        //图片回显
+                                        _this.parent().find(".filelist").append('<div id="imgDiv"><img style="height:150px;width:250px;float:left" src="' + xhr.responseText + '"></div>');
                                         self.onUploadComplete();
                                     } else {
                                         self.onUploadError(file, xhr.responseText);
@@ -183,7 +190,8 @@
                                 }
                             };
                             var fd = new FormData();
-                            fd.append("upload",$("input[name='fileselect[]']")[0].files[0]);
+                            fd.append("upload",_this.parent().find("input[name='fileselect[]']")[0].files[0]);
+                            fd.append("token",$("#infoToken").val())
                             option.onUploadStart();
                             xhr.open("POST", self.url, true);
                             xhr.setRequestHeader("X_FILENAME", file.name);
@@ -200,11 +208,9 @@
                             self.funGetFiles(e);
                         }, false);
                     }
-                    _this.find('.uploadfilebtn').live('click', function () {
-                        var liList = $(".filelist").find("li");
+                    _this.find('.chooseFile').on('click', function () {
+                        var liList = _this.parent().find(".filelist").find("li");
                         if (liList.size()>0){
-                            dialogAlert("提示","只能上传一张封面图！",function () {
-                            })
                             return;
                         }
                         _this.find('.uploadfile').trigger('click');

@@ -1,24 +1,32 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + 'css/style.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/style.css'}"/>
     <!--富文本编辑器 start-->
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/sample.js'}"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.uploadify-3.1.min.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/sample.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.uploadify-3.1.min.js'}"></script>
     <!--富文本编辑器 end-->
     <!--上传start-->
-    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.js'}"></script>
-    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
     <!--上传end-->
     <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/reset.css'}"/>
     <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/main.css'}"/>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/common.js'}"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/base.js'}"></script>
     <!--弹窗start-->
-    <link rel="Stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/DialogBySHF.css'}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/dialog-back.css'}"/>
+    <link rel="Stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/DialogBySHF.css'}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/dialog-back.css'}"/>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/dialog-min.js'}"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/sea.js'}"></script>
     <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/DialogBySHF.js'}"></script>
@@ -34,7 +42,7 @@
             var newsType = $("#newsType").val();
 
             //游戏不需要富文本
-            if (newsType == '1'){
+            if (newsType == '1') {
                 //页面初始化时加载富文本编辑器
                 var editor = CKEDITOR.replace('newsDetail');
             }
@@ -52,16 +60,14 @@
 
                 },
                 onUploadComplete: function () {
-                    //form表单值
-                    $("#newsCoverImg").val($("#uploadImg").val());
-                    //图片回显
-                    $("#newsCoverImgLabel").append('<div id="imgDiv"><img style="height:400px;width:600px" src="'+$("#uploadImg").val()+'"></div>');
                 }
             });
 
             //回显删除按钮
-            $("#deleteBtn").on("click",function () {
-                $("#reviewUl").remove();
+            $("#deleteBtn").on("click", function () {
+                /*$("#reviewUl").remove();*/
+                $(this).parent().parent().parent().parent().find(".uploadImgUrl").val("");
+                $(this).parent().parent().remove();
             });
         });
 
@@ -82,7 +88,7 @@
                 removeMsg("titleLabel");
             }
 
-            if($("#newsType").val()=="2"){
+            if ($("#newsType").val() == "2") {
                 if (newsLink == undefined || newsLink == "") {
                     removeMsg("newsLinkLabel");
                     appendMsg("newsLinkLabel", "链接地址不能为空!");
@@ -104,7 +110,7 @@
                 removeMsg("newsCoverImgLabel");
             }
 
-            if($("#newsType").val()=="1"){
+            if ($("#newsType").val() == "1") {
                 $('#newsDetail').val(CKEDITOR.instances.newsDetail.getData());
                 var newsDetail = CKEDITOR.instances.newsDetail.getData();
                 if (newsDetail == undefined || newsDetail == "") {
@@ -119,9 +125,9 @@
             }
 
             $.post("/news/addOrEdit", $('#infoForm').serialize(), function (data) {
-                if (data!= null && data.success) {
+                if (data != null && data.success) {
                     dialogAlert("提示", "保存成功！", function () {
-                        window.location.href = "/news/listPage?newsType="+$("#newsType").val();
+                        window.location.href = "/news/listPage?newsType=" + $("#newsType").val();
                     });
                 } else if (data == "nologin") {
                     dialogConfirm("提示", "请先登录！", function () {
@@ -136,7 +142,8 @@
 </head>
 <body style="background: #FFFFFF;">
 <div class="site">
-    <em>您现在所在的位置：<p style="float: right;" th:if="${news.newsType=='1'}" >添加新闻</p> <p style="float: right;" th:if="${news.newsType=='2'}" >添加游戏</p></em>
+    <em>您现在所在的位置：<p style="float: right;" th:if="${news.newsType=='1'}">添加新闻</p>
+        <p style="float: right;" th:if="${news.newsType=='2'}">添加游戏</p></em>
 </div>
 <div class="site-title">发布</div>
 <div class="main-publish">
@@ -158,15 +165,19 @@
                     <div id="upload">
 
                     </div>
-                    <ul th:if="${not #lists.isEmpty(news.newsCoverImg)}" class="filelist" id="reviewUl">
-                        <li id="1file">
-                            <div class="progress"><div class="progressbar"></div></div>
-                            <a class="delfilebtn" id="deleteBtn">删除</a>
-                            <div>
-                                <img style="height:400px;width:600px" th:src="${news.newsCoverImg}">
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="review">
+                        <ul th:if="${not #lists.isEmpty(news.newsCoverImg)}" class="filelist" id="reviewUl">
+                            <li id="1file">
+                                <div class="progress">
+                                    <div class="progressbar"></div>
+                                </div>
+                                <a class="delfilebtn" id="deleteBtn">删除</a>
+                                <div>
+                                    <img style="height:400px;width:600px" th:src="${news.newsCoverImg}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
 

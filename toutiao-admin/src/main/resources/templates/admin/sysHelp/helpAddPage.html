@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + 'css/style.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/style.css'}"/>
     <!--富文本编辑器 start-->
     <script type="text/javascript"
             th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
@@ -94,7 +94,8 @@
 
             //回显删除按钮
             $("#deleteBtn").on("click", function () {
-                $("#reviewUl").remove();
+                $(this).parent().parent().parent().parent().find(".uploadImgUrl").val("");
+                $(this).parent().parent().remove();
             });
         });
 

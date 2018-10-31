@@ -1,0 +1,399 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/style.css'}"/>
+    <!--富文本编辑器 start-->
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/sample.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/jquery.uploadify-3.1.min.js'}"></script>
+    <!--富文本编辑器 end-->
+    <!--上传start-->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/html5uploader.css'}">
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/upload/jquery.html5uploader.js'}"></script>
+    <!--上传end-->
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/reset.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/main.css'}"/>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/common.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/base.js'}"></script>
+    <!--弹窗start-->
+    <link rel="Stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/DialogBySHF.css'}"/>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#httpServletRequest.getContextPath()} + '/css/dialog-back.css'}"/>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/distpicker.data.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/distpicker.js'}"></script>
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/main.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/dialog-min.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/sea.js'}"></script>
+    <script type="text/javascript" th:src="@{${#httpServletRequest.getContextPath()} + '/js/DialogBySHF.js'}"></script>
+    <!--弹窗end-->
+    <script type="text/javascript"
+            th:src="@{${#httpServletRequest.getContextPath()} + '/js/DatePicker/WdatePicker.js'}"></script>
+    <title>编辑</title>
+    <style>
+        input {
+            box-sizing: content-box !important;
+        }
+        .ui-popup-modal{
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            margin: auto !important;
+            width: 474px !important;
+            height: 550px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+            selectModel();
+
+            //页面初始化时加载富文本编辑器
+            var editor = CKEDITOR.replace('activeContent');
+            var deitorRewardsContent = CKEDITOR.replace('rewardsContent');
+
+            //页面初始化时加载上传插件
+            $('.upload').html5uploader({
+                auto: false,
+                multi: false,
+                removeTimeout: 9999999,
+                url: '/upload/uplodaHeadlineImg',
+                onUploadStart: function () {
+
+                },
+                onInit: function () {
+
+                },
+                onUploadComplete: function () {
+                }
+            });
+
+            //回显删除按钮
+            $(".deleteBtn").on("click", function () {
+                $(this).parent().parent().parent().parent().find(".uploadImgUrl").val("");
+                $(this).parent().parent().remove();
+            });
+
+            //初始化时间插件
+            $(".start-btn").on("click", function () {
+                WdatePicker({
+                    el: 'startDateHidden',
+                    dateFmt: 'yyyy-MM-dd HH:mm:ss',
+                    doubleCalendar: true,
+                    maxDate: '#F{$dp.$D(\'endDateHidden\')}',
+                    position: {left: -224, top: 8},
+                    isShowClear: false,
+                    isShowOK: true,
+                    isShowToday: false,
+                    onpicked: pickedStartFunc
+                })
+            })
+            $(".end-btn").on("click", function () {
+                WdatePicker({
+                    el: 'endDateHidden',
+                    dateFmt: 'yyyy-MM-dd HH:mm:ss',
+                    doubleCalendar: true,
+                    minDate: '#F{$dp.$D(\'startDateHidden\')}',
+                    position: {left: -224, top: 8},
+                    isShowClear: false,
+                    isShowOK: true,
+                    isShowToday: false,
+                    onpicked: pickedendFunc
+                })
+            })
+        });
+
+        function pickedStartFunc() {
+            $dp.$('startDate').value = $dp.cal.getDateStr('yyyy-MM-dd HH:mm:ss');
+        }
+
+        function pickedendFunc() {
+            $dp.$('endDate').value = $dp.cal.getDateStr('yyyy-MM-dd HH:mm:ss');
+        }
+
+        //前端校验数据
+        function addmatch() {
+
+            var theme = $("#theme").val();
+            var bannerImg = $("#bannerImg").val();
+            var wxHead = $("#wxHead").val();
+            var contactName = $("#contactName").val();
+            var phone = $("#phone").val();
+            var fee = $("#fee").val();
+            var userLimit = $("#userLimit").val();
+            var province = $("#province").val();
+            var city = $("#city").val();
+            var area = $("#area").val();
+            var address = $("#address").val();
+
+            if (theme == undefined || theme == "") {
+                removeMsg("themeLabel");
+                appendMsg("themeLabel", "主题不能为空!");
+                $("#themeLabel").focus();
+                window.location.hash = "#themeLabel";
+                return;
+            } else {
+                removeMsg("themeLabel");
+            }
+
+            if (bannerImg == undefined || bannerImg == "") {
+                removeMsg("bannerImgLabel");
+                appendMsg("bannerImgLabel", "封面不能为空!");
+                $('#bannerImgLabel').focus();
+                window.location.hash = "#bannerImgLabel";
+                return;
+            } else {
+                removeMsg("bannerImgLabel");
+            }
+
+            if (wxHead == undefined || wxHead == "") {
+                removeMsg("wxHeadLabel");
+                appendMsg("wxHeadLabel", "二维码不能为空!");
+                $('#wxHeadLabel').focus();
+                window.location.hash = "#wxHeadLabel";
+                return;
+            } else {
+                removeMsg("wxHeadLabel");
+            }
+
+            $('#activeContent').val(CKEDITOR.instances.activeContent.getData());
+            var activeContent = CKEDITOR.instances.activeContent.getData();
+            if (activeContent == undefined || activeContent == "") {
+                removeMsg("activeContentLabel");
+                appendMsg("activeContentLabel", "详情信息不能为空!");
+                $('#activeContentLabel').focus();
+                window.location.hash = "#activeContentLabel";
+                return;
+            } else {
+                removeMsg("activeContentLabel");
+            }
+
+            $('#rewardsContent').val(CKEDITOR.instances.rewardsContent.getData());
+            var rewardsContent = CKEDITOR.instances.rewardsContent.getData();
+            if (rewardsContent == undefined || rewardsContent == "") {
+                removeMsg("rewardsContentLabel");
+                appendMsg("rewardsContentLabel", "详情信息不能为空!");
+                $('#rewardsContentLabel').focus();
+                window.location.hash = "#rewardsContentLabel";
+                return;
+            } else {
+                removeMsg("rewardsContentLabel");
+            }
+
+            $.post("/match/addOrEdit", $('#infoForm').serialize(), function (data) {
+                if (data != null && data.success) {
+                    dialogAlert("提示", "保存成功！", function () {
+                        window.location.href = "/match/matchListPage";
+                    });
+                } else if (data == "nologin") {
+                    dialogConfirm("提示", "请先登录！", function () {
+                        window.location.href = "/login";
+                    });
+                } else {
+                    dialogConfirm("提示", "保存失败！")
+                }
+            });
+        }
+    </script>
+</head>
+<body style="background: #FFFFFF;">
+<div class="site">
+    <em>您现在所在的位置：编辑比赛</p></em>
+</div>
+<div class="site-title">发布</div>
+<div class="main-publish">
+    <form th:id="infoForm" method="post" th:object="${match}">
+        <table width="100%" class="form-table">
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>标题：</td>
+                <td class="td-input" th:id="themeLabel">
+                    <input th:id="theme" name="theme" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.theme}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>封面：</td>
+                <td class="td-upload" th:id="bannerImgLabel">
+                    <input type="hidden" th:id="bannerImg" th:value="${match.bannerImg}" name="bannerImg"
+                           class="uploadImgUrl">
+                    <div class="upload">
+
+                    </div>
+                    <div class="review">
+                        <ul th:if="${not #lists.isEmpty(match.bannerImg)}" class="filelist">
+                            <li>
+                                <div class="progress">
+                                    <div class="progressbar"></div>
+                                </div>
+                                <a class="delfilebtn deleteBtn">删除</a>
+                                <div>
+                                    <img style="height:400px;width:600px" th:src="${match.bannerImg}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>二维码：</td>
+                <td class="td-upload" th:id="wxHeadLabel">
+                    <input type="hidden" th:id="wxHead" th:value="${match.wxHead}" name="wxHead" class="uploadImgUrl">
+                    <div class="upload">
+
+                    </div>
+                    <div class="review">
+                        <ul th:if="${not #lists.isEmpty(match.wxHead)}" class="filelist">
+                            <li>
+                                <div class="progress">
+                                    <div class="progressbar"></div>
+                                </div>
+                                <a class="delfilebtn deleteBtn">删除</a>
+                                <div>
+                                    <img style="height:400px;width:600px" th:src="${match.wxHead}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>开始日期：</td>
+                <td class="td-time" id="topicStartTimeLabel">
+                    <div class="start w340" style="width:270px">
+                        <input type="hidden" id="startDateHidden" name="startDate"
+                               th:value="${#dates.format(match.startDate,'yyyy-MM-dd HH:mm:ss')}"/>
+                        <input type="text" readonly id="startDate" style="width:140px;"
+                               th:value="${#dates.format(match.startDate,'yyyy-MM-dd HH:mm:ss')}"/>
+                        <span class="week" id="startWeek"></span>
+                        <i class="data-btn start-btn"></i>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>结束日期：</td>
+                <td class="td-time" id="topicEndTimeLabel">
+                    <div class="end w340" style="width:270px">
+                        <input type="hidden" id="endDateHidden" name="endDate"
+                               th:value="${#dates.format(match.endDate,'yyyy-MM-dd HH:mm:ss')}"/>
+                        <input type="text" readonly id="endDate" style="width:140px;"
+                               th:value="${#dates.format(match.endDate,'yyyy-MM-dd HH:mm:ss')}"/>
+                        <span class="week" id="endWeek"></span>
+                        <i class="data-btn end-btn"></i>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>联系人：</td>
+                <td class="td-input" th:id="contactNameLabel">
+                    <input th:id="contactName" name="contactName" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.contactName}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>手机号码：</td>
+                <td class="td-input" th:id="phoneLabel">
+                    <input th:id="phone" name="phone" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.phone}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>费用设置：</td>
+                <td class="td-input" th:id="feeLabel">
+                    <input th:id="fee" name="fee" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.fee}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>人数限制：</td>
+                <td class="td-input" th:id="userLimitLabel">
+                    <input th:id="userLimit" name="userLimit" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.userLimit}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td-title"><span class="red">*</span>地点：</td>
+                <td class="td-select" id="loc_provinceLable">
+                    <div data-toggle="distpicker">
+                        <div class="form-group">
+                            <label class="sr-only" for="province3">省：</label>
+                            <select class="form-control" id="province3" name="province"
+                                    th:data-province="${match.province}"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="city3">市：</label>
+                            <select class="form-control" id="city3" name="city" th:data-city="${match.city}"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="district3">区：</label>
+                            <select class="form-control" id="district3" name="area"
+                                    th:data-district="${match.area}"></select>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>详细地址：</td>
+                <td class="td-input" th:id="addressLabel">
+                    <input th:id="address" name="address" type="text" class="input-text w510" maxlength="20"
+                           th:value="${match.address}"/>
+                    <span class="error-msg"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" class="td-title"><span class="red" th:id="spanred">*</span>活动介绍：</td>
+                <td class="td-content" th:id="activeContentLabel">
+                    <div class="editor-box">
+                        <textarea name="activeContent" th:id="activeContent"
+                                  th:text="${match.activeContent}"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="100" class="td-title"><span class="red">*</span>奖品介绍：</td>
+                <td class="td-content" th:id="rewardsContentLabel">
+                    <div class="editor-box">
+                        <textarea name="rewardsContent" th:id="rewardsContent"
+                                  th:text="${match.rewardsContent}"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td width="100" class="td-title"></td>
+                <td class="td-btn">
+                    <input type="hidden" name="id" th:id="infoId" th:value="${match.id}"/>
+                    <input th:id="btnPublish" class="btn-publish" type="button" onclick="addmatch()" value="保存并发布"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

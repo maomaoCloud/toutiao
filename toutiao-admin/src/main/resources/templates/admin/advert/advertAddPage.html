@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + 'css/style.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{${#httpServletRequest.getContextPath()} + '/css/style.css'}"/>
     <!--富文本编辑器 start-->
     <script type="text/javascript"
             th:src="@{${#httpServletRequest.getContextPath()} + '/js/ckeditor/ckeditor.js'}"></script>
@@ -39,6 +39,7 @@
         input {
             box-sizing: content-box !important;
         }
+
         body {
             font-size: 12px !important;
         }
@@ -87,16 +88,13 @@
 
                 },
                 onUploadComplete: function () {
-                    //form表单值
-                    $("#advertImgUrl").val($("#uploadImg").val());
-                    //图片回显
-                    $("#advertImgUrlLabel").append('<div id="imgDiv"><img style="height:400px;width:600px" src="' + $("#uploadImg").val() + '"></div>');
                 }
             });
 
             //回显删除按钮
             $("#deleteBtn").on("click", function () {
-                $("#reviewUl").remove();
+                $(this).parent().parent().parent().parent().find(".uploadImgUrl").val("");
+                $(this).parent().parent().remove();
             });
 
             //初始化下拉列表
@@ -234,17 +232,19 @@
                     <div id="upload">
 
                     </div>
-                    <ul th:if="${not #lists.isEmpty(advert.advertImgUrl)}" class="filelist" id="reviewUl">
-                        <li id="1file">
-                            <div class="progress">
-                                <div class="progressbar"></div>
-                            </div>
-                            <a class="delfilebtn" id="deleteBtn">删除</a>
-                            <div>
-                                <img style="height:400px;width:600px" th:src="${advert.advertImgUrl}">
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="review">
+                        <ul th:if="${not #lists.isEmpty(advert.advertImgUrl)}" class="filelist" id="reviewUl">
+                            <li id="1file">
+                                <div class="progress">
+                                    <div class="progressbar"></div>
+                                </div>
+                                <a class="delfilebtn" id="deleteBtn">删除</a>
+                                <div>
+                                    <img style="height:400px;width:600px" th:src="${advert.advertImgUrl}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
 
@@ -263,14 +263,16 @@
                     <div class="start w340">
                         <span class="text">开始日期</span>
                         <input type="hidden" id="startDateHidden"/>
-                        <input type="text" id="advertStartDate" name="advertStartDate" th:value="${advert.advertStartDate}" readonly/>
+                        <input type="text" id="advertStartDate" name="advertStartDate"
+                               th:value="${advert.advertStartDate}" readonly/>
                         <i class="data-btn start-btn"></i>
                     </div>
                     <span class="txt">至</span>
                     <div class="end w340">
                         <span class="text">结束日期</span>
                         <input type="hidden" id="endDateHidden"/>
-                        <input type="text" id="advertEndDate" name="advertEndDate" th:value="${advert.advertEndDate}" readonly/>
+                        <input type="text" id="advertEndDate" name="advertEndDate" th:value="${advert.advertEndDate}"
+                               readonly/>
                         <i class="data-btn end-btn"></i>
                     </div>
                 </td>
@@ -282,9 +284,10 @@
                 </td>
                 <td class="td-select td-select-time" th:id="advertStartTimeLabel">
                     <div class="select-box w140">
-                        <input type="hidden" id="advertStartHour" name="advertStartTime" th:value="${advert.advertStartHour}"/>
+                        <input type="hidden" id="advertStartHour" name="advertStartTime"
+                               th:value="${advert.advertStartHour}"/>
                         <div class="select-text" data-value="">时</div>
-                        <ul class="select-option" >
+                        <ul class="select-option">
                             <li data-option="00">00</li>
                             <li data-option="01">01</li>
                             <li data-option="02">02</li>
@@ -314,7 +317,8 @@
                     </div>
                     <span class="time-text">时</span>
                     <div class="select-box w140">
-                        <input type="hidden" id="advertStartMin" name="advertStartTime" th:value="${advert.advertStartMin}"/>
+                        <input type="hidden" id="advertStartMin" name="advertStartTime"
+                               th:value="${advert.advertStartMin}"/>
                         <div class="select-text" data-value="">分</div>
                         <ul class="select-option">
                             <li data-option="00">00</li>
@@ -334,7 +338,8 @@
                 </td>
                 <td class="td-select td-select-time" th:id="advertEndTimeLabel">
                     <div class="select-box w140">
-                        <input type="hidden" id="advertEndHour" name="advertEndTime" th:value="${advert.advertEndHour}"/>
+                        <input type="hidden" id="advertEndHour" name="advertEndTime"
+                               th:value="${advert.advertEndHour}"/>
                         <div class="select-text" data-value="">时</div>
                         <ul class="select-option">
                             <li data-option="00">00</li>

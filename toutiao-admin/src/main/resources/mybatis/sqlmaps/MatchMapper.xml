@@ -23,6 +23,7 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
     <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
+    <result column="user_limit" property="userLimit" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchWithBLOBs" extends="BaseResultMap" >
     <result column="active_content" property="activeContent" jdbcType="LONGVARCHAR" />
@@ -89,7 +90,7 @@
   <sql id="Base_Column_List" >
     id, user_id, theme, start_date, end_date, province, city, area, address, contact_name, 
     phone, wx_head, fee, banner_img, add_time, is_delete, fee_share_percent, statue, 
-    remark, order_no
+    remark, order_no, user_limit
   </sql>
   <sql id="Blob_Column_List" >
     active_content, rewards_content
