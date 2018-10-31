@@ -48,6 +48,10 @@
         vertical-align: middle;
         text-align: center;
     }
+
+    .line-right{
+        border-right: 1px solid #e8e8e8;
+    }
 </style>
 
 <!-- col 12 -->
@@ -69,12 +73,20 @@
 
             <table class="table" id="user-table">
                 <thead>
+                <tr style="border-top: 1px solid rgba(100,100,100,0.6);">
+                    <th colspan="4" style="border-bottom: none" class="line-right">用户信息</th>
+                    <th colspan="4" style="border-bottom: none" class="line-right">搭档信息</th>
+                    <th rowspan="2" style="vertical-align: middle;">报名时间</th>
+                </tr>
                 <tr>
                     <th></th>
                     <th>姓名</th>
                     <th>手机</th>
-                    <th>报名时间</th>
-                    <th>状态</th>
+                    <th class="line-right">状态</th>
+                    <th></th>
+                    <th>姓名</th>
+                    <th>手机</th>
+                    <th class="line-right">状态</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,8 +96,14 @@
                     </td>
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.phone}">18012673347</td>
+                    <td class="line-right" th:text="${user.signStatue}"></td>
+                    <td>
+                        <img  th:if="${user.hasPartner}" class="head" th:src="${user.partnerHead}" src="assets/images/peter-avatar.jpg">
+                    </td>
+                    <td th:text="${user.partnerName}"></td>
+                    <td th:text="${user.partnerPhone}">18012673347</td>
+                    <td class="line-right" th:text="${user.partnerSignStatue}"></td>
                     <td th:text="${user.applyDate}">2018-10-10 12:23:56</td>
-                    <td th:text="${user.signStatue}"></td>
                 </tr>
                 </tbody>
             </table>

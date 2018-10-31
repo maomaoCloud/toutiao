@@ -1,91 +1,107 @@
 package com.tiaotiaopoker.entity;
 
-import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.pojo.ApplyOrder;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 /**
  * Created by xiekang on 2018/10/13.
  */
 public class UserInfo {
-    private String userId;
-    private String name;
-    private String phone;
-    private String head;
-    private String applyDate;
-    private String signStatue;
+    private String  userId;
+    private String  name;
+    private String  phone;
+    private String  head;
+    private String  applyDate;
+    private String  signStatue;
+    private boolean hasPartner;
+    private String  partnerName;
+    private String  partnerPhone;
+    private String  partnerHead;
+    private String  partnerSignStatue;
 
-    public String getUserId() {
+    public String getUserId () {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId (String userId) {
         this.userId = userId;
     }
 
-    public String getName() {
+    public String getName () {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName (String name) {
         this.name = name;
     }
 
-    public String getPhone() {
+    public String getPhone () {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone (String phone) {
         this.phone = phone;
     }
 
-    public String getHead() {
+    public String getHead () {
         return head;
     }
 
-    public void setHead(String head) {
+    public void setHead (String head) {
         this.head = head;
     }
 
-    public String getApplyDate() {
+    public String getApplyDate () {
         return applyDate;
     }
 
-    public void setApplyDate(String applyDate) {
+    public void setApplyDate (String applyDate) {
         this.applyDate = applyDate;
     }
 
-    public String getSignStatue() {
+    public String getSignStatue () {
         return signStatue;
     }
 
-    public void setSignStatue(String signStatue) {
+    public void setSignStatue (String signStatue) {
         this.signStatue = signStatue;
     }
 
-    public static UserInfo genFromApplyOrder(ApplyOrder order) {
+    public static UserInfo genFromApplyOrder (ApplyOrder order) {
         UserInfo info = new UserInfo();
-        info.setUserId( order.getUserId() );
-        info.setHead( StringUtils.isBlank( order.getUserHead() ) ? "/images/head.png" : order.getUserHead() );
-        info.setName( order.getUserName() );
-        info.setPhone( order.getUserPhone() );
-        info.setApplyDate( new DateTime( order.getAddTime() ).toString( "yyyy-MM-dd HH:mm:ss" ) );
-        info.setSignStatue( getSignStatusName( order.getUserSignStatus() ) );
+        info.setUserId(order.getUserId());
+        info.setHead(StringUtils.isBlank(order.getUserHead()) ? "/images/head.png" : order.getUserHead());
+        info.setName(order.getUserName());
+        info.setPhone(order.getUserPhone());
+        info.setApplyDate(new DateTime(order.getAddTime()).toString("yyyy-MM-dd HH:mm:ss"));
+        info.setSignStatue(getSignStatusName(order.getUserSignStatus()));
         return info;
     }
 
-    public static UserInfo genFromApplyOrderBUser(ApplyOrder order) {
+    public static UserInfo genFromApplyOrderBUser (ApplyOrder order) {
         UserInfo info = new UserInfo();
-        info.setUserId( order.getPartnerId() );
-        info.setHead( StringUtils.isBlank( order.getPartnerHead() ) ? "/images/head.png" : order.getPartnerHead() );
-        info.setName( order.getPartnerName() );
-        info.setPhone( order.getPartnerPhone() );
-        info.setApplyDate( new DateTime( order.getAddTime() ).toString( "yyyy-MM-dd HH:mm:ss" ) );
-        info.setSignStatue( getSignStatusName( order.getPartnerSignStatue() ) );
+        info.setUserId(order.getPartnerId());
+        info.setHead(StringUtils.isBlank(order.getPartnerHead()) ? "/images/head.png" : order.getPartnerHead());
+        info.setName(order.getPartnerName());
+        info.setPhone(order.getPartnerPhone());
+        info.setApplyDate(new DateTime(order.getAddTime()).toString("yyyy-MM-dd HH:mm:ss"));
+        info.setSignStatue(getSignStatusName(order.getUserSignStatus()));
+        info.setHasPartner(order.getHasPartner().equals(1));
+        if (info.getHasPartner()) {
+            info.setPartnerHead(order.getPartnerHead());
+            if (StringUtils.isBlank(info.getPartnerHead())) {
+                info.setPartnerHead("/images/head.png");
+            }
+
+            info.setPartnerName(order.getPartnerName());
+            info.setPartnerPhone(order.getPartnerPhone());
+            info.setPartnerSignStatue(getSignStatusName(order.getPayStatue()));
+        }
         return info;
     }
 
-    private static String getSignStatusName(Integer signStatus) {
+    private static String getSignStatusName (Integer signStatus) {
         String signStatue = "";
         switch (signStatus) {
             case -1:
@@ -106,4 +122,46 @@ public class UserInfo {
         }
         return signStatue;
     }
+
+    public String getPartnerName () {
+        return partnerName;
+    }
+
+    public void setPartnerName (String partnerName) {
+        this.partnerName = partnerName;
+    }
+
+    public String getPartnerPhone () {
+        return partnerPhone;
+    }
+
+    public void setPartnerPhone (String partnerPhone) {
+        this.partnerPhone = partnerPhone;
+    }
+
+    public String getPartnerHead () {
+        return partnerHead;
+    }
+
+    public void setPartnerHead (String partnerHead) {
+        this.partnerHead = partnerHead;
+    }
+
+    public String getPartnerSignStatue () {
+        return partnerSignStatue;
+    }
+
+    public void setPartnerSignStatue (String partnerSignStatue) {
+        this.partnerSignStatue = partnerSignStatue;
+    }
+
+    public boolean getHasPartner () {
+        return hasPartner;
+    }
+
+    public void setHasPartner (boolean hasPartner) {
+        this.hasPartner = hasPartner;
+    }
+
+
 }

@@ -42,7 +42,9 @@
             id: [[${id}]], t: new Date().getTime()
         };
         var option = {
-            url: "/public/login/check", data: data,
+            url: "/public/login/check",
+            data: data,
+            dateType : "text",
             type: "POST",
             success: function (res) {
                 if (res == "WAIT_SCAN") {

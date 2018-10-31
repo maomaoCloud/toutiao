@@ -109,9 +109,6 @@ public class SignController extends BaseController {
         List<UserInfo> datas = new ArrayList<>();
         for( ApplyOrder order : signData ) {
             datas.add( UserInfo.genFromApplyOrder( order ) );
-            if( order.getHasPartner().equals( 1 ) ) {
-                datas.add( UserInfo.genFromApplyOrderBUser( order ) );
-            }
         }
 
         mv.addObject( "datas", datas );

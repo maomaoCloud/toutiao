@@ -37,6 +37,7 @@
         align-items: center;
         margin-bottom: 20px;
         margin-right: 20px;
+        margin-left: 20px;
     }
 
     .user-group img {
@@ -69,7 +70,7 @@
 
     .user-group .user-name {
         margin-left: 40%;
-        font-size: 20px;
+        font-size: 30px;
         letter-spacing: 1px;
     }
 
@@ -140,14 +141,15 @@
 
     <!-- tile -->
     <section class="tile transparent">
-        <div class="tile-header color transparent-black textured rounded-top-corners">
-            <h1 class="box-title" id="sign-data-title">已签到人员(0)</h1>
+        <div class="tile-header color transparent-black textured rounded-top-corners" style="background-color: rgba(255,255,255,0.05);">
+            <h1 class="box-title" style="font-size: 30px !important;" id="sign-data-title">已签到人员(0)</h1>
         </div>
         <!-- /tile header -->
 
 
         <!-- tile widget -->
-        <div class="tile-widget color transparent-black textured scroll-view" id="sign-list">
+        <div class="tile-widget color transparent-black textured scroll-view" style="background-color: rgba(255,255,255,0.05);align-items: center;
+    justify-content: center;" id="sign-list">
 
             <div th:each="user,userStat : ${signUsers}" class="user-group">
                 <div th:data-id="${user.userId}" th:id="${user.userId}" class="user-a unsign">
@@ -180,8 +182,10 @@
 
 
         <!-- tile header -->
-        <div class="tile-header">
-            <h1 class="box-title">打开微信小程序:&nbsp;竞技来了<br/>扫一扫签到</h1>
+        <div class="tile-header" style="text-align: center">
+            <h1 style="font-size: 20px;" class="box-title">打开微信小程序:&nbsp;竞技来了<br/>扫一扫签到</h1>
+            
+            <img style="width: 170px; margin-top: 10px;" src="/images/jjll.png">
         </div>
         <!-- /tile header -->
 

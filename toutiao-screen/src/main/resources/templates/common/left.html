@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8"/>
     <!-- Bootstrap -->
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css?v=3.0'}"
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/bootstrap/bootstrap.min.css?v=3.9'}"
           rel="stylesheet">
     <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/font-awesome.css'}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{${#httpServletRequest.getContextPath()} + '/css/vendor/animate/animate.min.css'}">
@@ -29,7 +29,7 @@
     <link rel="stylesheet"
           th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen-bootstrap.css'}">
 
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=3.7'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=3.8'}" rel="stylesheet">
     <link th:href="@{${#httpServletRequest.getContextPath()} + '/layer/theme/default/layer.css'}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js} IE8 support of HTML5 elements and media queries -->
@@ -66,7 +66,7 @@
 
         #bottom-info {
             width: 100%;
-            height: 60px;
+            height: 100px;
             background-color: rgba(0, 0, 0, .5);
             position: fixed;
             bottom: 0;
@@ -74,13 +74,16 @@
             border-top: 1px solid rgba(200, 200, 200, 0.5);
             opacity: .9;
             z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #bottom-info .info-name {
             font-size: 20px;
             line-height: 60px;
             margin-left: 100px;
-            float: left;
+            margin-right: 50px;
         }
 
         #bottom-info .info-op-box {
@@ -150,6 +153,10 @@
 
         #content {
             overflow: scroll !important;
+        }
+
+        input{
+            font-size: 20px !important;
         }
     </style>
 </head>
@@ -804,6 +811,8 @@
     /* ]]> */
 </script>
 <div id="bottom-info">
+    <img style="width: 200px; height: 200px;position: absolute; left: 20px; top: -110px;" src="/images/qr_1.png">
+    <img style="width: 180px;" src="/images/LOGO_1.png">
     <div class="info-name">本工具技术支持：跳跳体育 &nbsp;&nbsp;&nbsp;&nbsp;请先关注微信小程序：竞技来了</div>
 
     <ul class="info-op-box">

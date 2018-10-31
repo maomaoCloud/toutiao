@@ -24,7 +24,8 @@
 .filename,.progressnum,.delfilebtn,.uploadbtn {
  font-size:12px;
  color:#666;
- margin-left:10px
+ margin-left:10px;
+ display: none;
 }
 .progress {
  display:inline-block;

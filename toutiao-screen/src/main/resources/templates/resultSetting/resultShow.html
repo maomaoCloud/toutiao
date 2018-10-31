@@ -13,7 +13,8 @@
         table td {
             vertical-align: middle !important;
             text-align: center;
-            font-size: 16px;
+            font-size: 20px;
+            font-weight: bolder;
             color: #ffffff;
         }
 
@@ -36,7 +37,7 @@
                 <td valign="middle" rowspan="2">名次</td>
                 <td colspan="4">选手信息</td>
                 <td colspan="3">本轮成绩</td>
-                <td colspan="5">总成绩</td>
+                <td th:colspan="${tdList.size()}">总成绩</td>
             </tr>
 
             <tr>

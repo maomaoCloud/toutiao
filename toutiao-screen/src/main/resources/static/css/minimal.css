@@ -49,7 +49,7 @@ html.mm-opened #wrap > .row #content {
 
 body {
     font-family: "Roboto", "Arial", sans-serif;
-    font-size: 14px;
+    font-size: 23px;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
 }
@@ -965,7 +965,6 @@ body .navbar .navbar-nav.side-nav > li.navigation .menu > li > a > i {
 body .navbar .navbar-nav.side-nav > li.navigation .menu > li > a > b.dropdown-plus {
     float: right;
     line-height: 40px;
-    color: rgba(0, 0, 0, 0.2);
 }
 
 body .navbar .navbar-nav.side-nav > li.navigation .menu > li > a:after {
@@ -2031,7 +2030,7 @@ body #content .tile.color.grey {
 }
 
 body #content .tile.color.transparent-black {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 body #content .tile.color.transparent-black.textured {
@@ -8882,7 +8881,7 @@ body #content .modal .modal-dialog .modal-content .input-group .form-control:not
 .pageheader h2 {
     display: inline-block;
     color: rgba(255, 255, 255, 0.8);
-    font-size: 32px;
+    font-size: 55px;
     font-weight: 300;
     font-family: "Roboto", "Arial", sans-serif;
 }

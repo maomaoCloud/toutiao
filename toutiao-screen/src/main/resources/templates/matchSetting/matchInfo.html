@@ -47,6 +47,11 @@
     }
     /* ]]> */
 </script>
+<style>
+    .filelist a{
+        margin: 0 15px;
+    }
+</style>
 <section class="tile color transparent-black">
     <!-- tile header -->
     <div class="tile-header">
@@ -132,8 +137,8 @@
                 <label class="col-sm-4 control-label">奖品设置</label>
                 <div class="col-sm-8">
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
-                            <label for="matchChampion">一等奖</label>
+                        <div class="form-group col-sm-8" style="margin-left: 0px;margin-right: 20px;">
+                            <label for="matchChampion"  style="width: 120px">一等奖</label>
                             <input type="text" class="form-control" th:name="matchChampion" id="matchChampion" th:value="${matchRule}==null?'':${matchRule.matchChampion}">
                             <input type="hidden" th:name="matchChampionImg" class="uploadImgUrl" th:value="${matchRule}==null?'':${matchRule.matchChampionImg}">
                         </div>
@@ -156,8 +161,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
-                            <label for="matchSecond">二等奖</label>
+                        <div class="form-group col-sm-8" style="margin-left: 0px;margin-right: 20px;">
+                            <label for="matchSecond"  style="width: 120px">二等奖</label>
                             <input type="text" class="form-control" th:name="matchSecond" id="matchSecond" th:value="${matchRule}==null?'':${matchRule.matchSecond}">
                             <input type="hidden" th:name="matchSecondImg" class="uploadImgUrl" th:value="${matchRule}==null?'':${matchRule.matchSecondImg}">
                         </div>
@@ -180,8 +185,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-sm-6" style="margin-left: 0px;margin-right: 20px;">
-                            <label for="matchThird">三等奖</label>
+                        <div class="form-group col-sm-8" style="margin-left: 0px;margin-right: 20px;">
+                            <label for="matchThird" style="width: 120px">三等奖</label>
                             <input type="text" class="form-control input-group mb-3" th:name="matchThird" id="matchThird" th:value="${matchRule}==null?'':${matchRule.matchThird}">
                             <input type="hidden" th:name="matchThirdImg" class="uploadImgUrl" th:value="${matchRule}==null?'':${matchRule.matchThirdImg}">
                         </div>
@@ -206,8 +211,8 @@
                 </div>
             </div>
 
-            <div class="form-group form-footer" style="margin-bottom: -28px;">
-                <div class="col-sm-offset-4 col-sm-8" style="margin-left: 12.333333%;">
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
                     <input type="hidden" th:name="token" th:value="${token}" id="infoToken">
                     <input type="hidden" th:name="id" th:value="${matchRule}==null?'':${matchRule.id}">
                     <button type="button" class="btn btn-primary" id="updateMatchInfo">保存</button>

@@ -25,15 +25,14 @@ import java.util.List;
 @Controller
 @RequestMapping("sys/seatSetting")
 public class SeatSettingController {
-
     @Autowired
     private MatchRuleService matchRuleService;
 
     @Autowired
     private MatchTeamDataService matchTeamDataService;
 
-    @RequestMapping("index")
-    public ModelAndView seatIndex(ModelAndView mv, String matchId) {
+    @RequestMapping ("index")
+    public ModelAndView seatIndex (ModelAndView mv, String matchId) {
         if (!StringUtils.isBlank(matchId) && !matchId.equals("0")) {
             MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
             if (null == matchRule.getRuleSeat() || matchRule.getRuleTurn() == 0) {

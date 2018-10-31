@@ -29,14 +29,17 @@ public class LoginIntercepter implements HandlerInterceptor {
         //String token = request.getParameter("token");
         String   token   = null;
         Cookie[] cookies = request.getCookies();
+        String   method  = request.getMethod();
+        if (cookies == null) {
+            deal(method, request, response);
+            return false;
+        }
         for (Cookie cookie : cookies) {
             if (StringUtils.equals(cookie.getName(), "__token")) {
                 token = cookie.getValue();
                 break;
             }
         }
-
-        String method = request.getMethod();
 
         if (StringUtils.isBlank(token)) {
             deal(method, request, response);
