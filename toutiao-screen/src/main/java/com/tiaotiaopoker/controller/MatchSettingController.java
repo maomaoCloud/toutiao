@@ -3,6 +3,7 @@ package com.tiaotiaopoker.controller;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
+import com.tiaotiaopoker.entity.RuleResult;
 import com.tiaotiaopoker.pojo.Match;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.service.MatchRuleService;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("sys/matchSetting")
@@ -33,21 +36,29 @@ public class MatchSettingController {
                               @ModelAttribute(value = "matchRule") MatchRule matchRule) {
         String matchId = matchRule.getMatchId();
         Match match = new Match();
-        match.setUserId( token );
+        match.setUserId(token);
         //比赛设置前列出该用户创建的比赛（不需要分页）
-        List<Match> matchList = matchService.queryMatchByCondition( match, null );
+        List<Match> matchList = matchService.queryMatchByCondition(match, null);
         //遍历创建的所有比赛，若不存在比赛规则，则创建
-        for( Match myMatch : matchList ) {
-            matchRuleService.createMatchRuleByMatch( myMatch );
+        for (Match myMatch : matchList) {
+            matchRuleService.createMatchRuleByMatch(myMatch);
         }
-        if( !StringUtils.isBlank( matchRule.getMatchId() ) ) {
-            matchRule = matchRuleService.selectMatchRuleByMatchId( matchRule.getMatchId() );
+        if (!StringUtils.isBlank(matchRule.getMatchId())) {
+            matchRule = matchRuleService.selectMatchRuleByMatchId(matchRule.getMatchId());
         }
-        mv.addObject( "matchRule", matchRule );
-        mv.addObject( "token", token );
-        mv.addObject( "matchList", matchList );
-        mv.addObject( "matchId", matchId );
-        mv.setViewName( "matchSetting/matchIndex" );
+
+        //成绩排名规则
+        List<RuleResult> myList = new ArrayList<>();
+        List<RuleResult> otherList = new ArrayList<>();
+        divideRuleResult(Constants.resultRule.resultRuleMap, matchRule.getRuleResult(), myList, otherList);
+        mv.addObject("myList", myList);
+        mv.addObject("otherList", otherList);
+
+        mv.addObject("matchRule", matchRule);
+        mv.addObject("token", token);
+        mv.addObject("matchList", matchList);
+        mv.addObject("matchId", matchId);
+        mv.setViewName("matchSetting/matchIndex");
         return mv;
     }
 
@@ -56,12 +67,12 @@ public class MatchSettingController {
     public ModelAndView matchInfo(ModelAndView mv,
                                   String token,
                                   @ModelAttribute(value = "matchRule") MatchRule matchRule) {
-        if( !StringUtils.isBlank( matchRule.getMatchId() ) ) {
-            matchRule = matchRuleService.selectMatchRuleByMatchId( matchRule.getMatchId() );
+        if (!StringUtils.isBlank(matchRule.getMatchId())) {
+            matchRule = matchRuleService.selectMatchRuleByMatchId(matchRule.getMatchId());
         }
-        mv.setViewName( "matchSetting/matchInfo" );
-        mv.addObject( "token", token );
-        mv.addObject( "matchRule", matchRule );
+        mv.setViewName("matchSetting/matchInfo");
+        mv.addObject("token", token);
+        mv.addObject("matchRule", matchRule);
         return mv;
     }
 
@@ -70,12 +81,20 @@ public class MatchSettingController {
     public ModelAndView matchRule(ModelAndView mv,
                                   String token,
                                   @ModelAttribute(value = "matchRule") MatchRule matchRule) {
-        if( !StringUtils.isBlank( matchRule.getMatchId() ) ) {
-            matchRule = matchRuleService.selectMatchRuleByMatchId( matchRule.getMatchId() );
+        if (!StringUtils.isBlank(matchRule.getMatchId())) {
+            matchRule = matchRuleService.selectMatchRuleByMatchId(matchRule.getMatchId());
         }
-        mv.setViewName( "matchSetting/matchRule" );
-        mv.addObject( "token", token );
-        mv.addObject( "matchRule", matchRule );
+
+        //成绩排名规则
+        List<RuleResult> myList = new ArrayList<>();
+        List<RuleResult> otherList = new ArrayList<>();
+        divideRuleResult(Constants.resultRule.resultRuleMap, matchRule.getRuleResult(), myList, otherList);
+        mv.addObject("myList", myList);
+        mv.addObject("otherList", otherList);
+
+        mv.setViewName("matchSetting/matchRule");
+        mv.addObject("token", token);
+        mv.addObject("matchRule", matchRule);
         return mv;
     }
 
@@ -84,11 +103,11 @@ public class MatchSettingController {
     @ResponseBody
     public List<String> matchTurn(String token,
                                   String matchId) {
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId( matchId );
-        int ruleTurn = ( null == matchRule ? 0 : matchRule.getRuleTurn() );
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        int ruleTurn = (null == matchRule ? 0 : matchRule.getRuleTurn());
         List<String> ruleTurnList = new ArrayList<>();
-        for( int i = 1; i <= ruleTurn; i++ ) {
-            ruleTurnList.add( Constants.NUM_CH[i - 1] );
+        for (int i = 1; i <= ruleTurn; i++) {
+            ruleTurnList.add(Constants.NUM_CH[i - 1]);
         }
         return ruleTurnList;
     }
@@ -98,16 +117,33 @@ public class MatchSettingController {
     public JsonResult save(MatchRule matchRule) {
         JsonResult jsonResult;
         try {
-            int result = matchRuleService.saveBySelective( matchRule );
-            if( result > 0 ) {
-                jsonResult = JsonResult.SUCCESS( "保存成功" );
+            int result = matchRuleService.saveBySelective(matchRule);
+            if (result > 0) {
+                jsonResult = JsonResult.SUCCESS("保存成功");
             } else {
-                jsonResult = JsonResult.FAILED( "保存失败" );
+                jsonResult = JsonResult.FAILED("保存失败");
             }
         } catch (Exception e) {
-            jsonResult = JsonResult.FAILED( "比赛设置接口异常" );
+            jsonResult = JsonResult.FAILED("比赛设置接口异常");
             e.printStackTrace();
         }
         return jsonResult;
+    }
+
+    private void divideRuleResult(Map<String, Object> ruleResultMap, String ruleResult, List<RuleResult> myList, List<RuleResult> otherList) {
+        for (Map.Entry<String, Object> entry : ruleResultMap.entrySet()) {
+            if (ruleResult != null) {
+                RuleResult object = new RuleResult(entry.getKey(), (String) entry.getValue());
+                List<String> myListString = Arrays.asList(ruleResult.split(","));
+                if (myListString.contains(entry.getKey())) {
+                    myList.add(object);
+                } else {
+                    otherList.add(object);
+                }
+            } else {
+                RuleResult object = new RuleResult(entry.getKey(), (String) entry.getValue());
+                otherList.add(object);
+            }
+        }
     }
 }
