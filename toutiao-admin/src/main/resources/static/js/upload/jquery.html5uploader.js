@@ -211,6 +211,8 @@
                     _this.find('.chooseFile').on('click', function () {
                         var liList = _this.parent().find(".filelist").find("li");
                         if (liList.size()>0){
+                            dialogAlert("提示","只能上传一张图片！",function () {
+                            })
                             return;
                         }
                         _this.find('.uploadfile').trigger('click');

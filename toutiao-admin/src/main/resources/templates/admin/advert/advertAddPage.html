@@ -228,7 +228,7 @@
             <tr>
                 <td width="100" class="td-title"><span class="red">*</span>封面：</td>
                 <td class="td-upload" th:id="advertImgUrlLabel">
-                    <input type="hidden" th:id="uploadImg" th:value="${advert.advertImgUrl}">
+                    <input type="hidden" class="uploadImgUrl" id="advertImgUrl" name="advertImgUrl" th:value="${advert.advertImgUrl}">
                     <div id="upload">
 
                     </div>
@@ -389,7 +389,6 @@
             <tr>
                 <td width="100" class="td-title"></td>
                 <td class="td-btn">
-                    <input type="hidden" name="advertImgUrl" th:id="advertImgUrl" th:value="${advert.advertImgUrl}"/>
                     <input type="hidden" name="advertId" th:id="infoId" th:value="${advert.advertId}"/>
                     <input th:id="btnPublish" class="btn-publish" type="button" onclick="addadvert()" value="保存并发布"/>
                 </td>

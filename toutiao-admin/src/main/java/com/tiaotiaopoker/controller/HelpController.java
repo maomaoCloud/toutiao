@@ -34,7 +34,7 @@ public class HelpController {
             help = sysHelpService.queryHelpById(help.getHelpId());
         }
         mv.addObject("help", help);
-        mv.setViewName("admin/SysHelp/helpAddPage");
+        mv.setViewName("admin/sysHelp/helpAddPage");
         return mv;
     }
 
@@ -48,7 +48,7 @@ public class HelpController {
         mv.addObject("help", help);
         mv.addObject("page", page);
         mv.addObject("list", list);
-        mv.setViewName("admin/SysHelp/listPage");
+        mv.setViewName("admin/sysHelp/listPage");
         return mv;
     }
 
