@@ -58,7 +58,7 @@
     .time-item strong {
         background: #C71C60;
         color: #fff;
-        font-size: 110px;
+        font-size: 11vw;
         padding: 0 10px;
         border-radius: 5px;
         box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
@@ -113,7 +113,7 @@
         </div>
         <div id="theme" th:text="${theme}"></div>
         <div th:if="${hasHost ||  hasMatchReferee}" id="host">
-            <span th:if="${hasHost}" th:text="'主办方：'+${host}"></span><br>
+            <span th:if="${hasHost}" th:text="'承办单位：'+${host}"></span><br>
             <span th:if="${hasMatchReferee}" id="referee" th:text="'裁判长：'+${matchReferee}"></span>
         </div>
         <div class="time-item">

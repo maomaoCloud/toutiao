@@ -76,19 +76,19 @@
             z-index: 99999;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         #bottom-info .info-name {
             font-size: 20px;
             line-height: 60px;
-            margin-left: 100px;
+            margin-left: 60px;
             margin-right: 50px;
         }
 
         #bottom-info .info-op-box {
             float: right;
-            margin-right: 100px;
+            margin-right: 50px;
             line-height: 30px;
             padding: 15px 0;
         }
@@ -188,7 +188,7 @@
 
             <!-- Branding -->
             <div class="navbar-header col-md-2">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" target="_blank" href="http://www.tiaotiaopoker.com">
                     跳跳体育提供
                 </a>
                 <input type="hidden" id="nowSettingMatch" th:value="${matchId}">
@@ -811,8 +811,8 @@
     /* ]]> */
 </script>
 <div id="bottom-info">
-    <img style="width: 200px; height: 200px;position: absolute; left: 20px; top: -110px;" src="/images/qr_1.png">
-    <img style="width: 180px;" src="/images/LOGO_1.png">
+    <img style="width: 160px; height: 160px;position: absolute; left: 20px; top: -65px;" src="/images/qr_1.png">
+    <img style="width: 200px; position: absolute; left: 190px;" src="/images/LOGO_1.png">
     <div class="info-name">本工具技术支持：跳跳体育 &nbsp;&nbsp;&nbsp;&nbsp;请先关注微信小程序：竞技来了</div>
 
     <ul class="info-op-box">
