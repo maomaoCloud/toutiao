@@ -1,0 +1,122 @@
+<view class='top'>
+  <view class='club'>
+    <view class="scrool-left">
+      <picker-view indicator-class='slt-match-info' class='slt-match' value="{{value}}" bindchange="matchChange">
+        <picker-view-column>
+          <view wx:for="{{resData.matchList}}" style="line-height: 50px">{{item.theme}}</view>
+        </picker-view-column>
+      </picker-view>
+      <view class='match-other-info'>
+        <text class='address'>{{ match.location }}</text>
+        <text>{{ match.startDate }}</text>
+      </view>
+    </view>
+  </view>
+
+  <image class='bottom-image' mode="widthFix" src='/resource/bg-bottom.png'></image>
+</view>
+<view class='padding-holder'></view>
+
+<view class='option-box'>
+  <view class='option-group'>
+    <view class='option color1'>
+      <text>已报名：{{ match.signUpNum }}人</text>
+      <text>已签到：{{ match.signInNum }}人</text>
+    </view>
+
+    <view class='option color2'>
+      <text>当前进度</text>
+      <text>{{ match.matchState }}</text>
+    </view>
+  </view>
+
+  <view class='option-group'>
+    <view class='option option-icon color3' bindtap='showSetting'>
+      <text>比赛设置</text>
+      <image src='../../resource/setting.png' class="icon"></image>
+    </view>
+
+    <view class='option option-icon color4' bindtap='showSignDetail'>
+      <text>签到情况</text>
+      <image src='../../resource/sign.png' class="icon sign"></image>
+    </view>
+  </view>
+
+  <view class='option-group'>
+    <view class='option option-icon color5' bindtap='sort'>
+      <text>座位编排</text>
+      <image src='../../resource/pai.png' class="icon"></image>
+    </view>
+
+    <view class='option option-icon color6' bindtap='showInputScore'>
+      <text>成绩录入</text>
+      <image src='../../resource/luru.png' class="icon"></image>
+    </view>
+  </view>
+
+  <view class='option-group'>
+    <view class='option-sub-group'>
+      <view class='option color7' bindtap='showHistoryMatch'>
+        <image src='../../resource/match-icon.png' class="icon-match"></image>
+        <text>历史赛事</text>
+      </view>
+    </view>
+    <view class='option-sub-group'>
+      <view class='option option-icon color7' bindtap='showMyScore'>
+        <text>查看成绩</text>
+        <image src='../../resource/score.png' class="icon"></image>
+      </view>
+      <view class='option option-icon color7' bindtap='showHelp'>
+        <text>帮助中心</text>
+        <image src='../../resource/help.png' class="icon"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='line'></view>
+
+<view class='profit-box'>
+  <view class='profit'>收益</view>
+  <view class='val-line-1'>
+    <text>可提现金额：{{ resData.availableWithdraw }}</text>
+    <button bindtap='withdraw'>提现</button>
+  </view>
+  <view class='val-line-2'>
+    <view class='val-item'>
+      <text class='money'>{{ match.sumMoney }}</text>
+      <text class='title'>本场比赛收益(元)</text>
+    </view>
+
+    <view class='val-item'>
+      <text class='money'>{{ resData.sumPayMoney }}</text>
+      <text class='title'>累计收益(元)</text>
+    </view>
+  </view>
+</view>
+
+<view class='space'></view>
+
+<!--提现弹出层-->
+<view wx:if="{{ withdraw }}" animation='{{animationData}}' class='addActive-layer'>
+  <view class='title'>提现</view>
+  <view class='layer-data'>
+    <view class='user-info-item'>
+      <view class='user-info'>
+        <view class='tip'>每日可提现10次,单笔金额不超过2w</view>
+        <view class='input-money'>
+          <text>￥</text>
+          <input type='digit' cursor-spacing="120" bindinput='withdrawInputChange' bindblur='checkMoney' focus="{{ true }}" value=''></input>
+        </view>
+        <view class='total'>
+          <text>可用余额 {{ income.availableWithdraw }}元</text>
+          <text wx:if="{{ showErrorMsg }}" class='errorMsg'>{{errorMsg}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='op-box'>
+      <button bindtap='applyDo' class='addActive-btn'>及时到账，确认提现</button>
+    </view>
+  </view>
+</view>
+<view wx:if="{{ withdraw }}" bindtap='hideMask' class='mask'></view>

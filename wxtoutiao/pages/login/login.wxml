@@ -1,0 +1,13 @@
+<view class='dataBox' style='height:{{height}}px'>
+  <view class='head'>
+    <image src='{{ avatarUrl }}' class='headImg'></image>
+  </view>
+
+  <view class='tip'>
+    您将登录比竞技头条提供的比赛管理系统
+  </view>
+  <view class='btn-box'>
+    <button bindtap='sureLogin' class='sure'>确认登录</button>
+    <button bindtap='cancelLogin' class='cancel'>取消</button>
+  </view>
+</view>

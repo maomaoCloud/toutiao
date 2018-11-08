@@ -1,0 +1,361 @@
+.top .bottom-image {
+  width: 100%;
+  position: absolute;
+}
+
+.weui-search-bar__add-active-btn {
+  color: #fff;
+  font-size: 18px;
+}
+
+.padding-holder {
+  padding-top: 80rpx;
+}
+
+/*俱乐部分类*/
+
+.club {
+  padding: 0 20rpx;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAGLCAYAAAAGSfiDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABR0RVh0Q3JlYXRpb24gVGltZQA4LzgvMTjoebKiAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAAStJREFUOI2dlUt2xSAMQyVv+A265e5DbwDYGExKOuFAMCBff4Lfn48MAOaBGjMBBhIGCQZmOx8IwBRLAib5rDCubmnvCjCAScbNoKG0EvROn78bdgBMBIwaJ5azXLSAfSZwXMrMNNtts3Aruyrs3yZ+nNXHLQRhajN3YeVSaSnC/Te/5nSzy4+3bx5fd6bzC2qhL/O7zog9LdryzM/prvwSq3C6JUM7ps4vhD/kAZ1fbCzp81ZfGYAp0v6uJ8PL/PPd4LcKOuZfzjXfuOI3jNf6LRIY09n/89sC4J4TuzPVssV3lNq5fkt+/mTufxs/wijBVPTnm/535pdrRrEscuMIu8J++f+IEw/9xXe9P9+0h2Mosr7o98jtf5H7it/cfNlrf4r+yYW5IPrwBUabpPtw5EvQAAAAAElFTkSuQmCC') no-repeat;
+  background-size: 100% 100%;
+}
+
+.scrool-left {
+  width: 100%;
+  text-align: center;
+}
+
+.slt-match {
+  height: 75rpx;
+  background: transparent;
+  text-align: center;
+  color: #fff;
+  font-size: 36rpx;
+  border: none;
+}
+
+.slt-match-info {
+  background-color: transparent;
+  height: 80rpx;
+}
+
+.match-other-info {
+  width: 100%;
+  font-size: 26rpx;
+  color: #eee;
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.match-other-info .address {
+  margin-right: 30rpx;
+}
+
+.option-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-group .option {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+  margin: 10rpx;
+  padding: 20rpx;
+  color: #fff;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}
+
+.option-group .option-icon {
+  flex-direction: row;
+}
+
+.option-group .option-icon .icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 20rpx;
+}
+
+.option-group .option .icon-match {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.option-group .option-sub-group {
+  width: 50%;
+  margin: 10rpx;
+}
+
+.option-group .option-sub-group .option {
+  flex-direction: column;
+  padding: 10rpx 0;
+  margin: 0;
+  width: 100%;
+  border-radius: 0;
+  color: rgb(199, 51, 68) !important;
+}
+
+.option-group .option-sub-group .option-icon {
+  flex-direction: row;
+  margin: 10rpx 0;
+  padding: 15rpx 0;
+}
+
+.option-group .option-sub-group .icon-match {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 10rpx 0;
+}
+
+.color1 {
+  background-color: rgb(229, 117, 110);
+}
+
+.color2 {
+  background-color: rgb(107, 178, 75);
+}
+
+.color3 {
+  background-color: rgb(255, 164, 82);
+}
+
+.color4 {
+  background-color: rgb(255, 103, 150);
+}
+
+.color5 {
+  background-color: rgb(192, 134, 200);
+}
+
+.color6 {
+  background-color: rgb(149, 157, 255);
+}
+
+.color7 {
+  background-color: #ccc;
+}
+
+.sign {
+  width: 60rpx !important;
+  height: 60rpx !important;
+}
+
+.line {
+  height: 20rpx;
+  background-color: #e1e1e1;
+}
+
+.profit-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profit {
+  font-size: 28rpx;
+  color: rgb(153, 193, 208);
+  letter-spacing: 8rpx;
+  font-weight: bold;
+  text-align: center;
+  padding: 25rpx 0;
+  width: 100%;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+
+.profit::before {
+  content: "";
+  position: absolute;
+  left: 100rpx;
+  top: 42rpx;
+  width: 200rpx;
+  height: 4rpx;
+  background-color: rgba(153, 193, 208, 0.4);
+}
+
+.profit::after {
+  content: "";
+  position: absolute;
+  right: 100rpx;
+  top: 42rpx;
+  width: 200rpx;
+  height: 4rpx;
+  background-color: rgba(153, 193, 208, 0.4);
+}
+
+.val-line-1 {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 0;
+  font-size: 28rpx;
+  width: 95%;
+  position: relative;
+}
+
+.val-line-1 text{
+  float: left;
+  color: #555;
+}
+
+.val-line-1 button {
+  border-radius: 0;
+  background-color: transparent;
+  border: 2rpx solid #e5e5e5;
+  font-size: 26rpx;
+  letter-spacing: 2rpx;
+  color: rgb(255, 56, 79);
+  height: 50rpx;
+  width: 140rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 10rpx;
+}
+
+.val-line-1 button::after {
+  border: none;
+}
+
+.val-line-2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.val-line-2 .val-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}
+
+.val-line-2 .val-item .money{
+  font-size: 40rpx;
+  color: rgb(255, 56, 79);
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.val-line-2 .val-item .title{
+  letter-spacing: 2rpx;
+  color: #333;
+}
+
+
+/*弹出层*/
+
+.addActive-layer {
+  padding-top: 20rpx;
+  width: 100%;
+  background-color: #fff;
+  height: 500rpx;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer .title {
+  font-size: 16px;
+  color: #bd2529;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: #eee;
+  margin-top: -20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #cecece;
+}
+
+.addActive-layer .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer .op-box {
+  width: 100%;
+  bottom: 0rpx;
+  text-align: center;
+}
+
+.addActive-layer .layer-data {
+  padding-top: 60rpx;
+  height: 750rpx;
+  overflow: scroll;
+  width: 100%;
+  background: #e5e5e5;
+}
+
+.addActive-layer .user-info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35rpx 0;
+  background-color: #FFF;
+  padding: 20rpx 0;
+}
+
+.addActive-layer .user-info-item .user-info{
+  display: flex;
+  flex-direction: column;
+  font-size: 36rpx;
+  width: 95%;
+}
+
+.addActive-layer .user-info-item .user-info .tip{
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  color: #333;
+}
+
+.addActive-layer .user-info-item .user-info .input-money{
+  display: flex;
+  font-size: 80rpx;
+  align-items: center;
+  font-weight: bold;
+  margin: 10rpx 0;
+}
+
+.addActive-layer .user-info-item .user-info .input-money input{
+  height: 80rpx;
+}
+
+.addActive-layer .user-info-item .user-info .total{
+  font-size: 28rpx;
+  color: #555;
+}
+
+.addActive-layer .user-info-item .user-info .total .errorMsg{
+  font-size: 28rpx;
+  color: red;
+  float: right;
+}
+
+.addActive-layer .user-info-item .user-info .inputGroup{
+  width: 100%;
+  display: flex;
+}
+
+.hasApply{
+  margin-bottom: 10rpx;
+}

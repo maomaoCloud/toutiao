@@ -1,0 +1,362 @@
+page{
+ background-color: #efefef;
+}
+
+.top {
+  height: 300rpx;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAHVCAYAAAAwzZEEAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABR0RVh0Q3JlYXRpb24gVGltZQA4LzgvMTjoebKiAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAATlJREFUSIndlTGywzAIRHe58C9y5dxjU8hBEgLsmd+lyTiWgAUeGO/XnwwAfuZHAIzjiTBAMIyn0iI7JUza39H9iTCxUwDQZTyIhlzkUMDzVK3ZUD8yn3+xCyr0ZYGCWS4DR7TeaZ95Vs6rC4BBIcuyBvf+0iuE0T2PTosw8Nv9qUWq9NGjqQipymyJMe8tmcPJBkwMnot2Z7MQQQrACVf6ByqESYJx1nkOxKzV0oVNQc8VKs15Q7vuN4xrt824Lxha7hEwCnuqwLUt1NF+rKoS1ltia9qDPu7+vL+ZvpW1rhDLfATCfD4iJfIK+T5dxiXR9wCV63QqyPibiG49muyOpigbq6JRd6iUXorN9Z/vRwNrslDClXKzemeGIL/CZf+d3Eezfv+FA/FU7/oOkLr5eP4pKrYoAHwAUNeWf72MosUAAAAASUVORK5CYII=') no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-bottom {
+  width: 100%;
+  margin-bottom: -11rpx;
+}
+
+.top .user-header {
+  width: 179rpx;
+  height: 179rpx;
+  border-radius: 50%;
+  border: 15rpx solid rgba(200, 200, 200, 0.5);
+}
+
+.top .user-header button {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 15rpx solid rgba(221, 176, 194, 0.9);
+  line-height: 57rpx;
+  display: flex;
+  align-items: center;
+}
+.top .user-header button::after{
+  border: none;
+}
+
+.top .user-header image {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  border: 15rpx solid rgba(221, 176, 194, 0.9);
+}
+
+.top .user-info {
+  margin-top: 15rpx;
+}
+
+.top .user-info .name {
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 2rpx;
+}
+
+/*个人信息和二维码布局*/
+.other{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF;
+  padding: 20rpx 10rpx;
+}
+
+.other .info-item{
+  width: 100%;
+}
+
+.other .baseinfo{
+  display: flex;
+  align-items: center;
+}
+
+.other .baseinfo .icon{
+  padding-right: 10rpx;
+}
+
+.other .baseinfo .phone ,.other .baseinfo .address{
+  display: flex;
+  padding: 15rpx 0;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.other .baseinfo .phone::after{
+  content: "";
+  height: 40rpx;
+  width: 10rpx;
+  border-right: 3rpx solid #e5e5e5;
+  position: absolute;
+  right: 50%;
+}
+
+.other .baseinfo .phone .icon{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.other .baseinfo .phone text{
+  font-size: 14px;
+}
+
+.other .baseinfo .address .icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.other .baseinfo .address text{
+ font-size: 14px;
+}
+
+/*列表菜单布局*/
+.card {
+  background-color: #FFF;
+  padding: 20rpx 15rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.card-with-info{
+  display: flex;
+  flex-direction: column;
+}
+
+.card-with-info .main-line{
+  width: 100%;
+}
+
+.sub-line{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+  border-top:1rpx solid #efefef;
+  padding-top: 20rpx;
+  padding-left: 20rpx;
+  padding-bottom: 20rpx;
+}
+.sub-line .info-left{
+  font-size: 28rpx;
+  width: 60%;
+}
+
+.sub-line .info-left view{
+  line-height: 50rpx;
+  color: #555;
+}
+
+.sub-line .info-right{
+  width: 40%;
+  font-size: 28rpx;
+}
+
+.sub-line .info-right view{
+  width: 100%;
+  text-align: center;
+}
+
+.sub-line .info-right button{
+  width: 160rpx;
+  height: 70rpx;
+  font-size: 28rpx;
+  border-radius: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rpx;
+  border: 2rpx solid #e5e5e5;
+  background: transparent;
+  letter-spacing: 4rpx;
+}
+
+.sub-line .info-right button::after{
+  border: none;
+}
+
+.card:last-child{
+  margin-bottom: 100rpx;
+}
+
+.card-hover{
+  background-color: #efefef;
+}
+
+.line-bottom {
+  border-bottom: 1rpx solid #efefef;
+}
+
+.card .main-line{
+  display: flex;
+}
+
+.card .main {
+  color: #101010;
+  font-size: 16px;
+}
+
+.card .sub {
+  font-size: 14px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.sub::after {
+  content: "";
+  clear: both;
+  width: 16rpx;
+  height: 16rpx;
+  border-right:2rpx solid #ccc;
+  border-top: 2rpx solid #ccc;
+  display: block;
+  margin-left: 5rpx;
+  margin-right: 20rpx;
+  transform: rotate(45deg);
+}
+
+/*三等分样式*/
+.data{
+  display: flex;
+  padding-top: 30rpx;
+  padding-bottom: 25rpx;
+  background-color: #FFF;
+}
+
+.data .data-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 33.3333%;
+}
+
+.data .data-item .icon{
+  width: 55rpx;
+  height: 55rpx;
+}
+
+.data .data-item .title{
+  font-size: 14px;
+  color: #444;
+  padding: 10rpx 0;
+}
+
+.data .data-item .count{
+  font-size: 12px;
+  color: #444;
+  font-weight: bold;
+}
+
+
+.ad image{
+   width: 100%;
+}
+
+
+/*弹出层*/
+
+.addActive-layer {
+  padding-top: 20rpx;
+  width: 100%;
+  background-color: #fff;
+  height: 500rpx;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer .title {
+  font-size: 16px;
+  color: #bd2529;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: #eee;
+  margin-top: -20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #cecece;
+}
+
+.addActive-layer .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer .op-box {
+  width: 100%;
+  bottom: 0rpx;
+  text-align: center;
+}
+
+.addActive-layer .layer-data {
+  padding-top: 60rpx;
+  height: 750rpx;
+  overflow: scroll;
+  width: 100%;
+  background: #e5e5e5;
+}
+
+.addActive-layer .user-info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35rpx 0;
+  background-color: #FFF;
+  padding: 20rpx 0;
+}
+
+.addActive-layer .user-info-item .user-info{
+  display: flex;
+  flex-direction: column;
+  font-size: 36rpx;
+  width: 95%;
+}
+
+.addActive-layer .user-info-item .user-info .tip{
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  color: #333;
+}
+
+.addActive-layer .user-info-item .user-info .input-money{
+  display: flex;
+  font-size: 80rpx;
+  align-items: center;
+  font-weight: bold;
+  margin: 10rpx 0;
+}
+
+.addActive-layer .user-info-item .user-info .input-money input{
+  height: 80rpx;
+}
+
+.addActive-layer .user-info-item .user-info .total{
+  font-size: 28rpx;
+  color: #555;
+}
+
+.addActive-layer .user-info-item .user-info .total .errorMsg{
+  font-size: 28rpx;
+  color: red;
+  float: right;
+}
+
+.addActive-layer .user-info-item .user-info .inputGroup{
+  width: 100%;
+  display: flex;
+}
+
+.hasApply{
+  margin-bottom: 10rpx;
+}

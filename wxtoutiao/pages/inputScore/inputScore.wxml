@@ -1,0 +1,217 @@
+<view class='score-data-box'>
+
+  <view class='score-item'>
+    <view class="lunci">
+      当前轮次：第一轮
+    </view>
+
+  </view>
+
+
+  <view class='score-item'>
+    <view class='index'>
+     <view class='v'>1</view>
+     <view class='k'>号桌</view>
+    </view>
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+    <view class='inputScore'>
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='score-item'>
+    <view class='index'>
+     <view class='v'>1</view>
+     <view class='k'>号桌</view>
+    </view>
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+    <view class='inputScore'>
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='score-item'>
+    <view class='index'>
+     <view class='v'>1</view>
+     <view class='k'>号桌</view>
+    </view>
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+    <view class='inputScore'>
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='score-item'>
+    <view class='index'>
+     <view class='v'>1</view>
+     <view class='k'>号桌</view>
+    </view>
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+    <view class='inputScore'>
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+
+      <view class='input-item'>
+        <picker bindchange="bindPickerChange" range="{{array}}">
+          <view class="picker">
+            <view class='title'>级数:</view>
+            <view class='score'>A+</view>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='g gA'>
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+
+      <view class='user'>
+        <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+        <text class='name'>张晓明</text>
+      </view>
+    </view>
+
+  </view>
+</view>
+
+<button id='submit'>保存本轮成绩</button>
+<view id='padding-holder'></view>

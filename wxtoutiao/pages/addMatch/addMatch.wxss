@@ -1,0 +1,189 @@
+.addActive-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer .layer-data{
+  width: 100%;
+}
+
+.addActive-layer .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer .op-box {
+  width: 100%;
+  background-color: #fff;
+  bottom: 0rpx;
+  text-align: center;
+}
+
+.addActive-layer .layer-data .add-pic{
+  width: 100%;
+  background-color: rgb(80, 28, 32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addActive-layer .layer-data .add-pic .image-holder{
+   width: 60rpx;
+   padding: 10rpx;
+   border: 5rpx solid #FFF;
+   border-radius: 50%;
+   margin-right: 20rpx;
+}
+
+.addActive-layer .layer-data .add-pic .banner-image{
+  width: 100%;
+}
+
+.addActive-layer .layer-data .add-pic text{
+  font-size: 50rpx;
+  letter-spacing: 3rpx;
+  color: #FFF;
+  padding: 100rpx 0;
+}
+
+.placeholder{
+  font-size: 26rpx;
+}
+
+.input-item{
+  display: flex;
+  border-bottom: 5rpx solid #CCC;
+  padding-bottom: 10rpx;
+  margin: 40rpx 40rpx;
+}
+
+.input-item .vTitle{
+  font-size: 40rpx;
+  width: 20%;
+}
+
+.input-item input{
+  font-size: 26rpx;
+  width: 90%;
+}
+
+.input-item .input-value{
+  display: flex;
+  font-size: 26rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-item .input-value .split{
+  margin: 0 15rpx;
+}
+
+.input-item .input-value .time-picker{
+  margin-left: 10rpx;
+}
+
+.input-box{
+  display: flex;
+  flex-direction: column;
+  margin: 20rpx 40rpx;
+}
+
+.input-box .ititle{
+  background-color: #CCC;
+  color: #FFF;
+  text-align: center;
+  padding: 10rpx;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+}
+
+.input-box .icontent{
+  height: 220rpx;
+  font-size: 26rpx;
+  border: 3rpx solid #CCC;
+}
+
+.input-box .icontent textarea{
+  width: 95%;
+  margin:  10rpx auto;
+  height: 200rpx;
+}
+
+.input-box .contact{
+   display: flex;
+   border: 3rpx solid #CCC;
+}
+
+.input-box .contact .info{
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 60%;
+}
+
+.input-box .contact .info .info-item{
+  margin:  15rpx 15rpx;
+}
+
+.input-box .contact .info .info-item text{
+  float: left;
+  font-size: 40rpx;
+}
+
+.input-box .contact .info .info-item input{
+  border-bottom: 5rpx solid #CCC;
+  width: 230rpx;
+  float: right;
+  font-size: 26rpx;
+}
+
+.input-box .contact .upload-wx{
+  width: 200rpx;
+  height: 200rpx;
+  font-size: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3rpx solid #CCC;
+  margin: 15rpx 0;
+  position: relative;
+  padding: 15rpx;
+  right: -15rpx;
+}
+
+.input-box .contact .upload-wx image{
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.input-box .fee{
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+}
+
+.input-box .fee input{
+  width: 200rpx;
+  border-bottom: 5rpx solid #CCC;
+  text-align: center;
+}
+
+ .input-box .userLimit{
+   height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+ }
+
+ .input-box .userLimit input{
+  width: 200rpx;
+  border-bottom: 5rpx solid #CCC;
+  text-align: center;
+}

@@ -1,0 +1,50 @@
+page{
+  background-color: #F7F7F9;
+}
+
+.dataBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dataBox .head {
+  width: 100%;
+  text-align: center;
+}
+
+.dataBox .head image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+}
+
+.dataBox .tip{
+  font-size: 30rpx;
+  letter-spacing: 1rpx;
+  margin: 20rpx;
+  color: #555;
+}
+
+.dataBox .btn-box{
+  width: 85%;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.dataBox .btn-box button{
+  margin: 20rpx 0;
+  font-size: 36rpx;
+  letter-spacing: 2rpx;
+   color: #FFF;
+}
+
+.dataBox .btn-box .sure{
+  background-color: #bd2529;
+}
+
+.dataBox .btn-box .cancel{
+  background-color: rgb(0, 185, 236);
+}

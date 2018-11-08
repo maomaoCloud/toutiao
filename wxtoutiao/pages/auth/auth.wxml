@@ -1,0 +1,12 @@
+<view class='dataBox' style='height:{{height}}px'>
+  <view class='head'>
+    <image src='{{ avatarUrl }}' class='headImg'></image>
+  </view>
+
+  <view class='tip'>
+    我们希望获取您的公开信息（昵称，头像等）
+  </view>
+  <view class='btn-box'>
+    <button bindtap='sureLogin' class='sure'>授权登录</button>
+  </view>
+</view>

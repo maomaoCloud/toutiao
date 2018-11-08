@@ -1,0 +1,9 @@
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class='header' >
+  <text class='title'>{{ title }}</text>
+  <text class='date'>{{ date }}</text>
+</view>
+<view class='content'>
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+</view>

@@ -1,0 +1,34 @@
+#help-list{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+ margin: 0 auto;
+}
+
+#help-list .help-list-item{
+  text-align: left;
+  width: 100%;
+  border-bottom: 1rpx solid #CCC;
+  padding: 20rpx;
+  padding-right:0; 
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+#help-list .hover{
+  background-color: #e9e9e9;
+}
+
+#help-list .help-list-item::after{
+  content: "";
+  width: 25rpx;
+  height: 25rpx;
+  display: block;
+  position: absolute;
+  right: 20rpx;
+  border-top: 2rpx solid #CCC;
+  border-right: 2rpx solid #CCC;
+  transform: rotate(45deg);
+}

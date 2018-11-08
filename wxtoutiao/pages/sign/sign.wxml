@@ -1,0 +1,104 @@
+<view wx:if="{{ canSgin }}" class='dataBox' style='height:{{height}}px'>
+  <view class='head'>
+    <image src='{{ avatarUrl }}' class='headImg'></image>
+  </view>
+
+  <view class='tip'>
+    您将正在签到活动:{{ theme }}
+  </view>
+  <view class='btn-box'>
+    <button bindtap='sureSign' class='sure'>确认签到</button>
+    <button bindtap='cancel' class='cancel'>取消</button>
+  </view>
+</view>
+
+<view wx:if="{{ select }}" class='dataBox' style='height:{{height}}px'>
+  <view class='head'>
+    <image src='{{ avatarUrl }}' class='headImg'></image>
+  </view>
+
+  <view class='tip'>
+    您正在签到活动:{{ theme }}
+  </view>
+  <view class='btn-box'>
+    <button bindtap='toApply' class='cancel'>未报名</button>
+    <button bindtap='toSelect' class='sure'>搭档已经帮我报名</button>
+  </view>
+</view>
+
+<view wx:if="{{ search }}" class='dataBox' style='height:{{height}}px'>
+  <view class='head'>
+    <image src='{{ avatarUrl }}' class='headImg'></image>
+  </view>
+
+  <view class='tip'>
+    您将正在签到活动:{{ theme }}
+  </view>
+  <form class='form' bindsubmit="search">
+    <view class='search-box'>
+      <view wx:if="{{ !showData }}" class='inputMyInfo'>
+        <view class='input-group'>
+          <text>姓名：</text>
+          <input name="name" placeholder='请输入您的真实姓名'></input>
+        </view>
+        <view class='input-group'>
+          <text>手机：</text>
+          <input name="phone" type='number' placeholder='请输入您的手机号码'></input>
+        </view>
+      </view>
+
+      <view wx:if="{{ showData }}" class="user-list">
+        <view wx:for="{{ users }}" data-id='{{ item.userId }}' class='userItem {{ selectUserId == item.userId  ? "active" : "" }}' bindtap='select'>
+          <view class='user'>
+            <image src='{{ item.head }}'></image>
+            <text>{{ item.name }}</text>
+            <text>{{ item.phone }}</text>
+          </view>
+          <view class='da'>搭</view>
+          <view class='user'>
+            <image src='../../resource/head.png'></image>
+            <text>{{ item.partnerName }}</text>
+            <text>{{ item.partnerPhone }}</text>
+          </view>
+        </view>
+      </view>
+
+      <button wx:if="{{ !showData }}" formType='submit' class='sure'>查询我的报名信息</button>
+      <button bindtap='bSign' wx:if="{{ showData && users.length > 0 }}" class='sure'>确认选择并签到</button>
+      <button wx:if="{{ showSeeAllBtn }}" bindtap='showAll' class="cancel">没查到？查看所有</button>
+    </view>
+  </form>
+</view>
+
+<!--报名弹出层-->
+<view wx:if="{{ addActive }}" animation='{{animationData}}' class='addActive-layer'>
+  <view class='title'>报名信息</view>
+  <view class='layer-data'>
+    <view class='user-info-item'>
+      <image class='head' src='{{ avatarUrl }}'></image>
+      <view class='user-info'>
+      <view  class='inputGroup'>
+        <text>报名人：</text><input class='applyInput' data-name="userName" bindblur='getInputValue' placeholder='请填写真实姓名' type='text' value='{{ userName }}'></input>
+        </view>
+        <view class='inputGroup'>
+        <text>手机号：</text><input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
+        </view>
+      </view>
+    </view>
+
+    <view class='price-info'>
+      <text class='price'>￥{{ fee }}</text>
+      <text class='userCount'>*{{ 1 }}</text>
+    </view>
+
+    <view class='pay-info'>
+      <text class='pay-title'>支付金额</text>
+      <text class='pay-fee'>总计： ￥{{ fee *  1}}</text>
+    </view>
+
+    <view class='op-box'>
+      <button bindtap='doApply' class='addActive-btn'>立即报名</button>
+    </view>
+  </view>
+</view>
+<view wx:if="{{ addActive }}" bindtap='hideMask' class='mask'></view>

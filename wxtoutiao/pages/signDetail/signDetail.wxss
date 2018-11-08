@@ -1,0 +1,66 @@
+page{
+  background-color: #FFF9F6;
+}
+
+.data-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-box .data-item{
+  display: flex;
+  padding: 20rpx 0;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFF;
+  border-radius: 20rpx;
+  margin: 20rpx;
+
+}
+
+.data-box .data-item .user{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+
+.data-box .noPartner{
+  justify-content: left;
+}
+
+.data-box .data-item .user .qd{
+  display: none;
+}
+
+.data-box .data-item .hasSign .head{
+  border:10rpx solid rgb(248,213,79);
+}
+
+.data-box .data-item .hasSign .qd{
+  position: absolute;
+  display: block !important;
+  background-color: red;
+  border-radius: 26rpx;
+  padding: 5rpx 10rpx;
+  font-size: 20rpx;
+  color: #FFF;
+  font-weight: 500;
+}
+
+.data-box .data-item .user .head{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius:50%; 
+  margin-bottom: 10rpx;
+  opacity: .7;
+}
+
+.data-box .data-item .user .name{
+  font-size: 30rpx;
+  margin-bottom: 10rpx;
+}

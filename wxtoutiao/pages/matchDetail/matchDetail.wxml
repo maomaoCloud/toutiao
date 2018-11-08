@@ -1,0 +1,155 @@
+<import src="../../wxParse/wxParse.wxml"/>
+<view wx:if="{{ loadCompleted }}">
+  <view class='applyList'>
+    <view class="scrool-left">
+      <scroll-view scroll-x="true" style="white-space: nowrap; display: block" class="showmian">
+        <view class="w25 hovertxt" wx:for="{{ matchInfo.applyList }}" wx:key="id">
+          <view class='club-item'>
+            <view class='border'>
+              <image src='{{ item.headImg }}' lazy-load='{{ true }}'></image>
+              <text class='hasPartner' wx:if="{{ item.hasPartner == 1 }}">+1</text>
+            </view>
+            <text>{{ item.name }}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class='.addActive-layer-box'>
+    <view class='layer-data'>
+      <view class='add-pic'>
+        <image class='banner-image' mode='widthFix' src='{{ matchInfo.headImg }}'></image>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle theme'>{{ matchInfo.theme }}</text>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>时间：{{matchInfo.startDateTime}} 至 {{matchInfo.endDateTime}}</text>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>地点：{{ matchInfo.address }}</text>
+      </view>
+
+      <view class='tabList'>
+        <view data-index="1" bindtap='switchTab' class='tableItem {{ tabIndex == 1 ? "active":"" }}'>活动介绍</view>
+        <view data-index="2" bindtap='switchTab' class='tableItem {{ tabIndex == 2 ? "active":"" }}'>奖品介绍</view>
+        <view data-index="3" bindtap='switchTab' class='tableItem {{ tabIndex == 3 ? "active":"" }}'>联系人信息</view>
+      </view>
+
+      <view class='info-box' wx:if="{{ tabIndex == 1 }}">
+        <view class='icontent-data'>
+          <template is="wxParse" data="{{wxParseData:activeContent.nodes}}" />
+        </view>
+      </view>
+
+
+      <view class='info-box' wx:if="{{ tabIndex == 2 }}">
+        <view class='icontent'>
+          <template is="wxParse" data="{{wxParseData:rewardsContent.nodes}}" />
+        </view>
+      </view>
+
+      <view class='info-box' wx:if="{{ tabIndex == 3 }}">
+        <view class='contact'>
+          <view class='info'>
+            <view class='info-item'>
+              <text>联系人:</text>
+              <text>{{ matchInfo.contactName }}</text>
+            </view>
+            <view class='info-item'>
+              <text>手机号:</text>
+              <text>{{ matchInfo.contactPhone }}</text>
+            </view>
+          </view>
+
+          <view class='upload-wx' bindtap='uploadWxQr'>
+            <image src='{{ matchInfo.wxHead }}'></image>
+          </view>
+        </view>
+      </view>
+
+      <view class='input-box'>
+        <view class='icontent fee'>
+          <text>活动费用:{{ matchInfo.fee }}元</text>
+        </view>
+      </view>
+
+      <view class='padding-bootom-holder'></view>
+    </view>
+    <view class='op-box'>
+      <view class='goto' bindtap='gotoIndex'>返回首页</view>
+      <view bindtap='apply' data-price="{{ matchInfo.fee }}" data-id="{{ matchInfo.id }}" wx:if="{{ !matchInfo.isMine && !matchInfo.hasApply && !matchInfo.hasLimit }}" class='apply'>立即报名</view>
+      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasApply }}" class='apply'>您已报名</view>
+      <view wx:if="{{ matchInfo.isMine }}" class='apply'>我的发布</view>
+      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasLimit }}" class='apply'>报名人数已满</view>
+      <view class='share'>
+        <button open-type="share">分享活动</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--报名弹出层-->
+<view wx:if="{{ addActive }}" animation='{{animationData}}' class='addActive-layer'>
+  <view class='title'>报名信息</view>
+  <view class='layer-data'>
+    <view class='user-info-item'>
+      <image class='head' src='{{ userHead }}'></image>
+      <view class='user-info'>
+        <view class='inputGroup'>
+          <text>报名人：</text>
+          <input class='applyInput' data-name="userName" bindblur='getInputValue' placeholder='请填写真实姓名' type='text' value='{{ userName }}'></input>
+        </view>
+        <view class='inputGroup'>
+          <text>手机号：</text>
+          <input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
+        </view>
+      </view>
+    </view>
+
+    <view class='user-info-item'>
+      <image wx:if="{{ hasPartner }}" class='head' src='../../resource/head.png'></image>
+      <view class='user-info'>
+        <view class='tip'>
+          <text>是否携带搭档:</text>
+          <switch class='switch' checked="{{ hasPartner }}" bindchange="hasPartner" />
+        </view>
+        <view wx:if="{{ hasPartner }}" class='inputGroup'>
+          <text>报名人：</text>
+          <input class='applyInput' placeholder='搭档的真实姓名' type='text' value='{{ partnerName }}' data-name="partnerName" bindblur='getInputValue'></input>
+        </view>
+        <view wx:if="{{ hasPartner }}" class='inputGroup'>
+          <text>手机号：</text>
+          <input data-name="partnerPhone" bindblur='getInputValue' class='applyInput' placeholder='搭档的手机号码' type='number' value='{{ partnerPhone }}'></input>
+        </view>
+      </view>
+    </view>
+
+    <view class='price-info'>
+      <text class='price'>￥{{ applyPrice }}</text>
+      <text class='userCount'>*{{ applyCount }}</text>
+    </view>
+
+    <view class='pay-info'>
+      <text class='pay-title'>支付金额</text>
+      <text class='pay-fee'>总计： ￥{{ applyCount *  applyPrice}}</text>
+    </view>
+
+    <view class='op-box'>
+      <button bindtap='applyDo' class='addActive-btn'>立即报名</button>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{ showLogin }}" class='showLogin'>
+  <view class='title'>微信授权</view>
+  <view class='content'>为了更好的使用体验，我们希望获取您的公开信息（昵称，头像等）</view>
+  <view class='btn-box'>
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfoDo">确认授权信息</button>
+  </view>
+</view>
+
+<view wx:if="{{ showMask }}" bindtap='hideMask' class='mask'></view>

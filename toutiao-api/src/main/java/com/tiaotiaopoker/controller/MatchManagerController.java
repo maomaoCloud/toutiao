@@ -26,7 +26,6 @@ public class MatchManagerController {
         return JsonResult.SUCCESS();
     }
 
-
     /**
      * 1.帮助中心接口 -> 帮助中心列表
      * resData:[{helpId:"123",helpTitle:"title",helpColor:"#EFEFEF"},{helpId:"456",helpTitle:"title",helpColor:"#EFEFEF"}]

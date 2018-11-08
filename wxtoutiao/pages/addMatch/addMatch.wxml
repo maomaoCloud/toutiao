@@ -1,0 +1,121 @@
+<form bindsubmit='formSubmit'>
+  <view class='addActive-layer'>
+    <view class='layer-data'>
+      <view class='add-pic' wx:if="{{ !hasImg1 }}" bindtap='uploadImg'>
+        <image class='image-holder' src='../../resource/plus.png' mode='widthFix'></image>
+        <text>添加图片</text>
+      </view>
+
+      <view class='add-pic' wx:if="{{ hasImg1 }}" bindtap='uploadImg'>
+        <image class='banner-image' mode='widthFix' src='{{ img1Url }}'></image>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>主题：</text>
+        <input type='text' name="theme" placeholder-class='placeholder' placeholder="活动主题"></input>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>时间：</text>
+        <view class='input-value'>
+          <picker mode="date" data-type="start" value="{{startDate}}" start="2018-10-01" end="2050-10-01" bindchange="bindDateChange">
+            <view class="picker">
+              {{startDate}}
+            </view>
+          </picker>
+
+          <picker class='time-picker' mode="time" data-type="start" value="{{startTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+            <view class="picker">
+              {{startTime}}
+            </view>
+          </picker>
+          <text class='split'>至</text>
+          <picker mode="date" data-type="end" value="{{endDate}}" start="2018-10-01" end="2050-10-01" bindchange="bindDateChange">
+            <view class="picker">
+              {{endDate}}
+            </view>
+          </picker>
+
+          <picker class='time-picker' mode="time" data-type="end" value="{{endTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+            <view class="picker">
+              {{endTime}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>地点：</text>
+        <view class='input-value'>
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+            <view class="picker">
+              {{region[0]}} - {{region[1]}} - {{region[2]}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class='input-item'>
+        <text class='vTitle'>地址：</text>
+        <input type='text' name="address" placeholder-class='placeholder' placeholder="活动详细地址"></input>
+      </view>
+
+      <view class='input-box'>
+        <view class='ititle'>活动介绍</view>
+        <view class='icontent'>
+          <textarea name="activeContent" maxlength="1000" placeholder='请输入文字，1000字以内' placeholder-class='placeholder'></textarea>
+        </view>
+      </view>
+
+      <view class='input-box'>
+        <view class='ititle'>奖品介绍</view>
+        <view class='icontent'>
+          <textarea name="rewardsContent" maxlength="1000" placeholder='请输入文字，1000字以内' placeholder-class='placeholder'></textarea>
+        </view>
+      </view>
+
+      <view class='input-box'>
+        <view class='ititle'>联系人信息</view>
+        <view class='contact'>
+          <view class='info'>
+            <view class='info-item'>
+              <text>联系人:</text>
+              <input value='{{ name }}' name="contactName"></input>
+            </view>
+            <view class='info-item'>
+              <text>手机号:</text>
+              <input value='{{ phone }}' name="phone" maxlength="11" type='number'></input>
+            </view>
+          </view>
+          <view wx:if="{{!hasImg2}}" class='upload-wx' bindtap='uploadWxQr'>
+            <view>请上传</view>
+            <view>微信二维码</view>
+          </view>
+
+          <view wx:if="{{hasImg2}}" class='upload-wx' bindtap='uploadWxQr'>
+            <image src='{{ img2Url }}'></image>
+          </view>
+        </view>
+      </view>
+
+      <view class='input-box'>
+        <view class='icontent fee'>
+          <text>费用设置</text>
+          <input name="fee" type='number' placeholder='默认为免费' placeholder-class='placeholder'></input>
+          <text>元</text>
+        </view>
+      </view>
+
+       <view class='input-box'>
+        <view class='icontent userLimit'>
+          <text>报名人数限制：</text>
+          <input name="userLimit" type='number' placeholder='默认无限制' placeholder-class='placeholder'></input>
+        </view>
+      </view>
+
+    </view>
+    <view class='op-box'>
+      <button formType="submit" class='addActive-btn'>提交活动</button>
+    </view>
+  </view>
+</form>

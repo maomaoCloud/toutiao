@@ -1,0 +1,461 @@
+page {
+  background-color: #fff;
+}
+
+.addActive-layer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer-box .layer-data {
+  width: 100%;
+}
+
+.addActive-layer-box .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer-box .op-box {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.addActive-layer-box .op-box view {
+  width: 33.3333%;
+  color: #fff;
+  text-align: center;
+  padding: 0 20rpx;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addActive-layer-box .op-box .apply {
+  background-color: #bd2529;
+  text-align: center;
+  height: 100rpx;
+}
+
+.addActive-layer-box .op-box .goto {
+  background-color: #9c2125;
+  text-align: center;
+  height: 100rpx;
+}
+
+.addActive-layer-box .op-box .share {
+  background-color: #2579bd;
+  text-align: center;
+}
+
+.addActive-layer-box .op-box .share button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 0;
+  height: 100rpx;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addActive-layer-box .op-box .share button::after {
+  border: none;
+}
+
+.addActive-layer-box .layer-data .add-pic {
+  width: 100%;
+  background-color: rgb(80, 28, 32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addActive-layer-box .layer-data .add-pic .image-holder {
+  width: 60rpx;
+  padding: 10rpx;
+  border: 5rpx solid #fff;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.addActive-layer-box .layer-data .add-pic .banner-image {
+  width: 100%;
+}
+
+.addActive-layer-box .layer-data .add-pic text {
+  font-size: 50rpx;
+  letter-spacing: 3rpx;
+  color: #fff;
+  padding: 100rpx 0;
+}
+
+.placeholder {
+  font-size: 26rpx;
+}
+
+.input-item {
+  display: flex;
+  padding-bottom: 10rpx;
+  margin: 5rpx 10rpx;
+}
+
+.input-item .vTitle {
+  font-size: 25rpx;
+  color: #666;
+}
+
+.input-item .theme {
+  color: #000;
+  font-size: 30rpx;
+}
+
+.input-item .input-value {
+  display: flex;
+  font-size: 26rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-item .input-value .split {
+  margin: 0 15rpx;
+}
+
+.input-item .input-value .time-picker {
+  margin-left: 10rpx;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin: 20rpx 40rpx;
+}
+
+.input-box .ititle {
+  background-color: #ccc;
+  color: #fff;
+  text-align: center;
+  padding: 10rpx;
+  font-size: 30rpx;
+  letter-spacing: 2rpx;
+}
+
+.input-box .icontent {
+  height: 220rpx;
+  font-size: 26rpx;
+  border: 3rpx solid #ccc;
+}
+
+.input-box .icontent textarea {
+  width: 95%;
+  margin: 10rpx auto;
+  height: 200rpx;
+}
+
+.info-box .contact {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-box .contact .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+}
+
+.info-box .contact .info .info-item {
+  margin: 15rpx 15rpx;
+}
+
+.info-box .contact .info .info-item text {
+  float: left;
+  font-size: 30rpx;
+}
+
+.info-box .contact .info .info-item input {
+  border-bottom: 5rpx solid #ccc;
+  width: 230rpx;
+  float: right;
+  font-size: 26rpx;
+}
+
+.info-box .contact .upload-wx {
+  width: 300rpx;
+  height: 300rpx;
+  font-size: 40rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3rpx solid #ccc;
+  margin: 15rpx 0;
+  position: relative;
+  padding: 15rpx;
+  right: -15rpx;
+}
+
+.info-box .contact .upload-wx image {
+  width: 300rpx;
+  height: 300rpx;
+}
+
+.input-box .fee {
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  background-color: #E47370;
+  color: #FFF;
+  letter-spacing: 2rpx;
+}
+
+.input-box .fee input {
+  width: 200rpx;
+  border-bottom: 5rpx solid #ccc;
+  text-align: center;
+}
+
+.padding-bootom-holder {
+  padding-bottom: 100rpx;
+}
+
+/*信息tab*/
+
+.tabList {
+  display: flex;
+  border-top: 2rpx solid #ccc;
+  border-bottom: 2rpx solid #ccc;
+  padding: 10rpx 20rpx;
+  justify-content: center;
+  align-items: center;
+  font-size: 34rpx;
+}
+
+.tabList .tableItem {
+  padding: 10rpx 20rpx;
+}
+
+.tabList .active {
+  font-weight: bold;
+  border-bottom: 5rpx solid rgb(228, 115, 112);
+  color: rgb(228, 115, 112);
+}
+
+/*已报名列表*/
+.applyList {
+  padding: 0 10rpx;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAGLCAYAAAAGSfiDAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABR0RVh0Q3JlYXRpb24gVGltZQA4LzgvMTjoebKiAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAAStJREFUOI2dlUt2xSAMQyVv+A265e5DbwDYGExKOuFAMCBff4Lfn48MAOaBGjMBBhIGCQZmOx8IwBRLAib5rDCubmnvCjCAScbNoKG0EvROn78bdgBMBIwaJ5azXLSAfSZwXMrMNNtts3Aruyrs3yZ+nNXHLQRhajN3YeVSaSnC/Te/5nSzy4+3bx5fd6bzC2qhL/O7zog9LdryzM/prvwSq3C6JUM7ps4vhD/kAZ1fbCzp81ZfGYAp0v6uJ8PL/PPd4LcKOuZfzjXfuOI3jNf6LRIY09n/89sC4J4TuzPVssV3lNq5fkt+/mTufxs/wijBVPTnm/535pdrRrEscuMIu8J++f+IEw/9xXe9P9+0h2Mosr7o98jtf5H7it/cfNlrf4r+yYW5IPrwBUabpPtw5EvQAAAAAElFTkSuQmCC') no-repeat;
+  background-size: 100% 100%;
+}
+
+.applyList .applyListTitle {
+  text-align: center;
+  padding: 15rpx 0;
+  font-size: 38rpx;
+  color: #fff;
+}
+
+.showmian {
+  margin: 0 auto;
+  width: 100%;
+  padding: 10px 0px;
+}
+
+.w25 {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+}
+
+.scrool-left {
+  position: relative;
+}
+
+.leftjiantou {
+  position: absolute;
+  top: 38%;
+  right: 1%;
+}
+
+.leftjiantou image {
+  width: 10px;
+}
+
+.lefts {
+  left: 1%;
+  top: 38%;
+}
+ 
+.w25 .club-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.w25 .club-item .border{
+  position: relative;
+}
+
+.w25 .club-item .border .hasPartner{
+  position: absolute;
+  width: 35rpx;
+  height: 35rpx;
+  background-color: red;
+  border-radius: 50%;
+  font-size: 24rpx;
+  bottom: 25rpx;
+  right: 3rpx;
+} 
+
+.w25 .club-item image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 10rpx solid rgba(243, 204, 192, 0.3);
+}
+
+.w25 .club-item text {
+  font-size: 11px;
+  letter-spacing: 1rpx;
+  margin-top: 5rpx;
+  color: #fff;
+}
+
+/*弹出层*/
+.addActive-layer {
+  padding-top: 20rpx;
+  width: 100%;
+  background-color: #fff;
+  height: 800rpx;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer .title {
+  font-size: 16px;
+  color: #bd2529;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: #eee;
+  margin-top: -20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #cecece;
+}
+
+.addActive-layer .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer .op-box {
+  width: 100%;
+  background-color: #fff;
+  bottom: 0rpx;
+  text-align: center;
+}
+
+.addActive-layer .layer-data {
+  padding-top: 60rpx;
+  height: 750rpx;
+  overflow: scroll;
+  width: 100%;
+}
+
+.addActive-layer .user-info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35rpx 0;
+}
+
+.addActive-layer .user-info-item .head {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.addActive-layer .user-info-item .user-info{
+  display: flex;
+  flex-direction: column;
+  font-size: 36rpx;
+}
+
+.addActive-layer .user-info-item .user-info text{
+  margin: 5rpx 0;
+}
+.addActive-layer .user-info-item .user-info .tip{
+  font-size: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.addActive-layer .user-info-item .user-info .tip text{
+  margin-right: 20rpx;
+}
+
+.addActive-layer .price-info{
+  width: 100%;
+  border-bottom: 3rpx solid #CCC;
+  text-align: right;
+  font-size: 36rpx;
+}
+
+.addActive-layer .price-info .price{
+  color: #bd2529;
+  margin-right: 10rpx;
+  font-size: 40rpx;
+}
+
+.addActive-layer .price-info .userCount{
+  letter-spacing: 10rpx;
+}
+
+.addActive-layer .pay-info{
+  width: 100%;
+  font-size: 36rpx;
+  border-bottom: 3rpx solid #CCC;
+  margin: 15rpx 0;
+  padding-bottom: 15rpx;
+}
+.addActive-layer .pay-info .pay-title{
+  text-align: left;
+  padding-left: 10rpx;
+}
+
+.addActive-layer .pay-info .pay-fee{
+  float: right;
+  text-align: right;
+  padding-right: 10rpx;
+}
+
+
+.inputGroup{
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.applyInput{
+  width: 300rpx;
+  border-bottom:2rpx solid #CCC; 
+}

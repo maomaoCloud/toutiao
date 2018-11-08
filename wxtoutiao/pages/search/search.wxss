@@ -1,0 +1,86 @@
+@import "../../wxSearchView/wxSearchView.wxss";
+
+.line{
+  width: 100%;
+  height: 20rpx;
+  background-color: #E5E5E5;
+}
+
+.news {
+  padding-top: 10rpx;
+  z-index: 9999;
+}
+
+.news-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60rpx;
+  z-index: 9999;
+}
+
+.news-item .title {
+  width: 97%;
+  font-size: 18px;
+  text-align: left;
+  margin: 10rpx 0;
+}
+
+.news-item .img {
+  width: 97%;
+}
+
+.news-item .info {
+  width: 97%;
+  color: #aaa3a3;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+}
+
+.news-item .info .address-box .icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.news-item .info .address-box {
+  float: left;
+  display: flex;
+  justify-content: left;
+  width: 30%;
+  text-align: left;
+}
+
+.news-item .info .date {
+  width: 40%;
+  text-align: center;
+}
+
+.news-item .info .number {
+  text-align: right;
+  width: 30%;
+}
+
+.news-item .baoming-btn {
+  width: 50%;
+  height: 70rpx;
+  font-size: 18px;
+  background-color: #bd2529;
+  border-radius: 20rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10rpx;
+}
+
+.noData{
+  width: 100%;
+  font-size: 32rpx;
+  color: #999;
+  letter-spacing: 2rpx;
+  text-align: center;
+  margin-top: 40rpx;
+}

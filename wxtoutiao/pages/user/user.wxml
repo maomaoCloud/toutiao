@@ -1,0 +1,118 @@
+<view class='top'>
+  <view class='user-header'>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击授权登录 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    </block>
+  </view>
+  <view class='user-info'>
+    <text class='name'> {{(loginUserInfo.trueName != null && loginUserInfo.trueName != "") ?"("+ loginUserInfo.trueName +")":""  }} {{userInfo.nickName}}</text>
+  </view>
+</view>
+<image class='bg-bottom' mode='widthFix' src='/resource/user-bottom.png'></image>
+<view class='other'>
+  <view class='baseinfo info-item'>
+    <view class='phone'>
+      <image class='icon' src='/resource/phone.png'></image>
+      <text>{{ (loginUserInfo.phone == null || loginUserInfo.phone == "") ? "暂无电话" : loginUserInfo.phone }}</text>
+    </view>
+    <view class='address'>
+      <image class='icon' src='/resource/aui-icon-location.png'></image>
+      <text>{{ (loginUserInfo.userAddress == null ||  loginUserInfo.userAddress == "") ? "暂无地址" : loginUserInfo.userAddress}}</text>
+    </view>
+  </view>
+</view>
+
+<view hover-class='card-hover' bindtap='myApply' class='card line-bottom'>
+  <view class='main'>我的报名</view>
+  <view class='sub'>全部报名</view>
+</view>
+<view class='data'>
+  <view data-idx="1" bindtap='toMyApply' class='data-item'>
+    <image class='icon' src='/resource/clock-big.png'></image>
+    <text class='title'>火热报名中</text>
+    <text class='count'>{{ orderNotStart }}</text>
+  </view>
+  <view data-idx='2' bindtap='toMyApply' class='data-item'>
+    <image class='icon' src='/resource/hour-glass.png'></image>
+    <text class='title'>进行中</text>
+    <text class='count'>{{ orderUnderWay }}</text>
+  </view>
+  <view data-idx='3' bindtap='toMyApply' class='data-item'>
+    <image class='icon' src='/resource/message.png'></image>
+    <text class='title'>已结束</text>
+    <text class='count'>{{ orderEnd }}</text>
+  </view>
+</view>
+<view class='divider-line'></view>
+
+<view hover-class='card-hover' bindtap='myPublish' class='card card-with-info line-bottom'>
+  <view class='main-line'>
+    <view class='main'>我的发布</view>
+    <view class='sub'>全部发布</view>
+  </view>
+</view>
+<view class='data'>
+  <view data-idx="1" bindtap='toMyPublish' class='data-item'>
+      <image class='icon' src='/resource/clock-big.png'></image>
+      <text class='title'>火热报名中</text>
+      <text class='count'>{{ publishNotStart }}</text>
+  </view>
+  <view data-idx="2" bindtap='toMyPublish' class='data-item'>
+    <image class='icon' src='/resource/hour-glass.png'></image>
+    <text class='title'>进行中</text>
+    <text class='count'>{{ publishUnderWay }}</text>
+  </view>
+  <view data-idx="3" bindtap='toMyPublish' class='data-item'>
+    <image class='icon' src='/resource/message.png'></image>
+    <text class='title'>已结束</text>
+    <text class='count'>{{ publishEnd }}</text>
+  </view>
+</view>
+<view class='sub-line'>
+    <view class='info-left'>
+      <view>今日报名数：{{ income.sumSignUpToday }}人</view>
+      <view>今日报名费：{{ income.sumMoneyToday }}元</view>
+    </view>
+    <view class='info-right'>
+      <view>可提现：{{ income.availableWithdraw }}元</view>
+      <button catchtap='withdraw'>提现</button>
+    </view>
+  </view>
+<view class='divider-line'></view>
+
+<view class='ad'>
+  <view class='swiper'>
+    <swiper indicator-dots="{{ true }}" autoplay="{{ true }}" indicator-active-color="#FFF" indicator-color="rgba(200,200,200,.5)" interval="3000" duration="500" circular="{{ true }}">
+      <swiper-item wx:for="{{ advertList }}" wx:key="id">
+        <navigator url='../web/web?title={{ item.title }}&url={{ item.linkUrl }}'>
+          <image src="{{ item.imgUrl }}" class="slide-image" lazy-load="{{ true }}" mode="widthFix" />
+        </navigator>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
+<view class='space'></view>
+<!--提现弹出层-->
+<view wx:if="{{ withdraw }}" animation='{{animationData}}' class='addActive-layer'>
+  <view class='title'>提现</view>
+  <view class='layer-data'>
+    <view class='user-info-item'>
+      <view class='user-info'>
+        <view class='tip'>每日可提现10次,单笔金额不超过2w</view>
+        <view class='input-money'>
+          <text>￥</text>
+          <input type='digit' cursor-spacing="120" bindinput='withdrawInputChange' bindblur='checkMoney' focus="{{ true }}" value=''></input>
+        </view>
+        <view class='total'>
+          <text>可用余额 {{ income.availableWithdraw }}元</text>
+          <text wx:if="{{ showErrorMsg }}" class='errorMsg'>{{errorMsg}}</text>
+        </view>
+      </view>
+    </view>
+    <view class='op-box'>
+      <button bindtap='applyDo' class='addActive-btn'>及时到账，确认提现</button>
+    </view>
+  </view>
+</view>
+<view wx:if="{{ withdraw }}" bindtap='hideMask' class='mask'></view>

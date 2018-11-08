@@ -1,0 +1,86 @@
+page{
+  background-color: #EFEFEF;
+}
+
+.data{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.data .data-item{
+  background-color: #FFF;
+  display: flex;
+  padding: 20rpx 20rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.data .data-item .title{
+  font-size: 28rpx;
+  width: 20%;
+  text-align: right;
+}
+
+.data .data-item .input{
+  font-size: 30rpx;
+  width: 93%;
+  margin-left: 5%;
+  color: #555;
+}
+
+.data .data-item .reward-info .input{
+  width: 100%;
+}
+
+.data .all-title{
+  text-align: center;
+  font-size: 34rpx;
+  background-color: #FFF;
+  border-bottom: 1rpx solid #EFEFEF;
+  padding: 15rpx 0;
+}
+
+.split-line{
+  height: 20rpx;
+}
+
+.placeholder{
+  font-size: 26rpx;
+}
+
+.data .data-item .pic-data{
+  width: 40%;
+}
+
+
+.data .data-item .pic-data .pic{
+  width: 100%;
+}
+
+#logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(80, 28, 32);
+  color: #FFF;
+  font-weight: 500;
+}
+
+#logo .holder{
+  height: 250rpx;
+  line-height: 250rpx;
+  font-size: 40rpx;
+}
+
+.op-box{
+  margin-bottom: 40rpx;
+}
+
+.op-box .save-btn {
+  margin: 30rpx auto;
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}

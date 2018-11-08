@@ -1,0 +1,97 @@
+<view class='data'>
+  <view id='logo'>
+    <view class='holder'>上传logo</view>
+  </view>
+  <view class='data-item'>
+    <text class='title'>比赛名称</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入比赛的名称'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>承办单位</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入承办单位'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>裁判长</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入裁判长'></input>
+  </view>
+
+  <view class='split-line'></view>
+
+  <view class='all-title'>奖品设置</view>
+  <view class='data-item'>
+    <view class='pic-data'>
+      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
+    </view>
+    <view class='reward-info'>
+      <text class='title'>一等奖</text>
+      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
+    </view>
+  </view>
+
+  <view class='data-item'>
+    <view class='pic-data'>
+      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
+    </view>
+    <view class='reward-info'>
+      <text class='title'>二等奖</text>
+      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
+    </view>
+  </view>
+
+  <view class='data-item'>
+    <view class='pic-data'>
+      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
+    </view>
+    <view class='reward-info'>
+      <text class='title'>三等奖</text>
+      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
+    </view>
+  </view>
+
+  <view class='split-line'></view>
+
+  <view class='all-title'>基础规则设定</view>
+  <view class='data-item'>
+    <text class='title'>总轮次</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入总轮次数'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>每轮副数</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入每轮副数'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>每轮时间</text>
+    <input class='input' placeholder-class='placeholder' placeholder='请输入每轮时间'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>首座排序</text>
+    <input class='input' placeholder-class='placeholder' placeholder='点击选择'></input>
+  </view>
+
+  <view class='split-line'></view>
+
+  <view class='all-title'>积分设定</view>
+  <view class='data-item'>
+    <text class='title'>胜积分</text>
+    <input class='input' placeholder-class='placeholder' type="number" placeholder='请输入胜积分'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>负积分</text>
+    <input class='input' placeholder-class='placeholder' type="number" placeholder='请输入负积分'></input>
+  </view>
+
+  <view class='data-item'>
+    <text class='title'>平积分</text>
+    <input class='input' placeholder-class='placeholder' type="number" placeholder='输入 1 表示不可平'></input>
+  </view>
+
+  <view class='op-box'>
+    <button formType="submit" class='save-btn'>保存比赛设置内容</button>
+  </view>
+</view>

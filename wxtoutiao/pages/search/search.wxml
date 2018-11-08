@@ -1,0 +1,25 @@
+<include src="../../wxSearchView/wxSearchView.wxml" />
+
+<view class='noData' wx:if="{{ !hasData }}">
+  抱歉，没有相关比赛...
+</view>
+
+<view wx:if="{{ hasData }}" class='news'>
+  <view class='news-item' wx:for="{{ matchData }}" wx:key="id">
+    <image data-id="{{ item.id }}" bindtap='showMatchDetail' class='img' mode='widthFix' src='{{ item.bannerImg }}' lazy-load='{{ true }}'></image>
+    <text data-id="{{ item.id }}" bindtap='showMatchDetail' class='title'>{{ item.theme }}</text>
+    <view class='info'>
+      <view class='address-box'>
+        <image class='icon' src='/resource/location.png'></image>
+        <text class='address'>{{ item.location }}</text>
+      </view>
+      <view class='date'>{{ item.startDate }} 开始</view>
+      <view class='number'>{{ item.applyCount }}人已报名</view>
+    </view>
+    <view class="hasApply" wx:if="{{ !item.isMine && item.hasApply }}" class='baoming-btn'>您已经报名</view>
+    <view class="hasApply" wx:if="{{ item.isMine }}" class='baoming-btn'>您自己的活动</view>
+  
+  <view class='line'></view>
+</view>
+
+</view>

@@ -1,0 +1,251 @@
+page{
+  background-color: #F7F7F9;
+}
+
+.dataBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dataBox .head {
+  width: 100%;
+  text-align: center;
+}
+
+.dataBox .head image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  margin-top:20rpx; 
+}
+
+.dataBox .tip{
+  font-size: 30rpx;
+  letter-spacing: 1rpx;
+  margin: 20rpx;
+  color: #555;
+}
+
+.dataBox .btn-box{
+  width: 85%;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+ button{
+  margin: 20rpx 0;
+  font-size: 36rpx;
+  letter-spacing: 2rpx;
+   color: #FFF;
+}
+
+ .sure{
+  background-color: #bd2529;
+}
+
+ .cancel{
+  background-color: rgb(0, 185, 236);
+}
+
+.form{
+  width: 80%;
+  justify-content: center;
+}
+
+.input-group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38rpx;
+}
+
+.input-group input{
+  border-bottom: 2rpx solid #E5E5E5;
+}
+
+.search-box{
+  width: 100%;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.user-list{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.user-list .active{
+  border:4rpx solid #bd2529 !important;
+  background-color: #f75d5d !important;
+  color: #FFF !important;
+}
+
+.user-list .userItem{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #e8e8e8;
+  padding: 10rpx;
+  background-color: #e5e5e5;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-list .userItem .user{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  font-size: 30rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-list .userItem .user image{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.user-list .userItem .user text{
+  line-height: 50rpx;
+}
+
+.user-list .userItem .da{
+  font-size: 40rpx;
+  color: #666;
+}
+
+/**报名弹出层*/
+.addActive-layer {
+  padding-top: 20rpx;
+  width: 100%;
+  background-color: #fff;
+  height: 600rpx;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addActive-layer .title {
+  font-size: 16px;
+  color: #bd2529;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  background-color: #eee;
+  margin-top: -20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #cecece;
+}
+
+.addActive-layer .addActive-btn {
+  background-color: #bd2529;
+  color: #fff;
+  width: 90%;
+  margin-bottom: 15rpx;
+}
+
+.addActive-layer .op-box {
+  width: 100%;
+  background-color: #fff;
+  bottom: 0rpx;
+  justify-content:center;
+  display:flex;
+}
+
+.addActive-layer .layer-data {
+  padding-top: 60rpx;
+  height: 750rpx;
+  overflow: scroll;
+  width: 100%;
+}
+
+.addActive-layer .user-info-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35rpx 0;
+}
+
+.addActive-layer .user-info-item .head {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.addActive-layer .user-info-item .user-info{
+  display: flex;
+  flex-direction: column;
+  font-size: 36rpx;
+}
+
+.addActive-layer .user-info-item .user-info text{
+  margin: 5rpx 0;
+}
+.addActive-layer .user-info-item .user-info .tip{
+  font-size: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.addActive-layer .user-info-item .user-info .tip text{
+  margin-right: 20rpx;
+}
+
+.addActive-layer .price-info{
+  width: 100%;
+  border-bottom: 3rpx solid #CCC;
+  text-align: right;
+  font-size: 36rpx;
+}
+
+.addActive-layer .price-info .price{
+  color: #bd2529;
+  margin-right: 10rpx;
+  font-size: 40rpx;
+}
+
+.addActive-layer .price-info .userCount{
+  letter-spacing: 10rpx;
+}
+
+.addActive-layer .pay-info{
+  width: 100%;
+  font-size: 36rpx;
+  border-bottom: 3rpx solid #CCC;
+  margin: 15rpx 0;
+  padding-bottom: 15rpx;
+}
+.addActive-layer .pay-info .pay-title{
+  text-align: left;
+  padding-left: 10rpx;
+}
+
+.addActive-layer .pay-info .pay-fee{
+  float: right;
+  text-align: right;
+  padding-right: 10rpx;
+}
+
+
+.inputGroup{
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.applyInput{
+  width: 300rpx;
+  border-bottom:2rpx solid #CCC; 
+}

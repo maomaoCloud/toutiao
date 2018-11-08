@@ -1,0 +1,104 @@
+page{
+  background-color: rgb(243, 241, 235);
+}
+
+.score-data-box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-data-box .score-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  border-radius: 20rpx;
+  width: 95%;
+  padding: 30rpx 0;
+  margin: 10rpx 0rpx;
+}
+
+.score-data-box .score-item .lunci{
+    font-size: 40rpx;
+    font-weight: 700;
+    border-bottom: 2rpx solid #E5E5E5;
+    padding: 10rpx 30rpx;
+    color: #222;
+}
+
+.score-data-box .score-item .g{
+  display: flex;
+  flex-direction: column;
+}
+
+.score-data-box .score-item .g .user{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.score-data-box .score-item .g .user .name{
+  font-size: 26rpx;
+  margin: 5rpx 0 10rpx 0; 
+}
+
+.score-data-box .score-item .head{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 8rpx solid rgb(248,213,79);
+}
+
+.score-data-box .score-item .index{
+  font-size: 70rpx;
+  width: 100rpx;
+  text-align: center;
+  font-style: italic;
+  color: rgb(220,192,177);
+  border-right: 5rpx dashed rgb(220,192,177);
+  margin-right: 20rpx;
+  padding: 100rpx 0;
+}
+
+
+.score-data-box .score-item .index .k{
+  font-size: 30rpx;
+}
+
+.score-data-box .score-item .inputScore{
+  display: flex;
+  width: 300rpx;
+}
+
+.score-data-box .score-item .inputScore .input-item{
+  width: 100%;
+  text-align: center;
+  margin: 0 20rpx;
+}
+
+.score-data-box .score-item .inputScore .title{
+  font-size: 30rpx;
+}
+
+.score-data-box .score-item .inputScore .score{
+  color: rgb(220,192,177);
+  font-size: 50rpx;
+  border-bottom: 2rpx solid rgb(220,192,177);
+}
+
+#submit{
+  width: 95%;
+  margin: 30rpx auto;
+  background-color: #BD2529;
+  color: #FFF;
+  font-size: 35rpx;
+}
+
+#padding-holder{
+  padding-bottom: 30rpx;
+}

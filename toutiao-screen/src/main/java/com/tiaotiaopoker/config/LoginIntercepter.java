@@ -27,6 +27,7 @@ public class LoginIntercepter implements HandlerInterceptor {
                               HttpServletResponse response,
                               Object handler) throws Exception {
         //String token = request.getParameter("token");
+
         String   token   = null;
         Cookie[] cookies = request.getCookies();
         String   method  = request.getMethod();

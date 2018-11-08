@@ -1,0 +1,50 @@
+<view class='nav'>
+  <view data-index="0" bindtap='switchNav' class='nav-item {{ index == 0 ? "active" : "" }}'>全部</view>
+  <view data-index="1" bindtap='switchNav' class='nav-item {{ index == 1 ? "active" : "" }}'>未开始</view>
+  <view data-index="2" bindtap='switchNav' class='nav-item {{ index == 2 ? "active" : "" }}'>进行中</view>
+  <view data-index="3" bindtap='switchNav' class='nav-item {{ index == 3 ? "active" : "" }}'>已结束</view>
+</view>
+
+<view class='padding-holder'></view>
+
+<view wx:if="{{ currentData.length > 0 }}" class='apply-list'>
+  <view class='apply' wx:for="{{ currentData }}" wx:key="id">
+    <view class='top'>
+      <view class='addTime'>
+        <image src='../../resource/time2.png'></image>
+        <text>{{ item.startDate }}</text>
+      </view>
+      <view class='apply-statu'>{{ item.matchState }}</view>
+    </view>
+    <view data-id="{{ item.id }}" bindtap='matchDetail' class='center'>
+      <image src='{{ item.bannerImg }}' class='headImg' mode='widthFix' lazy-load='{{ true }}'></image>
+
+      <text class='theme'>{{ item.theme }}</text>
+      <view class='detail'>
+        <view class='address-statu'>
+          <text class='address'>{{ item.location }}</text>
+          <text class='match-statu'>{{ item.matchState }}</text>
+        </view>
+        <view class='price-info'>
+          <text class='icon'>￥</text>
+          <text class='prive'>{{ item.fee }}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='other-info'>共{{ item.signUpNum }}人报名</view>
+    <view class='opt-box'>
+      <button wx:if="{{ item.matchState == '已结束' }}">查看成绩</button>
+      <button data-id="{{ item.id }}" bindtap='toMatchManager'>比赛管理</button>
+      <button data-id="{{ item.id }}" bindtap='matchDetail'>比赛详情</button>
+    </view>
+  </view>
+
+</view>
+
+<view class='noData'   wx:if="{{ currentData.length == 0 }}">
+<image class='no-data-icon' src='../../resource/noData.png'></image>
+     <text class='no-data-text'>暂时木有内容啊~~</text>
+</view>
+
+<view class='space'></view>
