@@ -1,79 +1,103 @@
-page{
-  background-color: #EFEFEF;
+page {
+  background-color: #efefef;
 }
 
-.data{
+.data {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.data .data-item{
-  background-color: #FFF;
+.data .data-item {
+  background-color: #fff;
   display: flex;
   padding: 20rpx 20rpx;
   justify-content: center;
   align-items: center;
 }
 
-.data .data-item .title{
+.data .data-item .title {
   font-size: 28rpx;
   width: 20%;
   text-align: right;
 }
 
-.data .data-item .input{
+.data .data-item .input {
   font-size: 30rpx;
   width: 93%;
   margin-left: 5%;
   color: #555;
 }
 
-.data .data-item .reward-info .input{
+.data .data-item  picker {
+  font-size: 30rpx;
+  width: 93%;
+  margin-left: 5%;
+  color: #555;
+}
+
+.data .data-item .reward-info .input {
   width: 100%;
 }
 
-.data .all-title{
+.data .all-title {
   text-align: center;
   font-size: 34rpx;
-  background-color: #FFF;
-  border-bottom: 1rpx solid #EFEFEF;
+  background-color: #fff;
+  border-bottom: 1rpx solid #efefef;
   padding: 15rpx 0;
 }
 
-.split-line{
+.split-line {
   height: 20rpx;
 }
 
-.placeholder{
+.placeholder {
   font-size: 26rpx;
 }
 
-.data .data-item .pic-data{
+.data .data-item .pic-data {
   width: 40%;
 }
 
+.data .data-item .up-holder {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx dashed #bd2529;
+  padding: 40rpx;
+}
 
-.data .data-item .pic-data .pic{
+.data .data-item .up-holder .plus {
+  font-size: 60rpx;
+}
+
+.data .data-item .up-holder .tip {
+  font-size: 20rpx;
+}
+
+.data .data-item .pic-data .pic {
   width: 100%;
 }
 
-#logo{
+#logo {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(80, 28, 32);
-  color: #FFF;
+  color: #fff;
   font-weight: 500;
 }
 
-#logo .holder{
+#logo .holder {
   height: 250rpx;
   line-height: 250rpx;
   font-size: 40rpx;
 }
 
-.op-box{
+.op-box {
   margin-bottom: 40rpx;
 }
 

@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.3.0",
 	"appid": "wx9e61825cdbaa98dd",
-	"projectname": "toutiao",
+	"projectname": "%E7%AB%9E%E6%8A%80%E6%9D%A5%E4%BA%86",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -41,8 +41,8 @@
 				{
 					"id": 0,
 					"name": "index",
-					"pathName": "pages/sort/sort",
-					"query": ""
+					"pathName": "pages/setting/setting",
+					"query": "matchId=TCW0LkFf"
 				}
 			]
 		}

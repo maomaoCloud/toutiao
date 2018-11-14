@@ -1,97 +1,119 @@
-<view class='data'>
-  <view id='logo'>
-    <view class='holder'>上传logo</view>
-  </view>
-  <view class='data-item'>
-    <text class='title'>比赛名称</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入比赛的名称'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>承办单位</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入承办单位'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>裁判长</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入裁判长'></input>
-  </view>
-
-  <view class='split-line'></view>
-
-  <view class='all-title'>奖品设置</view>
-  <view class='data-item'>
-    <view class='pic-data'>
-      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
+<form bindsubmit="formSubmit">
+  <view class='data'>
+    <view data-name='matchLogo' bindtap='uploadImg' id='logo'>
+      <view wx:if="{{ !hasImg1 }}" class='holder'>上传logo</view>
+      <image wx:if="{{ hasImg1 }}" data-name='matchLogo' bindtap='uploadImg' style='width:100%;' mode='widthFix' src='{{ rule.matchLogo }}'></image>
     </view>
-    <view class='reward-info'>
-      <text class='title'>一等奖</text>
-      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
+    <view class='data-item'>
+      <text class='title'>比赛名称</text>
+      <input class='input' name="matchName" value='{{ rule.matchName }}' placeholder-class='placeholder' placeholder='[必填] 请输入比赛的名称'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>承办单位</text>
+      <input class='input' name="matchHost" value='{{ rule.matchHost }}' placeholder-class='placeholder' placeholder='请输入承办单位'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>裁判长</text>
+      <input class='input' name="matchReferee" value='{{ rule.matchReferee }}' placeholder-class='placeholder' placeholder='请输入裁判长'></input>
+    </view>
+
+    <view class='split-line'></view>
+
+    <view class='all-title'>奖品设置</view>
+    <view class='data-item'>
+      <view class='pic-data'>
+        <view wx:if="{{ !hasImg2 }}" class='up-holder' data-name='matchChampionImg' bindtap='uploadImg'>
+          <text class='plus'>+</text>
+          <text class='tip'>奖品图片</text>
+        </view>
+        <image wx:if="{{ hasImg2 }}" data-name='matchChampionImg' bindtap='uploadImg' class='pic' mode='widthFix' src='{{ rule.matchChampionImg }}'></image>
+      </view>
+      <view class='reward-info'>
+        <text class='title'>一等奖</text>
+        <input class='input' name="matchChampion" value='{{ rule.matchChampion }}' placeholder-class='placeholder' placeholder='[必填] 请输入一等奖名称'></input>
+      </view>
+    </view>
+
+    <view class='data-item'>
+      <view class='pic-data'>
+        <view wx:if="{{ !hasImg3 }}" class='up-holder' data-name='matchSecondImg' bindtap='uploadImg'>
+          <text class='plus'>+</text>
+          <text class='tip'>奖品图片</text>
+        </view>
+        <image wx:if="{{ hasImg3 }}" data-name='matchSecondImg' bindtap='uploadImg' class='pic' mode='widthFix' src='{{ rule.matchSecondImg }}'></image>
+      </view>
+      <view class='reward-info'>
+        <text class='title'>二等奖</text>
+        <input class='input' name="matchSecond" value='{{ rule.matchSecond }}' placeholder-class='placeholder' placeholder='[必填] 请输入二等奖名称'></input>
+      </view>
+    </view>
+
+    <view class='data-item'>
+      <view class='pic-data'>
+        <view wx:if="{{ !hasImg4 }}" class='up-holder' data-name='matchThirdImg' bindtap='uploadImg'>
+          <text class='plus'>+</text>
+          <text class='tip'>奖品图片</text>
+        </view>
+        <image wx:if="{{ hasImg4 }}" data-name='matchThirdImg' bindtap='uploadImg' class='pic' mode='widthFix' src='{{ rule.matchThirdImg }}'></image>
+      </view>
+      <view class='reward-info'>
+        <text class='title'>三等奖</text>
+        <input class='input' name="matchThird" value='{{ rule.matchThird }}' placeholder-class='placeholder' placeholder='[必填] 请输入三等奖名称'></input>
+      </view>
+    </view>
+
+    <view class='split-line'></view>
+
+    <view class='all-title'>基础规则设定</view>
+    <view class='data-item'>
+      <text class='title'>总轮次</text>
+      <input class='input' type='number' name="ruleTurn" value='{{ rule.ruleTurn }}' placeholder-class='placeholder' placeholder='[必填] 请输入总轮次数'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>每轮副数</text>
+      <input class='input' type='number' name="rulePair" value='{{ rule.rulePair }}' placeholder-class='placeholder' placeholder='[必填] 请输入每轮副数'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>每轮时间</text>
+      <input class='input' type='number' name="ruleTime" value='{{ rule.ruleTime }}' placeholder-class='placeholder' placeholder='[必填] 请输入每轮时间'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>首座排序</text>
+      <picker bindchange="bindPickerChange" range="{{array}}">
+        <view class="picker">
+          <view class='firstPx'>{{ firstPx }}</view>
+        </view>
+      </picker>
+    </view>
+
+    <view class='split-line'></view>
+
+    <view class='all-title'>
+    <text>  是否可平  </text>
+    <switch checked="{{ checkRuleDraw == 1 }}" bindchange="setCanDraw"/>
+    </view>
+    <view class='data-item'>
+      <text class='title'>胜积分</text>
+      <input class='input' type='number' name="ruleWin" value='{{ rule.ruleWin }}' placeholder-class='placeholder' type="number" placeholder='[必填] 请输入胜积分'></input>
+    </view>
+
+    <view class='data-item'>
+      <text class='title'>负积分</text>
+      <input class='input' type='number' name="ruleFail" value='{{ rule.ruleFail }}' placeholder-class='placeholder' type="number" placeholder='[必填] 请输入负积分'></input>
+    </view>
+
+    <view wx:if="{{ checkRuleDraw == 1 }}" class='data-item'>
+      <text class='title'>平积分</text>
+      <input class='input' type='number' name="ruleDraw" value='{{ rule.ruleDraw }}' placeholder-class='placeholder' type="number" placeholder='[必填] 输入 1 表示不可平'></input>
+    </view>
+
+    <view class='op-box'>
+      <button formType="submit" class='save-btn'>保存比赛设置内容</button>
     </view>
   </view>
-
-  <view class='data-item'>
-    <view class='pic-data'>
-      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
-    </view>
-    <view class='reward-info'>
-      <text class='title'>二等奖</text>
-      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
-    </view>
-  </view>
-
-  <view class='data-item'>
-    <view class='pic-data'>
-      <image class='pic' mode='widthFix' src='https://m.360buyimg.com/n1/jfs/t25144/2/1278469398/101844/cb66b21/5b90f5bfNcd58f18b.png'></image>
-    </view>
-    <view class='reward-info'>
-      <text class='title'>三等奖</text>
-      <input class='input' placeholder-class='placeholder' placeholder='请输入一等奖名称'></input>
-    </view>
-  </view>
-
-  <view class='split-line'></view>
-
-  <view class='all-title'>基础规则设定</view>
-  <view class='data-item'>
-    <text class='title'>总轮次</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入总轮次数'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>每轮副数</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入每轮副数'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>每轮时间</text>
-    <input class='input' placeholder-class='placeholder' placeholder='请输入每轮时间'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>首座排序</text>
-    <input class='input' placeholder-class='placeholder' placeholder='点击选择'></input>
-  </view>
-
-  <view class='split-line'></view>
-
-  <view class='all-title'>积分设定</view>
-  <view class='data-item'>
-    <text class='title'>胜积分</text>
-    <input class='input' placeholder-class='placeholder' type="number" placeholder='请输入胜积分'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>负积分</text>
-    <input class='input' placeholder-class='placeholder' type="number" placeholder='请输入负积分'></input>
-  </view>
-
-  <view class='data-item'>
-    <text class='title'>平积分</text>
-    <input class='input' placeholder-class='placeholder' type="number" placeholder='输入 1 表示不可平'></input>
-  </view>
-
-  <view class='op-box'>
-    <button formType="submit" class='save-btn'>保存比赛设置内容</button>
-  </view>
-</view>
+</form>

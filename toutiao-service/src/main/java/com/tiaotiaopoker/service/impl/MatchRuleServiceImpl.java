@@ -25,14 +25,14 @@ public class MatchRuleServiceImpl implements MatchRuleService {
     private MatchRuleMapper matchRuleMapper;
 
     @Override
-    public int saveBySelective(MatchRule matchRule) {
+    public int saveBySelective (MatchRule matchRule) {
         return matchRuleMapper.updateByPrimaryKeySelective(matchRule);
     }
 
     @Override
-    public MatchRule selectMatchRuleByMatchId(String matchId) {
-        MatchRuleExample matchRuleExample = new MatchRuleExample();
-        MatchRuleExample.Criteria criteria = matchRuleExample.createCriteria();
+    public MatchRule selectMatchRuleByMatchId (String matchId) {
+        MatchRuleExample          matchRuleExample = new MatchRuleExample();
+        MatchRuleExample.Criteria criteria         = matchRuleExample.createCriteria();
         criteria.andMatchIdEqualTo(matchId);
         List<MatchRule> matchRuleList = matchRuleMapper.selectByExample(matchRuleExample);
         if (matchRuleList.size() > 0) {
@@ -43,9 +43,9 @@ public class MatchRuleServiceImpl implements MatchRuleService {
     }
 
     @Override
-    public void createMatchRuleByMatch(Match myMatch) {
-        MatchRuleExample matchRuleExample = new MatchRuleExample();
-        MatchRuleExample.Criteria criteria = matchRuleExample.createCriteria();
+    public void createMatchRuleByMatch (Match myMatch) {
+        MatchRuleExample          matchRuleExample = new MatchRuleExample();
+        MatchRuleExample.Criteria criteria         = matchRuleExample.createCriteria();
         criteria.andMatchIdEqualTo(myMatch.getId());
         List<MatchRule> matchRuleList = matchRuleMapper.selectByExample(matchRuleExample);
         if (matchRuleList.size() == 0) {
@@ -62,8 +62,7 @@ public class MatchRuleServiceImpl implements MatchRuleService {
             matchRule.setRuleDraw(1);
             matchRule.setRuleFail(0);
             matchRuleMapper.insertSelective(matchRule);
-        } else {
-            return;
         }
     }
+
 }

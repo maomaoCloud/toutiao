@@ -45,8 +45,8 @@ App({
     loginUserInfo: null,
     sessionKey: null
   },
-  serverUrl: "https://api.kikistudio.cn/",
-  //serverUrl: "https://1698ee42.ngrok.io/",
+  //serverUrl: "https://api.kikistudio.cn/",
+  serverUrl: "http://localhost:8081/",
   /**显示错误提示*/
   showErrorMsg: function(msg) {
     wx.showToast({

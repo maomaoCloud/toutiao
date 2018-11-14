@@ -1,8 +1,14 @@
 package com.tiaotiaopoker.controller;
 
 import com.tiaotiaopoker.JsonResult;
+import com.tiaotiaopoker.pojo.MatchRule;
+import com.tiaotiaopoker.pojo.MatchWithBLOBs;
+import com.tiaotiaopoker.service.MatchRuleService;
+import com.tiaotiaopoker.service.MatchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping ("match/manager/")
 @Scope ("prototype")
 public class MatchManagerController {
+    @Autowired
+    private MatchRuleService matchRuleService;
+    @Autowired
+    private MatchService     matchService;
+
     /**
      * 0.根据比赛Id 获取比赛轮次信息
      * resData:{
@@ -106,6 +117,37 @@ public class MatchManagerController {
      */
     @RequestMapping ("seat/detail/{matchId}/{turn}")
     public JsonResult seatDetail (@PathVariable ("matchId") String matchId, @PathVariable ("turn") Integer turn) {
+        return JsonResult.SUCCESS();
+    }
+
+    /**
+     * 5.获取比赛的设置信息
+     */
+    @RequestMapping ("setting/{matchId}")
+    public JsonResult getMatchSettingInfo (@PathVariable ("matchId") String matchId) {
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        if (matchRule == null) {
+            MatchWithBLOBs matchData = matchService.getMatchDataById(matchId);
+            if (matchData == null) {
+                return JsonResult.FAILED("活动不存在");
+            }
+            matchRuleService.createMatchRuleByMatch(matchData);
+            matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        }
+        return JsonResult.SUCCESS("success", matchRule);
+    }
+
+    /**
+     * 5.获取保存比赛规则信息
+     */
+    @RequestMapping ("setting/save")
+    public JsonResult saveMatchRule (@RequestBody MatchRule matchRule) {
+        try {
+            matchRuleService.saveBySelective(matchRule);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
         return JsonResult.SUCCESS();
     }
 
