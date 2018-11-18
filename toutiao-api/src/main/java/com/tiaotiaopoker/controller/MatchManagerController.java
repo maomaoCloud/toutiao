@@ -1,10 +1,11 @@
 package com.tiaotiaopoker.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
-import com.tiaotiaopoker.pojo.MatchRule;
-import com.tiaotiaopoker.pojo.MatchWithBLOBs;
-import com.tiaotiaopoker.service.MatchRuleService;
-import com.tiaotiaopoker.service.MatchService;
+import com.tiaotiaopoker.entity.*;
+import com.tiaotiaopoker.pojo.*;
+import com.tiaotiaopoker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +13,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController ()
-@RequestMapping ("match/manager/")
-@Scope ("prototype")
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController()
+@RequestMapping("match/manager/")
+@Scope("prototype")
 public class MatchManagerController {
     @Autowired
     private MatchRuleService matchRuleService;
     @Autowired
-    private MatchService     matchService;
+    private MatchService matchService;
+    @Autowired
+    private MatchTeamDataService matchTeamDataService;
+    @Autowired
+    private MatchTeamResultService matchTeamResultService;
+    @Autowired
+    private SysHelpService sysHelpService;
+    @Autowired
+    private ApplyOrderService applyOrderService;
 
     /**
      * 0.根据比赛Id 获取比赛轮次信息
@@ -32,19 +47,62 @@ public class MatchManagerController {
      * currentTurnHasInputScore:true    //当前轮次是否已录入成绩
      * }
      */
-    @RequestMapping ("info/{matchId}")
-    public JsonResult matchInfo (@PathVariable ("matchId") String matchId) {
-        return JsonResult.SUCCESS();
+    @RequestMapping("info/{matchId}")
+    public JsonResult matchInfo(@PathVariable("matchId") String matchId) {
+
+        try {
+            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+            Map<String, Object> resultMap = new HashMap<>();
+            if (null == matchRule) {
+                resultMap.put("hasSettingRule", false);
+                return JsonResult.SUCCESS("success", resultMap);
+            } else {
+                //已设置比赛信息
+                resultMap.put("hasSettingRule", true);
+                //ruleDraw=1(不可平)
+                resultMap.put("canDraw", matchRule.getRuleDraw() == 1 ? false : true);
+                resultMap.put("totalTurn", matchRule.getRuleTurn());
+                //当前轮次
+                int nowTurn = matchTeamDataService.getNowTurn(matchId);
+                resultMap.put("currentTurn", nowTurn);
+                if (nowTurn != 0) {
+                    resultMap.put("currentTurnName", Constants.NUM_CH[nowTurn - 1]);
+                }
+                //当前轮次是否有成绩信息
+                MatchTeamResult matchTeamResult = new MatchTeamResult();
+                matchTeamResult.setTurnNumber(nowTurn);
+                matchTeamResult.setMatchId(matchId);
+                List<MatchTeamResult> matchTeamResults = matchTeamResultService.queryMatchTeamResultByCondition(matchTeamResult);
+                if (matchTeamResults != null && matchTeamResults.size() > 0) {
+                    resultMap.put("currentTurnHasInputScore", true);
+                } else {
+                    resultMap.put("currentTurnHasInputScore", false);
+                }
+                return JsonResult.SUCCESS("success", resultMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
     }
 
     /**
      * 1.帮助中心接口 -> 帮助中心列表
      * resData:[{helpId:"123",helpTitle:"title",helpColor:"#EFEFEF"},{helpId:"456",helpTitle:"title",helpColor:"#EFEFEF"}]
      */
-    @RequestMapping ("help/list")
-    public JsonResult helpList () {
-
-        return JsonResult.SUCCESS();
+    @RequestMapping("help/list")
+    public JsonResult helpList() {
+        List<ApiHelpData> resultList = new ArrayList<>();
+        try {
+            List<SysHelp> helpList = sysHelpService.queryHelpByCondition(null, null);
+            for (SysHelp help : helpList) {
+                resultList.add(ApiHelpData.genFromHelp(help));
+            }
+            return JsonResult.SUCCESS("success", resultList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
     }
 
     /**
@@ -52,9 +110,15 @@ public class MatchManagerController {
      * 时间格式: yyyy-MM-dd
      * resData:{helpId:"123", helpTitle:"",helpContent:"", helpCreateTime:"yyyy-MM-dd"}
      */
-    @RequestMapping ("help/detail/{id}")
-    public JsonResult helpDetail (@PathVariable ("id") String id) {
-        return JsonResult.SUCCESS();
+    @RequestMapping("help/detail/{id}")
+    public JsonResult helpDetail(@PathVariable("id") String id) {
+        try {
+            SysHelp sysHelp = sysHelpService.queryHelpById(id);
+            return JsonResult.SUCCESS("success", ApiHelpData.genFromHelp(sysHelp));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
     }
 
     /**
@@ -70,10 +134,57 @@ public class MatchManagerController {
      * userBName:"",
      * 这个比赛设置的一些参考成绩项目
      * }
+     * <p>
+     * resData{
+     * nameList[积分和，去首轮积分和]，
+     * apiResultList[scoreDataItem,scoreDataItem]
+     * }
+     * scoreDataItem:{
+     * index:1,   //名次
+     * userAHead:"",
+     * userAName:"",
+     * userBHead:"",
+     * userBName:"",
+     * resultString:""   //参考成绩（逗号分隔字符串，值与nameList里的属性名称一一对应）
+     * }
      */
-    @RequestMapping ("score/show/{matchId}/{turn}")
-    public JsonResult showScore (@PathVariable ("matchId") String matchId, @PathVariable ("turn") Integer turn) {
-        return JsonResult.SUCCESS();
+    @RequestMapping("score/show/{matchId}/{turn}")
+    public JsonResult showScore(@PathVariable("matchId") String matchId, @PathVariable("turn") Integer turn) {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            //比赛设置参考成绩属性名称集合
+            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+            List<String> nameList = new ArrayList<>();
+            String resultRule = matchRule.getRuleResult() == null ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+            for (String title : resultRule.split(",")) {
+                nameList.add((String) Constants.resultRule.resultRuleMap.get(title));
+            }
+            resultMap.put("nameList", nameList);
+
+            //成绩数据集合
+            List<ApiMatchTeamResult> apiResultList = new ArrayList<>();
+            MatchTeamResult result = new MatchTeamResult();
+            result.setMatchId(matchId);
+            result.setTurnNumber(turn);
+            List<MatchTeamResultDto> resultDtolist = matchTeamResultService.sortMatchTeamResult(result);
+            //根据规则显示相应的成绩
+            for (MatchTeamResultDto resultDto : resultDtolist) {
+                ApiMatchTeamResult apiResult = ApiMatchTeamResult.genFromMatchTeamResultDto(resultDto);
+                String resultString = "";
+                Class clazz = resultDto.getClass();
+                for (String getName : resultRule.split(",")) {
+                    resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
+                }
+                apiResult.setResultString(resultString.length() > 0 ? resultString.substring(0, resultString.length() - 1) : "");
+                apiResult.setIndex(resultDtolist.indexOf(resultDto) + 1);
+                apiResultList.add(apiResult);
+            }
+            resultMap.put("apiResultList", apiResultList);
+            return JsonResult.SUCCESS("success", resultMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
     }
 
     /**
@@ -92,9 +203,19 @@ public class MatchManagerController {
      * userBHasHasSign:false
      * }
      */
-    @RequestMapping ("sign/detail/{matchId}")
-    public JsonResult signDetail (@PathVariable ("matchId") String matchId) {
-        return JsonResult.SUCCESS();
+    @RequestMapping("sign/detail/{matchId}")
+    public JsonResult signDetail(@PathVariable("matchId") String matchId) {
+        try {
+            List<ApiSignDetail> signDetailList = new ArrayList<>();
+            List<ApplyOrder> orderList = applyOrderService.getSignData(matchId);
+            for (ApplyOrder order : orderList) {
+                signDetailList.add(ApiSignDetail.genFromApplyOrder(order));
+            }
+            return JsonResult.SUCCESS("success", signDetailList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
     }
 
     /**
@@ -115,16 +236,31 @@ public class MatchManagerController {
      * groupBUserBHead:"",
      * }
      */
-    @RequestMapping ("seat/detail/{matchId}/{turn}")
-    public JsonResult seatDetail (@PathVariable ("matchId") String matchId, @PathVariable ("turn") Integer turn) {
-        return JsonResult.SUCCESS();
+    @RequestMapping("seat/detail/{matchId}/{turn}")
+    public JsonResult seatDetail(@PathVariable("matchId") String matchId, @PathVariable("turn") Integer turn) {
+
+        try {
+            List<ApiMatchTeamData> apiMatchTeamDataList = new ArrayList<>();
+            MatchTeamData data = new MatchTeamData();
+            data.setMatchId(matchId);
+            data.setTurnNumber(turn);
+            List<MatchTeamDataDto> matchTeamDataDtoList = matchTeamDataService.queryTeamDataByCondition(data);
+            for (MatchTeamDataDto dataDto : matchTeamDataDtoList) {
+                apiMatchTeamDataList.add(ApiMatchTeamData.genFromMatchTeamDataDto(dataDto));
+            }
+            return JsonResult.SUCCESS("success", apiMatchTeamDataList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+
+        }
     }
 
     /**
      * 5.获取比赛的设置信息
      */
-    @RequestMapping ("setting/{matchId}")
-    public JsonResult getMatchSettingInfo (@PathVariable ("matchId") String matchId) {
+    @RequestMapping("setting/{matchId}")
+    public JsonResult getMatchSettingInfo(@PathVariable("matchId") String matchId) {
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         if (matchRule == null) {
             MatchWithBLOBs matchData = matchService.getMatchDataById(matchId);
@@ -140,8 +276,8 @@ public class MatchManagerController {
     /**
      * 5.获取保存比赛规则信息
      */
-    @RequestMapping ("setting/save")
-    public JsonResult saveMatchRule (@RequestBody MatchRule matchRule) {
+    @RequestMapping("setting/save")
+    public JsonResult saveMatchRule(@RequestBody MatchRule matchRule) {
         try {
             matchRuleService.saveBySelective(matchRule);
         } catch (Exception e) {

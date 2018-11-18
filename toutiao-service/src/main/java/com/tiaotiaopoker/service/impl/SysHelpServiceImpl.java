@@ -22,11 +22,13 @@ public class SysHelpServiceImpl implements SysHelpService {
     @Override
     public List<SysHelp> queryHelpByCondition(SysHelp Help, Pagination page) {
         Map<String, Object> paramMap = new HashMap<>();
-        if (!StringUtils.isBlank(Help.getHelpTitle())) {
-            paramMap.put("HelpTitle", Help.getHelpTitle());
-        }
-        if (null != Help.getHelpStatus()) {
-            paramMap.put("HelpStatus", Help.getHelpStatus());
+        if (null != Help) {
+            if (!StringUtils.isBlank(Help.getHelpTitle())) {
+                paramMap.put("HelpTitle", Help.getHelpTitle());
+            }
+            if (null != Help.getHelpStatus()) {
+                paramMap.put("HelpStatus", Help.getHelpStatus());
+            }
         }
         if (null != page) {
             page.setTotal(sysHelpMapper.countHelpByCondition(paramMap));

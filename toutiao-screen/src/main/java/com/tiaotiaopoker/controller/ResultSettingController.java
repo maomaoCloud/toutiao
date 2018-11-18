@@ -131,8 +131,8 @@ public class ResultSettingController {
             for (MatchTeamResultDto resultDto : resultlist) {
                 String resultString = "";
                 Class clazz = resultDto.getClass();
-                for (String getNmae : resultRule.split(",")) {
-                    resultString += clazz.getMethod("get" + getNmae).invoke(resultDto) + ",";
+                for (String getName : resultRule.split(",")) {
+                    resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
                 }
                 resultDto.setResultString(resultString.substring(0, resultString.length() - 1));
             }
