@@ -10,20 +10,22 @@
         <result column="partner_name" property="partnerName" jdbcType="VARCHAR"/>
         <result column="partner_phone" property="partnerPhone" jdbcType="VARCHAR"/>
         <result column="has_partner" property="hasPartner" jdbcType="INTEGER"/>
-        <result column="price" property="price" jdbcType="REAL"/>
-        <result column="pay_money" property="payMoney" jdbcType="REAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="pay_money" property="payMoney" jdbcType="DECIMAL"/>
         <result column="match_id" property="matchId" jdbcType="VARCHAR"/>
         <result column="user_head" property="userHead" jdbcType="VARCHAR"/>
         <result column="partner_head" property="partnerHead" jdbcType="VARCHAR"/>
         <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
         <result column="pay_statue" property="payStatue" jdbcType="INTEGER"/>
-        <result column="share_percent" property="sharePercent" jdbcType="REAL"/>
+        <result column="share_percent" property="sharePercent" jdbcType="DECIMAL"/>
         <result column="pay_date" property="payDate" jdbcType="TIMESTAMP"/>
         <result column="user_sign_status" property="userSignStatus" jdbcType="INTEGER"/>
         <result column="partner_sign_statue" property="partnerSignStatue" jdbcType="INTEGER"/>
         <result column="patner_code" property="patnerCode" jdbcType="VARCHAR"/>
         <result column="user_sign_datetime" property="userSignDatetime" jdbcType="TIMESTAMP"/>
         <result column="partner_sign_datetime" property="partnerSignDatetime" jdbcType="TIMESTAMP"/>
+        <result column="user_id_card" property="userIdCard" jdbcType="VARCHAR"/>
+        <result column="partner_id_card" property="partnerIdCard" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="baseResultMapDto" type="com.tiaotiaopoker.entity.ApplyOrderDto" extends="BaseResultMap">
         <result column="match_theme" property="matchTheme" jdbcType="VARCHAR"/>
@@ -93,10 +95,10 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, user_id, user_name, user_phone, partner_id, partner_name, partner_phone, has_partner, 
-    price, pay_money, match_id, user_head, partner_head, add_time, pay_statue, share_percent, 
-    pay_date, user_sign_status, partner_sign_statue, patner_code, user_sign_datetime, 
-    partner_sign_datetime
+    id, user_id, user_name, user_phone, partner_id, partner_name, partner_phone, has_partner,
+    price, pay_money, match_id, user_head, partner_head, add_time, pay_statue, share_percent,
+    pay_date, user_sign_status, partner_sign_statue, patner_code, user_sign_datetime,
+    partner_sign_datetime, user_id_card, partner_id_card
   </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample">
         select
@@ -129,22 +131,24 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
-    insert into apply_order (id, user_id, user_name, 
-      user_phone, partner_id, partner_name, 
-      partner_phone, has_partner, price, 
-      pay_money, match_id, user_head, 
-      partner_head, add_time, pay_statue, 
-      share_percent, pay_date, user_sign_status, 
-      partner_sign_statue, patner_code, user_sign_datetime, 
-      partner_sign_datetime)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, #{partnerName,jdbcType=VARCHAR}, 
-      #{partnerPhone,jdbcType=VARCHAR}, #{hasPartner,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
-      #{payMoney,jdbcType=REAL}, #{matchId,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR}, 
-      #{partnerHead,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{payStatue,jdbcType=INTEGER}, 
-      #{sharePercent,jdbcType=REAL}, #{payDate,jdbcType=TIMESTAMP}, #{userSignStatus,jdbcType=INTEGER}, 
-      #{partnerSignStatue,jdbcType=INTEGER}, #{patnerCode,jdbcType=VARCHAR}, #{userSignDatetime,jdbcType=TIMESTAMP}, 
-      #{partnerSignDatetime,jdbcType=TIMESTAMP})
+    insert into apply_order (id, user_id, user_name,
+      user_phone, partner_id, partner_name,
+      partner_phone, has_partner, price,
+      pay_money, match_id, user_head,
+      partner_head, add_time, pay_statue,
+      share_percent, pay_date, user_sign_status,
+      partner_sign_statue, patner_code, user_sign_datetime,
+      partner_sign_datetime, user_id_card, partner_id_card
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, #{partnerName,jdbcType=VARCHAR},
+      #{partnerPhone,jdbcType=VARCHAR}, #{hasPartner,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL},
+      #{payMoney,jdbcType=DECIMAL}, #{matchId,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR},
+      #{partnerHead,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{payStatue,jdbcType=INTEGER},
+      #{sharePercent,jdbcType=DECIMAL}, #{payDate,jdbcType=TIMESTAMP}, #{userSignStatus,jdbcType=INTEGER},
+      #{partnerSignStatue,jdbcType=INTEGER}, #{patnerCode,jdbcType=VARCHAR}, #{userSignDatetime,jdbcType=TIMESTAMP},
+      #{partnerSignDatetime,jdbcType=TIMESTAMP}, #{userIdCard,jdbcType=VARCHAR}, #{partnerIdCard,jdbcType=VARCHAR}
+      )
   </insert>
     <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
         insert into apply_order
@@ -215,6 +219,12 @@
             <if test="partnerSignDatetime != null">
                 partner_sign_datetime,
             </if>
+            <if test="userIdCard != null">
+                user_id_card,
+            </if>
+            <if test="partnerIdCard != null">
+                partner_id_card,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -242,10 +252,10 @@
                 #{hasPartner,jdbcType=INTEGER},
             </if>
             <if test="price != null">
-                #{price,jdbcType=REAL},
+                #{price,jdbcType=DECIMAL},
             </if>
             <if test="payMoney != null">
-                #{payMoney,jdbcType=REAL},
+                #{payMoney,jdbcType=DECIMAL},
             </if>
             <if test="matchId != null">
                 #{matchId,jdbcType=VARCHAR},
@@ -263,7 +273,7 @@
                 #{payStatue,jdbcType=INTEGER},
             </if>
             <if test="sharePercent != null">
-                #{sharePercent,jdbcType=REAL},
+                #{sharePercent,jdbcType=DECIMAL},
             </if>
             <if test="payDate != null">
                 #{payDate,jdbcType=TIMESTAMP},
@@ -282,6 +292,12 @@
             </if>
             <if test="partnerSignDatetime != null">
                 #{partnerSignDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userIdCard != null">
+                #{userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="partnerIdCard != null">
+                #{partnerIdCard,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -319,10 +335,10 @@
                 has_partner = #{record.hasPartner,jdbcType=INTEGER},
             </if>
             <if test="record.price != null">
-                price = #{record.price,jdbcType=REAL},
+                price = #{record.price,jdbcType=DECIMAL},
             </if>
             <if test="record.payMoney != null">
-                pay_money = #{record.payMoney,jdbcType=REAL},
+                pay_money = #{record.payMoney,jdbcType=DECIMAL},
             </if>
             <if test="record.matchId != null">
                 match_id = #{record.matchId,jdbcType=VARCHAR},
@@ -340,7 +356,7 @@
                 pay_statue = #{record.payStatue,jdbcType=INTEGER},
             </if>
             <if test="record.sharePercent != null">
-                share_percent = #{record.sharePercent,jdbcType=REAL},
+                share_percent = #{record.sharePercent,jdbcType=DECIMAL},
             </if>
             <if test="record.payDate != null">
                 pay_date = #{record.payDate,jdbcType=TIMESTAMP},
@@ -360,6 +376,12 @@
             <if test="record.partnerSignDatetime != null">
                 partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP},
             </if>
+            <if test="record.userIdCard != null">
+                user_id_card = #{record.userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="record.partnerIdCard != null">
+                partner_id_card = #{record.partnerIdCard,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -375,20 +397,22 @@
         partner_name = #{record.partnerName,jdbcType=VARCHAR},
         partner_phone = #{record.partnerPhone,jdbcType=VARCHAR},
         has_partner = #{record.hasPartner,jdbcType=INTEGER},
-        price = #{record.price,jdbcType=REAL},
-        pay_money = #{record.payMoney,jdbcType=REAL},
+        price = #{record.price,jdbcType=DECIMAL},
+        pay_money = #{record.payMoney,jdbcType=DECIMAL},
         match_id = #{record.matchId,jdbcType=VARCHAR},
         user_head = #{record.userHead,jdbcType=VARCHAR},
         partner_head = #{record.partnerHead,jdbcType=VARCHAR},
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
         pay_statue = #{record.payStatue,jdbcType=INTEGER},
-        share_percent = #{record.sharePercent,jdbcType=REAL},
+        share_percent = #{record.sharePercent,jdbcType=DECIMAL},
         pay_date = #{record.payDate,jdbcType=TIMESTAMP},
         user_sign_status = #{record.userSignStatus,jdbcType=INTEGER},
         partner_sign_statue = #{record.partnerSignStatue,jdbcType=INTEGER},
         patner_code = #{record.patnerCode,jdbcType=VARCHAR},
         user_sign_datetime = #{record.userSignDatetime,jdbcType=TIMESTAMP},
-        partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP}
+        partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP},
+        user_id_card = #{record.userIdCard,jdbcType=VARCHAR},
+        partner_id_card = #{record.partnerIdCard,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -418,10 +442,10 @@
                 has_partner = #{hasPartner,jdbcType=INTEGER},
             </if>
             <if test="price != null">
-                price = #{price,jdbcType=REAL},
+                price = #{price,jdbcType=DECIMAL},
             </if>
             <if test="payMoney != null">
-                pay_money = #{payMoney,jdbcType=REAL},
+                pay_money = #{payMoney,jdbcType=DECIMAL},
             </if>
             <if test="matchId != null">
                 match_id = #{matchId,jdbcType=VARCHAR},
@@ -439,7 +463,7 @@
                 pay_statue = #{payStatue,jdbcType=INTEGER},
             </if>
             <if test="sharePercent != null">
-                share_percent = #{sharePercent,jdbcType=REAL},
+                share_percent = #{sharePercent,jdbcType=DECIMAL},
             </if>
             <if test="payDate != null">
                 pay_date = #{payDate,jdbcType=TIMESTAMP},
@@ -459,6 +483,12 @@
             <if test="partnerSignDatetime != null">
                 partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP},
             </if>
+            <if test="userIdCard != null">
+                user_id_card = #{userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="partnerIdCard != null">
+                partner_id_card = #{partnerIdCard,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
@@ -471,20 +501,22 @@
       partner_name = #{partnerName,jdbcType=VARCHAR},
       partner_phone = #{partnerPhone,jdbcType=VARCHAR},
       has_partner = #{hasPartner,jdbcType=INTEGER},
-      price = #{price,jdbcType=REAL},
-      pay_money = #{payMoney,jdbcType=REAL},
+      price = #{price,jdbcType=DECIMAL},
+      pay_money = #{payMoney,jdbcType=DECIMAL},
       match_id = #{matchId,jdbcType=VARCHAR},
       user_head = #{userHead,jdbcType=VARCHAR},
       partner_head = #{partnerHead,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       pay_statue = #{payStatue,jdbcType=INTEGER},
-      share_percent = #{sharePercent,jdbcType=REAL},
+      share_percent = #{sharePercent,jdbcType=DECIMAL},
       pay_date = #{payDate,jdbcType=TIMESTAMP},
       user_sign_status = #{userSignStatus,jdbcType=INTEGER},
       partner_sign_statue = #{partnerSignStatue,jdbcType=INTEGER},
       patner_code = #{patnerCode,jdbcType=VARCHAR},
       user_sign_datetime = #{userSignDatetime,jdbcType=TIMESTAMP},
-      partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP}
+      partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP},
+      user_id_card = #{userIdCard,jdbcType=VARCHAR},
+      partner_id_card = #{partnerIdCard,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 

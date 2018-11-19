@@ -278,8 +278,60 @@ Page({
   /**编排座位*/
   sort: function() {
     var matchId = this.data.match.id;
-    wx.navigateTo({
-      url: '../sort/sort?matchId=' + matchId,
-    }) 
+    //查看当前座位第几轮
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    })
+
+    var url = app.serverUrl + "match/manager/info/" + matchId;
+
+    wx.request({
+      url: url,
+      success: function(res) {
+        var settingInfo = res.data.resData;
+        if (!settingInfo.hasSettingRule) {
+          // 还没有设置比赛信息
+          app.showErrorMsg2("请先设置比赛！", 2500);
+          return;
+        }
+
+        if (settingInfo.currentTurn == 0) {
+          wx.navigateTo({
+            url: '../sort/sort?matchId=' + matchId,
+          })
+        }else{
+          wx.navigateTo({
+            url: '../sort2/sort?matchId=' + matchId,
+          })
+        }
+      }
+    })
+  },
+  checkCanDo: function(matchId, fn) {
+    var url = app.serverUrl + "match/manager/info/" + matchId;
+    wx.showLoading({
+      mask: true
+    })
+
+    wx.request({
+      url: url,
+      success: function(res) {
+        wx.hideLoading();
+        var settingInfo = res.data.resData;
+        if (!settingInfo.hasSettingRule) {
+          // 还没有设置比赛信息
+          app.showErrorMsg2("请先设置比赛！", 2500);
+          return;
+        }
+
+        if (settingInfo.currentTurn == 0) {
+          app.showErrorMsg2("请排座位！", 2500);
+          return;
+        }
+
+        fn(res);
+      }
+    })
   }
 })

@@ -193,7 +193,7 @@ public class ScreenServiceImpl implements ScreenService {
         AppUser bUser = appUserService.getUserByUserId( userId );
         ApplyOrder order = orderService.updateUserBSignStatue( matchId, aId, userId, bUser.getAvatarUrl() );
 
-        appUserService.updateUserApplyInfo( userId, order.getPartnerName(), order.getPartnerPhone() );
+        appUserService.updateUserApplyInfo( userId, order.getPartnerName(), order.getPartnerPhone(),order.getPartnerIdCard() );
 
         return resultMap;
     }

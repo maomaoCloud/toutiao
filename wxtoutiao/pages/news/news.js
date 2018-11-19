@@ -66,8 +66,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-  },
+  onShareAppMessage: function() {},
 
   /**
    * 加载新闻
@@ -88,9 +87,19 @@ Page({
         var jsonData = data.data;
         console.log(jsonData);
         if (jsonData.code == 200) {
-          var newsData = isReload ? jsonData.resData.data : that.data.newsData.concat(jsonData.resData.data);
+          var _newsData = jsonData.resData.data;
+          for (var i = 0; i < _newsData.length; i++) {
+            if (_newsData[i].newsType == "2"){
+              //表示广告
+              _newsData[i].url = encodeURI(_newsData[i].url);
+              console.log(_newsData[i]);
+            }
+          }
+
+          var newsData = isReload ? _newsData : that.data.newsData.concat(_newsData);
           var hasMore = jsonData.resData.hasMore;
           var currentPage = that.data.currentPage + 1;
+
           that.setData({
             newsData: newsData,
             hasMore: hasMore,

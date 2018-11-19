@@ -15,90 +15,101 @@ public class ApiAppUserInfo {
     private String wxQrImg;
     private String userAddress;
     private String unionId;
+    private String userIdCard;
 
-    public String getId() {
+    public String getId () {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId (String id) {
         this.id = id;
     }
 
-    public String getOpenId() {
+    public String getOpenId () {
         return openId;
     }
 
-    public void setOpenId(String openId) {
+    public void setOpenId (String openId) {
         this.openId = openId;
     }
 
-    public String getNickName() {
+    public String getNickName () {
         return nickName;
     }
 
-    public void setNickName(String nickName) {
+    public void setNickName (String nickName) {
         this.nickName = nickName;
     }
 
-    public String getAvatarUrl() {
+    public String getAvatarUrl () {
         return avatarUrl;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
+    public void setAvatarUrl (String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
-    public String getTrueName() {
+    public String getTrueName () {
         return trueName;
     }
 
-    public void setTrueName(String trueName) {
+    public void setTrueName (String trueName) {
         this.trueName = trueName;
     }
 
-    public String getPhone() {
+    public String getPhone () {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone (String phone) {
         this.phone = phone;
     }
 
-    public String getWxQrImg() {
+    public String getWxQrImg () {
         return wxQrImg;
     }
 
-    public void setWxQrImg(String wxQrImg) {
+    public void setWxQrImg (String wxQrImg) {
         this.wxQrImg = wxQrImg;
     }
 
-    public String getUserAddress() {
+    public String getUserAddress () {
         return userAddress;
     }
 
-    public void setUserAddress(String userAddress) {
+    public void setUserAddress (String userAddress) {
         this.userAddress = userAddress;
     }
 
-    public String getUnionId() {
+    public String getUnionId () {
         return unionId;
     }
 
-    public void setUnionId(String unionId) {
+    public void setUnionId (String unionId) {
         this.unionId = unionId;
     }
 
-    public static ApiAppUserInfo genFromAppUser(AppUser appUser) {
+    public String getUserIdCard () {
+        return userIdCard;
+    }
+
+    public void setUserIdCard (String userIdCard) {
+        this.userIdCard = userIdCard;
+    }
+
+    public static ApiAppUserInfo genFromAppUser (AppUser appUser) {
         ApiAppUserInfo user = new ApiAppUserInfo();
-        user.setId( appUser.getId() );
-        user.setOpenId( appUser.getOpenId() );
-        user.setNickName( appUser.getNickName() );
-        user.setAvatarUrl( appUser.getAvatarUrl() );
-        user.setTrueName( appUser.getTrueName() );
-        user.setPhone( appUser.getPhone() );
-        user.setWxQrImg( appUser.getWxQrImg() );
-        user.setUserAddress( appUser.getUserAddress() );
-        user.setUnionId( user.getUnionId() );
+        user.setId(appUser.getId());
+        user.setOpenId(appUser.getOpenId());
+        user.setNickName(appUser.getNickName());
+        user.setAvatarUrl(appUser.getAvatarUrl());
+        user.setTrueName(appUser.getTrueName());
+        user.setPhone(appUser.getPhone());
+        user.setWxQrImg(appUser.getWxQrImg());
+        user.setUserAddress(appUser.getUserAddress());
+        user.setUnionId(user.getUnionId());
+        user.setUserIdCard(appUser.getIdCard());
         return user;
     }
+
 }

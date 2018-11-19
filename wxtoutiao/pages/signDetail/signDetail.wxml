@@ -1,24 +1,15 @@
 <view class='data-box'>
-  <view class='data-item'>
-    <view class='user hasSign'>
-      <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/at17qvO9gHmd15xwvwht1OIfkNL3ribEtibMQWz5oej4XytdpfgJepLKwlVzgI5FrVvdMvBz886DicTD2SPV70smg/132'></image>
-      <text class='name'>毛尖</text>
+  <view wx:for="{{ data }}" wx:key="userAId" class='data-item {{ item.hasPartner ? "" : "noPartner" }}'>
+    <view class='user {{ item.userAHasSign ? "hasSign":"" }}'>
+      <image class='head' src='{{ item.userAHead }}'></image>
+      <text class='name'>{{ item.userAName }}</text>
       <text class='qd'>已签到</text>
     </view>
-    <view class='da'>搭</view>
-    <view class='user'>
-      <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/at17qvO9gHmd15xwvwht1OIfkNL3ribEtibMQWz5oej4XytdpfgJepLKwlVzgI5FrVvdMvBz886DicTD2SPV70smg/132'></image>
-      <text class='name'>毛尖</text>
+    <view wx:if='{{ item.hasPartner }}' class='da'>搭</view>
+    <view wx:if='{{ item.hasPartner }}' class='user  {{ item.userBHasHasSign ? "hasSign":"" }}'>
+      <image class='head' src='{{ item.userBHead }}'></image>
+      <text class='name'>{{ item.userBName }}</text>
       <text class='qd'>已签到</text>
     </view>
-  </view>
-
-   <view class='data-item noPartner'>
-    <view class='user'>
-      <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/at17qvO9gHmd15xwvwht1OIfkNL3ribEtibMQWz5oej4XytdpfgJepLKwlVzgI5FrVvdMvBz886DicTD2SPV70smg/132'></image>
-      <text class='name'>毛尖</text>
-      <text class='qd'>已签到</text>
-    </view>
-
   </view>
 </view>

@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ApplyOrder {
@@ -19,9 +20,9 @@ public class ApplyOrder {
 
     private Integer hasPartner;
 
-    private Float price;
+    private BigDecimal price;
 
-    private Float payMoney;
+    private BigDecimal payMoney;
 
     private String matchId;
 
@@ -33,7 +34,7 @@ public class ApplyOrder {
 
     private Integer payStatue;
 
-    private Float sharePercent;
+    private BigDecimal sharePercent;
 
     private Date payDate;
 
@@ -46,6 +47,10 @@ public class ApplyOrder {
     private Date userSignDatetime;
 
     private Date partnerSignDatetime;
+
+    private String userIdCard;
+
+    private String partnerIdCard;
 
     public String getId() {
         return id;
@@ -111,19 +116,19 @@ public class ApplyOrder {
         this.hasPartner = hasPartner;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Float getPayMoney() {
+    public BigDecimal getPayMoney() {
         return payMoney;
     }
 
-    public void setPayMoney(Float payMoney) {
+    public void setPayMoney(BigDecimal payMoney) {
         this.payMoney = payMoney;
     }
 
@@ -167,11 +172,11 @@ public class ApplyOrder {
         this.payStatue = payStatue;
     }
 
-    public Float getSharePercent() {
+    public BigDecimal getSharePercent() {
         return sharePercent;
     }
 
-    public void setSharePercent(Float sharePercent) {
+    public void setSharePercent(BigDecimal sharePercent) {
         this.sharePercent = sharePercent;
     }
 
@@ -221,5 +226,21 @@ public class ApplyOrder {
 
     public void setPartnerSignDatetime(Date partnerSignDatetime) {
         this.partnerSignDatetime = partnerSignDatetime;
+    }
+
+    public String getUserIdCard() {
+        return userIdCard;
+    }
+
+    public void setUserIdCard(String userIdCard) {
+        this.userIdCard = userIdCard == null ? null : userIdCard.trim();
+    }
+
+    public String getPartnerIdCard() {
+        return partnerIdCard;
+    }
+
+    public void setPartnerIdCard(String partnerIdCard) {
+        this.partnerIdCard = partnerIdCard == null ? null : partnerIdCard.trim();
     }
 }

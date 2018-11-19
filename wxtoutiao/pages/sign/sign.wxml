@@ -77,11 +77,17 @@
     <view class='user-info-item'>
       <image class='head' src='{{ avatarUrl }}'></image>
       <view class='user-info'>
-      <view  class='inputGroup'>
-        <text>报名人：</text><input class='applyInput' data-name="userName" bindblur='getInputValue' placeholder='请填写真实姓名' type='text' value='{{ userName }}'></input>
+        <view class='inputGroup'>
+          <text>报名人：</text>
+          <input class='applyInput' data-name="userName" bindblur='getInputValue' placeholder='请填写真实姓名' type='text' value='{{ userName }}'></input>
         </view>
         <view class='inputGroup'>
-        <text>手机号：</text><input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
+          <text>手机号：</text>
+          <input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
+        </view>
+         <view class='inputGroup'>
+          <text>身份证：</text>
+          <input class='applyInput' style='font-size:24rpx;' maxlength="18" placeholder='您的身份证号' type='idcard' value='{{ userIdCard }}' data-name="userIdCard" bindblur='getInputValue'></input>
         </view>
       </view>
     </view>

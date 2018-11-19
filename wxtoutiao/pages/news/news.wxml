@@ -3,13 +3,14 @@
   <view class='news-item' wx:for="{{ newsData }}" wx:key="id">
     <view class='date-box'>
       <image class='icon' src='/resource/clock.png'></image>
-      <text class='date'>{{ item.date }}</text>
+      <text class='date'>{{ item.dateDesc }}</text>
     </view>
-    <navigator url='/pages/newsdetail/newsdetail?newsId={{ item.id }}'>
+    
+    <navigator url='{{ item.newsType == "2" ? "../web/web?title="+item.title+"&url="+item.url : "/pages/newsdetail/newsdetail?newsId="+item.id }}'>
       <text class='title'>{{ item.title }}</text>
     </navigator>
 
-    <navigator url='/pages/newsdetail/newsdetail?newsId={{ item.id }}'>
+    <navigator url='{{ item.newsType == "2" ? "../web/web?title="+item.title+"&url="+item.url : "/pages/newsdetail/newsdetail?newsId="+item.id }}'>
       <image class='img' src='{{ item.img }}' lazy-load='{{ true }}' mode='widthFix'></image>
     </navigator>
   </view>

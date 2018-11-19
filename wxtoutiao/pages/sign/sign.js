@@ -24,7 +24,8 @@ Page({
     addActive: false,
     animationData: {},
     userName: "",
-    userPhone: ""
+    userPhone: "",
+    userIdCard:""
   },
 
   /**
@@ -40,6 +41,7 @@ Page({
     var id = options.id;
     var avatarUrl = app.globalData.loginUserInfo.avatarUrl;
     var height = wx.getSystemInfoSync().windowHeight;
+    var userIdCard = app.globalData.loginUserInfo.userIdCard;
 
 
     this.setData({
@@ -48,7 +50,8 @@ Page({
       avatarUrl: avatarUrl,
       height: height - 100,
       userName: app.globalData.loginUserInfo.trueName,
-      userPhone: app.globalData.loginUserInfo.phone
+      userPhone: app.globalData.loginUserInfo.phone,
+      userIdCard: userIdCard
     });
 
     var that = this;
@@ -118,6 +121,12 @@ Page({
       case "userPhone":
         that.setData({
           userPhone: val
+        });
+        break;
+
+      case "userIdCard":
+        that.setData({
+          userIdCard: val
         });
         break;
     }
@@ -315,6 +324,11 @@ Page({
       return;
     }
 
+    if (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18) {
+      app.showErrorMsg("身份证号有误！");
+      return;
+    }
+
     var that = this;
     var userInfo = app.globalData.loginUserInfo;
     var applyId = this.data.id;
@@ -324,6 +338,7 @@ Page({
     var userName = this.data.userName;
     var userPhone = this.data.userPhone;
     var userHead = this.data.avatarUrl;
+    var userIdCard = this.data.userIdCard;
 
     wx.showLoading({
       title: '提交报名中...',
@@ -339,7 +354,8 @@ Page({
         matchId: applyId,
         userName: userName,
         userPhone: userPhone,
-        userHead: userHead
+        userHead: userHead,
+        userIdCard: userIdCard
       },
       success: function(res) {
         wx.hideLoading();

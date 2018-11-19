@@ -106,7 +106,7 @@ public class ApiApplyOrder {
         apiOrder.setTheme(orderDto.getMatchTheme());
         apiOrder.setBannerImg(orderDto.getMatchBannerImg());
         apiOrder.setAddress(orderDto.getMatchAddress());
-        apiOrder.setPayMoney(orderDto.getPayMoney());
+        apiOrder.setPayMoney(orderDto.getPayMoney().floatValue());
         apiOrder.setSignUpNum(orderDto.getHasPartner() + 1);
         apiOrder.setOrderAddTime(new DateTime(orderDto.getAddTime()).toString("yyyy-MM-dd HH:mm"));
         //比赛状态

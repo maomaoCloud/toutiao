@@ -21,6 +21,8 @@ Page({
     partnerHead: "",
     partnerName: "",
     partnerPhone: "",
+    userIdCard: "",
+    partnerIdCard: "",
     applyPrice: 0,
     applyId: "",
     applyCount: 1,
@@ -118,6 +120,7 @@ Page({
       var phone = loginUserInfo.phone;
       var trueName = loginUserInfo.trueName;
       var userHead = loginUserInfo.avatarUrl;
+      var userIdCard = loginUserInfo.userIdCard;
 
       if (userHead == null || userHead == undefined || userHead == "") {
         userHead = "../../resource/head.png";
@@ -125,7 +128,8 @@ Page({
       that.setData({
         userName: trueName,
         userPhone: phone,
-        userHead: userHead
+        userHead: userHead,
+        userIdCard: userIdCard
       });
 
       //获取当前要申请的比赛的信息
@@ -210,6 +214,18 @@ Page({
           partnerPhone: val
         });
         break;
+
+      case "userIdCard":
+        that.setData({
+          userIdCard: val
+        });
+        break;
+
+      case "partnerIdCard":
+        that.setData({
+          partnerIdCard: val
+        });
+        break;
     }
   },
   /**立即报名*/
@@ -230,6 +246,12 @@ Page({
       app.showErrorMsg("手机格式有误!");
       return;
     }
+
+    if (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18) {
+      app.showErrorMsg("身份证号有误！");
+      return;
+    }
+
     if (this.data.hasPartner) {
       if (this.data.partnerName == "" || this.data.partnerName == undefined || this.data.partnerName == null) {
         app.showErrorMsg("请输入搭档姓名");
@@ -243,6 +265,11 @@ Page({
 
       if (!this.data.partnerPhone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|19[0-9]|11[0-9]|12[0-9]|14[57]|16[0-9])[0-9]{8}$/)) {
         app.showErrorMsg("手机格式有误!");
+        return;
+      }
+
+      if (this.data.partnerIdCard == "" || this.data.partnerIdCard == undefined || this.data.partnerIdCard == null || this.data.partnerIdCard.length != 18) {
+        app.showErrorMsg("身份证号有误！");
         return;
       }
     }
@@ -261,6 +288,8 @@ Page({
     var hasPartner = this.data.hasPartner;
     var userHead = this.data.userHead;
     var partnerHead = this.data.partnerHead;
+    var userIdCard = this.data.userIdCard;
+    var partnerIdCard = this.data.partnerIdCard;
 
     wx.showLoading({
       title: '提交报名中...'
@@ -279,7 +308,9 @@ Page({
         partnerPhone: partnerPhone,
         userHead: userHead,
         partnerHead: partnerHead,
-        hasPartner: hasPartner
+        hasPartner: hasPartner,
+        partnerIdCard: partnerIdCard,
+        userIdCard: userIdCard
       },
       success: function(res) {
         wx.hideLoading();

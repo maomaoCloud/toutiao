@@ -21,7 +21,8 @@
     "pages/helpDetail/helpDetail",
     "pages/signDetail/signDetail",
     "pages/setting/setting",
-    "pages/sort/sort"
+    "pages/sort/sort",
+    "pages/sort2/sort"
   ],
   "window": {
     "backgroundTextStyle": "light",

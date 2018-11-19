@@ -1,0 +1,27 @@
+<view class='outer'>
+  <view class='inner'>
+    <movable-area>
+      <block wx:for="{{data}}" wx:key="zh" id="data-box">
+        <view class='item' id="{{item.number}}" data-index='{{index}}' bindlongpress='_longtap' bindtouchstart='touchs' bindtouchend='touchend' bindtouchmove='touchm'>
+          <text>{{item.name}}</text>
+          <text class='da'>   搭  </text>
+          <text>{{item.name2}}</text>
+        </view>
+      </block>
+      <movable-view x="{{x}}" y="{{y}}" direction="all" damping="{{5000}}" friction="{{1}}" disabled="{{disabled}}">
+        <view class='item-move' hidden='{{hidden}}'>
+        </view>
+      </movable-view>
+    </movable-area>
+  </view>
+
+  <view class='tips'>
+    <view class='tips-item'>* 长按参赛人员拖动排座位</view>
+    <view class='tips-item'>* 每行的四个人为一桌</view>
+    <view class='tips-item'>* 第一行的桌号为1，依次递增</view>
+  </view>
+
+  <view class='op-box'>
+    <button formType="submit" bindtap='save' class='save-btn'>保存座位</button>
+  </view>
+</view>

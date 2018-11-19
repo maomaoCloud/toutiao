@@ -174,7 +174,6 @@ public class MatchController extends BaseController {
             Map<String, Object> resultMap = screenService.loadUserSignInfo( id, userId );
             return JsonResult.SUCCESS( "success", resultMap );
         } catch (Exception e) {
-            ;
         }
         return JsonResult.FAILED();
     }

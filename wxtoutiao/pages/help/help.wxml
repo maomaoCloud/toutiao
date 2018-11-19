@@ -1,9 +1,5 @@
 <view id='help-list'>
-  <view bindtap='showHelpDetail' data-id='123' hover-class='hover' class='help-list-item'>
-    <view class='data'>如何签到？</view>
-  </view>
-
-  <view bindtap='showHelpDetail' data-id='321' hover-class='hover' class='help-list-item'>
-    <view class='data'>活动审核流程？</view>
+  <view wx:for="{{ helpData }}" wx:key="helpId" bindtap='showHelpDetail' data-id='{{ item.helpId }}' hover-class='hover' class='help-list-item'>
+    <view class='data'>{{ item.helpTitle }}</view>
   </view>
 </view>

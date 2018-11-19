@@ -253,13 +253,7 @@ Page({
   /**设置是否可平*/
   setCanDraw: function(e) {
     var checkRuleDraw = e.detail.value ? 1 : 0;
-    var rule = this.data.rule;
-    if (e.detail.value) {
-      rule.ruleDraw = 1;
-    }
-
     this.setData({
-      rule: rule,
       checkRuleDraw: checkRuleDraw
     });
   }

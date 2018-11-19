@@ -13,54 +13,75 @@ public class NewsListItem {
     private String img;
     private String date;
     private String dateDesc;
+    private String newsType;
+    private String url;
 
-    public String getId() {
+    public String getId () {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId (String id) {
         this.id = id;
     }
 
-    public String getTitle() {
+    public String getTitle () {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle (String title) {
         this.title = title;
     }
 
-    public String getImg() {
+    public String getImg () {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg (String img) {
         this.img = img;
     }
 
-    public String getDate() {
+    public String getDate () {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate (String date) {
         this.date = date;
     }
 
-    public String getDateDesc() {
+    public String getDateDesc () {
         return dateDesc;
     }
 
-    public void setDateDesc(String dateDesc) {
+    public String getNewsType () {
+        return newsType;
+    }
+
+    public void setNewsType (String newsType) {
+        this.newsType = newsType;
+    }
+
+    public void setDateDesc (String dateDesc) {
         this.dateDesc = dateDesc;
     }
 
-    public static NewsListItem genItemFromHeadlineNews(HeadlineNews hn) {
+    public String getUrl () {
+        return url;
+    }
+
+    public void setUrl (String url) {
+        this.url = url;
+    }
+
+    public static NewsListItem genItemFromHeadlineNews (HeadlineNews hn) {
         NewsListItem item = new NewsListItem();
         item.setId(hn.getNewsId());
         item.setTitle(hn.getNewsTitle());
         item.setImg(hn.getNewsCoverImg());
+        item.setNewsType(hn.getNewsType());
+        item.setUrl(hn.getNewsLink());
         item.setDate(new DateTime(hn.getNewsCreateTime()).toString("yyyy-MM-dd"));
-        item.setDateDesc( DateUtils.dateDesc(hn.getNewsCreateTime()));
+        item.setDateDesc(DateUtils.dateDesc(hn.getNewsCreateTime()));
         return item;
     }
+
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -108,19 +109,21 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             order.setPartnerName(params.getPartnerName());
             order.setPartnerPhone(params.getPartnerPhone());
             order.setHasPartner(params.getHasPartner() ? 1 : 0);
-            order.setPrice(match.getFee());
-            order.setPayMoney(match.getFee()*params.getApplyCount());
+            order.setPrice(new BigDecimal(match.getFee()));
+            order.setPayMoney(new BigDecimal(match.getFee()*params.getApplyCount()));
             order.setMatchId(params.getMatchId());
             order.setUserHead(user.getAvatarUrl());
             order.setPartnerHead(params.getPartnerHead());
             order.setAddTime(new Date());
-            order.setSharePercent(
-                    match.getFeeSharePercent() == null ? 1.0f : 1.0f - (match.getFeeSharePercent()*0.01f));
+            order.setSharePercent(new BigDecimal(match.getFeeSharePercent() == null ? 1.0f : 1.0f - (match.getFeeSharePercent()*0.01f))
+            );
             order.setPayStatue(0);
             order.setUserSignStatus(0);
             order.setPartnerSignStatue(0);
             order.setPatnerCode(StringUtils.gen6Num());
-            needPay = order.getPayMoney() > 0.0f;
+            order.setUserIdCard(params.getUserIdCard());
+            order.setPartnerIdCard(params.getPartnerIdCard());
+            needPay = order.getPayMoney().doubleValue() > 0.0d;
 
             if (!needPay) {//如果不需要支付
                 order.setPayStatue(1);
@@ -131,7 +134,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         }
 
         //更新一下用户新信息
-        appUserService.updateUserApplyInfo(params.getUserId(), params.getUserName(), params.getUserPhone());
+        appUserService.updateUserApplyInfo(params.getUserId(), params.getUserName(), params.getUserPhone(), params.getUserIdCard());
 
         if (order.getPayStatue().equals(1)) {
             resultMap.put("needPay", false);//是否需要支付
@@ -218,17 +221,18 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             order.setUserPhone(params.getUserPhone());
             order.setUserName(params.getUserName());
             order.setHasPartner(0);
-            order.setPrice(match.getFee());
-            order.setPayMoney(match.getFee());
+            order.setPrice(new BigDecimal(match.getFee()));
+            order.setPayMoney(new BigDecimal(match.getFee()));
             order.setMatchId(params.getMatchId());
             order.setUserHead(params.getUserHead());
             order.setAddTime(new Date());
-            order.setSharePercent(
-                    match.getFeeSharePercent() == null ? 1.0f : 1.0f - (match.getFeeSharePercent()*0.01f));
+            order.setSharePercent(new BigDecimal(
+                    match.getFeeSharePercent() == null ? 1.0f : 1.0f - (match.getFeeSharePercent()*0.01f)));
             order.setPayStatue(0);
             order.setUserSignStatus(3);//需要等待审核
+            order.setUserIdCard(params.getUserIdCard());
 
-            needPay = order.getPayMoney() > 0.0f;
+            needPay = order.getPayMoney().doubleValue() > 0.0d;
 
             if (!needPay) {//如果不需要支付
                 order.setPayStatue(1);
@@ -251,7 +255,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         }
 
         //更新一下用户新信息
-        appUserService.updateUserApplyInfo(params.getUserId(), params.getUserName(), params.getUserPhone());
+        appUserService.updateUserApplyInfo(params.getUserId(), params.getUserName(), params.getUserPhone(), params.getUserIdCard());
 
         if (needPay) {
             //接下来需要统一下单了

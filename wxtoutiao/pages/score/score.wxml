@@ -1,50 +1,40 @@
 <view class='score-data-box'>
 
   <view class='score-item'>
-    <view class='index'>1</view>
-    <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
-    <view>
-      <view class='name-data'>
-        <text class='userA name'>张晓明</text>
-        <text class='userB name'>刘卓</text>
+    <view class='info-data'>
+      <view class='index'>1</view>
+      <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
+      <view>
+        <view class='name-data'>
+          <text class='userA name'>张晓明</text>
+          <text class='userB name'>刘卓</text>
+        </view>
       </view>
-      <view class='score'>
-        <text class='star'>⭐️</text> <text>240</text>
+      <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/zxjFSJeB0jjJNz6apUUbqC8uUfZX3Vyzy6agLmEXrXO2Z93S4x9M5pNvWXmtZdd99xNwtib0oJpzibZnibPhXXRKQ/132'></image>
+    </view>
+    <view class='score-data'>
+      <view class='title'>当前成绩</view>
+      <view class='tr'>
+        <text class='th'>成绩1</text>
+        <text class='th'>成绩2</text>
+        <text class='th'>成绩3</text>
+        <text class='th'>成绩4</text>
+        <text class='th'>成绩5</text>
+        <text class='th'>成绩6</text>
+        <text class='th'>成绩7</text>
+      </view>
+      <view class='tr'>
+        <text class='td'>成绩1</text>
+        <text class='td'>成绩2</text>
+        <text class='td'>成绩3</text>
+        <text class='td'>成绩4</text>
+        <text class='td'>成绩5</text>
+        <text class='td'>成绩6</text>
+        <text class='td'>成绩7</text>
       </view>
     </view>
-    <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/zxjFSJeB0jjJNz6apUUbqC8uUfZX3Vyzy6agLmEXrXO2Z93S4x9M5pNvWXmtZdd99xNwtib0oJpzibZnibPhXXRKQ/132'></image>
   </view>
 
-  <view class='score-item'>
-    <view class='index'>2</view>
-    <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
-    <view>
-      <view class='name-data'>
-        <text class='userA name'>张晓明</text>
-        <text class='userB name'>刘卓</text>
-      </view>
-      <view class='score'>
-        456
-      </view>
-    </view>
-    <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/zxjFSJeB0jjJNz6apUUbqC8uUfZX3Vyzy6agLmEXrXO2Z93S4x9M5pNvWXmtZdd99xNwtib0oJpzibZnibPhXXRKQ/132'></image>
-  </view>
 
-  <view class='score-item'>
-    <view class='index'>3</view>
-    <image class="head" src='https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eob1o42320JFmadK14bJOuMnGFWN5yMXRnMurAWrNibf9DMlUiaJBPUyRvW0ImxGRzjNicaULsvxctqA/132'></image>
-    <view>
-      <view class='name-data'>
-        <text class='userA name'>张晓明</text>
-        <text class='userB name'>刘卓</text>
-      </view>
-      <view class='score'>
-        456
-      </view>
-    </view>
-    <image class='head' src='https://wx.qlogo.cn/mmopen/vi_32/zxjFSJeB0jjJNz6apUUbqC8uUfZX3Vyzy6agLmEXrXO2Z93S4x9M5pNvWXmtZdd99xNwtib0oJpzibZnibPhXXRKQ/132'></image>
-  </view>
-
-  
 
 </view>

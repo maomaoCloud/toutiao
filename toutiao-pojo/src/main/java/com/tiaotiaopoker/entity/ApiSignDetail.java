@@ -98,12 +98,13 @@ public class ApiSignDetail {
         data.setUserAId(order.getUserId());
         data.setUserAHead(order.getUserHead());
         data.setUserAName(order.getUserName());
-        data.setUserAHasSign(order.getUserSignStatus() == 1 ? true : false);
-        data.setHasPartner(order.getHasPartner() == 1 ? true : false);
+        data.setUserAHasSign(order.getUserSignStatus().equals(1));
+        data.setHasPartner(order.getHasPartner().equals(1));
         if (data.isHasPartner()) {
             data.setUserBId(order.getPartnerId());
             data.setUserBName(order.getPartnerName());
             data.setUserBHead(order.getPartnerHead());
+            data.setUserBHasHasSign(order.getPartnerSignStatue().equals(1));
         }
         return data;
     }

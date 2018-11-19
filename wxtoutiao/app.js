@@ -45,13 +45,20 @@ App({
     loginUserInfo: null,
     sessionKey: null
   },
-  //serverUrl: "https://api.kikistudio.cn/",
-  serverUrl: "http://localhost:8081/",
+  serverUrl: "https://api.kikistudio.cn/",
+  //serverUrl: "http://localhost:8081/",
   /**显示错误提示*/
   showErrorMsg: function(msg) {
     wx.showToast({
       title: msg,
       image: "../../resource/error.png"
+    })
+  },
+  showErrorMsg2: function (msg, duration) {
+    wx.showToast({
+      title: msg,
+      image: "../../resource/error.png",
+      duration: duration
     })
   },
   /**登录*/

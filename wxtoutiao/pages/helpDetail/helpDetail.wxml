@@ -1,2 +1,9 @@
-<!--pages/helpDetail/helpDetail.wxml-->
-<text>pages/helpDetail/helpDetail.wxml</text>
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view class='header' >
+  <text class='title'>{{ data.helpTitle }}</text>
+  <text class='date'>{{ data.helpCreateTime }}</text>
+</view>
+<view class='content'>
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+</view>

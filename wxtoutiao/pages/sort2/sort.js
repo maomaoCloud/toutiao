@@ -10,178 +10,15 @@ Page({
     flag: false,
     x: 0,
     y: 0,
-    data: [{
-        index: 1,
-        name: "张晓明"
-      },
-      {
-        index: 2,
-        name: "刘卓"
-      },
-      {
-        index: 3,
-        name: "谢康"
-      },
-      {
-        index: 4,
-        name: "毛尖"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      }
-
-    ],
+    data: [],
     disabled: true,
-    elements: [],
-    settingInfo: {}
+    elements: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //加载比赛信息
     var matchId = options.matchId;
 
     var that = this;
@@ -207,23 +44,27 @@ Page({
           return;
         }
 
-        if (settingInfo.currentTurn == 0) {
-          settingInfo.currentTurn = 1;
-        } else {
-          //调整到二轮中
-
-        }
+        //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
+         if (settingInfo.currentTurn == settingInfo.totalTurn && settingInfo.currentTurnHasInputScore){
+           app.showErrorMsg2("成绩已录入！",2500);
+           setTimeout(function () {
+             wx.navigateTo({
+               url: '../matchManager/matchManager?id=' + matchId
+             })
+           }, 2500);
+           return;
+         }
+         
 
         that.setData({
           settingInfo: settingInfo,
           matchId: matchId
         });
 
-        
         url = app.serverUrl + "match/manager/seat/detail/" + matchId + "/" + settingInfo.currentTurn;
         wx.request({
           url: url,
-          success: function (_res) {
+          success: function(_res) {
             wx.hideLoading();
             var _data = _res.data.resData;
             var data = [];
@@ -262,11 +103,8 @@ Page({
             }).exec()
           }
         })
-
       }
     })
-
-
   },
 
   /**
@@ -356,9 +194,6 @@ Page({
         const endIndex = item.dataset.index;
         const beginIndex = this.data.beginIndex;
 
-        console.log(beginIndex);
-        console.log(endIndex);
-
         //  交换这两个元素
         if (endIndex != beginIndex) {
           var _item = this.data.data[beginIndex];
@@ -404,11 +239,60 @@ Page({
     if (this.data.flag) {
       const x = e.touches[0].pageX
       const y = e.touches[0].pageY
-      console.log(y);
       this.setData({
-        x: x - 45,
+        x: x - 90,
         y: y - 20
       })
     }
+  },
+  /**保存座位*/
+  save: function() {
+    wx.showLoading({
+      title: '保存中...',
+      mask: true
+    })
+
+    var matchId = this.data.matchId;
+    var turn = this.data.settingInfo.currentTurn;
+    var res = [];
+    for (var i = 0; i < this.data.data.length; i++) {
+      res.push(this.data.data[i].number);
+    }
+    var saveData = {};
+    saveData.matchId = matchId;
+    saveData.turn = turn;
+    saveData.res = res;
+
+    var url = app.serverUrl + 'match/manager/seat/save'
+    wx.request({
+      data: JSON.stringify(saveData),
+      method: "POST",
+      dataType: "JSON",
+      header: {
+        contentType: 'application/json;charset=UTF-8'
+      },
+      url: url,
+      success: function(res) {
+        wx.hideLoading();
+        var data = JSON.parse(res.data);
+        if (data.success) {
+          wx.showToast({
+            title: '保存成功！',
+            mask: true,
+            duration: 2500
+          })
+
+          setTimeout(function() {
+            wx.navigateTo({
+              url: '../matchManager/matchManager?id=' + matchId
+            })
+          }, 2500);
+        } else {
+          app.showErrorMsg("发生错误！");
+        }
+
+
+      }
+    })
   }
 })

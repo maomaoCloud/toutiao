@@ -1,8 +1,8 @@
-page{
+page {
   background-color: rgb(243, 241, 235);
 }
 
-.score-data-box{
+.score-data-box {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,57 +10,95 @@ page{
   align-items: center;
 }
 
-.score-data-box .score-item{
+.score-data-box .score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 95%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin: 20rpx 0;
+}
+
+.score-data-box .score-item .info-data {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FFF;
-  border-radius: 20rpx;
-  width: 95%;
+  width: 100%;
   padding: 30rpx 0;
   margin: 10rpx 0rpx;
+  border-bottom: 2rpx dashed #e5e5e5;
 }
 
-.score-data-box .score-item .head{
+.score-data-box .score-item .info-data .head {
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  border: 8rpx solid rgb(248,213,79);
+  border: 8rpx solid rgb(248, 213, 79);
 }
 
-.score-data-box .score-item .index{
+.score-data-box .score-item .info-data .index {
   font-size: 70rpx;
   width: 100rpx;
   text-align: center;
   font-style: italic;
-  color: rgb(220,192,177);
-  border-right: 5rpx dashed rgb(220,192,177);
+  color: rgb(220, 192, 177);
+  border-right: 5rpx dashed rgb(220, 192, 177);
   margin-right: 10rpx;
 }
 
-.score-data-box .score-item .name-data{
+.score-data-box .score-item .info-data .name-data {
   width: 250rpx;
   font-size: 30rpx;
-  border-bottom: 
-  2rpx solid #E5E5E5;
+  border-bottom: 2rpx solid #e5e5e5;
   margin: 0 10rpx;
   padding-bottom: 10rpx;
   position: relative;
 }
 
-.score-data-box .score-item .name-data .userB{
+.score-data-box .score-item .info-data .name-data .userB {
   position: absolute;
   right: 0;
 }
 
-.score-data-box .score-item .score{
-font-size: 30rpx;
-display: flex;
-align-items: center;
+.score-data {
+  border-bottom: 2rpx solid #e1e1e1;
+  margin: 10rpx 0;
 }
 
-.score-data-box .score-item .score .star{
-  font-size: 40rpx;
-  margin-left: 20rpx;
-  margin-right: 10rpx;
+.score-data .title{
+  font-size: 32rpx;
+  text-align: center;
+  margin-bottom: 5rpx;
+}
+
+.score-data .tr {
+  width: 100%;
+  border-top: 2rpx solid #e1e1e1;
+  border-left: 2rpx solid #e1e1e1;
+  border-right: 2rpx solid #e1e1e1;
+  font-size: 30rpx;
+  display: flex;
+}
+
+.score-data .tr .th {
+  padding: 2rpx;
+  font-weight: 500;
+  color: #000;
+  border-right: 2rpx solid #e1e1e1;
+}
+
+.score-data .tr .td {
+  padding: 2rpx;
+  color: #555;
+  border-right: 2rpx solid #e1e1e1;
+}
+
+.th:last-child{
+ border-right: none !important; 
+}
+
+.td:last-child{
+ border-right: none !important; 
 }

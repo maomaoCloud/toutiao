@@ -13,7 +13,7 @@ Page({
       mask: true
     })
 
-    var url = app.serverUrl + "help/list";
+    var url = app.serverUrl + "match/manager/help/list";
     var that = this;
     wx.request({
       url: url,

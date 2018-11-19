@@ -17,99 +17,119 @@ public class ApiApplyParams {
     private String  requestIp;
     private String  openId;
 
-    public String getUserId() {
+    private String userIdCard;
+    private String partnerIdCard;
+
+    public String getUserId () {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId (String userId) {
         this.userId = userId;
     }
 
-    public Integer getApplyCount() {
+    public Integer getApplyCount () {
         return applyCount;
     }
 
-    public void setApplyCount(Integer applyCount) {
+    public void setApplyCount (Integer applyCount) {
         this.applyCount = applyCount;
     }
 
-    public String getMatchId() {
+    public String getMatchId () {
         return matchId;
     }
 
-    public void setMatchId(String matchId) {
+    public void setMatchId (String matchId) {
         this.matchId = matchId;
     }
 
-    public String getUserName() {
+    public String getUserName () {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName (String userName) {
         this.userName = userName;
     }
 
-    public String getUserPhone() {
+    public String getUserPhone () {
         return userPhone;
     }
 
-    public void setUserPhone(String userPhone) {
+    public void setUserPhone (String userPhone) {
         this.userPhone = userPhone;
     }
 
-    public String getPartnerName() {
+    public String getPartnerName () {
         return partnerName;
     }
 
-    public void setPartnerName(String partnerName) {
+    public void setPartnerName (String partnerName) {
         this.partnerName = partnerName;
     }
 
-    public String getPartnerPhone() {
+    public String getPartnerPhone () {
         return partnerPhone;
     }
 
-    public void setPartnerPhone(String partnerPhone) {
+    public void setPartnerPhone (String partnerPhone) {
         this.partnerPhone = partnerPhone;
     }
 
-    public String getUserHead() {
+    public String getUserHead () {
         return userHead;
     }
 
-    public void setUserHead(String userHead) {
+    public void setUserHead (String userHead) {
         this.userHead = userHead;
     }
 
-    public String getPartnerHead() {
+    public String getPartnerHead () {
         return partnerHead;
     }
 
-    public void setPartnerHead(String partnerHead) {
+    public void setPartnerHead (String partnerHead) {
         this.partnerHead = partnerHead;
     }
 
-    public Boolean getHasPartner() {
+    public Boolean getHasPartner () {
         return hasPartner;
     }
 
-    public void setHasPartner(Boolean hasPartner) {
+    public void setHasPartner (Boolean hasPartner) {
         this.hasPartner = hasPartner;
     }
 
-    public String getRequestIp() {
+    public String getRequestIp () {
         return requestIp;
     }
 
-    public void setRequestIp(String requestIp) {
+    public void setRequestIp (String requestIp) {
         this.requestIp = requestIp;
     }
 
-    public String getOpenId() {
+    public String getOpenId () {
         return openId;
     }
 
-    public void setOpenId(String openId) {
+    public void setOpenId (String openId) {
         this.openId = openId;
     }
+
+    public String getUserIdCard () {
+        return userIdCard;
+    }
+
+    public void setUserIdCard (String userIdCard) {
+        this.userIdCard = userIdCard;
+    }
+
+    public String getPartnerIdCard () {
+        return partnerIdCard;
+    }
+
+    public void setPartnerIdCard (String partnerIdCard) {
+        this.partnerIdCard = partnerIdCard;
+    }
+
 }

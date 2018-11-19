@@ -70,9 +70,9 @@
 <view wx:if="{{ !hasMore }}" class='noMoreData'>没有更多数据了</view>
 <view class='space'></view>
 <!--报名弹出层-->
-<view wx:if="{{ addActive }}" animation='{{animationData}}' class='addActive-layer'>
+<view wx:if="{{ addActive }}"  animation='{{animationData}}' class='addActive-layer {{ hasPartner ? "h900" : "" }}'>
   <view class='title'>报名信息</view>
-  <view class='layer-data'>
+  <view class='layer-data {{ hasPartner ? "h920" : "" }}'>
     <view class='user-info-item'>
       <image class='head' src='{{ userHead }}'></image>
       <view class='user-info'>
@@ -83,6 +83,10 @@
         <view class='inputGroup'>
           <text>手机号：</text>
           <input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
+        </view>
+        <view class='inputGroup'>
+          <text>身份证：</text>
+          <input class='applyInput' style='font-size:24rpx;' maxlength="18" placeholder='您的身份证号' type='idcard' value='{{ userIdCard }}' data-name="userIdCard" bindblur='getInputValue'></input>
         </view>
       </view>
     </view>
@@ -101,6 +105,10 @@
         <view wx:if="{{ hasPartner }}" class='inputGroup'>
           <text>手机号：</text>
           <input data-name="partnerPhone" bindblur='getInputValue' class='applyInput' placeholder='搭档的手机号码' type='number' value='{{ partnerPhone }}'></input>
+        </view>
+        <view wx:if="{{ hasPartner }}" class='inputGroup'>
+          <text>身份证：</text>
+          <input class='applyInput' style='font-size:24rpx;' maxlength="18" placeholder='搭档的身份证号' type='idcard' value='{{ partnerIdCard }}' data-name="partnerIdCard" bindblur='getInputValue'></input>
         </view>
       </view>
     </view>

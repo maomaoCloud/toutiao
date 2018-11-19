@@ -339,7 +339,7 @@ page {
   padding-top: 20rpx;
   width: 100%;
   background-color: #fff;
-  height: 800rpx;
+  height: 750rpx;
   position: fixed;
   z-index: 9999;
   left: 0;
@@ -359,6 +359,14 @@ page {
   margin-top: -20rpx;
   padding: 20rpx 0;
   border-bottom: 1rpx solid #cecece;
+}
+
+.h900{
+  height: 950rpx !important;
+}
+
+.h920{
+  height: 900rpx !important;
 }
 
 .addActive-layer .addActive-btn {

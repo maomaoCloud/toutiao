@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.pojo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -665,52 +666,52 @@ public class ApplyOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPriceEqualTo(Float value) {
+        public Criteria andPriceEqualTo(BigDecimal value) {
             addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotEqualTo(Float value) {
+        public Criteria andPriceNotEqualTo(BigDecimal value) {
             addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThan(Float value) {
+        public Criteria andPriceGreaterThan(BigDecimal value) {
             addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThanOrEqualTo(Float value) {
+        public Criteria andPriceGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThan(Float value) {
+        public Criteria andPriceLessThan(BigDecimal value) {
             addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThanOrEqualTo(Float value) {
+        public Criteria andPriceLessThanOrEqualTo(BigDecimal value) {
             addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceIn(List<Float> values) {
+        public Criteria andPriceIn(List<BigDecimal> values) {
             addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotIn(List<Float> values) {
+        public Criteria andPriceNotIn(List<BigDecimal> values) {
             addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceBetween(Float value1, Float value2) {
+        public Criteria andPriceBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotBetween(Float value1, Float value2) {
+        public Criteria andPriceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }
@@ -725,52 +726,52 @@ public class ApplyOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyEqualTo(Float value) {
+        public Criteria andPayMoneyEqualTo(BigDecimal value) {
             addCriterion("pay_money =", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyNotEqualTo(Float value) {
+        public Criteria andPayMoneyNotEqualTo(BigDecimal value) {
             addCriterion("pay_money <>", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyGreaterThan(Float value) {
+        public Criteria andPayMoneyGreaterThan(BigDecimal value) {
             addCriterion("pay_money >", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyGreaterThanOrEqualTo(Float value) {
+        public Criteria andPayMoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("pay_money >=", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyLessThan(Float value) {
+        public Criteria andPayMoneyLessThan(BigDecimal value) {
             addCriterion("pay_money <", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyLessThanOrEqualTo(Float value) {
+        public Criteria andPayMoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("pay_money <=", value, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyIn(List<Float> values) {
+        public Criteria andPayMoneyIn(List<BigDecimal> values) {
             addCriterion("pay_money in", values, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyNotIn(List<Float> values) {
+        public Criteria andPayMoneyNotIn(List<BigDecimal> values) {
             addCriterion("pay_money not in", values, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyBetween(Float value1, Float value2) {
+        public Criteria andPayMoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("pay_money between", value1, value2, "payMoney");
             return (Criteria) this;
         }
 
-        public Criteria andPayMoneyNotBetween(Float value1, Float value2) {
+        public Criteria andPayMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("pay_money not between", value1, value2, "payMoney");
             return (Criteria) this;
         }
@@ -1115,52 +1116,52 @@ public class ApplyOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentEqualTo(Float value) {
+        public Criteria andSharePercentEqualTo(BigDecimal value) {
             addCriterion("share_percent =", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentNotEqualTo(Float value) {
+        public Criteria andSharePercentNotEqualTo(BigDecimal value) {
             addCriterion("share_percent <>", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentGreaterThan(Float value) {
+        public Criteria andSharePercentGreaterThan(BigDecimal value) {
             addCriterion("share_percent >", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentGreaterThanOrEqualTo(Float value) {
+        public Criteria andSharePercentGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("share_percent >=", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentLessThan(Float value) {
+        public Criteria andSharePercentLessThan(BigDecimal value) {
             addCriterion("share_percent <", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentLessThanOrEqualTo(Float value) {
+        public Criteria andSharePercentLessThanOrEqualTo(BigDecimal value) {
             addCriterion("share_percent <=", value, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentIn(List<Float> values) {
+        public Criteria andSharePercentIn(List<BigDecimal> values) {
             addCriterion("share_percent in", values, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentNotIn(List<Float> values) {
+        public Criteria andSharePercentNotIn(List<BigDecimal> values) {
             addCriterion("share_percent not in", values, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentBetween(Float value1, Float value2) {
+        public Criteria andSharePercentBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("share_percent between", value1, value2, "sharePercent");
             return (Criteria) this;
         }
 
-        public Criteria andSharePercentNotBetween(Float value1, Float value2) {
+        public Criteria andSharePercentNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("share_percent not between", value1, value2, "sharePercent");
             return (Criteria) this;
         }
@@ -1532,6 +1533,146 @@ public class ApplyOrderExample {
 
         public Criteria andPartnerSignDatetimeNotBetween(Date value1, Date value2) {
             addCriterion("partner_sign_datetime not between", value1, value2, "partnerSignDatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardIsNull() {
+            addCriterion("user_id_card is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardIsNotNull() {
+            addCriterion("user_id_card is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardEqualTo(String value) {
+            addCriterion("user_id_card =", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardNotEqualTo(String value) {
+            addCriterion("user_id_card <>", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardGreaterThan(String value) {
+            addCriterion("user_id_card >", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardGreaterThanOrEqualTo(String value) {
+            addCriterion("user_id_card >=", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardLessThan(String value) {
+            addCriterion("user_id_card <", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardLessThanOrEqualTo(String value) {
+            addCriterion("user_id_card <=", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardLike(String value) {
+            addCriterion("user_id_card like", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardNotLike(String value) {
+            addCriterion("user_id_card not like", value, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardIn(List<String> values) {
+            addCriterion("user_id_card in", values, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardNotIn(List<String> values) {
+            addCriterion("user_id_card not in", values, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardBetween(String value1, String value2) {
+            addCriterion("user_id_card between", value1, value2, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdCardNotBetween(String value1, String value2) {
+            addCriterion("user_id_card not between", value1, value2, "userIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardIsNull() {
+            addCriterion("partner_id_card is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardIsNotNull() {
+            addCriterion("partner_id_card is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardEqualTo(String value) {
+            addCriterion("partner_id_card =", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardNotEqualTo(String value) {
+            addCriterion("partner_id_card <>", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardGreaterThan(String value) {
+            addCriterion("partner_id_card >", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardGreaterThanOrEqualTo(String value) {
+            addCriterion("partner_id_card >=", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardLessThan(String value) {
+            addCriterion("partner_id_card <", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardLessThanOrEqualTo(String value) {
+            addCriterion("partner_id_card <=", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardLike(String value) {
+            addCriterion("partner_id_card like", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardNotLike(String value) {
+            addCriterion("partner_id_card not like", value, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardIn(List<String> values) {
+            addCriterion("partner_id_card in", values, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardNotIn(List<String> values) {
+            addCriterion("partner_id_card not in", values, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardBetween(String value1, String value2) {
+            addCriterion("partner_id_card between", value1, value2, "partnerIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andPartnerIdCardNotBetween(String value1, String value2) {
+            addCriterion("partner_id_card not between", value1, value2, "partnerIdCard");
             return (Criteria) this;
         }
     }
