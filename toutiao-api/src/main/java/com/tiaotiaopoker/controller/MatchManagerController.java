@@ -311,8 +311,9 @@ public class MatchManagerController {
      * resData[1,2,3,4,5,6,7,8]
      * 1,2为第一组 3,4为第二组  1，2，3，4为第一桌
      */
-    @RequestMapping ("seat/firstTurn")
-    public JsonResult getFirstTurnSeat (String matchId) {
+    @RequestMapping ("seat/firstTurn/{matchId}")
+    public JsonResult getFirstTurnSeat (@PathVariable("matchId") String matchId) {
+        System.out.println(matchId);
         return JsonResult.SUCCESS();
     }
 
