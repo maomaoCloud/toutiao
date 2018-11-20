@@ -34,7 +34,7 @@
 
     <view class='other-info'>共{{ item.signUpNum }}人报名</view>
     <view class='opt-box'>
-      <button wx:if="{{ item.matchState == '已结束' }}">查看成绩</button>
+      <button wx:if="{{ item.matchState == '已结束' }}" data-id="{{ item.id }}" bindtap='showScore'>查看成绩</button>
       <button data-id="{{ item.id }}" bindtap='toMatchManager'>比赛管理</button>
       <button data-id="{{ item.id }}" bindtap='matchDetail'>比赛详情</button>
     </view>
@@ -42,9 +42,9 @@
 
 </view>
 
-<view class='noData'   wx:if="{{ currentData.length == 0 }}">
-<image class='no-data-icon' src='../../resource/noData.png'></image>
-     <text class='no-data-text'>暂时木有内容啊~~</text>
+<view class='noData' wx:if="{{ currentData.length == 0 }}">
+  <image class='no-data-icon' src='../../resource/noData.png'></image>
+  <text class='no-data-text'>暂时木有内容啊~~</text>
 </view>
 
 <view class='space'></view>

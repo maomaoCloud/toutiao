@@ -63,5 +63,13 @@ Page({
     wx.navigateTo({
       url: '../matchDetail/matchDetail?id=' + id
     })
+  },
+  /**查看成绩*/
+  showScore: function (e) {
+    console.log(e);
+    var matchId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../score/score?matchId=' + matchId
+    })
   }
 })

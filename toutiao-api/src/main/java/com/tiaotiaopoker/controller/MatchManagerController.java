@@ -58,7 +58,7 @@ public class MatchManagerController {
                 //已设置比赛信息
                 resultMap.put("hasSettingRule", true);
                 //ruleDraw=1(不可平)
-                resultMap.put("canDraw", matchRule.getRuleDraw() == 1 ? false : true);
+                resultMap.put("canDraw", matchRule.getRuleDraw().equals(1));
                 resultMap.put("totalTurn", matchRule.getRuleTurn());
                 //当前轮次
                 int nowTurn = matchTeamDataService.getNowTurn(matchId);
@@ -314,6 +314,14 @@ public class MatchManagerController {
     @RequestMapping ("seat/firstTurn/{matchId}")
     public JsonResult getFirstTurnSeat (@PathVariable("matchId") String matchId) {
         System.out.println(matchId);
+        return JsonResult.SUCCESS();
+    }
+
+    /**
+     *成绩保存，你定义数据格式，我来跟你
+     */
+    @RequestMapping ("score/save")
+    public JsonResult saveScore () {
         return JsonResult.SUCCESS();
     }
 

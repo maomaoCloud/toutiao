@@ -67,7 +67,7 @@ page {
   margin: 10rpx 0;
 }
 
-.score-data .title{
+.score-data .title {
   font-size: 32rpx;
   text-align: center;
   margin-bottom: 5rpx;
@@ -80,25 +80,28 @@ page {
   border-right: 2rpx solid #e1e1e1;
   font-size: 30rpx;
   display: flex;
+  
 }
 
-.score-data .tr .th {
-  padding: 2rpx;
+.score-data .tr .data-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2rpx solid #e1e1e1;
+}
+
+.score-data .tr .data-item .th {
+  border-bottom: 2rpx solid #e1e1e1;
+  padding: 5rpx;
   font-weight: 500;
   color: #000;
-  border-right: 2rpx solid #e1e1e1;
 }
 
-.score-data .tr .td {
-  padding: 2rpx;
+.score-data .tr .data-item .td {
   color: #555;
-  border-right: 2rpx solid #e1e1e1;
 }
 
-.th:last-child{
- border-right: none !important; 
-}
-
-.td:last-child{
- border-right: none !important; 
+.score-data .tr .data-item:last-child {
+  border-right: none !important;
 }

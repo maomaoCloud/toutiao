@@ -34,7 +34,7 @@
 
     <view class='other-info'>共{{ item.signUpNum }}人报名 合计支付：￥{{ item.payMoney }}元</view>
     <view class='opt-box'>
-      <button wx:if="{{ item.matchState == '已结束' }}">查看成绩</button>
+      <button wx:if="{{ item.matchState == '已结束' }}" data-id="{{ item.matchId }}" bindtap='showScore'>查看成绩</button>
       <button data-id="{{ item.matchId }}" bindtap='showMatchDetail'>比赛详情</button>
     </view>
   </view>
