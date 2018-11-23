@@ -25,6 +25,7 @@ public class ApiMatchData {
     private BigDecimal sumMoney;
     private Boolean    isMine;
     private Boolean    hasLimit;
+    private int        statue;
 
     public BigDecimal getSumMoney () {
         return sumMoney;
@@ -138,6 +139,14 @@ public class ApiMatchData {
         this.hasLimit = hasLimit;
     }
 
+    public int getStatue () {
+        return statue;
+    }
+
+    public void setStatue (int statue) {
+        this.statue = statue;
+    }
+
     public static ApiMatchData genFromMatch (Match md,
                                              String myUserId) {
         ApiMatchData res = new ApiMatchData();
@@ -167,10 +176,13 @@ public class ApiMatchData {
         DateTime endDate   = new DateTime(md.getEndDate());
         if (nowDate.compareTo(startDate) < 0) {
             res.setMatchState(Constants.Match.NOT_START);
+            res.setStatue(Constants.Match.NOT_START_CODE);
         } else if (nowDate.compareTo(endDate) > 0) {
             res.setMatchState(Constants.Match.END);
+            res.setStatue(Constants.Match.END_CODE);
         } else {
             res.setMatchState(Constants.Match.UNDER_WAY);
+            res.setStatue(Constants.Match.UNDER_WAY_CODE);
         }
 
         return res;

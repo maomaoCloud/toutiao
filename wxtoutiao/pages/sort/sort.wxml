@@ -20,6 +20,6 @@
   </view>
 
   <view class='op-box'>
-    <button formType="submit" class='save-btn'>保存座位</button>
+    <button formType="submit" bindtap='save' class='save-btn'>保存座位</button>
   </view>
 </view>

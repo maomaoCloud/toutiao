@@ -12,7 +12,7 @@ public interface AppUserService {
 
     void addAppUser (AppUser appUser);
 
-    void updateAppUserInfo (AppUser user);
+    AppUser updateAppUserInfo (AppUser user);
 
     void updateUserApplyInfo (String userId,
                               String trueName,

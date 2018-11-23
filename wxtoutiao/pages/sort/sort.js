@@ -10,168 +10,7 @@ Page({
     flag: false,
     x: 0,
     y: 0,
-    data: [{
-        index: 1,
-        name: "张晓明"
-      },
-      {
-        index: 2,
-        name: "刘卓"
-      },
-      {
-        index: 3,
-        name: "谢康"
-      },
-      {
-        index: 4,
-        name: "毛尖"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      },
-      {
-        index: 5,
-        name: "赵晓芳"
-      },
-      {
-        index: 6,
-        name: "丁晓娟"
-      },
-      {
-        index: 7,
-        name: "你猜"
-      },
-      {
-        index: 8,
-        name: "哈哈哈"
-      }
-
-    ],
+    data: [],
     disabled: true,
     elements: [],
     settingInfo: {}
@@ -207,47 +46,29 @@ Page({
           return;
         }
 
-        if (settingInfo.currentTurn == 0) {
-          settingInfo.currentTurn = 1;
-        } else {
-          //调整到二轮中
-
-        }
-
         that.setData({
           settingInfo: settingInfo,
           matchId: matchId
         });
 
-        
-        url = app.serverUrl + "match/manager/seat/detail/" + matchId + "/" + settingInfo.currentTurn;
+
+        url = app.serverUrl + "match/manager/seat/firstTurn/" + matchId;
         wx.request({
           url: url,
-          success: function (_res) {
+          success: function(_res) {
             wx.hideLoading();
+            console.log(_res);
+
             var _data = _res.data.resData;
-            var data = [];
-            var item;
             var index = 0;
             for (var i = 0; i < _data.length; i++) {
-              item = new Object();
-              item.index = ++index;
-              item.name = _data[i].groupAUserAName;
-              item.name2 = _data[i].groupAUserBName;
-              item.number = _data[i].groupANumber;
-              data.push(item);
-
-              item = new Object();
-              item.index = ++index;
-              item.name = _data[i].groupBUserAName;
-              item.name2 = _data[i].groupBUserBName;
-              item.number = _data[i].groupBNumber;
-              data.push(item);
+              _data[i].index = ++index;
             }
 
             that.setData({
-              data: data
+              data: _data
             });
+
 
             var query = wx.createSelectorQuery();
             var nodesRef = query.selectAll(".item");
@@ -266,58 +87,6 @@ Page({
       }
     })
 
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
-  onPageScroll: function(obj) {
 
   },
   //长按
@@ -410,5 +179,54 @@ Page({
         y: y - 20
       })
     }
+  },
+  save: function() {
+    var resData = new Object();
+    resData.matchId = this.data.matchId;
+    resData.turn = 1;
+    resData.userIds = [];
+    resData.names = [];
+    resData.heads = [];
+
+    for (var i = 0; i < this.data.data.length; i++) {
+      resData.userIds.push(this.data.data[i].userId);
+      resData.names.push(this.data.data[i].name);
+      resData.heads.push(this.data.data[i].head);
+    }
+
+    var url = app.serverUrl + "match/manager/seat/save";
+    wx.showLoading({
+      title: '保存中...',
+      mask: true
+    })
+    var that = this;
+    wx.request({
+      url: url,
+      data: JSON.stringify(resData),
+      method: "POST",
+      dataType: "JSON",
+      header: {
+        contentType: 'application/json;charset=UTF-8'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        console.log(res);
+        if (JSON.parse(res.data).success) {
+          wx.showToast({
+            title: '保存成功！',
+            mask: true,
+            duration: 2000
+          })
+
+          setTimeout(function() {
+            wx.navigateTo({
+              url: '../matchManager/matchManager?id=' + that.data.matchId,
+            })
+          }, 2000);
+        } else {
+          app.showErrorMsg("保存失败！");
+        }
+      }
+    })
   }
 })

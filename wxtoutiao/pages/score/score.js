@@ -37,8 +37,10 @@ Page({
           return;
         }
 
-        if (settingInfo.currentTurn == 0) {
-          app.showErrorMsg2("请排座位！", 2500);
+
+        //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
+        if (settingInfo.currentTurn == 0 && !settingInfo.currentTurnHasInputScore) {
+          app.showErrorMsg2("还未录入成绩！", 2500);
           setTimeout(function() {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
@@ -47,15 +49,8 @@ Page({
           return;
         }
 
-        //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
-        if (settingInfo.currentTurn == 0 && !settingInfo.currentTurnHasInputScore) {
-          app.showErrorMsg2("未录入成绩！", 2500);
-          setTimeout(function() {
-            wx.navigateTo({
-              url: '../matchManager/matchManager?id=' + matchId
-            })
-          }, 2500);
-          return;
+        if (settingInfo.currentTurn > 0 && !settingInfo.currentTurnHasInputScore){
+          settingInfo.currentTurn = settingInfo.currentTurn - 1;
         }
 
         that.setData({

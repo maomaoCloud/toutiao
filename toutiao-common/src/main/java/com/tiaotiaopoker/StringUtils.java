@@ -2,8 +2,6 @@ package com.tiaotiaopoker;
 
 import org.joda.time.DateTime;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -44,10 +42,6 @@ public class StringUtils {
 
     public static String genRandomKey () {
         return new StringBuffer(generateShortUUID()).append(generateShortUUID()).toString();
-    }
-
-    public static void main (String[] args) {
-
     }
 
 }

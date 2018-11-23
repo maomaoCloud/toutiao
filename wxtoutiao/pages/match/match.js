@@ -38,13 +38,16 @@ Page({
     applyPrice: 0,
     applyId: "",
     applyCount: 1,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    showTip: true,
+    isAgree: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
     this.loadMatchData(false);
   },
   onShow: function() {
@@ -87,7 +90,21 @@ Page({
       url: '/pages/search/search'
     })
   },
-
+  showApplyTip:function(){
+    this.setData({
+      showTip: false
+    });
+  },/**是否同意*/
+  isAgree: function (e) {
+    this.setData({
+      isAgree: e.detail.value
+    });
+  },
+  confirm: function() {
+    this.setData({
+      showTip: true
+    });
+  },
   /**选择首页添加活动事件*/
   apply: function(e) {
     var that = this;
@@ -109,7 +126,8 @@ Page({
         userName: trueName,
         userPhone: phone,
         userHead: userHead,
-        userIdCard: userIdCard
+        userIdCard: userIdCard,
+        isAgree : false
       });
 
       //获取当前要申请的比赛的信息
@@ -294,6 +312,7 @@ Page({
             var hasMore = data.resData.hasMore;
             var matchData = isReload ? data.resData.data : that.data.matchData.concat(data.resData.data);
 
+            console.log(matchData);
             that.setData({
               hasMore: hasMore,
               matchData: matchData,
@@ -415,6 +434,11 @@ Page({
         app.showErrorMsg("身份证号有误！");
         return;
       }
+    }
+
+    if (!this.data.isAgree) {
+      app.showErrorMsg("请同意报名须知");
+      return;
     }
 
     var that = this;

@@ -7,6 +7,7 @@ Page({
    */
   data: {
     array: ["选择", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A", "A+"],
+    score: ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
     settingInfo: {
       canDraw: false
     },
@@ -56,9 +57,9 @@ Page({
         //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
         if (settingInfo.currentTurn == settingInfo.totalTurn && settingInfo.currentTurnHasInputScore) {
           app.showErrorMsg2("成绩已录入！", 2500);
-          setTimeout(function () {
+          setTimeout(function() {
             wx.navigateTo({
-              url: '../matchManager/matchManager?id='+matchId
+              url: '../matchManager/matchManager?id=' + matchId
             })
           }, 2500);
           return;
@@ -81,8 +82,8 @@ Page({
             }
 
             that.setData({
-              data:data
-            });            
+              data: data
+            });
           }
         })
       }
@@ -118,5 +119,76 @@ Page({
     this.setData({
       data: data
     });
+  },
+  save: function() {
+    //坚持是否都输入了
+    if (this.data.data.length <= 0) return;
+
+    var resData = new Object();
+    resData.matchId = this.data.matchId;
+    resData.turnNumber = this.data.settingInfo.currentTurn;
+    var id = [];
+    var teamOneId = [];
+    var teamOneScore = [];
+    var teamTwoId = [];
+    var teamTwoScore = [];
+
+    for (var i = 0; i < this.data.data.length; i++) {
+      if (this.data.data[i].idxA == 0 || this.data.data[i].idxB == 0) {
+        app.showErrorMsg("请输入全部成绩！");
+        return;
+      }
+
+      id.push(this.data.data[i].id);
+
+      teamOneId.push(this.data.data[i].groupAId);
+      teamTwoId.push(this.data.data[i].groupBId);
+
+      teamOneScore.push(this.data.score[this.data.data[i].idxA - 1]);
+      teamTwoScore.push(this.data.score[this.data.data[i].idxB - 1]);
+    }
+
+    resData.id = id.join(",");
+    resData.teamOneId = teamOneId.join(",");
+    resData.teamTwoId = teamTwoId.join(",");
+    resData.teamOneScore = teamOneScore.join(",");
+    resData.teamTwoScore = teamTwoScore.join(",");
+
+    var that = this;
+    var url = app.serverUrl + "match/manager/score/save";
+    wx.showLoading({
+      title: '保存中...',
+      mask: true
+    })
+
+    wx.request({
+      url: url,
+      data: JSON.stringify(resData),
+      method: "POST",
+      dataType: "JSON",
+      header: {
+        contentType: 'application/json;charset=UTF-8'
+      },
+      success: function(res) {
+        wx.hideLoading();
+        console.log(res);
+        if (JSON.parse(res.data).success) {
+          wx.showToast({
+            title: '保存成功！',
+            mask: true,
+            duration: 2000
+          })
+
+          setTimeout(function() {
+            wx.navigateTo({
+              url: '../matchManager/matchManager?id=' + that.data.matchId,
+            })
+          }, 2000);
+        } else {
+          app.showErrorMsg("保存失败！");
+        }
+      }
+    })
+
   }
 })

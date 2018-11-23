@@ -86,9 +86,11 @@ public class MatchServiceImpl implements MatchService {
                                              String userId) {
         Page<Object> page = PageHelper.startPage(pageNum, pageSize);
         MatchExample ex   = new MatchExample();
-        ex.setOrderByClause("start_date");
-        ex.createCriteria().andIsDeleteEqualTo(Constants.DataBaseCommon.IS_DELETE_FALSE).andStatueEqualTo(
-                1).andStartDateGreaterThanOrEqualTo(new Date());
+        ex.setOrderByClause("if(TIMESTAMPDIFF(MINUTE, start_date, NOW()) > 0, 1, 0 ), statue, order_no DESC ,start_date");
+        ex.createCriteria().andIsDeleteEqualTo(Constants.DataBaseCommon.IS_DELETE_FALSE).andStatueGreaterThan(0);
+        /*ex.setOrderByClause("start_date");
+        ex.createCriteria().andIsDeleteEqualTo(Constants.DataBaseCommon.IS_DELETE_FALSE).andStatueEqualTo(1).andStartDateGreaterThanOrEqualTo(new Date());
+        */
         List<Match>        dataList    = matchMapper.selectByExample(ex);
         List<ApiMatchData> resDataList = new ArrayList<>();
         ApiMatchData       apiData;

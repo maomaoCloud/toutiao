@@ -39,7 +39,9 @@ Page({
       wxHead: "https://api.kikistudio.cn/static/JxdfG5H/Lewud4AA.jpg",
       fee: 10,
       applyList: []
-    }
+    },
+    showTip: true,
+    isAgree: false
   },
 
   /**
@@ -49,7 +51,8 @@ Page({
     this.checkLogin();
     var id = options.id;
     this.setData({
-      id: id
+      id: id,
+      isAgree: false
     });
 
     this.loadMatchDetail(id);
@@ -106,6 +109,17 @@ Page({
     var index = parseInt(e.target.dataset.index);
     this.setData({
       tabIndex: index
+    });
+  },
+
+  showApplyTip: function() {
+    this.setData({
+      showTip: false
+    });
+  },
+  confirm: function() {
+    this.setData({
+      showTip: true
     });
   },
   /**选择首页添加活动事件*/
@@ -184,6 +198,12 @@ Page({
     });
 
   },
+  /**是否同意*/
+  isAgree: function(e) {
+    this.setData({
+      isAgree: e.detail.value
+    });
+  },
   /**获取用户输入的数据*/
   getInputValue: function(e) {
     var name = e.target.dataset.name;
@@ -231,6 +251,7 @@ Page({
   /**立即报名*/
   applyDo: function() {
     wx.hideToast();
+
     //第一步检查报名信息
     if (this.data.userName == "" || this.data.userName == undefined || this.data.userName == null) {
       app.showErrorMsg("请输入姓名");
@@ -272,6 +293,11 @@ Page({
         app.showErrorMsg("身份证号有误！");
         return;
       }
+    }
+
+    if (!this.data.isAgree) {
+      app.showErrorMsg("请同意报名须知");
+      return;
     }
 
     var that = this;

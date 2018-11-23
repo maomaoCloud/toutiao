@@ -1,129 +1,162 @@
 package com.tiaotiaopoker.entity;
 
 public class ApiMatchTeamData {
-    Integer zh;
+    private Integer zh;
 
-    Integer groupANumber;
+    private Integer groupANumber;
 
-    String groupAUserAHead;
+    private String groupAId;
 
-    String groupAUserAName;
+    private String groupAUserAHead;
 
-    String groupAUserBName;
+    private String groupAUserAName;
 
-    String groupAUserBHead;
+    private String groupAUserBName;
 
-    Integer groupBNumber;
+    private String groupAUserBHead;
 
-    String groupBUserAHead;
+    private Integer groupBNumber;
 
-    String groupBUserAName;
+    private String groupBId;
 
-    String groupBUserBName;
+    private String groupBUserAHead;
 
-    String groupBUserBHead;
+    private String groupBUserAName;
 
-    public Integer getZh() {
+    private String groupBUserBName;
+
+    private String groupBUserBHead;
+
+    private String id;
+
+    public Integer getZh () {
         return zh;
     }
 
-    public void setZh(Integer zh) {
+    public void setZh (Integer zh) {
         this.zh = zh;
     }
 
-    public Integer getGroupANumber() {
+    public Integer getGroupANumber () {
         return groupANumber;
     }
 
-    public void setGroupANumber(Integer groupANumber) {
+    public void setGroupANumber (Integer groupANumber) {
         this.groupANumber = groupANumber;
     }
 
-    public String getGroupAUserAHead() {
+    public String getGroupAUserAHead () {
         return groupAUserAHead;
     }
 
-    public void setGroupAUserAHead(String groupAUserAHead) {
+    public void setGroupAUserAHead (String groupAUserAHead) {
         this.groupAUserAHead = groupAUserAHead;
     }
 
-    public String getGroupAUserAName() {
+    public String getGroupAUserAName () {
         return groupAUserAName;
     }
 
-    public void setGroupAUserAName(String groupAUserAName) {
+    public void setGroupAUserAName (String groupAUserAName) {
         this.groupAUserAName = groupAUserAName;
     }
 
-    public String getGroupAUserBName() {
+    public String getGroupAUserBName () {
         return groupAUserBName;
     }
 
-    public void setGroupAUserBName(String groupAUserBName) {
+    public void setGroupAUserBName (String groupAUserBName) {
         this.groupAUserBName = groupAUserBName;
     }
 
-    public String getGroupAUserBHead() {
+    public String getGroupAUserBHead () {
         return groupAUserBHead;
     }
 
-    public void setGroupAUserBHead(String groupAUserBHead) {
+    public void setGroupAUserBHead (String groupAUserBHead) {
         this.groupAUserBHead = groupAUserBHead;
     }
 
-    public Integer getGroupBNumber() {
+    public Integer getGroupBNumber () {
         return groupBNumber;
     }
 
-    public void setGroupBNumber(Integer groupBNumber) {
+    public void setGroupBNumber (Integer groupBNumber) {
         this.groupBNumber = groupBNumber;
     }
 
-    public String getGroupBUserAHead() {
+    public String getGroupBUserAHead () {
         return groupBUserAHead;
     }
 
-    public void setGroupBUserAHead(String groupBUserAHead) {
+    public void setGroupBUserAHead (String groupBUserAHead) {
         this.groupBUserAHead = groupBUserAHead;
     }
 
-    public String getGroupBUserAName() {
+    public String getGroupBUserAName () {
         return groupBUserAName;
     }
 
-    public void setGroupBUserAName(String groupBUserAName) {
+    public void setGroupBUserAName (String groupBUserAName) {
         this.groupBUserAName = groupBUserAName;
     }
 
-    public String getGroupBUserBName() {
+    public String getGroupBUserBName () {
         return groupBUserBName;
     }
 
-    public void setGroupBUserBName(String groupBUserBName) {
+    public void setGroupBUserBName (String groupBUserBName) {
         this.groupBUserBName = groupBUserBName;
     }
 
-    public String getGroupBUserBHead() {
+    public String getGroupBUserBHead () {
         return groupBUserBHead;
     }
 
-    public void setGroupBUserBHead(String groupBUserBHead) {
+    public void setGroupBUserBHead (String groupBUserBHead) {
         this.groupBUserBHead = groupBUserBHead;
     }
 
-    public static ApiMatchTeamData genFromMatchTeamDataDto(MatchTeamDataDto dataDto) {
+    public String getGroupBId () {
+        return groupBId;
+    }
+
+    public void setGroupBId (String groupBId) {
+        this.groupBId = groupBId;
+    }
+
+    public String getGroupAId () {
+        return groupAId;
+    }
+
+    public void setGroupAId (String groupAId) {
+        this.groupAId = groupAId;
+    }
+
+    public String getId () {
+        return id;
+    }
+
+    public void setId (String id) {
+        this.id = id;
+    }
+
+    public static ApiMatchTeamData genFromMatchTeamDataDto (MatchTeamDataDto dataDto) {
         ApiMatchTeamData data = new ApiMatchTeamData();
         data.setZh(dataDto.getTableNumber());
         data.setGroupANumber(new Integer(dataDto.getTeamOneNum()));
+        data.setGroupAId(dataDto.getTeamOneId());
         data.setGroupAUserAHead(dataDto.getTeamOneUserOneHead());
         data.setGroupAUserAName(dataDto.getTeamOneUserOneName());
         data.setGroupAUserBHead(dataDto.getTeamOneUserTwoHead());
         data.setGroupAUserBName(dataDto.getTeamOneUserTwoName());
         data.setGroupBNumber(new Integer(dataDto.getTeamTwoNum()));
+        data.setGroupBId(dataDto.getTeamTwoId());
         data.setGroupBUserAHead(dataDto.getTeamTwoUserOneHead());
         data.setGroupBUserAName(dataDto.getTeamTwoUserOneName());
         data.setGroupBUserBHead(dataDto.getTeamTwoUserTwoHead());
         data.setGroupBUserBName(dataDto.getTeamTwoUserTwoName());
+        data.setId(dataDto.getId());
         return data;
     }
 

@@ -54,7 +54,6 @@ Page({
            }, 2500);
            return;
          }
-         
 
         that.setData({
           settingInfo: settingInfo,

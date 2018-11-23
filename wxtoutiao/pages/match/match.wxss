@@ -9,12 +9,12 @@
   border: 0;
   width: 100%;
   position: fixed;
-  z-index: 999;
+  z-index: 800;
   top: -23rpx;
 }
 
 .op-list {
- display: flex;
+  display: flex;
   margin-bottom: 15rpx;
 }
 
@@ -210,7 +210,7 @@
   background-color: #fff;
   height: 750rpx;
   position: fixed;
-  z-index: 9999;
+  z-index: 900;
   left: 0;
   bottom: 0;
   display: flex;
@@ -218,11 +218,11 @@
   align-items: center;
 }
 
-.h900{
+.h900 {
   height: 950rpx !important;
 }
 
-.h920{
+.h920 {
   height: 900rpx !important;
 }
 
@@ -264,7 +264,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 35rpx 0;
+  margin: 15rpx 0;
 }
 
 .addActive-layer .user-info-item .head {
@@ -274,75 +274,108 @@
   margin-right: 20rpx;
 }
 
-.addActive-layer .user-info-item .user-info{
+.addActive-layer .user-info-item .user-info {
   display: flex;
   flex-direction: column;
   font-size: 36rpx;
 }
 
-.addActive-layer .user-info-item .user-info text{
+.addActive-layer .user-info-item .user-info text {
   margin: 5rpx 0;
 }
-.addActive-layer .user-info-item .user-info .tip{
+
+.addActive-layer .user-info-item .user-info .tip {
   font-size: 30rpx;
   margin-bottom: 10rpx;
 }
 
-.addActive-layer .user-info-item .user-info .tip text{
+.addActive-layer .user-info-item .user-info .tip text {
   margin-right: 20rpx;
 }
 
-.addActive-layer .price-info{
+.addActive-layer .price-info {
   width: 100%;
-  border-bottom: 3rpx solid #CCC;
+  border-bottom: 3rpx solid #ccc;
   text-align: right;
   font-size: 36rpx;
 }
 
-.addActive-layer .price-info .price{
+.addActive-layer .price-info .price {
   color: #bd2529;
   margin-right: 10rpx;
   font-size: 40rpx;
 }
 
-.addActive-layer .price-info .userCount{
+.addActive-layer .price-info .userCount {
   letter-spacing: 10rpx;
 }
 
-.addActive-layer .pay-info{
+.addActive-layer .pay-info {
   width: 100%;
   font-size: 36rpx;
-  border-bottom: 3rpx solid #CCC;
+  border-bottom: 3rpx solid #ccc;
   margin: 15rpx 0;
   padding-bottom: 15rpx;
 }
-.addActive-layer .pay-info .pay-title{
+
+.addActive-layer .pay-info .pay-title {
   text-align: left;
   padding-left: 10rpx;
 }
 
-.addActive-layer .pay-info .pay-fee{
+.addActive-layer .pay-info .pay-fee {
   float: right;
   text-align: right;
   padding-right: 10rpx;
 }
 
-
-.inputGroup{
+.inputGroup {
   display: flex;
   margin-bottom: 20rpx;
 }
 
-.applyInput{
+.applyInput {
   width: 300rpx;
-  border-bottom:2rpx solid #CCC; 
+  border-bottom: 2rpx solid #ccc;
 }
 
-.hasApply{
-  background-color: rgba(189,37,41,.5);
+.hasApply {
+  background-color: rgba(189, 37, 41, 0.5);
 }
 
-.wx-switch-input{width:85rpx !important;height:50rpx !important;}
-.wx-switch-input::before{width:85rpx !important;height: 50rpx !important;}
-.wx-switch-input::after{width: 46rpx !important;height: 46rpx !important;}
+.wx-switch-input {
+  width: 85rpx !important;
+  height: 50rpx !important;
+}
 
+.wx-switch-input::before {
+  width: 85rpx !important;
+  height: 50rpx !important;
+}
+
+.wx-switch-input::after {
+  width: 46rpx !important;
+  height: 46rpx !important;
+}
+
+.applyTip .tip-title {
+  font-size: 34rpx;
+  color: #000;
+  margin-bottom: 15rpx;
+  display: flex;
+}
+
+.applyTip .tip-item {
+  display: flex;
+  font-size: 30rpx;
+  padding-left: 20rpx;
+  padding-bottom: 5rpx;
+  padding-top: 5rpx;
+}
+
+.applyTip .tip {
+  display: flex;
+  font-size: 35rpx;
+  color: #bd2529;
+  padding-top: 20rpx;
+}

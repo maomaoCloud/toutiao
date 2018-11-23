@@ -7,10 +7,10 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     withdraw: false,
-    errorMsg:"",
+    errorMsg: "",
     showErrorMsg: false,
     loginUserInfo: {},
-    withdrawAmount:null
+    withdrawAmount: null
   },
 
   onLoad: function(options) {
@@ -18,15 +18,15 @@ Page({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          app.getLoginUserInfo(function (res) {
+          app.getLoginUserInfo(function(res) {
             that.setData({
               hasUserInfo: true,
               loginUserInfo: res,
               userInfo: res
             });
           });
-        }else{
-          app.getLoginUserInfo(function (res) {
+        } else {
+          app.getLoginUserInfo(function(res) {
             that.setData({
               hasUserInfo: false,
               loginUserInfo: res,
@@ -52,7 +52,7 @@ Page({
     app.getLoginUserInfo(function(loginUserInfo) {
       that.setData({
         loginUserInfo: loginUserInfo,
-        withdraw: false        
+        withdraw: false
       });
 
       var totalTask = 0;
@@ -71,7 +71,7 @@ Page({
           if (res.data.success) {
             var advertList = res.data.resData.advertList;
             for (var i = 0; i < advertList.length; i++) {
-              advertList[i].linkUrl = encodeURI(advertList[i].linkUrl);
+              advertList[i].linkUrl = escape(advertList[i].linkUrl); //encodeURI(advertList[i].linkUrl);
             }
 
             var myOrder = res.data.resData.myOrder;
@@ -116,9 +116,9 @@ Page({
           }
 
           if (res.data.success) {
-              that.setData({
-                income: res.data.resData
-              });
+            that.setData({
+              income: res.data.resData
+            });
           } else {
             app.showErrorMsg("网络繁忙！");
           }
@@ -130,7 +130,7 @@ Page({
   },
   getUserInfo: function(e) {
     var that = this;
-    app.getUserInfoDo(e,function(){
+    app.getUserInfoDo(e, function() {
       app.globalData.userInfo = e.detail.userInfo
       that.setData({
         userInfo: e.detail.userInfo,
@@ -188,46 +188,50 @@ Page({
     wx.navigateTo({
       url: '../myPublish/myPublish'
     })
-  },/***输入提现金额改变的时候*/
-  withdrawInputChange:function(e){
+  },
+  /***输入提现金额改变的时候*/
+  withdrawInputChange: function(e) {
     this.setData({
       showErrorMsg: false
     });
     var val = parseFloat(e.detail.value);
-    if(val > 20000.00){
-      this.setData({
-        showErrorMsg:true,
-        errorMsg:"单笔金额不得超过2w"
-      });
-      return;
-    }
-
-    if (val > this.data.income.availableWithdraw){
+    if (val > 20000.00) {
       this.setData({
         showErrorMsg: true,
-        errorMsg: "您最多可提现金额为：" + this.data.income.availableWithdraw+"元"
+        errorMsg: "单笔金额不得超过2w"
       });
       return;
     }
 
-    if(!isNaN(val)){
+    if (val > this.data.income.availableWithdraw) {
+      this.setData({
+        showErrorMsg: true,
+        errorMsg: "您最多可提现金额为：" + this.data.income.availableWithdraw + "元"
+      });
+      return;
+    }
+
+    if (!isNaN(val)) {
       console.log(val);
       this.setData({
         withdrawAmount: val
       });
     }
-  }, toMyApply:function(e){
+  },
+  toMyApply: function(e) {
     var index = e.currentTarget.dataset.idx;
     wx.navigateTo({
-      url: '../myApply/myApply?index='+index,
+      url: '../myApply/myApply?index=' + index,
     })
-  }, toMyPublish:function(e){
+  },
+  toMyPublish: function(e) {
     var index = e.currentTarget.dataset.idx;
     wx.navigateTo({
       url: '../myPublish/myPublish?index=' + index,
     })
-  }, applyDo:function(){
-    if (this.data.withdrawAmount == null){
+  },
+  applyDo: function() {
+    if (this.data.withdrawAmount == null) {
       app.showErrorMsg("请输入提现金额");
       return;
     }
@@ -237,50 +241,52 @@ Page({
       return;
     }
 
-    if (this.data.withdrawAmount>20000.00){
+    if (this.data.withdrawAmount > 20000.00) {
       app.showErrorMsg("单笔不得操作2w元");
       return;
     }
 
     if (this.data.withdrawAmount > this.data.income.availableWithdraw) {
-      app.showErrorMsg("不得超过：" + this.data.income.availableWithdraw+"元");
+      app.showErrorMsg("不得超过：" + this.data.income.availableWithdraw + "元");
       return;
     }
 
     var that = this;
-    app.getLoginUserInfo(function(loginUserInfo){
+    app.getLoginUserInfo(function(loginUserInfo) {
       var useId = loginUserInfo.id;
       var openId = loginUserInfo.openId;
       var money = that.data.withdrawAmount;
-      var url = app.serverUrl + "wx/pay/withdraw?userId=" + useId + "&openId=" + openId+"&money=" + money;
+      var url = app.serverUrl + "wx/pay/withdraw?userId=" + useId + "&openId=" + openId + "&money=" + money;
 
       wx.showLoading({
         title: '提现处理中...'
       })
       wx.request({
         url: url,
-        success:function(res){
+        success: function(res) {
           wx.hideLoading();
-         var data = res.data;
-          if (data.success){
-            if (data.resData.isSuccess){
-              that.setData({ withdraw:false});
-               wx.showToast({
-                 title: '提现成功',
-                 duration:2000,
-                 mask:true
-               })
+          var data = res.data;
+          if (data.success) {
+            if (data.resData.isSuccess) {
+              that.setData({
+                withdraw: false
+              });
+              wx.showToast({
+                title: '提现成功',
+                duration: 2000,
+                mask: true
+              })
 
-               setTimeout(function(){
-                 that.onShow(); //重新加载页面
-               },2000);
-            }else{
+              setTimeout(function() {
+                that.onShow(); //重新加载页面
+              }, 2000);
+            } else {
               app.showErrorMsg("提现失败！");
             }
-          }else{
+          } else {
             wx.showToast({
               title: data.msg,
-              icon:"none"
+              icon: "none"
             })
           }
         }

@@ -271,6 +271,9 @@
         <result column="teamTwoUserOneName" jdbcType="VARCHAR" property="teamTwoUserOneName"/>
         <result column="teamTwoUserTwoHead" jdbcType="VARCHAR" property="teamTwoUserTwoHead"/>
         <result column="teamTwoUserTwoName" jdbcType="VARCHAR" property="teamTwoUserTwoName"/>
+        <result column="teamTwoId" jdbcType="VARCHAR" property="teamTwoId"/>
+        <result column="teamOneId" jdbcType="VARCHAR" property="teamOneId"/>
+        <result column="id" jdbcType="VARCHAR" property="id"/>
     </resultMap>
     <select id="queryTeamUserByMatchId" parameterType="java.lang.String">
       SELECT
@@ -285,7 +288,7 @@
 
     <select id="queryTeamDataByCondition" parameterType="java.util.Map" resultMap="matchTeamDataDto">
         SELECT
-        mtd.id, mtd.match_id, turn_number, table_number, team_one_id, team_one_score, team_two_id, team_two_score,
+        mtd.id, mtd.match_id, turn_number, table_number, team_one_id AS teamOneId, team_one_score, team_two_id AS teamTwoId, team_two_score,
         getTeamNum(mtm1.id) as teamOneNum,
         getTeamNum(mtm2.id) as teamTwoNum,
         mtm1.team_member_one_name as teamOneUserOneName,

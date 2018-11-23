@@ -41,8 +41,8 @@
 				{
 					"id": 0,
 					"name": "index",
-					"pathName": "pages/score/score",
-					"query": "matchId=whLOox6y"
+					"pathName": "pages/inputScore/inputScore",
+					"query": "matchId=123456"
 				}
 			]
 		}

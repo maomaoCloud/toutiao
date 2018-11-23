@@ -1,8 +1,8 @@
 //app.js
 App({
   onLaunch: function() {
-    this.getLoginUserInfo(function(res){
-        console.log(res);
+    this.getLoginUserInfo(function(res) {
+      console.log(res);
     });
   },
   getLoginUserInfo: function(fn) {
@@ -30,7 +30,8 @@ App({
               fn(res.data);
               return;
             }
-          },fail:function(){
+          },
+          fail: function() {
             that.reLogin(fn);
           }
         })
@@ -45,8 +46,8 @@ App({
     loginUserInfo: null,
     sessionKey: null
   },
-  serverUrl: "https://api.kikistudio.cn/",
-  //serverUrl: "http://localhost:8081/",
+  //serverUrl: "https://api.kikistudio.cn/",
+  serverUrl: "http://localhost:8081/",
   /**显示错误提示*/
   showErrorMsg: function(msg) {
     wx.showToast({
@@ -54,7 +55,7 @@ App({
       image: "../../resource/error.png"
     })
   },
-  showErrorMsg2: function (msg, duration) {
+  showErrorMsg2: function(msg, duration) {
     wx.showToast({
       title: msg,
       image: "../../resource/error.png",
@@ -82,18 +83,19 @@ App({
               that.globalData.loginUserInfo = userInfo;
               that.globalData.sessionKey = sessionKey;
 
-              wx.setStorage({
-                key: 'loginUserInfo',
-                data: userInfo
-              })
+              try {
+                wx.setStorageSync('loginUserInfo', userInfo)
+              } catch (e) {}
 
               fn(userInfo);
             }
-          },fail:function(){
+          },
+          fail: function() {
             that.showErrorMsg("网络繁忙！");
           }
         })
-      },fail:function(){
+      },
+      fail: function() {
         that.showErrorMsg("登陆失败！");
       }
     });
@@ -121,10 +123,10 @@ App({
       }
     })
   },
-  getUserInfoDo: function(e,fn) {
+  getUserInfoDo: function(e, fn) {
     var that = this;
-    that.getLoginUserInfo(function(loginUseInfo){
-    
+    that.getLoginUserInfo(function(loginUseInfo) {
+
       var encryptedData = e.detail.encryptedData
       var iv = e.detail.iv
       var sessionKey = that.globalData.sessionKey
@@ -143,13 +145,18 @@ App({
           iv: iv,
           userId: userId
         },
-        success: function (res) {
+        success: function(res) {
+          console.log(res);
           var data = res.data;
           if (data.success) {
             var userInfo = data.resData;
             that.globalData.loginUserInfo = userInfo;
+            try {
+              wx.setStorageSync('loginUserInfo', userInfo)
+            } catch (e) { }
+
+            fn();
           }
-          fn();
         }
       })
 
