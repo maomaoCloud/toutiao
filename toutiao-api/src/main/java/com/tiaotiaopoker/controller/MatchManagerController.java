@@ -305,6 +305,24 @@ public class MatchManagerController {
     }
 
     /**
+     * 更新座位信息
+     * SeatUpdateData:
+     * teamIds[]:队伍id集合
+     * matchId:比赛id
+     * turn:轮次
+     */
+    @RequestMapping("seat/update")
+    public JsonResult updateSeat(@RequestBody SeatUpdateData data) {
+        try {
+            matchTeamDataService.updateMatchTeamData(data.getTeamIds(), data.getMatchId(), data.getTurn());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
+        return JsonResult.SUCCESS();
+    }
+
+    /**
      * 获取首轮编排座位信息
      * resData:[dataItem,dataItem]
      * dataItem:
