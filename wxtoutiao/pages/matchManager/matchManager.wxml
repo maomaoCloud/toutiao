@@ -120,3 +120,7 @@
   </view>
 </view>
 <view wx:if="{{ withdraw }}" bindtap='hideMask' class='mask'></view>
+
+<view class='float-btn' bindtap='toIndex' bindtouchmove='move' style='left:{{left}}px; top:{{top}}px;'>
+  <view class='goToIndex'>首页</view>
+</view>

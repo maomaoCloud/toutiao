@@ -19,7 +19,12 @@ Page({
    */
   onLoad: function(options) {
     var matchId = options.matchId;
-    var userId = app.globalData.loginUserInfo.id;
+    this.setData({
+      matchId: matchId
+    });
+  },
+  onShow:function(){
+    var matchId = this.data.matchId;
     //加载是否可以继续输入成绩， 比如最后一轮已经输入了，就不能输入
     var that = this;
 
@@ -31,12 +36,12 @@ Page({
     var url = app.serverUrl + "match/manager/info/" + matchId;
     wx.request({
       url: url,
-      success: function(res) {
+      success: function (res) {
         var settingInfo = res.data.resData;
         if (!settingInfo.hasSettingRule) {
           // 还没有设置比赛信息
           app.showErrorMsg2("请先设置比赛！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -46,7 +51,7 @@ Page({
 
         if (settingInfo.currentTurn == 0) {
           app.showErrorMsg2("请排座位！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -57,7 +62,7 @@ Page({
         //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
         if (settingInfo.currentTurn == settingInfo.totalTurn && settingInfo.currentTurnHasInputScore) {
           app.showErrorMsg2("成绩已录入！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -73,7 +78,7 @@ Page({
         url = app.serverUrl + "match/manager/seat/detail/" + matchId + "/" + settingInfo.currentTurn;
         wx.request({
           url: url,
-          success: function(_res) {
+          success: function (_res) {
             wx.hideLoading();
             var data = _res.data.resData;
             for (var i = 0; i < data.length; i++) {
@@ -88,10 +93,8 @@ Page({
         })
       }
     })
-
-    //2 加载当前轮的成绩
-    //3.加载是否可以平局
-  },
+  }
+  ,
   bindPickerChange: function(e) {
     console.log(e);
     var idx = parseInt(e.detail.value);

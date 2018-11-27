@@ -7,7 +7,9 @@ Page({
     withdraw: false,
     errorMsg: "",
     showErrorMsg: false,
-    withdrawAmount: null
+    withdrawAmount: null,
+    left: "",
+    top: "",
   },
   /**切换比赛*/
   matchChange: function(e) {
@@ -25,6 +27,16 @@ Page({
     wx.showLoading({
       title: '加载中...'
     })
+
+    const sysInfo = wx.getSystemInfoSync()
+    var screenWidth = sysInfo.windowWidth
+    var screenHeight = sysInfo.windowHeight
+    this.setData({
+      screenWidth: screenWidth,
+      screenHeight: screenHeight
+    });
+
+
 
     var match_id = options.id;
     var that = this;
@@ -300,7 +312,7 @@ Page({
           wx.navigateTo({
             url: '../sort/sort?matchId=' + matchId,
           })
-        }else{
+        } else {
           wx.navigateTo({
             url: '../sort2/sort?matchId=' + matchId,
           })
@@ -333,5 +345,26 @@ Page({
         fn(res);
       }
     })
+  },
+  move: function(e) {
+    var left = e.touches[0].clientX - 30;
+    var top = e.touches[0].clientY - 30;
+
+
+    console.log(top);
+
+    if (left < 5) return;
+    if (left > this.data.screenWidth - 60) return;
+    if (this.data.screenHeight - top <= 48) return;
+    if (top < 0) return;
+
+    this.setData({
+      left: left,
+      top: top
+    })
+  },toIndex:function(){
+      wx.switchTab({
+        url: '../match/match'
+      })
   }
 })

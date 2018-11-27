@@ -4,6 +4,8 @@ import com.tiaotiaopoker.pojo.MatchTeamResult;
 
 public class MatchTeamResultDto extends MatchTeamResult {
 
+    private int index;
+
     private int tableNumber;
 
     private String userOne;
@@ -73,4 +75,13 @@ public class MatchTeamResultDto extends MatchTeamResult {
     public void setTableNumber(int tableNumber) {
         this.tableNumber = tableNumber;
     }
+
+    public int getIndex () {
+        return index;
+    }
+
+    public void setIndex (int index) {
+        this.index = index;
+    }
+
 }

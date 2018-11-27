@@ -212,7 +212,8 @@ Page({
       rule.ruleDraw = 1;
     }
 
-    rule.ruleSeat = this.data.idx + 1;
+    rule.matchHost = form.matchHost;
+    rule.matchReferee = form.matchReferee;
     console.log(rule);
 
     var url = app.serverUrl + "match/manager/setting/save";

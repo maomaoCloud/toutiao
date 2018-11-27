@@ -1554,6 +1554,126 @@ public class MatchExample {
             addCriterion("user_limit not between", value1, value2, "userLimit");
             return (Criteria) this;
         }
+
+        public Criteria andIsNeedIdCardIsNull() {
+            addCriterion("is_need_id_card is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardIsNotNull() {
+            addCriterion("is_need_id_card is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardEqualTo(Integer value) {
+            addCriterion("is_need_id_card =", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardNotEqualTo(Integer value) {
+            addCriterion("is_need_id_card <>", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardGreaterThan(Integer value) {
+            addCriterion("is_need_id_card >", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_need_id_card >=", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardLessThan(Integer value) {
+            addCriterion("is_need_id_card <", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardLessThanOrEqualTo(Integer value) {
+            addCriterion("is_need_id_card <=", value, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardIn(List<Integer> values) {
+            addCriterion("is_need_id_card in", values, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardNotIn(List<Integer> values) {
+            addCriterion("is_need_id_card not in", values, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardBetween(Integer value1, Integer value2) {
+            addCriterion("is_need_id_card between", value1, value2, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedIdCardNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_need_id_card not between", value1, value2, "isNeedIdCard");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameIsNull() {
+            addCriterion("is_need_group_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameIsNotNull() {
+            addCriterion("is_need_group_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameEqualTo(Integer value) {
+            addCriterion("is_need_group_name =", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameNotEqualTo(Integer value) {
+            addCriterion("is_need_group_name <>", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameGreaterThan(Integer value) {
+            addCriterion("is_need_group_name >", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_need_group_name >=", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameLessThan(Integer value) {
+            addCriterion("is_need_group_name <", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameLessThanOrEqualTo(Integer value) {
+            addCriterion("is_need_group_name <=", value, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameIn(List<Integer> values) {
+            addCriterion("is_need_group_name in", values, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameNotIn(List<Integer> values) {
+            addCriterion("is_need_group_name not in", values, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameBetween(Integer value1, Integer value2) {
+            addCriterion("is_need_group_name between", value1, value2, "isNeedGroupName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsNeedGroupNameNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_need_group_name not between", value1, value2, "isNeedGroupName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

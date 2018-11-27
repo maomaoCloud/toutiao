@@ -26,6 +26,8 @@ public class ApiMatchData {
     private Boolean    isMine;
     private Boolean    hasLimit;
     private int        statue;
+    private Boolean    isNeedIdCard;
+    private Boolean    isNeedGroupName;
 
     public BigDecimal getSumMoney () {
         return sumMoney;
@@ -147,6 +149,22 @@ public class ApiMatchData {
         this.statue = statue;
     }
 
+    public Boolean getIsNeedIdCard () {
+        return isNeedIdCard;
+    }
+
+    public void setIsNeedIdCard (Boolean needIdCard) {
+        isNeedIdCard = needIdCard;
+    }
+
+    public Boolean getIsNeedGroupName () {
+        return isNeedGroupName;
+    }
+
+    public void setIsNeedGroupName (Boolean needGroupName) {
+        isNeedGroupName = needGroupName;
+    }
+
     public static ApiMatchData genFromMatch (Match md,
                                              String myUserId) {
         ApiMatchData res = new ApiMatchData();
@@ -170,6 +188,9 @@ public class ApiMatchData {
         res.setStartDate(new DateTime(md.getStartDate()).toString("yyyy-MM-dd HH:mm"));
         res.setTheme(md.getTheme());
 
+        res.setIsNeedGroupName(md.getIsNeedGroupName() != null && md.getIsNeedGroupName().equals(1));
+        res.setIsNeedIdCard(md.getIsNeedIdCard() != null && md.getIsNeedIdCard().equals(1));
+
         //比赛状态
         DateTime nowDate   = new DateTime(new Date());
         DateTime startDate = new DateTime(md.getStartDate());
@@ -187,7 +208,6 @@ public class ApiMatchData {
 
         return res;
     }
-
 
 }
 

@@ -30,11 +30,6 @@
         text-align: center;
     }
 
-    .screen-item {
-        display: flex !important;
-        flex-wrap: wrap;
-    }
-
     .user-group {
         width: 45%;
         display: flex;
@@ -82,7 +77,7 @@
     #sign-list {
         display: flex;
         flex-wrap: wrap;
-        max-height: 550px;
+        max-height: 490px;
     }
 
     .unsign {
@@ -135,12 +130,6 @@
         padding: 5px;
     }
 
-    .carousel-indicators{
-        width: 100%;
-        text-align: center;
-        position: absolute;
-        top: -20px;
-    }
 </style>
 <div class="pageheader" style="margin-left: 15px;">
     <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i> 签到 <span>// Sign...</span>
@@ -152,38 +141,30 @@
 
     <!-- tile -->
     <section class="tile transparent">
-        <div class="tile-header color transparent-black textured rounded-top-corners"
-             style="background-color: rgba(255,255,255,0.05);">
+        <div class="tile-header color transparent-black textured rounded-top-corners" style="background-color: rgba(255,255,255,0.05);">
             <h1 class="box-title" style="font-size: 30px !important;" id="sign-data-title">已签到人员(0)</h1>
         </div>
         <!-- /tile header -->
 
 
         <!-- tile widget -->
-        <div class="tile-widget color transparent-black textured"
-             style="background-color: rgba(255,255,255,0.05);overflow: hidden;" id="sign-list">
-            <div id="myCarousel" class="carousel slide" style="width: 100%;" data-ride="carousel" data-interval="1000">
-                <!-- 轮播（Carousel）项目 -->
-                <div class="carousel-inner" style="margin-top: 30px;">
-                    <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}" th:each="d,dStat : ${data}">
-                        <div class="screen-item">
-                            <div th:each="user,userStat : ${d}" class="user-group">
-                                <div th:data-id="${user.userId}" th:id="${user.userId}" class="user-a unsign">
-                                    <img src="/images/unsign.png">
-                                    <span class="user-name" th:text="${user.name}"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="tile-widget color transparent-black textured scroll-view" style="background-color: rgba(255,255,255,0.05);align-items: center;
+    justify-content: center;" id="sign-list">
 
-                <!-- 轮播（Carousel）指标 -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" th:each="d,dStat : ${data}" th:data-slide-to="${dStat.index}"
-                        th:class="${dStat.index == 0 ? ' active':''}"></li>
-                </ol>
+            <div th:each="user,userStat : ${signUsers}" class="user-group">
+                <div th:data-id="${user.userId}" th:id="${user.userId}" class="user-a unsign">
+                    <img src="/images/unsign.png">
+                    <span class="user-name" th:text="${user.name}"></span>
+                </div>
             </div>
 
+            <div th:each="user,userStat : ${partnerUsers}" class="user-group">
+                <div th:data-id="${user.userId}" th:id="'partner-'+${user.userId}" th:data-myId="${user.partnerUserId}"
+                     class="user-a unsign user-partner">
+                    <img src="/images/unsign.png">
+                    <span class="user-name" th:text="${user.partnerName}"></span>
+                </div>
+            </div>
         </div>
         <!-- /tile widget -->
     </section>
@@ -212,7 +193,6 @@
             <img style="padding-bottom: 20px;" width="250" th:src="${qrcode_url}">
         </div>
         <!-- /tile body -->
-
     </section>
     <!-- /tile -->
 
@@ -252,8 +232,15 @@
     var matchId = getMatchId();
 
     $(function () {
-        $('#myCarousel').carousel({
-            interval: 6000
+        $("#sign-list").niceScroll({
+            cursorcolor: "rgb(220,220,220)",
+            zindex: 999999,
+            bouncescroll: true,
+            cursoropacitymax: 0.4,
+            cursorborder: "",
+            cursorborderradius: 7,
+            cursorwidth: "7px",
+            railalign: "right"
         });
 
         $("#waitList").niceScroll({
@@ -286,7 +273,7 @@
 
                     //更新bUser
                     for (var i = 0; i < res.resData.bUsers.length; i++) {
-                        item = $("#" + res.resData.bUsers[i].userId);
+                        item = $("#partner-" + res.resData.bUsers[i].userId);
                         item.removeClass("unsign");
                         item.find("img").attr("src", res.resData.bUsers[i].head);
                     }
@@ -319,6 +306,21 @@
         }
 
         $.ajax(option);
+
+
+        var down = true;
+        _sign_i = setInterval(function () {
+            var div = document.getElementById('sign-list');
+            if (down && div.scrollHeight - div.scrollTop === div.clientHeight) {
+                //到底了
+                down = false; //向上
+            } else if (!down && div.scrollTop === 0) {
+                down = true;
+            }
+
+            div.scrollBy(0, down ? 480 : -480);
+        }, 10000);
+
     });
 
     function doApprove(type, obj) {
@@ -329,29 +331,15 @@
                 doType: type, userId: id, matchId: matchId
             }, function (res) {
                 var pObj = _obj.parent();
-
                 if (res.success) {
                     if (type == 1) {
                         //通过
                         var img = pObj.find("img").attr("src");
                         var name = pObj.find(".name").html();
                         var html = ' <div class="user-group"> <div data-id="' + id + '" class="user-a"> <img src="' + img + '"> <span class="user-name">' + name + '</span> </div> </div>';
-                        //$("#sign-list").append(html);
+                        $("#sign-list").append(html);
                     }
 
-                    var items = document.getElementsByClassName("screen-item");
-                    console.log(items.length);
-                    if (items.length > 0 && $(items[items.length - 1]).find(".user-group").length < 10) {
-                        $(items[items.length - 1]).append(html);
-                    } else {
-                        var to = $(".carousel-indicators").find("li").length;
-                        var _item = '<div class="item"><div class="screen-item ' + ((to == 0) ? 'active' : '') + '">';
-                        _item += html;
-                        _item += '</div></div>';
-                        $(".carousel-inner").append(_item);
-
-                        $(".carousel-indicators").append('<li data-target="#myCarousel" class="' + ((to == 0) ? 'active' : '') + '" data-slide-to="' + to + '"></li>');
-                    }
                     pObj.remove();
                 } else {
                     alert("操作失败，请联系管理员!");

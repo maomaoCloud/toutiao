@@ -52,6 +52,8 @@ public class ApplyOrder {
 
     private String partnerIdCard;
 
+    private String groupName;
+
     public String getId() {
         return id;
     }
@@ -243,4 +245,13 @@ public class ApplyOrder {
     public void setPartnerIdCard(String partnerIdCard) {
         this.partnerIdCard = partnerIdCard == null ? null : partnerIdCard.trim();
     }
+
+    public String getGroupName () {
+        return groupName;
+    }
+
+    public void setGroupName (String groupName) {
+        this.groupName = groupName;
+    }
+
 }

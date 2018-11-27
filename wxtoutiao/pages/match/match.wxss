@@ -331,7 +331,7 @@
 
 .inputGroup {
   display: flex;
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
 }
 
 .applyInput {
@@ -378,4 +378,19 @@
   font-size: 35rpx;
   color: #bd2529;
   padding-top: 20rpx;
+}
+
+
+.inputGroup-full{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10rpx 0;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx dashed #E5E5E5;
+}
+
+.inputGroup-full input{
+   width: 500rpx;
 }

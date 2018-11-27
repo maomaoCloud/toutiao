@@ -123,6 +123,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             order.setPatnerCode(StringUtils.gen6Num());
             order.setUserIdCard(params.getUserIdCard());
             order.setPartnerIdCard(params.getPartnerIdCard());
+            order.setGroupName(params.getGroupName());
             needPay = order.getPayMoney().doubleValue() > 0.0d;
 
             if (!needPay) {//如果不需要支付

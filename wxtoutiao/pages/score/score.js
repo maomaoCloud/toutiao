@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    name: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
   },
 
   /**
@@ -14,6 +14,15 @@ Page({
    */
   onLoad: function(options) {
     var matchId = options.matchId;
+    this.setData({
+      matchId: matchId
+    });
+
+    
+
+  },
+  onShow:function(){
+    var matchId = this.data.matchId;
     var that = this;
 
     wx.showLoading({
@@ -24,12 +33,12 @@ Page({
     var url = app.serverUrl + "match/manager/info/" + matchId;
     wx.request({
       url: url,
-      success: function(res) {
+      success: function (res) {
         var settingInfo = res.data.resData;
         if (!settingInfo.hasSettingRule) {
           // 还没有设置比赛信息
           app.showErrorMsg2("请先设置比赛！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -37,11 +46,20 @@ Page({
           return;
         }
 
+        if (settingInfo.currentTurn == 0) {
+          app.showErrorMsg2("请先排座位！", 2500);
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../matchManager/matchManager?id=' + matchId
+            })
+          }, 2500);
+          return;
+        }
 
         //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
         if (settingInfo.currentTurn == 0 && !settingInfo.currentTurnHasInputScore) {
           app.showErrorMsg2("还未录入成绩！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -49,7 +67,7 @@ Page({
           return;
         }
 
-        if (settingInfo.currentTurn > 0 && !settingInfo.currentTurnHasInputScore){
+        if (settingInfo.currentTurn > 1 && !settingInfo.currentTurnHasInputScore) {
           settingInfo.currentTurn = settingInfo.currentTurn - 1;
         }
 
@@ -61,12 +79,22 @@ Page({
         url = app.serverUrl + "match/manager/score/show/" + matchId + "/" + settingInfo.currentTurn;
         wx.request({
           url: url,
-          success: function(_res) {
+          success: function (_res) {
             wx.hideLoading();
             var nameList = _res.data.resData.nameList;
             var dataList = _res.data.resData.apiResultList;
             var score;
             var scoreData;
+
+            if (dataList.length <= 0){
+              app.showErrorMsg2("还未录入成绩！", 2500);
+              setTimeout(function () {
+                wx.navigateTo({
+                  url: '../matchManager/matchManager?id=' + matchId
+                })
+              }, 2500);
+            }
+
             for (var i = 0; i < dataList.length; i++) {
               score = dataList[i].resultString.split(",");
 
@@ -87,56 +115,6 @@ Page({
         })
       }
     })
-
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
   }
+
 })

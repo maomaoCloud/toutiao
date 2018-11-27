@@ -40,17 +40,22 @@ Page({
     applyCount: 1,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     showTip: true,
-    isAgree: false
+    isAgree: false,
+    groupName: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
     this.loadMatchData(false);
   },
   onShow: function() {
+    this.setData({
+      addActive: false,
+      showMask: false
+    });
+
     this.checkLogin();
     if (app.globalData.isReloadMatch != null && app.globalData.isReloadMatch) {
       var matchId = app.globalData.isReloadMatchId;
@@ -90,12 +95,13 @@ Page({
       url: '/pages/search/search'
     })
   },
-  showApplyTip:function(){
+  showApplyTip: function() {
     this.setData({
       showTip: false
     });
-  },/**是否同意*/
-  isAgree: function (e) {
+  },
+  /**是否同意*/
+  isAgree: function(e) {
     this.setData({
       isAgree: e.detail.value
     });
@@ -127,17 +133,26 @@ Page({
         userPhone: phone,
         userHead: userHead,
         userIdCard: userIdCard,
-        isAgree : false
+        isAgree: false
       });
 
       //获取当前要申请的比赛的信息
       var price = parseInt(e.target.dataset.price);
       var id = e.target.dataset.id;
       var totalPrice = price;
+      var applyMatchData = null;
+
+      for (var i = 0; i < that.data.matchData.length; i++) {
+        if (that.data.matchData[i].id == id) {
+          applyMatchData = that.data.matchData[i];
+          break;
+        }
+      }
 
       that.setData({
         applyPrice: price,
-        applyId: id
+        applyId: id,
+        applyMatchData: applyMatchData
       });
 
       var animation = wx.createAnimation({
@@ -388,12 +403,23 @@ Page({
           partnerIdCard: val
         });
         break;
+
+      case "groupName":
+        that.setData({
+          groupName: val
+        });
+        break;
     }
   },
   /**立即报名*/
   applyDo: function() {
     wx.hideToast();
     //第一步检查报名信息
+    if (this.data.applyMatchData.isNeedGroupName && (this.data.groupName == "" || this.data.groupName == undefined || this.data.groupName == null)) {
+      app.showErrorMsg("请输入团队名称");
+      return;
+    }
+
     if (this.data.userName == "" || this.data.userName == undefined || this.data.userName == null) {
       app.showErrorMsg("请输入姓名");
       return;
@@ -409,7 +435,7 @@ Page({
       return;
     }
 
-    if (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18) {
+    if (this.data.applyMatchData.isNeedIdCard && (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18)) {
       app.showErrorMsg("身份证号有误！");
       return;
     }
@@ -430,7 +456,7 @@ Page({
         return;
       }
 
-      if (this.data.partnerIdCard == "" || this.data.partnerIdCard == undefined || this.data.partnerIdCard == null || this.data.partnerIdCard.length != 18) {
+      if (this.data.applyMatchData.isNeedIdCard && (this.data.partnerIdCard == "" || this.data.partnerIdCard == undefined || this.data.partnerIdCard == null || this.data.partnerIdCard.length != 18)) {
         app.showErrorMsg("身份证号有误！");
         return;
       }
@@ -457,6 +483,7 @@ Page({
     var partnerHead = this.data.partnerHead;
     var userIdCard = this.data.userIdCard;
     var partnerIdCard = this.data.partnerIdCard;
+    var groupName = this.data.groupName;
 
     wx.showLoading({
       title: '提交报名中...'
@@ -477,7 +504,8 @@ Page({
         partnerHead: partnerHead,
         hasPartner: hasPartner,
         partnerIdCard: partnerIdCard,
-        userIdCard: userIdCard
+        userIdCard: userIdCard,
+        groupName: groupName
       },
       success: function(res) {
         wx.hideLoading();
@@ -528,7 +556,7 @@ Page({
             }
           } else {
             //不需要支付，直接跳转成功
-            that.applySuccess();
+            that.applySuccess(applyId);
           }
         } else {
           app.showErrorMsg("报名失败，请重试！");

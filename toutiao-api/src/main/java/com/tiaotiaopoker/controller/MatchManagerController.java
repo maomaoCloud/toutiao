@@ -59,7 +59,7 @@ public class MatchManagerController {
                 //已设置比赛信息
                 resultMap.put("hasSettingRule", true);
                 //ruleDraw=1(不可平)
-                resultMap.put("canDraw", matchRule.getRuleDraw().equals(1));
+                resultMap.put("canDraw", !matchRule.getRuleDraw().equals(1));
                 resultMap.put("totalTurn", matchRule.getRuleTurn());
                 //当前轮次
                 int nowTurn = matchTeamDataService.getNowTurn(matchId);

@@ -26,22 +26,10 @@ Page({
     applyPrice: 0,
     applyId: "",
     applyCount: 1,
-    matchInfo: {
-      headImg: "https://modao.cc/uploads3/images/2344/23443797/raw_1533194816.png",
-      theme: "这里是活动的主题",
-      startDateTime: "2018-10-02 15:00",
-      endDateTime: "2018-11-02 18:00",
-      address: "江苏省昆山市张浦镇花苑路688号",
-      activeContent: "哈哈哈哈哈哈哈哈哈哈哈",
-      rewardsContent: "奖品介绍奖品介绍奖品介绍奖品介绍奖品介绍",
-      contactName: "谢康",
-      contactPhone: "18012673347",
-      wxHead: "https://api.kikistudio.cn/static/JxdfG5H/Lewud4AA.jpg",
-      fee: 10,
-      applyList: []
-    },
+    matchInfo: {},
     showTip: true,
-    isAgree: false
+    isAgree: false,
+    groupName:""
   },
 
   /**
@@ -246,13 +234,23 @@ Page({
           partnerIdCard: val
         });
         break;
+
+      case "groupName":
+        that.setData({
+          groupName: val
+        });
+        break;
     }
   },
   /**立即报名*/
   applyDo: function() {
     wx.hideToast();
-
     //第一步检查报名信息
+    if (this.data.matchInfo.isNeedGroupName && (this.data.groupName == "" || this.data.groupName == undefined || this.data.groupName == null)) {
+      app.showErrorMsg("请输入团队名称");
+      return;
+    }
+
     if (this.data.userName == "" || this.data.userName == undefined || this.data.userName == null) {
       app.showErrorMsg("请输入姓名");
       return;
@@ -268,7 +266,7 @@ Page({
       return;
     }
 
-    if (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18) {
+    if (this.data.matchInfo.isNeedIdCard && (this.data.userIdCard == "" || this.data.userIdCard == undefined || this.data.userIdCard == null || this.data.userIdCard.length != 18)) {
       app.showErrorMsg("身份证号有误！");
       return;
     }
@@ -289,7 +287,7 @@ Page({
         return;
       }
 
-      if (this.data.partnerIdCard == "" || this.data.partnerIdCard == undefined || this.data.partnerIdCard == null || this.data.partnerIdCard.length != 18) {
+      if (this.data.matchInfo.isNeedIdCard &&(this.data.partnerIdCard == "" || this.data.partnerIdCard == undefined || this.data.partnerIdCard == null || this.data.partnerIdCard.length != 18)) {
         app.showErrorMsg("身份证号有误！");
         return;
       }

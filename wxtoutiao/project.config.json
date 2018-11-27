@@ -41,7 +41,7 @@
 				{
 					"id": 0,
 					"name": "index",
-					"pathName": "pages/inputScore/inputScore",
+					"pathName": "pages/addMatch/addMatch",
 					"query": "matchId=123456"
 				}
 			]

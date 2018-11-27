@@ -25,7 +25,7 @@ public class DateUtils {
         diff /= 24;
         if( diff < 30 ) return diff + "天之前";
 
-        return Constants.NULL_STR;
+        return new DateTime(date).toString("yyyy-MM-dd");
     }
 
     /**

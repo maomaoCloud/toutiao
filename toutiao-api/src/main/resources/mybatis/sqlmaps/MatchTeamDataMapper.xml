@@ -321,9 +321,5 @@
             match_team_data
         WHERE
         match_id = #{matchId,jdbcType=VARCHAR}
-        AND
-        team_one_score IS NULL
-        AND
-        team_two_score IS NULL
   </select>
 </mapper>
