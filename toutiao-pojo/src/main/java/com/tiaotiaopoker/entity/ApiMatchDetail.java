@@ -1,9 +1,11 @@
 package com.tiaotiaopoker.entity;
 
+import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,8 @@ public class ApiMatchDetail {
     private Boolean              hasApply;
     private Boolean              isMine;//当前比赛是否是我自己发布的，如果是我自己发布的，就不能报名
     private Boolean              hasLimit;
+    private int                  statue;
+    private Boolean              isNeedGroupName, isNeedIdCard;
 
     public ApiMatchDetail () {
         super();
@@ -139,6 +143,21 @@ public class ApiMatchDetail {
         sbStress.append(m.getProvince()).append(m.getCity()).append(m.getArea()).append(m.getAddress());
         data.setAddress(sbStress.toString());
 
+        data.setIsNeedGroupName(m.getIsNeedGroupName() != null && m.getIsNeedGroupName().equals(1));
+        data.setIsNeedIdCard(m.getIsNeedIdCard() != null && m.getIsNeedIdCard().equals(1));
+
+        //比赛状态
+        DateTime nowDate   = new DateTime(new Date());
+        DateTime startDate = new DateTime(m.getStartDate());
+        DateTime endDate   = new DateTime(m.getEndDate());
+        if (nowDate.compareTo(startDate) < 0) {
+            data.setStatue(Constants.Match.NOT_START_CODE);
+        } else if (nowDate.compareTo(endDate) > 0) {
+            data.setStatue(Constants.Match.END_CODE);
+        } else {
+            data.setStatue(Constants.Match.UNDER_WAY_CODE);
+        }
+
         return data;
     }
 
@@ -172,6 +191,30 @@ public class ApiMatchDetail {
 
     public void setHasLimit (Boolean hasLimit) {
         this.hasLimit = hasLimit;
+    }
+
+    public int getStatue () {
+        return statue;
+    }
+
+    public void setStatue (int statue) {
+        this.statue = statue;
+    }
+
+    public Boolean getIsNeedGroupName () {
+        return isNeedGroupName;
+    }
+
+    public void setIsNeedGroupName (Boolean needGroupName) {
+        isNeedGroupName = needGroupName;
+    }
+
+    public Boolean getIsNeedIdCard () {
+        return isNeedIdCard;
+    }
+
+    public void setIsNeedIdCard (Boolean needIdCard) {
+        isNeedIdCard = needIdCard;
     }
 
 }

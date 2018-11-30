@@ -116,11 +116,12 @@ public class ApiSimpleUserInfo {
 
     public static ApiSimpleUserInfo genPartnerFromApplyOrder(ApplyOrder sd) {
         ApiSimpleUserInfo res = new ApiSimpleUserInfo();
-        res.setUserId( sd.getUserId() );
+        res.setUserId( sd.getPartnerId() );
         res.setPartnerUserId( sd.getPartnerId() );
         res.setPartnerName( sd.getPartnerName() );
         res.setPartnerPhone( sd.getPartnerPhone() );
         res.setHead( sd.getPartnerHead() );
+        res.setName(sd.getPartnerName());
         if( StringUtils.isBlank( res.getHead() ) ){
             res.setHead( "/images/head.png" );
         }

@@ -32,7 +32,57 @@
     <!-- tile body -->
     <div class="tile-body">
 
-        <table class="table table-bordered" id="seat-table" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
+        <div id="myCarouselSeat" class="carousel slide" style="width: 100%;" data-ride="carousel">
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner" style="margin-top: 30px;">
+                <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}" th:each="d,dStat : ${dataResult}">
+                    <div class="screen-item">
+                        <table class="table table-bordered" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
+                            <tr>
+                                <td class="head-title" colspan="10">
+                                    <div style="margin-top:10px; font-size: 30px" th:text="${matchName}"></div>
+                                    <div style="font-size:25px; margin:10px;" th:text="'第'+${turnNumChines}+'轮 座位表'"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="8%" class="color-1">桌号</td>
+                                <td width="5%" class="vs">编号</td>
+                                <td class="color-2">东</td>
+                                <td width="5%" class="color-2 no-left-border"></td>
+                                <td class="color-2 no-left-border">西</td>
+                                <td width="22%" class="vs"></td>
+                                <td width="5%" class="vs">编号</td>
+                                <td class="color-3">南</td>
+                                <td width="5%" class="color-3 no-left-border"></td>
+                                <td class="color-3 no-left-border">北</td>
+                            </tr>
+
+                            <tr th:each="data:${d}">
+                                <td th:text="${data.tableNumber}+'号桌'"></td>
+                                <td th:text="${data.teamOneNum}"></td>
+                                <td th:text="${data.teamOneUserOneName}"></td>
+                                <td>搭</td>
+                                <td th:text="${data.teamOneUserTwoName}"></td>
+                                <td>VS</td>
+                                <td th:text="${data.teamTwoNum}"></td>
+                                <td th:text="${data.teamTwoUserOneName}"></td>
+                                <td>搭</td>
+                                <td th:text="${data.teamTwoUserTwoName}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" th:each="d,dStat : ${dataResult}" th:data-slide-to="${dStat.index}"
+                    th:class="${dStat.index == 0 ? ' active':''}"></li>
+            </ol>
+        </div>
+
+        <table id="pShow" class="table table-bordered hide" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
             <tr>
                 <td class="head-title" colspan="10">
                     <div style="margin-top:10px; font-size: 30px" th:text="${matchName}"></div>
@@ -66,6 +116,7 @@
                 <td th:text="${data.teamTwoUserTwoName}"></td>
             </tr>
         </table>
+
     </div>
     <!-- /tile body -->
 
@@ -74,16 +125,26 @@
     </div>
 
 </section>
-<script>
+<script th:inline="javascript">
+    /* <![CDATA[ */
     $(function () {
+        $('#myCarouselSeat').carousel({
+            interval: 6000
+        });
+
         $("#print").click(function () {
+            $('#myCarouselSeat').addClass("hide");
+            $("#pShow").removeClass("hide");
             $(this).addClass("hide");
             hideNav();
             window.print();
             showNav();
             $(this).removeClass("hide");
+            $('#myCarouselSeat').removeClass("hide");
+            $("#pShow").addClass("hide");
         });
     });
+    /* ]]> */
 </script>
 </html>
 

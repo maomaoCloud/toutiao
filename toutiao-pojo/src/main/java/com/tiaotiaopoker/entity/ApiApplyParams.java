@@ -16,6 +16,7 @@ public class ApiApplyParams {
     private Boolean hasPartner;
     private String  requestIp;
     private String  openId;
+    private String  groupName;
 
     private String userIdCard;
     private String partnerIdCard;
@@ -130,6 +131,14 @@ public class ApiApplyParams {
 
     public void setPartnerIdCard (String partnerIdCard) {
         this.partnerIdCard = partnerIdCard;
+    }
+
+    public String getGroupName () {
+        return groupName;
+    }
+
+    public void setGroupName (String groupName) {
+        this.groupName = groupName;
     }
 
 }

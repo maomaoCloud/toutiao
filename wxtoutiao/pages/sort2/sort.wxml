@@ -22,6 +22,6 @@
   </view>
 
   <view class='op-box'>
-    <button formType="submit" bindtap='save' class='save-btn'>保存座位</button>
+    <button formType="submit" bindtap='save' class='save-btn'>保存第{{name[settingInfo.currentTurn - 1]}}轮座位</button>
   </view>
 </view>

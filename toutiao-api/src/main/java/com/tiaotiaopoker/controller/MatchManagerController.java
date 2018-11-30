@@ -2,6 +2,7 @@ package com.tiaotiaopoker.controller;
 
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
+import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.*;
 import com.tiaotiaopoker.pojo.*;
 import com.tiaotiaopoker.service.*;
@@ -17,22 +18,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController()
-@RequestMapping("match/manager/")
-@Scope("prototype")
+@RestController ()
+@RequestMapping ("match/manager/")
+@Scope ("prototype")
 public class MatchManagerController {
     @Autowired
-    private MatchRuleService matchRuleService;
+    private MatchRuleService       matchRuleService;
     @Autowired
-    private MatchService matchService;
+    private MatchService           matchService;
     @Autowired
-    private MatchTeamDataService matchTeamDataService;
+    private MatchTeamDataService   matchTeamDataService;
     @Autowired
     private MatchTeamResultService matchTeamResultService;
     @Autowired
-    private SysHelpService sysHelpService;
+    private SysHelpService         sysHelpService;
     @Autowired
-    private ApplyOrderService applyOrderService;
+    private ApplyOrderService      applyOrderService;
 
     /**
      * 0.根据比赛Id 获取比赛轮次信息
@@ -45,11 +46,11 @@ public class MatchManagerController {
      * currentTurnHasInputScore:true    //当前轮次是否已录入成绩
      * }
      */
-    @RequestMapping("info/{matchId}")
-    public JsonResult matchInfo(@PathVariable("matchId") String matchId) {
+    @RequestMapping ("info/{matchId}")
+    public JsonResult matchInfo (@PathVariable ("matchId") String matchId) {
 
         try {
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+            MatchRule           matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
             Map<String, Object> resultMap = new HashMap<>();
             if (null == matchRule) {
                 resultMap.put("hasSettingRule", false);
@@ -58,7 +59,7 @@ public class MatchManagerController {
                 //已设置比赛信息
                 resultMap.put("hasSettingRule", true);
                 //ruleDraw=1(不可平)
-                resultMap.put("canDraw", matchRule.getRuleDraw().equals(1));
+                resultMap.put("canDraw", !matchRule.getRuleDraw().equals(1));
                 resultMap.put("totalTurn", matchRule.getRuleTurn());
                 //当前轮次
                 int nowTurn = matchTeamDataService.getNowTurn(matchId);
@@ -88,8 +89,8 @@ public class MatchManagerController {
      * 1.帮助中心接口 -> 帮助中心列表
      * resData:[{helpId:"123",helpTitle:"title",helpColor:"#EFEFEF"},{helpId:"456",helpTitle:"title",helpColor:"#EFEFEF"}]
      */
-    @RequestMapping("help/list")
-    public JsonResult helpList() {
+    @RequestMapping ("help/list")
+    public JsonResult helpList () {
         List<ApiHelpData> resultList = new ArrayList<>();
         try {
             List<SysHelp> helpList = sysHelpService.queryHelpByCondition(null, null);
@@ -108,8 +109,8 @@ public class MatchManagerController {
      * 时间格式: yyyy-MM-dd
      * resData:{helpId:"123", helpTitle:"",helpContent:"", helpCreateTime:"yyyy-MM-dd"}
      */
-    @RequestMapping("help/detail/{id}")
-    public JsonResult helpDetail(@PathVariable("id") String id) {
+    @RequestMapping ("help/detail/{id}")
+    public JsonResult helpDetail (@PathVariable ("id") String id) {
         try {
             SysHelp sysHelp = sysHelpService.queryHelpById(id);
             return JsonResult.SUCCESS("success", ApiHelpData.genDetailDataFromHelp(sysHelp));
@@ -146,14 +147,14 @@ public class MatchManagerController {
      * resultString:""   //参考成绩（逗号分隔字符串，值与nameList里的属性名称一一对应）
      * }
      */
-    @RequestMapping("score/show/{matchId}/{turn}")
-    public JsonResult showScore(@PathVariable("matchId") String matchId, @PathVariable("turn") Integer turn) {
+    @RequestMapping ("score/show/{matchId}/{turn}")
+    public JsonResult showScore (@PathVariable ("matchId") String matchId, @PathVariable ("turn") Integer turn) {
         Map<String, Object> resultMap = new HashMap<>();
         try {
             //比赛设置参考成绩属性名称集合
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-            List<String> nameList = new ArrayList<>();
-            String resultRule = matchRule.getRuleResult() == null ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+            MatchRule    matchRule  = matchRuleService.selectMatchRuleByMatchId(matchId);
+            List<String> nameList   = new ArrayList<>();
+            String       resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
             for (String title : resultRule.split(",")) {
                 nameList.add((String) Constants.resultRule.resultRuleMap.get(title));
             }
@@ -161,15 +162,15 @@ public class MatchManagerController {
 
             //成绩数据集合
             List<ApiMatchTeamResult> apiResultList = new ArrayList<>();
-            MatchTeamResult result = new MatchTeamResult();
+            MatchTeamResult          result        = new MatchTeamResult();
             result.setMatchId(matchId);
             result.setTurnNumber(turn);
             List<MatchTeamResultDto> resultDtolist = matchTeamResultService.sortMatchTeamResult(result);
             //根据规则显示相应的成绩
             for (MatchTeamResultDto resultDto : resultDtolist) {
-                ApiMatchTeamResult apiResult = ApiMatchTeamResult.genFromMatchTeamResultDto(resultDto);
-                String resultString = "";
-                Class clazz = resultDto.getClass();
+                ApiMatchTeamResult apiResult    = ApiMatchTeamResult.genFromMatchTeamResultDto(resultDto);
+                String             resultString = "";
+                Class              clazz        = resultDto.getClass();
                 for (String getName : resultRule.split(",")) {
                     resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
                 }
@@ -201,11 +202,11 @@ public class MatchManagerController {
      * userBHasHasSign:false
      * }
      */
-    @RequestMapping("sign/detail/{matchId}")
-    public JsonResult signDetail(@PathVariable("matchId") String matchId) {
+    @RequestMapping ("sign/detail/{matchId}")
+    public JsonResult signDetail (@PathVariable ("matchId") String matchId) {
         try {
             List<ApiSignDetail> signDetailList = new ArrayList<>();
-            List<ApplyOrder> orderList = applyOrderService.getSignData(matchId);
+            List<ApplyOrder>    orderList      = applyOrderService.getSignData(matchId);
             for (ApplyOrder order : orderList) {
                 signDetailList.add(ApiSignDetail.genFromApplyOrder(order));
             }
@@ -234,11 +235,11 @@ public class MatchManagerController {
      * groupBUserBHead:"",
      * }
      */
-    @RequestMapping("seat/detail/{matchId}/{turn}")
-    public JsonResult seatDetail(@PathVariable("matchId") String matchId, @PathVariable("turn") Integer turn) {
+    @RequestMapping ("seat/detail/{matchId}/{turn}")
+    public JsonResult seatDetail (@PathVariable ("matchId") String matchId, @PathVariable ("turn") Integer turn) {
         try {
             List<ApiMatchTeamData> apiMatchTeamDataList = new ArrayList<>();
-            MatchTeamData data = new MatchTeamData();
+            MatchTeamData          data                 = new MatchTeamData();
             data.setMatchId(matchId);
             data.setTurnNumber(turn);
             List<MatchTeamDataDto> matchTeamDataDtoList = matchTeamDataService.queryTeamDataByCondition(data);
@@ -256,8 +257,8 @@ public class MatchManagerController {
     /**
      * 5.获取比赛的设置信息
      */
-    @RequestMapping("setting/{matchId}")
-    public JsonResult getMatchSettingInfo(@PathVariable("matchId") String matchId) {
+    @RequestMapping ("setting/{matchId}")
+    public JsonResult getMatchSettingInfo (@PathVariable ("matchId") String matchId) {
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         if (matchRule == null) {
             MatchWithBLOBs matchData = matchService.getMatchDataById(matchId);
@@ -273,8 +274,8 @@ public class MatchManagerController {
     /**
      * 6.获取保存比赛规则信息
      */
-    @RequestMapping("setting/save")
-    public JsonResult saveMatchRule(@RequestBody MatchRule matchRule) {
+    @RequestMapping ("setting/save")
+    public JsonResult saveMatchRule (@RequestBody MatchRule matchRule) {
         try {
             matchRuleService.saveBySelective(matchRule);
         } catch (Exception e) {
@@ -293,10 +294,28 @@ public class MatchManagerController {
      * names[]:用户姓名数组
      * heads[]:用户头像数组
      */
-    @RequestMapping("seat/save")
-    public JsonResult saveSeat(@RequestBody SeatSaveData data) {
+    @RequestMapping ("seat/save")
+    public JsonResult saveSeat (@RequestBody SeatSaveData data) {
         try {
             matchTeamDataService.saveMatchTeamDataAndMember(data.getUserIds(), data.getNames(), data.getHeads(), data.getMatchId(), data.getTurn());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.FAILED("操作失败！");
+        }
+        return JsonResult.SUCCESS();
+    }
+
+    /**
+     * 更新座位信息
+     * SeatUpdateData:
+     * teamIds[]:队伍id集合
+     * matchId:比赛id
+     * turn:轮次
+     */
+    @RequestMapping("seat/update")
+    public JsonResult updateSeat(@RequestBody SeatUpdateData data) {
+        try {
+            matchTeamDataService.updateMatchTeamData(data.getTeamIds(), data.getMatchId(), data.getTurn());
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.FAILED("操作失败！");
@@ -317,15 +336,19 @@ public class MatchManagerController {
      * resData[1,2,3,4,5,6,7,8]
      * 1,2为第一组 3,4为第二组  1，2，3，4为第一桌
      */
-    @RequestMapping("seat/firstTurn/{matchId}")
-    public JsonResult getFirstTurnSeat(@PathVariable("matchId") String matchId) {
+    @RequestMapping ("seat/firstTurn/{matchId}")
+    public JsonResult getFirstTurnSeat (@PathVariable ("matchId") String matchId) {
         try {
             List<ApiSeatUser> resData = new ArrayList<>();
             //首轮座位规则
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-            List<AppUser> userList = matchTeamDataService.sortMatchTeamByRuleSeat(matchRule.getRuleSeat(), matchId);
+            MatchRule     matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+            List<AppUser> userList  = matchTeamDataService.sortMatchTeamByRuleSeat(matchRule.getRuleSeat(), matchId);
             //签到人员不是4的倍数时，补全用户
-            while (userList.size() % 4 != 0) {
+            for (AppUser appUser : userList) {
+                resData.add(ApiSeatUser.genFromAppUser(appUser));
+            }
+
+            while (userList.size()%4 != 0) {
                 ApiSeatUser user = new ApiSeatUser();
                 user.setUserId(String.valueOf(userList.size()));
                 user.setName("我是null");
@@ -349,25 +372,17 @@ public class MatchManagerController {
      * teamTwoIds[]:队伍二（即南北方）id集合
      * teamTwoScores[]:队伍二成绩
      */
-    @RequestMapping("score/save")
-    public JsonResult saveScore(@RequestBody ApiTeamData data) {
+    @RequestMapping ("score/save")
+    public JsonResult saveScore (@RequestBody MatchTeamData matchTeamData) {
         try {
-            MatchTeamData matchTeamData = new MatchTeamData();
-            matchTeamData.setMatchId(data.getMatchId());
-            matchTeamData.setTurnNumber(data.getTurn());
-            matchTeamData.setId(data.getTeamDataIds().toString());
-            matchTeamData.setTeamOneId(data.getTeamOneIds().toString());
-            matchTeamData.setTeamOneScore(data.getTeamOneScores().toString());
-            matchTeamData.setTeamTwoId(data.getTeamTwoIds().toString());
-            matchTeamData.setTeamTwoScore(data.getTeamTwoScores().toString());
             matchTeamDataService.saveMatchTeamData(matchTeamData);
 
             //生成下一轮座位
-            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(data.getMatchId());
-            if (matchRule.getRuleTurn() == data.getTurn()) {
+            MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchTeamData.getMatchId());
+            if (matchRule.getRuleTurn() == matchTeamData.getTurnNumber()) {
                 return JsonResult.SUCCESS();
             } else {
-                matchTeamDataService.saveMatchTeamDataAndMemberNext(data.getMatchId(), data.getTurn() + 1);
+                matchTeamDataService.saveMatchTeamDataAndMemberNext(matchTeamData.getMatchId(), matchTeamData.getTurnNumber() + 1);
                 return JsonResult.SUCCESS();
             }
 

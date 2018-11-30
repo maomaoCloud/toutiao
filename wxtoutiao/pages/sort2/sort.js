@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据  1  5  9
    */
   data: {
+    name: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
     hidden: true,
     flag: false,
     x: 0,
@@ -20,7 +21,24 @@ Page({
    */
   onLoad: function(options) {
     var matchId = options.matchId;
+    this.setData({
+      matchId: matchId
+    });
+  },
+  
 
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    var matchId = this.data.matchId;
     var that = this;
 
     wx.showLoading({
@@ -31,12 +49,12 @@ Page({
     var url = app.serverUrl + "match/manager/info/" + matchId;
     wx.request({
       url: url,
-      success: function(res) {
+      success: function (res) {
         var settingInfo = res.data.resData;
         if (!settingInfo.hasSettingRule) {
           // 还没有设置比赛信息
           app.showErrorMsg2("请先设置比赛！", 2500);
-          setTimeout(function() {
+          setTimeout(function () {
             wx.navigateTo({
               url: '../matchManager/matchManager?id=' + matchId
             })
@@ -45,16 +63,16 @@ Page({
         }
 
         //如果当前成绩已经录入，而且当前轮次等于总轮次则不能保存座位
-         if (settingInfo.currentTurn == settingInfo.totalTurn && settingInfo.currentTurnHasInputScore){
-           app.showErrorMsg2("成绩已录入！",2500);
-           setTimeout(function () {
-             wx.navigateTo({
-               url: '../matchManager/matchManager?id=' + matchId
-             })
-           }, 2500);
-           return;
-         }
-         
+        if (settingInfo.currentTurn == settingInfo.totalTurn && settingInfo.currentTurnHasInputScore) {
+          app.showErrorMsg2("成绩已录入！", 2500);
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../matchManager/matchManager?id=' + matchId
+            })
+          }, 2500);
+          return;
+        }
+
 
         that.setData({
           settingInfo: settingInfo,
@@ -64,7 +82,7 @@ Page({
         url = app.serverUrl + "match/manager/seat/detail/" + matchId + "/" + settingInfo.currentTurn;
         wx.request({
           url: url,
-          success: function(_res) {
+          success: function (_res) {
             wx.hideLoading();
             var _data = _res.data.resData;
             var data = [];
@@ -76,6 +94,7 @@ Page({
               item.name = _data[i].groupAUserAName;
               item.name2 = _data[i].groupAUserBName;
               item.number = _data[i].groupANumber;
+              item.id = _data[i].groupAId;
               data.push(item);
 
               item = new Object();
@@ -83,6 +102,7 @@ Page({
               item.name = _data[i].groupBUserAName;
               item.name2 = _data[i].groupBUserBName;
               item.number = _data[i].groupBNumber;
+              item.id = _data[i].groupBId;
               data.push(item);
             }
 
@@ -105,20 +125,6 @@ Page({
         })
       }
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
   },
 
   /**
@@ -256,14 +262,14 @@ Page({
     var turn = this.data.settingInfo.currentTurn;
     var res = [];
     for (var i = 0; i < this.data.data.length; i++) {
-      res.push(this.data.data[i].number);
+      res.push(this.data.data[i].id);
     }
     var saveData = {};
     saveData.matchId = matchId;
     saveData.turn = turn;
-    saveData.res = res;
+    saveData.teamIds = res;
 
-    var url = app.serverUrl + 'match/manager/seat/save'
+    var url = app.serverUrl + 'match/manager/seat/update'
     wx.request({
       data: JSON.stringify(saveData),
       method: "POST",
@@ -290,8 +296,6 @@ Page({
         } else {
           app.showErrorMsg("发生错误！");
         }
-
-
       }
     })
   }

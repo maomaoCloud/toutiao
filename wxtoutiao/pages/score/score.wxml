@@ -13,7 +13,7 @@
       <image class='head' src='{{ item.userBHead }}'></image>
     </view>
     <view class='score-data'>
-      <view class='title'>当前成绩</view>
+      <view class='title'>当前[第{{ name[settingInfo.currentTurn - 1] }}轮]成绩</view>
       <view class='tr'>
         <view wx:for="{{ item.scoreData }}" wx:for-item="d" class='data-item'>
           <text class='th'>{{ d.t }}</text>

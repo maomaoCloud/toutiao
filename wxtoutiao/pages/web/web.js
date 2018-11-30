@@ -12,9 +12,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log("WEB-VIEW:"+decodeURI(options.url));
+    console.log("WEB-VIEW:" + unescape(options.url));
     this.setData({
-      url:decodeURI(options.url)
+      url:unescape(options.url)
     });
     wx.setNavigationBarTitle({
       title: options.title,

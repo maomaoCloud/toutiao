@@ -91,7 +91,7 @@ Page({
           for (var i = 0; i < _newsData.length; i++) {
             if (_newsData[i].newsType == "2"){
               //表示广告
-              _newsData[i].url = encodeURI(_newsData[i].url);
+              _newsData[i].url = escape(_newsData[i].url); //encodeURI(_newsData[i].url);
               console.log(_newsData[i]);
             }
           }

@@ -18,6 +18,11 @@ public class MatchTeamDataDto extends MatchTeamData {
     private String teamOneNum;
     private String teamTwoNum;
 
+    private String teamOneId;
+    private String teamTwoId;
+
+    private String id;
+
     public String getTeamOneNum() {
         return teamOneNum;
     }
@@ -97,4 +102,35 @@ public class MatchTeamDataDto extends MatchTeamData {
     public void setTeamTwoUserTwoName(String teamTwoUserTwoName) {
         this.teamTwoUserTwoName = teamTwoUserTwoName;
     }
+
+    @Override
+    public String getTeamOneId () {
+        return teamOneId;
+    }
+
+    @Override
+    public void setTeamOneId (String teamOneId) {
+        this.teamOneId = teamOneId;
+    }
+
+    @Override
+    public String getTeamTwoId () {
+        return teamTwoId;
+    }
+
+    @Override
+    public void setTeamTwoId (String teamTwoId) {
+        this.teamTwoId = teamTwoId;
+    }
+
+    @Override
+    public String getId () {
+        return id;
+    }
+
+    @Override
+    public void setId (String id) {
+        this.id = id;
+    }
+
 }

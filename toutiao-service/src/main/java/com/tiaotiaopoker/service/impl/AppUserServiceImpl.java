@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.applet.Main;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -50,7 +49,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void updateAppUserInfo (AppUser user) {
+    public AppUser updateAppUserInfo (AppUser user) {
         user.setUpdateInfoDate(new Date());
         user.setLastLoginDateTime(new Date());
         appUserMapper.updateByPrimaryKeySelective(user);
@@ -64,6 +63,8 @@ public class AppUserServiceImpl implements AppUserService {
             order.setUserHead(user.getAvatarUrl());
             applyOrderMapper.updateByExampleSelective(order, example);
         }
+
+        return appUserMapper.selectByPrimaryKey(user.getId());
     }
 
     @Override

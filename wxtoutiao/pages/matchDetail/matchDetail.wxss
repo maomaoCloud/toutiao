@@ -341,7 +341,7 @@ page {
   background-color: #fff;
   height: 750rpx;
   position: fixed;
-  z-index: 9999;
+  z-index: 900;
   left: 0;
   bottom: 0;
   display: flex;
@@ -359,6 +359,7 @@ page {
   margin-top: -20rpx;
   padding: 20rpx 0;
   border-bottom: 1rpx solid #cecece;
+  z-index: 99;
 }
 
 .h900{
@@ -394,7 +395,7 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 35rpx 0;
+  margin: 15rpx 0;
 }
 
 .addActive-layer .user-info-item .head {
@@ -466,4 +467,41 @@ page {
 .applyInput{
   width: 300rpx;
   border-bottom:2rpx solid #CCC; 
+}
+
+
+.applyTip .tip-title {
+  font-size: 34rpx;
+  color: #000;
+  margin-bottom: 15rpx;
+  display: flex;
+}
+
+.applyTip .tip-item {
+  display: flex;
+  font-size: 30rpx;
+  padding-left: 20rpx;
+  padding-bottom: 5rpx;
+  padding-top: 5rpx;
+}
+
+.applyTip .tip {
+  display: flex;
+  font-size: 35rpx;
+  color: #bd2529;
+  padding-top: 20rpx;
+}
+
+.inputGroup-full{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10rpx 0;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx dashed #E5E5E5;
+}
+
+.inputGroup-full input{
+   width: 500rpx;
 }

@@ -24,6 +24,8 @@
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
     <result column="operate_user" property="operateUser" jdbcType="VARCHAR" />
     <result column="user_limit" property="userLimit" jdbcType="INTEGER" />
+    <result column="is_need_id_card" property="isNeedIdCard" jdbcType="INTEGER" />
+    <result column="is_need_group_name" property="isNeedGroupName" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchWithBLOBs" extends="BaseResultMap" >
     <result column="active_content" property="activeContent" jdbcType="LONGVARCHAR" />
@@ -88,9 +90,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, theme, start_date, end_date, province, city, area, address, contact_name, 
-    phone, wx_head, fee, banner_img, add_time, is_delete, fee_share_percent, statue, 
-    remark, order_no, operate_user, user_limit,getMathcApplyCount(id) as applyCount
+    id, user_id, theme, start_date, end_date, province, city, area, address, contact_name,
+    phone, wx_head, fee, banner_img, add_time, is_delete, fee_share_percent, statue,
+    remark, order_no, operate_user, user_limit, is_need_id_card, is_need_group_name,getMathcApplyCount(id) as applyCount
   </sql>
   <sql id="Blob_Column_List" >
     active_content, rewards_content
@@ -132,24 +134,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs" >
-    insert into match_data (id, user_id, theme, 
-      start_date, end_date, province, 
-      city, area, address, 
-      contact_name, phone, wx_head, 
-      fee, banner_img, add_time, 
-      is_delete, fee_share_percent, statue, 
-      remark, order_no, operate_user, 
-      user_limit, active_content, rewards_content
-      )
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{theme,jdbcType=VARCHAR}, 
-      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{contactName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{wxHead,jdbcType=VARCHAR}, 
-      #{fee,jdbcType=REAL}, #{bannerImg,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{isDelete,jdbcType=INTEGER}, #{feeSharePercent,jdbcType=INTEGER}, #{statue,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, #{operateUser,jdbcType=VARCHAR}, 
-      #{userLimit,jdbcType=INTEGER}, #{activeContent,jdbcType=LONGVARCHAR}, #{rewardsContent,jdbcType=LONGVARCHAR}
-      )
+    insert into match_data (id, user_id, theme,
+      start_date, end_date, province,
+      city, area, address,
+      contact_name, phone, wx_head,
+      fee, banner_img, add_time,
+      is_delete, fee_share_percent, statue,
+      remark, order_no, operate_user,
+      user_limit, is_need_id_card, is_need_group_name,
+      active_content, rewards_content)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{theme,jdbcType=VARCHAR},
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR},
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{contactName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{wxHead,jdbcType=VARCHAR},
+      #{fee,jdbcType=REAL}, #{bannerImg,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
+      #{isDelete,jdbcType=INTEGER}, #{feeSharePercent,jdbcType=INTEGER}, #{statue,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR}, #{orderNo,jdbcType=INTEGER}, #{operateUser,jdbcType=VARCHAR},
+      #{userLimit,jdbcType=INTEGER}, #{isNeedIdCard,jdbcType=INTEGER}, #{isNeedGroupName,jdbcType=INTEGER},
+      #{activeContent,jdbcType=LONGVARCHAR}, #{rewardsContent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchWithBLOBs" >
     insert into match_data
@@ -219,6 +221,12 @@
       </if>
       <if test="userLimit != null" >
         user_limit,
+      </if>
+      <if test="isNeedIdCard != null" >
+        is_need_id_card,
+      </if>
+      <if test="isNeedGroupName != null" >
+        is_need_group_name,
       </if>
       <if test="activeContent != null" >
         active_content,
@@ -293,6 +301,12 @@
       </if>
       <if test="userLimit != null" >
         #{userLimit,jdbcType=INTEGER},
+      </if>
+      <if test="isNeedIdCard != null" >
+        #{isNeedIdCard,jdbcType=INTEGER},
+      </if>
+      <if test="isNeedGroupName != null" >
+        #{isNeedGroupName,jdbcType=INTEGER},
       </if>
       <if test="activeContent != null" >
         #{activeContent,jdbcType=LONGVARCHAR},
@@ -377,6 +391,12 @@
       <if test="record.userLimit != null" >
         user_limit = #{record.userLimit,jdbcType=INTEGER},
       </if>
+      <if test="record.isNeedIdCard != null" >
+        is_need_id_card = #{record.isNeedIdCard,jdbcType=INTEGER},
+      </if>
+      <if test="record.isNeedGroupName != null" >
+        is_need_group_name = #{record.isNeedGroupName,jdbcType=INTEGER},
+      </if>
       <if test="record.activeContent != null" >
         active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
       </if>
@@ -391,29 +411,31 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update match_data
     set id = #{record.id,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      theme = #{record.theme,jdbcType=VARCHAR},
-      start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
-      contact_name = #{record.contactName,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      wx_head = #{record.wxHead,jdbcType=VARCHAR},
-      fee = #{record.fee,jdbcType=REAL},
-      banner_img = #{record.bannerImg,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      is_delete = #{record.isDelete,jdbcType=INTEGER},
-      fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
-      statue = #{record.statue,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      order_no = #{record.orderNo,jdbcType=INTEGER},
-      operate_user = #{record.operateUser,jdbcType=VARCHAR},
-      user_limit = #{record.userLimit,jdbcType=INTEGER},
-      active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
-      rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR}
+    user_id = #{record.userId,jdbcType=VARCHAR},
+    theme = #{record.theme,jdbcType=VARCHAR},
+    start_date = #{record.startDate,jdbcType=TIMESTAMP},
+    end_date = #{record.endDate,jdbcType=TIMESTAMP},
+    province = #{record.province,jdbcType=VARCHAR},
+    city = #{record.city,jdbcType=VARCHAR},
+    area = #{record.area,jdbcType=VARCHAR},
+    address = #{record.address,jdbcType=VARCHAR},
+    contact_name = #{record.contactName,jdbcType=VARCHAR},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    wx_head = #{record.wxHead,jdbcType=VARCHAR},
+    fee = #{record.fee,jdbcType=REAL},
+    banner_img = #{record.bannerImg,jdbcType=VARCHAR},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    is_delete = #{record.isDelete,jdbcType=INTEGER},
+    fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
+    statue = #{record.statue,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    order_no = #{record.orderNo,jdbcType=INTEGER},
+    operate_user = #{record.operateUser,jdbcType=VARCHAR},
+    user_limit = #{record.userLimit,jdbcType=INTEGER},
+    is_need_id_card = #{record.isNeedIdCard,jdbcType=INTEGER},
+    is_need_group_name = #{record.isNeedGroupName,jdbcType=INTEGER},
+    active_content = #{record.activeContent,jdbcType=LONGVARCHAR},
+    rewards_content = #{record.rewardsContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -421,27 +443,29 @@
   <update id="updateByExample" parameterType="map" >
     update match_data
     set id = #{record.id,jdbcType=VARCHAR},
-      user_id = #{record.userId,jdbcType=VARCHAR},
-      theme = #{record.theme,jdbcType=VARCHAR},
-      start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP},
-      province = #{record.province,jdbcType=VARCHAR},
-      city = #{record.city,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
-      contact_name = #{record.contactName,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      wx_head = #{record.wxHead,jdbcType=VARCHAR},
-      fee = #{record.fee,jdbcType=REAL},
-      banner_img = #{record.bannerImg,jdbcType=VARCHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      is_delete = #{record.isDelete,jdbcType=INTEGER},
-      fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
-      statue = #{record.statue,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      order_no = #{record.orderNo,jdbcType=INTEGER},
-      operate_user = #{record.operateUser,jdbcType=VARCHAR},
-      user_limit = #{record.userLimit,jdbcType=INTEGER}
+    user_id = #{record.userId,jdbcType=VARCHAR},
+    theme = #{record.theme,jdbcType=VARCHAR},
+    start_date = #{record.startDate,jdbcType=TIMESTAMP},
+    end_date = #{record.endDate,jdbcType=TIMESTAMP},
+    province = #{record.province,jdbcType=VARCHAR},
+    city = #{record.city,jdbcType=VARCHAR},
+    area = #{record.area,jdbcType=VARCHAR},
+    address = #{record.address,jdbcType=VARCHAR},
+    contact_name = #{record.contactName,jdbcType=VARCHAR},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    wx_head = #{record.wxHead,jdbcType=VARCHAR},
+    fee = #{record.fee,jdbcType=REAL},
+    banner_img = #{record.bannerImg,jdbcType=VARCHAR},
+    add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    is_delete = #{record.isDelete,jdbcType=INTEGER},
+    fee_share_percent = #{record.feeSharePercent,jdbcType=INTEGER},
+    statue = #{record.statue,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    order_no = #{record.orderNo,jdbcType=INTEGER},
+    operate_user = #{record.operateUser,jdbcType=VARCHAR},
+    user_limit = #{record.userLimit,jdbcType=INTEGER},
+    is_need_id_card = #{record.isNeedIdCard,jdbcType=INTEGER},
+    is_need_group_name = #{record.isNeedGroupName,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -113,6 +113,18 @@
         </view>
       </view>
 
+      <view class='input-box'>
+        <view class='icontent userLimit' style='border-bottom:none;'>
+          <text>是否需要身份证验证：</text>
+          <switch class='switch' data-name='isNeedIdCard'  checked="{{ isNeedIdCard }}" bindchange="switchChange" />
+        </view>
+
+        <view class='icontent userLimit' style='border-top:none;'>
+          <text>是否分团队：</text>
+          <switch class='switch' data-name="isNeedGroupName" checked="{{ isNeedGroupName }}" bindchange="switchChange" />
+        </view>
+      </view>
+
     </view>
     <view class='op-box'>
       <button formType="submit" class='addActive-btn'>提交活动</button>

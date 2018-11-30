@@ -61,5 +61,5 @@
 
 </view>
 
-<button id='submit'>保存本轮成绩</button>
+<button bindtap='save' id='submit'>保存本轮成绩</button>
 <view id='padding-holder'></view>

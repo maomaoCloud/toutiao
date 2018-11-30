@@ -81,10 +81,12 @@
     </view>
     <view class='op-box'>
       <view class='goto' bindtap='gotoIndex'>返回首页</view>
-      <view bindtap='apply' data-price="{{ matchInfo.fee }}" data-id="{{ matchInfo.id }}" wx:if="{{ !matchInfo.isMine && !matchInfo.hasApply && !matchInfo.hasLimit }}" class='apply'>立即报名</view>
-      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasApply }}" class='apply'>您已报名</view>
-      <view wx:if="{{ matchInfo.isMine }}" class='apply'>我的发布</view>
-      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasLimit }}" class='apply'>报名人数已满</view>
+      <view bindtap='apply' data-price="{{ matchInfo.fee }}" data-id="{{ matchInfo.id }}" wx:if="{{ !matchInfo.isMine && !matchInfo.hasApply && !matchInfo.hasLimit && matchInfo.statue == 0 }}" class='apply'>立即报名</view>
+      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasApply && matchInfo.statue == 0 }}" class='apply'>您已报名</view>
+      <view wx:if="{{ matchInfo.isMine && matchInfo.statue == 0 }}" class='apply'>我的发布</view>
+      <view wx:if="{{ !matchInfo.isMine && matchInfo.hasLimit && matchInfo.statue == 0 }}" class='apply'>报名人数已满</view>
+      <view wx:if="{{ matchInfo.statue == 1 }}" class='apply'>活动进行中</view>
+    <view  wx:if="{{ matchInfo.statue == 2 }}" class='apply'>活动已结束</view>
       <view class='share'>
         <button open-type="share">分享活动</button>
       </view>
@@ -96,6 +98,10 @@
 <view wx:if="{{ addActive }}" animation='{{animationData}}' class='addActive-layer {{ hasPartner ? "h900" : "" }}'>
   <view class='title'>报名信息</view>
   <view class='layer-data {{ hasPartner ? "h920" : "" }}'>
+  <view wx:if="{{ matchInfo.isNeedGroupName }}" class='inputGroup-full'>
+     <text>团体名称：</text>
+          <input class='applyInput' data-name="groupName" bindblur='getInputValue' placeholder='请填写团体名称' type='text' value='{{ groupName }}'></input>
+    </view>
     <view class='user-info-item'>
       <image class='head' src='{{ userHead }}'></image>
       <view class='user-info'>
@@ -107,7 +113,7 @@
           <text>手机号：</text>
           <input class='applyInput' placeholder='您的手机号码' type='number' value='{{ userPhone }}' data-name="userPhone" bindblur='getInputValue'></input>
         </view>
-        <view class='inputGroup'>
+        <view wx:if="{{ matchInfo.isNeedIdCard }}" class='inputGroup'>
           <text>身份证：</text>
           <input class='applyInput' style='font-size:24rpx;' maxlength="18" placeholder='您的身份证号' type='idcard' value='{{ userIdCard }}' data-name="userIdCard" bindblur='getInputValue'></input>
         </view>
@@ -121,6 +127,12 @@
           <text>是否携带搭档:</text>
           <switch class='switch' checked="{{ hasPartner }}" bindchange="hasPartner" />
         </view>
+
+        <view class='tip'>
+          <text>我同意</text>
+          <text style='color:rgb(80, 177, 191);text-decoration: underline;' bindtap='showApplyTip'>报名须知 </text>
+          <switch class='switch' checked="{{ isAgree }}" bindchange="isAgree" />
+        </view>
         <view wx:if="{{ hasPartner }}" class='inputGroup'>
           <text>报名人：</text>
           <input class='applyInput' placeholder='搭档的真实姓名' type='text' value='{{ partnerName }}' data-name="partnerName" bindblur='getInputValue'></input>
@@ -129,7 +141,7 @@
           <text>手机号：</text>
           <input data-name="partnerPhone" bindblur='getInputValue' class='applyInput' placeholder='搭档的手机号码' type='number' value='{{ partnerPhone }}'></input>
         </view>
-        <view wx:if="{{ hasPartner }}" class='inputGroup'>
+        <view wx:if="{{ hasPartner && matchInfo.isNeedIdCard}}"  class='inputGroup'>
           <text>身份证：</text>
           <input class='applyInput' style='font-size:24rpx;' maxlength="18" placeholder='搭档的身份证号' type='idcard' value='{{ partnerIdCard }}' data-name="partnerIdCard" bindblur='getInputValue'></input>
         </view>
@@ -161,3 +173,14 @@
 </view>
 
 <view wx:if="{{ showMask }}" bindtap='hideMask' class='mask'></view>
+
+<modal class="applyTip" hidden="{{showTip}}" title="报名须知" confirm-text="确定" bindconfirm="confirm" no-cancel="{{ true }}">
+  <text class='tip-title'>有以下情况者不得参加本次比赛：</text>
+  <text class='tip-item'>1、先天性心脏病和风湿性心脏病患者；</text>
+  <text class='tip-item'>2、高血压和脑血管疾病患者；</text>
+  <text class='tip-item'>3、心肌炎和其它心脏病患者；</text>
+  <text class='tip-item'>4、冠状动脉病患者和严重心律不齐者；</text>
+  <text class='tip-item'>5、孕妇；</text>
+  <text class='tip-item'>6、其他不适合紧张刺激的疾病患者。</text>
+  <text class='tip'>患有以上疾病人员如参加比赛，与“竞技来了”官方无关。</text>
+</modal>

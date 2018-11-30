@@ -25,6 +25,9 @@ public class ApiMatchData {
     private BigDecimal sumMoney;
     private Boolean    isMine;
     private Boolean    hasLimit;
+    private int        statue;
+    private Boolean    isNeedIdCard;
+    private Boolean    isNeedGroupName;
 
     public BigDecimal getSumMoney () {
         return sumMoney;
@@ -138,6 +141,30 @@ public class ApiMatchData {
         this.hasLimit = hasLimit;
     }
 
+    public int getStatue () {
+        return statue;
+    }
+
+    public void setStatue (int statue) {
+        this.statue = statue;
+    }
+
+    public Boolean getIsNeedIdCard () {
+        return isNeedIdCard;
+    }
+
+    public void setIsNeedIdCard (Boolean needIdCard) {
+        isNeedIdCard = needIdCard;
+    }
+
+    public Boolean getIsNeedGroupName () {
+        return isNeedGroupName;
+    }
+
+    public void setIsNeedGroupName (Boolean needGroupName) {
+        isNeedGroupName = needGroupName;
+    }
+
     public static ApiMatchData genFromMatch (Match md,
                                              String myUserId) {
         ApiMatchData res = new ApiMatchData();
@@ -161,21 +188,26 @@ public class ApiMatchData {
         res.setStartDate(new DateTime(md.getStartDate()).toString("yyyy-MM-dd HH:mm"));
         res.setTheme(md.getTheme());
 
+        res.setIsNeedGroupName(md.getIsNeedGroupName() != null && md.getIsNeedGroupName().equals(1));
+        res.setIsNeedIdCard(md.getIsNeedIdCard() != null && md.getIsNeedIdCard().equals(1));
+
         //比赛状态
         DateTime nowDate   = new DateTime(new Date());
         DateTime startDate = new DateTime(md.getStartDate());
         DateTime endDate   = new DateTime(md.getEndDate());
         if (nowDate.compareTo(startDate) < 0) {
             res.setMatchState(Constants.Match.NOT_START);
+            res.setStatue(Constants.Match.NOT_START_CODE);
         } else if (nowDate.compareTo(endDate) > 0) {
             res.setMatchState(Constants.Match.END);
+            res.setStatue(Constants.Match.END_CODE);
         } else {
             res.setMatchState(Constants.Match.UNDER_WAY);
+            res.setStatue(Constants.Match.UNDER_WAY_CODE);
         }
 
         return res;
     }
-
 
 }
 

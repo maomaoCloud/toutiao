@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("sys/seatSetting")
+@RequestMapping ("sys/seatSetting")
 public class SeatSettingController {
     @Autowired
     private MatchRuleService matchRuleService;
@@ -45,7 +45,7 @@ public class SeatSettingController {
                     //查找当前比赛是否存在对局数据，若不存在则查找签到人员进行首轮排序
                     List<AppUser> userList = matchTeamDataService.sortMatchTeamByRuleSeat(matchRule.getRuleSeat(), matchId);
                     //签到人员不是4的倍数时，补全用户
-                    while (userList.size() % 4 != 0) {
+                    while (userList.size()%4 != 0) {
                         AppUser user = new AppUser();
                         user.setId(String.valueOf(userList.size()));
                         user.setNickName("我是null");
@@ -78,9 +78,9 @@ public class SeatSettingController {
         return mv;
     }
 
-    @RequestMapping("save")
+    @RequestMapping ("save")
     @ResponseBody
-    public JsonResult save(String userIds, String userNames, String userHeads, String matchId, Integer turnNumber) {
+    public JsonResult save (String userIds, String userNames, String userHeads, String matchId, Integer turnNumber) {
         JsonResult jsonResult;
         try {
             if (StringUtils.isBlank(userIds)) {
@@ -100,9 +100,9 @@ public class SeatSettingController {
         return jsonResult;
     }
 
-    @RequestMapping("saveNext")
+    @RequestMapping ("saveNext")
     @ResponseBody
-    public JsonResult saveNext(String matchId, Integer turnNumber) {
+    public JsonResult saveNext (String matchId, Integer turnNumber) {
         JsonResult jsonResult;
         try {
             MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
@@ -123,9 +123,9 @@ public class SeatSettingController {
         return jsonResult;
     }
 
-    @RequestMapping("update")
+    @RequestMapping ("update")
     @ResponseBody
-    public JsonResult update(String teamIds, String matchId, Integer turnNumber) {
+    public JsonResult update (String teamIds, String matchId, Integer turnNumber) {
         JsonResult jsonResult;
         try {
             if (StringUtils.isBlank(teamIds)) {
@@ -145,28 +145,45 @@ public class SeatSettingController {
         return jsonResult;
     }
 
-    @RequestMapping("showDetail")
-    public ModelAndView showDetail(ModelAndView mv, String matchId, int turnNumber) {
+    @RequestMapping ("showDetail")
+    public ModelAndView showDetail (ModelAndView mv, String matchId, int turnNumber) {
 
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-        List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
+        MatchRule                    matchRule  = matchRuleService.selectMatchRuleByMatchId(matchId);
+        List<MatchTeamDataDto>       dataList   = matchTeamDataService.queryTeamDataByCondition(data);
+        List<List<MatchTeamDataDto>> dataResult = new ArrayList<>();
+        int                          i          = 0;
+        List<MatchTeamDataDto>       tmp        = null;
+        for (MatchTeamDataDto matchTeamDataDto : dataList) {
+            if (i%10 == 0) {
+                if (tmp != null) dataResult.add(tmp);
+
+                tmp = new ArrayList<>();
+            }
+            tmp.add(matchTeamDataDto);
+            i++;
+        }
+        if (tmp != null && tmp.size() > 0) {
+            dataResult.add(tmp);
+        }
+
         mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("turnNumChines", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("dataList", dataList);
+        mv.addObject("dataResult", dataResult);
         mv.setViewName("seatSetting/seatShowDetail");
         return mv;
     }
 
-    @RequestMapping("seatPrint")
-    public ModelAndView seatPrint(ModelAndView mv, String matchId, int turnNumber) {
+    @RequestMapping ("seatPrint")
+    public ModelAndView seatPrint (ModelAndView mv, String matchId, int turnNumber) {
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-        List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
+        MatchRule              matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        List<MatchTeamDataDto> dataList  = matchTeamDataService.queryTeamDataByCondition(data);
         mv.addObject("matchDate", matchRule.getMatchDate());
         mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("dataList", dataList);
@@ -174,9 +191,9 @@ public class SeatSettingController {
         return mv;
     }
 
-    private List<AppUser> getUserList(MatchTeamDataDto data) {
+    private List<AppUser> getUserList (MatchTeamDataDto data) {
         List<AppUser> userList = new ArrayList<>();
-        AppUser user1 = new AppUser();
+        AppUser       user1    = new AppUser();
         user1.setTrueName(data.getTeamOneUserOneName());
         user1.setAvatarUrl(data.getTeamOneUserOneHead());
         userList.add(user1);
@@ -195,13 +212,13 @@ public class SeatSettingController {
         return userList;
     }
 
-    private List<Integer> getDivList(int index) {
+    private List<Integer> getDivList (int index) {
         List<Integer> divList = new ArrayList<>();
-        for (int i = 0; i < index / 4; i++) {
+        for (int i = 0; i < index/4; i++) {
             divList.add(i + 1);
         }
-        if (index % 4 != 0) {
-            divList.add(index / 4 + 1);
+        if (index%4 != 0) {
+            divList.add(index/4 + 1);
         }
         return divList;
     }

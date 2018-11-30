@@ -67,12 +67,12 @@ public class MatchTeamDataServiceImpl implements MatchTeamDataService {
                 //首位组合
                 for (int i = 0; i < userListSignBoth.size() / 2; i++) {
                     orderList.add(userListSignBoth.get(i));
-                    orderList.add(userListSignBoth.get(userListSignBoth.size() - i));
+                    orderList.add(userListSignBoth.get(userListSignBoth.size() - i - 1));
                 }
                 if (userListSignBoth.size() % 2 == 1) {
                     orderList.add(userListSignBoth.get(userListSignBoth.size() / 2));
                 }
-            } else if (ruleSeat.equals(Constants.ruleSeat.SRTT_MIDDLE)) {
+            } else if (ruleSeat.equals(Constants.ruleSeat.SORT_MIDDLE)) {
                 //拦腰组合
                 for (int i = 0; i < userListSignBoth.size() / 2; i++) {
                     orderList.add(userListSignBoth.get(i));

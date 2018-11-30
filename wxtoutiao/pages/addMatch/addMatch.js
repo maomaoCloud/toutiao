@@ -24,7 +24,9 @@ Page({
     hasImg2: false,
     img2Url: null,
     phone: "",
-    name: ""
+    name: "",
+    isNeedIdCard: false,
+    isNeedGroupName: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -284,9 +286,12 @@ Page({
       form.fee = 0;
     }
 
-    if (form.userLimit == "" || form.userLimit == null){
+    if (form.userLimit == "" || form.userLimit == null) {
       form.userLimit = -1;
     }
+
+    form.isNeedIdCard = this.data.isNeedIdCard ? 1 : 0;
+    form.isNeedGroupName = this.data.isNeedGroupName ? 1 : 0;
 
     wx.showLoading({
       title: '提交中...'
@@ -323,5 +328,17 @@ Page({
       }
     })
 
+  },
+  switchChange: function(e) {
+    console.log(e);
+    var name = e.target.dataset.name;
+    var value = e.detail.value;
+    if (name == "isNeedIdCard") {
+      this.setData({
+        isNeedIdCard: value
+      });
+    } else if (name == "isNeedGroupName") {
+      isNeedGroupName: value
+    }
   }
 })

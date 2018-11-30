@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("sys/resultSetting")
+@RequestMapping ("sys/resultSetting")
 public class ResultSettingController {
 
     @Autowired
@@ -34,8 +34,8 @@ public class ResultSettingController {
     @Autowired
     private MatchTeamResultService matchTeamResultService;
 
-    @RequestMapping("resultInput")
-    public ModelAndView resultInput(ModelAndView mv, String matchId) {
+    @RequestMapping ("resultInput")
+    public ModelAndView resultInput (ModelAndView mv, String matchId) {
         //根据matchId查出比赛规则（轮次）
         if (!StringUtils.isBlank(matchId)) {
             MatchTeamData matchTeamData = new MatchTeamData();
@@ -66,14 +66,14 @@ public class ResultSettingController {
         return mv;
     }
 
-    @RequestMapping("resultInputLoad")
-    public ModelAndView resultInputLoad(ModelAndView mv, String matchId, Integer ruleTurn) {
+    @RequestMapping ("resultInputLoad")
+    public ModelAndView resultInputLoad (ModelAndView mv, String matchId, Integer ruleTurn) {
 
         MatchTeamData matchTeamData = new MatchTeamData();
         matchTeamData.setMatchId(matchId);
         matchTeamData.setTurnNumber(ruleTurn);
-        List<MatchTeamDataDto> list = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
-        MatchTeamResult matchTeamResult = new MatchTeamResult();
+        List<MatchTeamDataDto> list            = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
+        MatchTeamResult        matchTeamResult = new MatchTeamResult();
         matchTeamResult.setTurnNumber(ruleTurn);
         matchTeamResult.setMatchId(matchId);
         List<MatchTeamResult> resultList = matchTeamResultService.queryMatchTeamResultByCondition(matchTeamResult);
@@ -89,9 +89,9 @@ public class ResultSettingController {
         return mv;
     }
 
-    @RequestMapping("save")
+    @RequestMapping ("save")
     @ResponseBody
-    public JsonResult save(MatchTeamData matchTeamData) {
+    public JsonResult save (MatchTeamData matchTeamData) {
         JsonResult jsonResult;
         try {
             int result = matchTeamDataService.saveMatchTeamData(matchTeamData);
@@ -107,16 +107,16 @@ public class ResultSettingController {
         return jsonResult;
     }
 
-    @RequestMapping("resultDetail")
-    public ModelAndView resultDetail(ModelAndView mv, String matchId, int turnNumber) {
+    @RequestMapping ("resultDetail")
+    public ModelAndView resultDetail (ModelAndView mv, String matchId, int turnNumber) {
 
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         if (turnNumber > matchRule.getRuleTurn()) {
             turnNumber = matchRule.getRuleTurn();
         }
         //成绩td标题
-        List<String> tdList = new ArrayList<>();
-        String resultRule = matchRule.getRuleResult() == null ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+        List<String> tdList     = new ArrayList<>();
+        String       resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
         for (String title : resultRule.split(",")) {
             tdList.add((String) Constants.resultRule.resultRuleMap.get(title));
         }
@@ -130,7 +130,7 @@ public class ResultSettingController {
         try {
             for (MatchTeamResultDto resultDto : resultlist) {
                 String resultString = "";
-                Class clazz = resultDto.getClass();
+                Class  clazz        = resultDto.getClass();
                 for (String getName : resultRule.split(",")) {
                     resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
                 }
@@ -139,10 +139,32 @@ public class ResultSettingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        List<List<MatchTeamResultDto>> resultData = new ArrayList<>();
+        List<MatchTeamResultDto>       tmp        = null;
+        int                            i          = 0;
+        for (MatchTeamResultDto matchTeamResultDto : resultlist) {
+            matchTeamResultDto.setIndex(i + 1);
+            if (i%10 == 0) {
+                if (tmp != null) {
+                    resultData.add(tmp);
+                }
+
+                tmp = new ArrayList<>();
+            }
+            tmp.add(matchTeamResultDto);
+            i++;
+        }
+
+        if (tmp != null && tmp.size() > 0)
+            resultData.add(tmp);
+
         mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("resultlist", resultlist);
+        mv.addObject("resultData", resultData);
         mv.setViewName("resultSetting/resultShow");
         return mv;
     }
+
 }

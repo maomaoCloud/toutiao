@@ -176,7 +176,7 @@
   position: fixed;
   background-color: #000;
   opacity: .7;
-  z-index: 9995;
+  z-index: 890;
 }
 
 /**隐藏滚动条*/

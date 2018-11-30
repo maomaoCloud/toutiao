@@ -53,6 +53,10 @@ public class Match {
 
     private Integer userLimit;
 
+    private Integer isNeedIdCard;
+
+    private Integer isNeedGroupName;
+
     public String getOperateUser() {
         return operateUser;
     }
@@ -220,10 +224,6 @@ public class Match {
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
-
-    /**自定义字段*/
-    private int applyCount;
-
     public void setApplyCount(int applyCount) {
         this.applyCount = applyCount;
     }
@@ -240,4 +240,22 @@ public class Match {
         this.userLimit = userLimit;
     }
 
+    public Integer getIsNeedIdCard () {
+        return isNeedIdCard;
+    }
+
+    public void setIsNeedIdCard (Integer isNeedIdCard) {
+        this.isNeedIdCard = isNeedIdCard;
+    }
+
+    public Integer getIsNeedGroupName () {
+        return isNeedGroupName;
+    }
+
+    public void setIsNeedGroupName (Integer isNeedGroupName) {
+        this.isNeedGroupName = isNeedGroupName;
+    }
+
+    /**自定义字段*/
+    private int applyCount;
 }
