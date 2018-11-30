@@ -24,30 +24,8 @@
             updateMatchId(matchId);
             setCookie("__matchId", matchId, 1);
             //重置左侧轮次
-            $.post("/sys/matchSetting/matchTurn", {
-                token: token,
-                matchId: $("#nowSettingMatch").val()
-            }, function (data) {
-                //移除旧轮次
-                $("#navigation").find(".turn").each(function () {
-                    $(this).remove();
-                });
-                //拼接新轮次
-                var li = '';
-                for (var i = 0; i < data.length; i++) {
-                    var turn = data[i];
-                    li += '<li class="dropdown turn">';
-                    li += '<a href="#" onclick="openAndDown(this)" class="dropdown-toggle" data-toggle="dropdown" th:data="' + (i + 1) + '" >';
-                    li += '<i class="fa fa-list"></i> 第' + turn + '轮<b class="fa fa-plus dropdown-plus"></b>';
-                    li += '</a>';
-                    li += '<ul class="dropdown-menu">';
-                    li += '<li><a href="#" onclick="' + 'seatShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 座位</a></li>';
-                    li += '<li><a href="#" onclick="' + 'resultShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 成绩</a></li>';
-                    li += '<li><a href="#" onclick="' + 'printSeat(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 座位标签</a></li>';
-                    li += '</ul></li>';
-                }
-                $("#turnBefore").after(li);
-            });
+            resetTurn();
+
             //重置比赛信息
             $("#matchInfo").load("/sys/matchSetting/matchInfo?token=" + token + "&matchId=" + $("#nowSettingMatch").val(), function () {
 
@@ -58,6 +36,34 @@
             });
         });
     })
+
+    //重置左侧轮次
+    function resetTurn() {
+        $.post("/sys/matchSetting/matchTurn", {
+            token: getToken(),
+            matchId: $("#nowSettingMatch").val()
+        }, function (data) {
+            //移除旧轮次
+            $("#navigation").find(".turn").each(function () {
+                $(this).remove();
+            });
+            //拼接新轮次
+            var li = '';
+            for (var i = 0; i < data.length; i++) {
+                var turn = data[i];
+                li += '<li class="dropdown turn">';
+                li += '<a href="#" onclick="openAndDown(this)" class="dropdown-toggle" data-toggle="dropdown" th:data="' + (i + 1) + '" >';
+                li += '<i class="fa fa-list"></i> 第' + turn + '轮<b class="fa fa-plus dropdown-plus"></b>';
+                li += '</a>';
+                li += '<ul class="dropdown-menu">';
+                li += '<li><a href="#" onclick="' + 'seatShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 座位</a></li>';
+                li += '<li><a href="#" onclick="' + 'resultShowDetail(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 成绩</a></li>';
+                li += '<li><a href="#" onclick="' + 'printSeat(' + (i + 1) + ',this' + ')"><i class="fa fa-caret-right"></i> 座位标签</a></li>';
+                li += '</ul></li>';
+            }
+            $("#turnBefore").after(li);
+        });
+    }
     /* ]]> */
 </script>
 <div class="pageheader" style="margin-left: 15px;">

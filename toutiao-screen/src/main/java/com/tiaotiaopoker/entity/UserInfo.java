@@ -75,6 +75,11 @@ public class UserInfo {
         info.setName(order.getUserName());
         info.setPhone(order.getUserPhone());
         info.setApplyDate(new DateTime(order.getAddTime()).toString("yyyy-MM-dd HH:mm:ss"));
+        if (order.getHasPartner().equals(1)){
+            info.setPartnerName(order.getPartnerName());
+            info.setPartnerPhone(order.getPartnerPhone());
+            info.setPartnerSignStatue(getSignStatusName(order.getPartnerSignStatue()));
+        }
         info.setSignStatue(getSignStatusName(order.getUserSignStatus()));
         return info;
     }
