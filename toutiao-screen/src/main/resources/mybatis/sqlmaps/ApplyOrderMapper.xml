@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tiaotiaopoker.dao.ApplyOrderMapper">
-    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.ApplyOrder">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
-        <result column="partner_id" property="partnerId" jdbcType="VARCHAR"/>
-        <result column="partner_name" property="partnerName" jdbcType="VARCHAR"/>
-        <result column="partner_phone" property="partnerPhone" jdbcType="VARCHAR"/>
-        <result column="has_partner" property="hasPartner" jdbcType="INTEGER"/>
-        <result column="price" property="price" jdbcType="REAL"/>
-        <result column="pay_money" property="payMoney" jdbcType="REAL"/>
-        <result column="match_id" property="matchId" jdbcType="VARCHAR"/>
-        <result column="user_head" property="userHead" jdbcType="VARCHAR"/>
-        <result column="partner_head" property="partnerHead" jdbcType="VARCHAR"/>
-        <result column="add_time" property="addTime" jdbcType="TIMESTAMP"/>
-        <result column="pay_statue" property="payStatue" jdbcType="INTEGER"/>
-        <result column="share_percent" property="sharePercent" jdbcType="REAL"/>
-        <result column="pay_date" property="payDate" jdbcType="TIMESTAMP"/>
-        <result column="user_sign_status" property="userSignStatus" jdbcType="INTEGER"/>
-        <result column="partner_sign_statue" property="partnerSignStatue" jdbcType="INTEGER"/>
-        <result column="patner_code" property="patnerCode" jdbcType="VARCHAR"/>
-        <result column="user_sign_datetime" property="userSignDatetime" jdbcType="TIMESTAMP"/>
-        <result column="partner_sign_datetime" property="partnerSignDatetime" jdbcType="TIMESTAMP"/>
-    </resultMap>
     <resultMap id="baseResultMapDto" type="com.tiaotiaopoker.entity.ApplyOrderDto" extends="BaseResultMap">
         <result column="match_theme" property="matchTheme" jdbcType="VARCHAR"/>
         <result column="match_address" property="matchAddress" jdbcType="VARCHAR"/>
@@ -32,26 +8,54 @@
         <result column="match_start_date" property="matchStartDate" jdbcType="TIMESTAMP"/>
         <result column="match_end_date" property="matchEndDate" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
+
+    <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.ApplyOrder" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+        <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+        <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
+        <result column="partner_phone" property="partnerPhone" jdbcType="VARCHAR" />
+        <result column="has_partner" property="hasPartner" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="pay_money" property="payMoney" jdbcType="DECIMAL" />
+        <result column="match_id" property="matchId" jdbcType="VARCHAR" />
+        <result column="user_head" property="userHead" jdbcType="VARCHAR" />
+        <result column="partner_head" property="partnerHead" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="pay_statue" property="payStatue" jdbcType="INTEGER" />
+        <result column="share_percent" property="sharePercent" jdbcType="DECIMAL" />
+        <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+        <result column="user_sign_status" property="userSignStatus" jdbcType="INTEGER" />
+        <result column="partner_sign_statue" property="partnerSignStatue" jdbcType="INTEGER" />
+        <result column="patner_code" property="patnerCode" jdbcType="VARCHAR" />
+        <result column="user_sign_datetime" property="userSignDatetime" jdbcType="TIMESTAMP" />
+        <result column="partner_sign_datetime" property="partnerSignDatetime" jdbcType="TIMESTAMP" />
+        <result column="user_id_card" property="userIdCard" jdbcType="VARCHAR" />
+        <result column="partner_id_card" property="partnerIdCard" jdbcType="VARCHAR" />
+        <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
                                     and ${criterion.condition}
                                 </when>
-                                <when test="criterion.singleValue">
+                                <when test="criterion.singleValue" >
                                     and ${criterion.condition} #{criterion.value}
                                 </when>
-                                <when test="criterion.betweenValue">
+                                <when test="criterion.betweenValue" >
                                     and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                                 </when>
-                                <when test="criterion.listValue">
+                                <when test="criterion.listValue" >
                                     and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -62,26 +66,25 @@
             </foreach>
         </where>
     </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
                                     and ${criterion.condition}
                                 </when>
-                                <when test="criterion.singleValue">
+                                <when test="criterion.singleValue" >
                                     and ${criterion.condition} #{criterion.value}
                                 </when>
-                                <when test="criterion.betweenValue">
+                                <when test="criterion.betweenValue" >
                                     and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                                 </when>
-                                <when test="criterion.listValue">
+                                <when test="criterion.listValue" >
                                     and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -92,280 +95,318 @@
             </foreach>
         </where>
     </sql>
-    <sql id="Base_Column_List">
-    id, user_id, user_name, user_phone, partner_id, partner_name, partner_phone, has_partner, 
-    price, pay_money, match_id, user_head, partner_head, add_time, pay_statue, share_percent, 
-    pay_date, user_sign_status, partner_sign_statue, patner_code, user_sign_datetime, 
-    partner_sign_datetime
+    <sql id="Base_Column_List" >
+    id, user_id, user_name, user_phone, partner_id, partner_name, partner_phone, has_partner,
+    price, pay_money, match_id, user_head, partner_head, add_time, pay_statue, share_percent,
+    pay_date, user_sign_status, partner_sign_statue, patner_code, user_sign_datetime,
+    partner_sign_datetime, user_id_card, partner_id_card, group_name, company_name
   </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample">
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample" >
         select
-        <if test="distinct">
+        <if test="distinct" >
             distinct
         </if>
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from apply_order
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
         </if>
-        <if test="orderByClause != null">
+        <if test="orderByClause != null" >
             order by ${orderByClause}
         </if>
     </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from apply_order
         where id = #{id,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from apply_order
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-    <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample">
+    <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample" >
         delete from apply_order
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
         </if>
     </delete>
-    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
-    insert into apply_order (id, user_id, user_name, 
-      user_phone, partner_id, partner_name, 
-      partner_phone, has_partner, price, 
-      pay_money, match_id, user_head, 
-      partner_head, add_time, pay_statue, 
-      share_percent, pay_date, user_sign_status, 
-      partner_sign_statue, patner_code, user_sign_datetime, 
-      partner_sign_datetime)
-    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, #{partnerName,jdbcType=VARCHAR}, 
-      #{partnerPhone,jdbcType=VARCHAR}, #{hasPartner,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
-      #{payMoney,jdbcType=REAL}, #{matchId,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR}, 
-      #{partnerHead,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{payStatue,jdbcType=INTEGER}, 
-      #{sharePercent,jdbcType=REAL}, #{payDate,jdbcType=TIMESTAMP}, #{userSignStatus,jdbcType=INTEGER}, 
-      #{partnerSignStatue,jdbcType=INTEGER}, #{patnerCode,jdbcType=VARCHAR}, #{userSignDatetime,jdbcType=TIMESTAMP}, 
-      #{partnerSignDatetime,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.tiaotiaopoker.pojo.ApplyOrder" >
+    insert into apply_order (id, user_id, user_name,
+      user_phone, partner_id, partner_name,
+      partner_phone, has_partner, price,
+      pay_money, match_id, user_head,
+      partner_head, add_time, pay_statue,
+      share_percent, pay_date, user_sign_status,
+      partner_sign_statue, patner_code, user_sign_datetime,
+      partner_sign_datetime, user_id_card, partner_id_card,
+      group_name, company_name)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{partnerId,jdbcType=VARCHAR}, #{partnerName,jdbcType=VARCHAR},
+      #{partnerPhone,jdbcType=VARCHAR}, #{hasPartner,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL},
+      #{payMoney,jdbcType=DECIMAL}, #{matchId,jdbcType=VARCHAR}, #{userHead,jdbcType=VARCHAR},
+      #{partnerHead,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{payStatue,jdbcType=INTEGER},
+      #{sharePercent,jdbcType=DECIMAL}, #{payDate,jdbcType=TIMESTAMP}, #{userSignStatus,jdbcType=INTEGER},
+      #{partnerSignStatue,jdbcType=INTEGER}, #{patnerCode,jdbcType=VARCHAR}, #{userSignDatetime,jdbcType=TIMESTAMP},
+      #{partnerSignDatetime,jdbcType=TIMESTAMP}, #{userIdCard,jdbcType=VARCHAR}, #{partnerIdCard,jdbcType=VARCHAR},
+      #{groupName,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
+    <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.ApplyOrder" >
         insert into apply_order
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
                 id,
             </if>
-            <if test="userId != null">
+            <if test="userId != null" >
                 user_id,
             </if>
-            <if test="userName != null">
+            <if test="userName != null" >
                 user_name,
             </if>
-            <if test="userPhone != null">
+            <if test="userPhone != null" >
                 user_phone,
             </if>
-            <if test="partnerId != null">
+            <if test="partnerId != null" >
                 partner_id,
             </if>
-            <if test="partnerName != null">
+            <if test="partnerName != null" >
                 partner_name,
             </if>
-            <if test="partnerPhone != null">
+            <if test="partnerPhone != null" >
                 partner_phone,
             </if>
-            <if test="hasPartner != null">
+            <if test="hasPartner != null" >
                 has_partner,
             </if>
-            <if test="price != null">
+            <if test="price != null" >
                 price,
             </if>
-            <if test="payMoney != null">
+            <if test="payMoney != null" >
                 pay_money,
             </if>
-            <if test="matchId != null">
+            <if test="matchId != null" >
                 match_id,
             </if>
-            <if test="userHead != null">
+            <if test="userHead != null" >
                 user_head,
             </if>
-            <if test="partnerHead != null">
+            <if test="partnerHead != null" >
                 partner_head,
             </if>
-            <if test="addTime != null">
+            <if test="addTime != null" >
                 add_time,
             </if>
-            <if test="payStatue != null">
+            <if test="payStatue != null" >
                 pay_statue,
             </if>
-            <if test="sharePercent != null">
+            <if test="sharePercent != null" >
                 share_percent,
             </if>
-            <if test="payDate != null">
+            <if test="payDate != null" >
                 pay_date,
             </if>
-            <if test="userSignStatus != null">
+            <if test="userSignStatus != null" >
                 user_sign_status,
             </if>
-            <if test="partnerSignStatue != null">
+            <if test="partnerSignStatue != null" >
                 partner_sign_statue,
             </if>
-            <if test="patnerCode != null">
+            <if test="patnerCode != null" >
                 patner_code,
             </if>
-            <if test="userSignDatetime != null">
+            <if test="userSignDatetime != null" >
                 user_sign_datetime,
             </if>
-            <if test="partnerSignDatetime != null">
+            <if test="partnerSignDatetime != null" >
                 partner_sign_datetime,
             </if>
+            <if test="userIdCard != null" >
+                user_id_card,
+            </if>
+            <if test="partnerIdCard != null" >
+                partner_id_card,
+            </if>
+            <if test="groupName != null" >
+                group_name,
+            </if>
+            <if test="companyName != null" >
+                company_name,
+            </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="userId != null">
+            <if test="userId != null" >
                 #{userId,jdbcType=VARCHAR},
             </if>
-            <if test="userName != null">
+            <if test="userName != null" >
                 #{userName,jdbcType=VARCHAR},
             </if>
-            <if test="userPhone != null">
+            <if test="userPhone != null" >
                 #{userPhone,jdbcType=VARCHAR},
             </if>
-            <if test="partnerId != null">
+            <if test="partnerId != null" >
                 #{partnerId,jdbcType=VARCHAR},
             </if>
-            <if test="partnerName != null">
+            <if test="partnerName != null" >
                 #{partnerName,jdbcType=VARCHAR},
             </if>
-            <if test="partnerPhone != null">
+            <if test="partnerPhone != null" >
                 #{partnerPhone,jdbcType=VARCHAR},
             </if>
-            <if test="hasPartner != null">
+            <if test="hasPartner != null" >
                 #{hasPartner,jdbcType=INTEGER},
             </if>
-            <if test="price != null">
-                #{price,jdbcType=REAL},
+            <if test="price != null" >
+                #{price,jdbcType=DECIMAL},
             </if>
-            <if test="payMoney != null">
-                #{payMoney,jdbcType=REAL},
+            <if test="payMoney != null" >
+                #{payMoney,jdbcType=DECIMAL},
             </if>
-            <if test="matchId != null">
+            <if test="matchId != null" >
                 #{matchId,jdbcType=VARCHAR},
             </if>
-            <if test="userHead != null">
+            <if test="userHead != null" >
                 #{userHead,jdbcType=VARCHAR},
             </if>
-            <if test="partnerHead != null">
+            <if test="partnerHead != null" >
                 #{partnerHead,jdbcType=VARCHAR},
             </if>
-            <if test="addTime != null">
+            <if test="addTime != null" >
                 #{addTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="payStatue != null">
+            <if test="payStatue != null" >
                 #{payStatue,jdbcType=INTEGER},
             </if>
-            <if test="sharePercent != null">
-                #{sharePercent,jdbcType=REAL},
+            <if test="sharePercent != null" >
+                #{sharePercent,jdbcType=DECIMAL},
             </if>
-            <if test="payDate != null">
+            <if test="payDate != null" >
                 #{payDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="userSignStatus != null">
+            <if test="userSignStatus != null" >
                 #{userSignStatus,jdbcType=INTEGER},
             </if>
-            <if test="partnerSignStatue != null">
+            <if test="partnerSignStatue != null" >
                 #{partnerSignStatue,jdbcType=INTEGER},
             </if>
-            <if test="patnerCode != null">
+            <if test="patnerCode != null" >
                 #{patnerCode,jdbcType=VARCHAR},
             </if>
-            <if test="userSignDatetime != null">
+            <if test="userSignDatetime != null" >
                 #{userSignDatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="partnerSignDatetime != null">
+            <if test="partnerSignDatetime != null" >
                 #{partnerSignDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userIdCard != null" >
+                #{userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="partnerIdCard != null" >
+                #{partnerIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null" >
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null" >
+                #{companyName,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.ApplyOrderExample" resultType="java.lang.Integer" >
         select count(*) from apply_order
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
         </if>
     </select>
-    <update id="updateByExampleSelective" parameterType="map">
+    <update id="updateByExampleSelective" parameterType="map" >
         update apply_order
-        <set>
-            <if test="record.id != null">
+        <set >
+            <if test="record.id != null" >
                 id = #{record.id,jdbcType=VARCHAR},
             </if>
-            <if test="record.userId != null">
+            <if test="record.userId != null" >
                 user_id = #{record.userId,jdbcType=VARCHAR},
             </if>
-            <if test="record.userName != null">
+            <if test="record.userName != null" >
                 user_name = #{record.userName,jdbcType=VARCHAR},
             </if>
-            <if test="record.userPhone != null">
+            <if test="record.userPhone != null" >
                 user_phone = #{record.userPhone,jdbcType=VARCHAR},
             </if>
-            <if test="record.partnerId != null">
+            <if test="record.partnerId != null" >
                 partner_id = #{record.partnerId,jdbcType=VARCHAR},
             </if>
-            <if test="record.partnerName != null">
+            <if test="record.partnerName != null" >
                 partner_name = #{record.partnerName,jdbcType=VARCHAR},
             </if>
-            <if test="record.partnerPhone != null">
+            <if test="record.partnerPhone != null" >
                 partner_phone = #{record.partnerPhone,jdbcType=VARCHAR},
             </if>
-            <if test="record.hasPartner != null">
+            <if test="record.hasPartner != null" >
                 has_partner = #{record.hasPartner,jdbcType=INTEGER},
             </if>
-            <if test="record.price != null">
-                price = #{record.price,jdbcType=REAL},
+            <if test="record.price != null" >
+                price = #{record.price,jdbcType=DECIMAL},
             </if>
-            <if test="record.payMoney != null">
-                pay_money = #{record.payMoney,jdbcType=REAL},
+            <if test="record.payMoney != null" >
+                pay_money = #{record.payMoney,jdbcType=DECIMAL},
             </if>
-            <if test="record.matchId != null">
+            <if test="record.matchId != null" >
                 match_id = #{record.matchId,jdbcType=VARCHAR},
             </if>
-            <if test="record.userHead != null">
+            <if test="record.userHead != null" >
                 user_head = #{record.userHead,jdbcType=VARCHAR},
             </if>
-            <if test="record.partnerHead != null">
+            <if test="record.partnerHead != null" >
                 partner_head = #{record.partnerHead,jdbcType=VARCHAR},
             </if>
-            <if test="record.addTime != null">
+            <if test="record.addTime != null" >
                 add_time = #{record.addTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="record.payStatue != null">
+            <if test="record.payStatue != null" >
                 pay_statue = #{record.payStatue,jdbcType=INTEGER},
             </if>
-            <if test="record.sharePercent != null">
-                share_percent = #{record.sharePercent,jdbcType=REAL},
+            <if test="record.sharePercent != null" >
+                share_percent = #{record.sharePercent,jdbcType=DECIMAL},
             </if>
-            <if test="record.payDate != null">
+            <if test="record.payDate != null" >
                 pay_date = #{record.payDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="record.userSignStatus != null">
+            <if test="record.userSignStatus != null" >
                 user_sign_status = #{record.userSignStatus,jdbcType=INTEGER},
             </if>
-            <if test="record.partnerSignStatue != null">
+            <if test="record.partnerSignStatue != null" >
                 partner_sign_statue = #{record.partnerSignStatue,jdbcType=INTEGER},
             </if>
-            <if test="record.patnerCode != null">
+            <if test="record.patnerCode != null" >
                 patner_code = #{record.patnerCode,jdbcType=VARCHAR},
             </if>
-            <if test="record.userSignDatetime != null">
+            <if test="record.userSignDatetime != null" >
                 user_sign_datetime = #{record.userSignDatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="record.partnerSignDatetime != null">
+            <if test="record.partnerSignDatetime != null" >
                 partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP},
             </if>
+            <if test="record.userIdCard != null" >
+                user_id_card = #{record.userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="record.partnerIdCard != null" >
+                partner_id_card = #{record.partnerIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="record.groupName != null" >
+                group_name = #{record.groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.companyName != null" >
+                company_name = #{record.companyName,jdbcType=VARCHAR},
+            </if>
         </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByExample" parameterType="map">
+    <update id="updateByExample" parameterType="map" >
         update apply_order
         set id = #{record.id,jdbcType=VARCHAR},
         user_id = #{record.userId,jdbcType=VARCHAR},
@@ -375,94 +416,110 @@
         partner_name = #{record.partnerName,jdbcType=VARCHAR},
         partner_phone = #{record.partnerPhone,jdbcType=VARCHAR},
         has_partner = #{record.hasPartner,jdbcType=INTEGER},
-        price = #{record.price,jdbcType=REAL},
-        pay_money = #{record.payMoney,jdbcType=REAL},
+        price = #{record.price,jdbcType=DECIMAL},
+        pay_money = #{record.payMoney,jdbcType=DECIMAL},
         match_id = #{record.matchId,jdbcType=VARCHAR},
         user_head = #{record.userHead,jdbcType=VARCHAR},
         partner_head = #{record.partnerHead,jdbcType=VARCHAR},
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
         pay_statue = #{record.payStatue,jdbcType=INTEGER},
-        share_percent = #{record.sharePercent,jdbcType=REAL},
+        share_percent = #{record.sharePercent,jdbcType=DECIMAL},
         pay_date = #{record.payDate,jdbcType=TIMESTAMP},
         user_sign_status = #{record.userSignStatus,jdbcType=INTEGER},
         partner_sign_statue = #{record.partnerSignStatue,jdbcType=INTEGER},
         patner_code = #{record.patnerCode,jdbcType=VARCHAR},
         user_sign_datetime = #{record.userSignDatetime,jdbcType=TIMESTAMP},
-        partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
+        partner_sign_datetime = #{record.partnerSignDatetime,jdbcType=TIMESTAMP},
+        user_id_card = #{record.userIdCard,jdbcType=VARCHAR},
+        partner_id_card = #{record.partnerIdCard,jdbcType=VARCHAR},
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+        company_name = #{record.companyName,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
+    <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.ApplyOrder" >
         update apply_order
-        <set>
-            <if test="userId != null">
+        <set >
+            <if test="userId != null" >
                 user_id = #{userId,jdbcType=VARCHAR},
             </if>
-            <if test="userName != null">
+            <if test="userName != null" >
                 user_name = #{userName,jdbcType=VARCHAR},
             </if>
-            <if test="userPhone != null">
+            <if test="userPhone != null" >
                 user_phone = #{userPhone,jdbcType=VARCHAR},
             </if>
-            <if test="partnerId != null">
+            <if test="partnerId != null" >
                 partner_id = #{partnerId,jdbcType=VARCHAR},
             </if>
-            <if test="partnerName != null">
+            <if test="partnerName != null" >
                 partner_name = #{partnerName,jdbcType=VARCHAR},
             </if>
-            <if test="partnerPhone != null">
+            <if test="partnerPhone != null" >
                 partner_phone = #{partnerPhone,jdbcType=VARCHAR},
             </if>
-            <if test="hasPartner != null">
+            <if test="hasPartner != null" >
                 has_partner = #{hasPartner,jdbcType=INTEGER},
             </if>
-            <if test="price != null">
-                price = #{price,jdbcType=REAL},
+            <if test="price != null" >
+                price = #{price,jdbcType=DECIMAL},
             </if>
-            <if test="payMoney != null">
-                pay_money = #{payMoney,jdbcType=REAL},
+            <if test="payMoney != null" >
+                pay_money = #{payMoney,jdbcType=DECIMAL},
             </if>
-            <if test="matchId != null">
+            <if test="matchId != null" >
                 match_id = #{matchId,jdbcType=VARCHAR},
             </if>
-            <if test="userHead != null">
+            <if test="userHead != null" >
                 user_head = #{userHead,jdbcType=VARCHAR},
             </if>
-            <if test="partnerHead != null">
+            <if test="partnerHead != null" >
                 partner_head = #{partnerHead,jdbcType=VARCHAR},
             </if>
-            <if test="addTime != null">
+            <if test="addTime != null" >
                 add_time = #{addTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="payStatue != null">
+            <if test="payStatue != null" >
                 pay_statue = #{payStatue,jdbcType=INTEGER},
             </if>
-            <if test="sharePercent != null">
-                share_percent = #{sharePercent,jdbcType=REAL},
+            <if test="sharePercent != null" >
+                share_percent = #{sharePercent,jdbcType=DECIMAL},
             </if>
-            <if test="payDate != null">
+            <if test="payDate != null" >
                 pay_date = #{payDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="userSignStatus != null">
+            <if test="userSignStatus != null" >
                 user_sign_status = #{userSignStatus,jdbcType=INTEGER},
             </if>
-            <if test="partnerSignStatue != null">
+            <if test="partnerSignStatue != null" >
                 partner_sign_statue = #{partnerSignStatue,jdbcType=INTEGER},
             </if>
-            <if test="patnerCode != null">
+            <if test="patnerCode != null" >
                 patner_code = #{patnerCode,jdbcType=VARCHAR},
             </if>
-            <if test="userSignDatetime != null">
+            <if test="userSignDatetime != null" >
                 user_sign_datetime = #{userSignDatetime,jdbcType=TIMESTAMP},
             </if>
-            <if test="partnerSignDatetime != null">
+            <if test="partnerSignDatetime != null" >
                 partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userIdCard != null" >
+                user_id_card = #{userIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="partnerIdCard != null" >
+                partner_id_card = #{partnerIdCard,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null" >
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null" >
+                company_name = #{companyName,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.ApplyOrder">
+    <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.ApplyOrder" >
     update apply_order
     set user_id = #{userId,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
@@ -471,20 +528,24 @@
       partner_name = #{partnerName,jdbcType=VARCHAR},
       partner_phone = #{partnerPhone,jdbcType=VARCHAR},
       has_partner = #{hasPartner,jdbcType=INTEGER},
-      price = #{price,jdbcType=REAL},
-      pay_money = #{payMoney,jdbcType=REAL},
+      price = #{price,jdbcType=DECIMAL},
+      pay_money = #{payMoney,jdbcType=DECIMAL},
       match_id = #{matchId,jdbcType=VARCHAR},
       user_head = #{userHead,jdbcType=VARCHAR},
       partner_head = #{partnerHead,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       pay_statue = #{payStatue,jdbcType=INTEGER},
-      share_percent = #{sharePercent,jdbcType=REAL},
+      share_percent = #{sharePercent,jdbcType=DECIMAL},
       pay_date = #{payDate,jdbcType=TIMESTAMP},
       user_sign_status = #{userSignStatus,jdbcType=INTEGER},
       partner_sign_statue = #{partnerSignStatue,jdbcType=INTEGER},
       patner_code = #{patnerCode,jdbcType=VARCHAR},
       user_sign_datetime = #{userSignDatetime,jdbcType=TIMESTAMP},
-      partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP}
+      partner_sign_datetime = #{partnerSignDatetime,jdbcType=TIMESTAMP},
+      user_id_card = #{userIdCard,jdbcType=VARCHAR},
+      partner_id_card = #{partnerIdCard,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 

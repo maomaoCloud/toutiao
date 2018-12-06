@@ -13,12 +13,17 @@ public class UserInfo {
     private String  phone;
     private String  head;
     private String  applyDate;
+    private String  groupName;
+    private String  idCard;
     private String  signStatue;
     private boolean hasPartner;
     private String  partnerName;
     private String  partnerPhone;
     private String  partnerHead;
+    private String  partnerIdCard;
     private String  partnerSignStatue;
+
+    private String orderId;
 
     public String getUserId () {
         return userId;
@@ -70,17 +75,33 @@ public class UserInfo {
 
     public static UserInfo genFromApplyOrder (ApplyOrder order) {
         UserInfo info = new UserInfo();
+        info.setOrderId(order.getId());
         info.setUserId(order.getUserId());
         info.setHead(StringUtils.isBlank(order.getUserHead()) ? "/images/head.png" : order.getUserHead());
         info.setName(order.getUserName());
         info.setPhone(order.getUserPhone());
         info.setApplyDate(new DateTime(order.getAddTime()).toString("yyyy-MM-dd HH:mm:ss"));
         info.setSignStatue(getSignStatusName(order.getUserSignStatus()));
+        info.setHasPartner(order.getHasPartner().equals(1));
+        info.setGroupName(order.getGroupName());
+        info.setIdCard(order.getUserIdCard());
+        if (info.getHasPartner()) {
+            info.setPartnerHead(order.getPartnerHead());
+            if (StringUtils.isBlank(info.getPartnerHead())) {
+                info.setPartnerHead("/images/head.png");
+            }
+
+            info.setPartnerIdCard(order.getPartnerIdCard());
+            info.setPartnerName(order.getPartnerName());
+            info.setPartnerPhone(order.getPartnerPhone());
+            info.setPartnerSignStatue(getSignStatusName(order.getPayStatue()));
+        }
         return info;
     }
 
     public static UserInfo genFromApplyOrderBUser (ApplyOrder order) {
         UserInfo info = new UserInfo();
+        info.setOrderId(order.getId());
         info.setUserId(order.getPartnerId());
         info.setHead(StringUtils.isBlank(order.getPartnerHead()) ? "/images/head.png" : order.getPartnerHead());
         info.setName(order.getPartnerName());
@@ -88,12 +109,15 @@ public class UserInfo {
         info.setApplyDate(new DateTime(order.getAddTime()).toString("yyyy-MM-dd HH:mm:ss"));
         info.setSignStatue(getSignStatusName(order.getUserSignStatus()));
         info.setHasPartner(order.getHasPartner().equals(1));
+        info.setGroupName(order.getGroupName());
+        info.setIdCard(order.getUserIdCard());
         if (info.getHasPartner()) {
             info.setPartnerHead(order.getPartnerHead());
             if (StringUtils.isBlank(info.getPartnerHead())) {
                 info.setPartnerHead("/images/head.png");
             }
 
+            info.setPartnerIdCard(order.getPartnerIdCard());
             info.setPartnerName(order.getPartnerName());
             info.setPartnerPhone(order.getPartnerPhone());
             info.setPartnerSignStatue(getSignStatusName(order.getPayStatue()));
@@ -163,5 +187,37 @@ public class UserInfo {
         this.hasPartner = hasPartner;
     }
 
+
+    public String getGroupName () {
+        return groupName;
+    }
+
+    public void setGroupName (String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getIdCard () {
+        return idCard;
+    }
+
+    public void setIdCard (String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getPartnerIdCard () {
+        return partnerIdCard;
+    }
+
+    public void setPartnerIdCard (String partnerIdCard) {
+        this.partnerIdCard = partnerIdCard;
+    }
+
+    public String getOrderId () {
+        return orderId;
+    }
+
+    public void setOrderId (String orderId) {
+        this.orderId = orderId;
+    }
 
 }

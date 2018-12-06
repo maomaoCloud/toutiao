@@ -38,7 +38,7 @@
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/html5shiv.js'}"></script>
     <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/respond.min.js'}"></script>
     <![endif]-->
-    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/global.js?V=2.0'}"></script>
+    <script th:src="@{${#httpServletRequest.getContextPath()} + '/js/global.js?V=2.1'}"></script>
 
     <style>
         body {
@@ -143,14 +143,14 @@
             justify-content: center;
         }
 
-        .qr-mask-gd{
+        .qr-mask-gd {
             background-image: url(/images/backgrounds/b3.jpg);
             background-repeat: repeat, no-repeat;
             background-position: left top;
             background-size: cover;
         }
 
-        .qr-mask-gd #qr-gd-img{
+        .qr-mask-gd #qr-gd-img {
             width: 89%;
             position: relative;
             top: -30px;
@@ -168,7 +168,7 @@
             overflow: scroll !important;
         }
 
-        input{
+        input {
             font-size: 20px !important;
         }
     </style>
@@ -284,9 +284,16 @@
                                             <i class="fa fa-caret-right"></i> 座位
                                         </a>
                                     </li>
+
                                     <li>
                                         <a href="#" th:onclick="'resultShowDetail(\''+ ${turnStat.index+1} +'\',this)'">
                                             <i class="fa fa-caret-right"></i> 成绩
+                                        </a>
+                                    </li>
+
+                                    <li th:if="${isShowGroup}">
+                                        <a href="#" th:onclick="'showGroupResult(\''+ ${turnStat.index+1} +'\',this)'">
+                                            <i class="fa fa-caret-right"></i> 团队成绩
                                         </a>
                                     </li>
                                     <li>
@@ -297,11 +304,18 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item" id="totalScore">
                                 <a href="javascript:resultShowDetail(999999)">
                                     <i class="fa fa-glass"></i> 总成绩
                                 </a>
                             </li>
+
+                            <li th:class="'nav-item ' + ${isShowGroup ? '':'hide'}" id="groupTotalScore">
+                                <a href="javascript:showGroupResult(9999,this)">
+                                    <i class="fa fa-glass"></i> 团队总成绩
+                                </a>
+                            </li>
+
                             <li class="nav-item">
                                 <a href="javascript:void(0)" id="prize">
                                     <i class="fa fa-bullhorn"></i> 获奖名单
@@ -386,6 +400,10 @@
 
     $(function () {
         var token = [[${token}]]
+
+        var isGroup = [[${isShowGroup}]]
+
+        setHasGroupName(isGroup);
 
         updateToken(token);
         $(".qr-mask").fadeOut(1);
@@ -811,6 +829,21 @@
         _destory();
         $("#row").load("/sys/resultSetting/resultDetail", {
             matchId: $("#nowSettingMatch").val(),
+            token: getToken(),
+            turnNumber: turnNumber
+        }, function () {
+            closeLoading();
+            $(obj).parent().parent().parent().siblings().removeClass("hovered open")
+            $(obj).parent().parent().parent().addClass("hovered open");
+        });
+    }
+
+    /**查看团队成绩*/
+    function showGroupResult(turnNumber, obj) {
+        showLoading();
+        _destory();
+        $("#row").load("/sys/resultSetting/groupResultDetail", {
+            matchId: getMatchId(),
             token: getToken(),
             turnNumber: turnNumber
         }, function () {

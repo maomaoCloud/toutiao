@@ -60,16 +60,46 @@
                 showNotification("提示", "请填写负得分！");
                 return;
             }
-            //保存
-            $("#updateMatchRule").click();
-            $("#updateMatchInfo").click();
 
-            window.localStorage.setItem("IS_LOGIN_ENTER", "0");
-            window.localStorage.setItem("CURRENT_MATCH_ID", getMatchId());
+            //获取当游戏是否分团队
+            $.post("/sys/matchSetting/isGroup/" + getMatchId(), {}, function (res) {
+                var hasGroupName = res.resData;
+                setHasGroupName(hasGroupName);
 
-            //去签到页面
-            $("#signSetting").click();
-            showNav();
+                var ruleTurn = parseInt($("#ruleTurn").val());
+                var html = '';
+                var tName = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+                for (var i = 0; i < ruleTurn; i++) {
+                    html += '<li class="dropdown turn"><a href="#" onclick="openAndDown(this)" class="dropdown-toggle" data-toggle="dropdown" th:data="' + (i + 1) + '"><i class="fa fa-list"></i> 第' + (tName[i]) + '轮<b class="fa fa-plus dropdown-plus"></b></a><ul class="dropdown-menu"><li><a href="#" onclick="seatShowDetail(' + (i + 1) + ',this)"><i class="fa fa-caret-right"></i> 座位</a></li><li><a href="#" onclick="resultShowDetail(' + (i + 1) + ',this)"><i class="fa fa-caret-right"></i> 成绩</a></li>';
+                    if (hasGroupName) {
+                        html += '<li><a href="#" onclick="showGroupResult(' + (i + 1) + ',this)"><i class="fa fa-caret-right"></i> 团队成绩</a></li>';
+                    }
+                    html += '<li><a href="#" onclick="printSeat(' + (i + 1) + ',this)"><i class="fa fa-caret-right"></i> 座位标签</a></li></ul></li>';
+                }
+
+                $("#navigation").find(".menu").find(".turn").each(function () {
+                    $(this).remove();
+                });
+
+                if (hasGroupName) {
+                    $("#groupTotalScore").removeClass("hide");
+                } else {
+                    $("#groupTotalScore").addClass("hide");
+                }
+
+                $(html).insertAfter("#turnBefore");
+                //保存
+                $("#updateMatchRule").click();
+                $("#updateMatchInfo").click();
+
+                window.localStorage.setItem("IS_LOGIN_ENTER", "0");
+                window.localStorage.setItem("CURRENT_MATCH_ID", getMatchId());
+
+                //去签到页面
+                $("#signSetting").click();
+                showNav();
+            });
+
         });
 
         var sVal = $("#ruleSeat").attr("value");

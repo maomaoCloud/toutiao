@@ -30,41 +30,25 @@
         <div id="myCarouselScore" class="carousel slide" style="width: 100%;" data-ride="carousel">
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner" style="margin-top: 30px;">
-                <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}" th:each="d,dStat : ${resultData}">
+                <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}"
+                     th:each="d,dStat : ${groupDataList}">
                     <div class="screen-item">
                         <table class="table table-bordered label-table"
                                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
                             <tr>
-                                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
+                                <td class="head-title" th:colspan="${tdList.size() + 2}"
+                                    th:text="${matchName}+' —— 团队成绩单'"></td>
                             </tr>
 
                             <tr>
-                                <td valign="middle" rowspan="2">名次</td>
-                                <td colspan="4">选手信息</td>
-                                <td colspan="3">本轮成绩</td>
-                                <td th:colspan="${tdList.size()}">总成绩</td>
-                            </tr>
-
-                            <tr>
-                                <td>编号</td>
-                                <td>选手姓名</td>
-                                <td>选手姓名</td>
-                                <td>桌号</td>
-                                <td>级数</td>
-                                <td>级差分</td>
-                                <td>对手级差分</td>
+                                <td valign="middle">名次</td>
+                                <td>团队名称</td>
                                 <td th:each="title:${tdList}" th:text="${title}"></td>
                             </tr>
 
                             <tr th:each="result:${d }">
                                 <td th:text="'第'+${result.index}+'名'"></td>
-                                <td th:text="${result.teamNumber}"></td>
-                                <td th:text="${result.userOne }"></td>
-                                <td th:text="${result.userTwo }"></td>
-                                <td th:text="${result.tableNumber }"></td>
-                                <td th:text="${result.score }"></td>
-                                <td th:text="${result.disparity }"></td>
-                                <td th:text="${26 - result.disparity }"></td>
+                                <td th:text="${result.groupName}"></td>
                                 <td th:each="value:${result.resultString.split(',')}" th:text="${value}"></td>
                             </tr>
 
@@ -75,7 +59,8 @@
 
             <!-- 轮播（Carousel）指标 -->
             <ol class="carousel-indicators">
-                <li data-target="#myCarouselScore" th:each="d,dStat : ${resultData}" th:data-slide-to="${dStat.index}"
+                <li data-target="#myCarouselScore" th:each="d,dStat : ${groupDataList}"
+                    th:data-slide-to="${dStat.index}"
                     th:class="${dStat.index == 0 ? ' active':''}"></li>
             </ol>
         </div>

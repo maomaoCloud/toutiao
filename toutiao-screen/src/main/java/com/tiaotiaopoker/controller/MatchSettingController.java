@@ -11,17 +11,15 @@ import com.tiaotiaopoker.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
-@RequestMapping("sys/matchSetting")
+@RequestMapping ("sys/matchSetting")
 public class MatchSettingController {
 
     @Autowired
@@ -30,12 +28,12 @@ public class MatchSettingController {
     @Autowired
     private MatchRuleService matchRuleService;
 
-    @RequestMapping("index")
-    public ModelAndView index(ModelAndView mv,
-                              String token,
-                              @ModelAttribute(value = "matchRule") MatchRule matchRule) {
+    @RequestMapping ("index")
+    public ModelAndView index (ModelAndView mv,
+                               String token,
+                               @ModelAttribute (value = "matchRule") MatchRule matchRule) {
         String matchId = matchRule.getMatchId();
-        Match match = new Match();
+        Match  match   = new Match();
         match.setUserId(token);
         //比赛设置前列出该用户创建的比赛（不需要分页）
         List<Match> matchList = matchService.queryMatchByCondition(match, null);
@@ -48,7 +46,7 @@ public class MatchSettingController {
         }
 
         //成绩排名规则
-        List<RuleResult> myList = new ArrayList<>();
+        List<RuleResult> myList    = new ArrayList<>();
         List<RuleResult> otherList = new ArrayList<>();
         divideRuleResult(Constants.resultRule.resultRuleMap, matchRule.getRuleResult(), myList, otherList);
         mv.addObject("myList", myList);
@@ -63,10 +61,10 @@ public class MatchSettingController {
     }
 
     //比赛信息
-    @RequestMapping("matchInfo")
-    public ModelAndView matchInfo(ModelAndView mv,
-                                  String token,
-                                  @ModelAttribute(value = "matchRule") MatchRule matchRule) {
+    @RequestMapping ("matchInfo")
+    public ModelAndView matchInfo (ModelAndView mv,
+                                   String token,
+                                   @ModelAttribute (value = "matchRule") MatchRule matchRule) {
         if (!StringUtils.isBlank(matchRule.getMatchId())) {
             matchRule = matchRuleService.selectMatchRuleByMatchId(matchRule.getMatchId());
         }
@@ -77,16 +75,16 @@ public class MatchSettingController {
     }
 
     //比赛基础设置
-    @RequestMapping("matchRule")
-    public ModelAndView matchRule(ModelAndView mv,
-                                  String token,
-                                  @ModelAttribute(value = "matchRule") MatchRule matchRule) {
+    @RequestMapping ("matchRule")
+    public ModelAndView matchRule (ModelAndView mv,
+                                   String token,
+                                   @ModelAttribute (value = "matchRule") MatchRule matchRule) {
         if (!StringUtils.isBlank(matchRule.getMatchId())) {
             matchRule = matchRuleService.selectMatchRuleByMatchId(matchRule.getMatchId());
         }
 
         //成绩排名规则
-        List<RuleResult> myList = new ArrayList<>();
+        List<RuleResult> myList    = new ArrayList<>();
         List<RuleResult> otherList = new ArrayList<>();
         divideRuleResult(Constants.resultRule.resultRuleMap, matchRule.getRuleResult(), myList, otherList);
         mv.addObject("myList", myList);
@@ -99,12 +97,12 @@ public class MatchSettingController {
     }
 
     //比赛轮次
-    @RequestMapping("matchTurn")
+    @RequestMapping ("matchTurn")
     @ResponseBody
-    public List<String> matchTurn(String token,
-                                  String matchId) {
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-        int ruleTurn = (null == matchRule ? 0 : matchRule.getRuleTurn());
+    public List<String> matchTurn (String token,
+                                   String matchId) {
+        MatchRule    matchRule    = matchRuleService.selectMatchRuleByMatchId(matchId);
+        int          ruleTurn     = (null == matchRule ? 0 : matchRule.getRuleTurn());
         List<String> ruleTurnList = new ArrayList<>();
         for (int i = 1; i <= ruleTurn; i++) {
             ruleTurnList.add(Constants.NUM_CH[i - 1]);
@@ -112,9 +110,9 @@ public class MatchSettingController {
         return ruleTurnList;
     }
 
-    @RequestMapping("save")
+    @RequestMapping ("save")
     @ResponseBody
-    public JsonResult save(MatchRule matchRule) {
+    public JsonResult save (MatchRule matchRule) {
         JsonResult jsonResult;
         try {
             int result = matchRuleService.saveBySelective(matchRule);
@@ -130,20 +128,31 @@ public class MatchSettingController {
         return jsonResult;
     }
 
-    private void divideRuleResult(Map<String, Object> ruleResultMap, String ruleResult, List<RuleResult> myList, List<RuleResult> otherList) {
+    private void divideRuleResult (Map<String, Object> ruleResultMap, String ruleResult, List<RuleResult> myList, List<RuleResult> otherList) {
+        if (StringUtils.isBlank(ruleResult)) {
+            ruleResult = Constants.result.DEFAULT_RESULT_RULE;
+        }
+
+        String[]    ruleItems = ruleResult.split(",");
+        Set<String> myListSet = new HashSet<>();
+        for (String ruleItem : ruleItems) {
+            myList.add(new RuleResult(ruleItem, ruleResultMap.get(ruleItem).toString()));
+            myListSet.add(ruleItem);
+        }
+
         for (Map.Entry<String, Object> entry : ruleResultMap.entrySet()) {
-            if (ruleResult != null) {
-                RuleResult object = new RuleResult(entry.getKey(), (String) entry.getValue());
-                List<String> myListString = Arrays.asList(ruleResult.split(","));
-                if (myListString.contains(entry.getKey())) {
-                    myList.add(object);
-                } else {
-                    otherList.add(object);
-                }
-            } else {
-                RuleResult object = new RuleResult(entry.getKey(), (String) entry.getValue());
-                otherList.add(object);
+            if (!myListSet.contains(entry.getKey())) {
+                otherList.add(new RuleResult(entry.getKey(), entry.getValue().toString()));
             }
         }
+
     }
+
+    @RequestMapping ("isGroup/{matchId}")
+    @ResponseBody
+    public JsonResult checkIsGroup (@PathVariable ("matchId") String matchId) {
+        Boolean isGroup = matchService.checkIsGroup(matchId);
+        return JsonResult.SUCCESS("", isGroup);
+    }
+
 }

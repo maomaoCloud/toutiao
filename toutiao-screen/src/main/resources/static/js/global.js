@@ -2,6 +2,8 @@ var _sign_t = 0;
 var _sign_i = 0;
 var _t = 0;
 
+var hasGroupName = false;
+
 var __matchId = null;
 var __token = null;
 
@@ -25,6 +27,14 @@ function _destory() {
     clearInterval(_t);
     clearInterval(_sign_i);
     clearTimeout(_sign_t);
+}
+
+function getHasGroupName() {
+    return hasGroupName;
+}
+
+function setHasGroupName(_hasGroupName) {
+     hasGroupName = _hasGroupName;
 }
 
 /**显示信息*/

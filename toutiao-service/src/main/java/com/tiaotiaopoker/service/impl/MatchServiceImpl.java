@@ -268,4 +268,10 @@ public class MatchServiceImpl implements MatchService {
         return data;
     }
 
+    @Override
+    public Boolean checkIsGroup (String matchId) {
+        MatchWithBLOBs matchDataById = getMatchDataById(matchId);
+        return matchDataById != null && matchDataById.getIsNeedGroupName().equals(1);
+    }
+
 }

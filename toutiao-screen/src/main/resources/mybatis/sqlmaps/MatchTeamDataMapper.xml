@@ -271,6 +271,8 @@
         <result column="teamTwoUserOneName" jdbcType="VARCHAR" property="teamTwoUserOneName"/>
         <result column="teamTwoUserTwoHead" jdbcType="VARCHAR" property="teamTwoUserTwoHead"/>
         <result column="teamTwoUserTwoName" jdbcType="VARCHAR" property="teamTwoUserTwoName"/>
+        <result column="teamOneExt" jdbcType="VARCHAR" property="teamOneExt"/>
+        <result column="teamTwoExt" jdbcType="VARCHAR" property="teamTwoExt"/>
     </resultMap>
     <select id="queryTeamUserByMatchId" parameterType="java.lang.String">
       SELECT
@@ -292,10 +294,12 @@
         mtm1.team_member_one_head as teamOneUserOneHead,
         mtm1.team_member_two_name as teamOneUserTwoName,
         mtm1.team_member_two_head as teamOneUserTwoHead,
+        mtm1.ext AS teamOneExt,
         mtm2.team_member_one_name as teamTwoUserOneName,
         mtm2.team_member_one_head as teamTwoUserOneHead,
         mtm2.team_member_two_name as teamTwoUserTwoName,
-        mtm2.team_member_two_head as teamTwoUserTwoHead
+        mtm2.team_member_two_head as teamTwoUserTwoHead,
+        mtm2.ext AS teamTwoExt
         FROM
         match_team_data AS mtd
         LEFT JOIN match_team_member AS mtm1 ON mtd.team_one_id = mtm1.id

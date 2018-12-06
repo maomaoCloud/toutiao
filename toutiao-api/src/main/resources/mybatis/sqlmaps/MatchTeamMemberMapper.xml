@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tiaotiaopoker.dao.MatchTeamMemberMapper">
-  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.MatchTeamMember">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="match_id" jdbcType="VARCHAR" property="matchId" />
-    <result column="team_number" jdbcType="INTEGER" property="teamNumber" />
-    <result column="team_member_one" jdbcType="VARCHAR" property="teamMemberOne" />
-    <result column="team_member_one_name" jdbcType="VARCHAR" property="teamMemberOneName" />
-    <result column="team_member_one_head" jdbcType="VARCHAR" property="teamMemberOneHead" />
-    <result column="team_member_two" jdbcType="VARCHAR" property="teamMemberTwo" />
-    <result column="team_member_two_name" jdbcType="VARCHAR" property="teamMemberTwoName" />
-    <result column="team_member_two_head" jdbcType="VARCHAR" property="teamMemberTwoHead" />
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.MatchTeamMember" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="match_id" property="matchId" jdbcType="VARCHAR" />
+    <result column="team_number" property="teamNumber" jdbcType="INTEGER" />
+    <result column="team_member_one" property="teamMemberOne" jdbcType="VARCHAR" />
+    <result column="team_member_one_name" property="teamMemberOneName" jdbcType="VARCHAR" />
+    <result column="team_member_one_head" property="teamMemberOneHead" jdbcType="VARCHAR" />
+    <result column="team_member_two" property="teamMemberTwo" jdbcType="VARCHAR" />
+    <result column="team_member_two_name" property="teamMemberTwoName" jdbcType="VARCHAR" />
+    <result column="team_member_two_head" property="teamMemberTwoHead" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -41,25 +42,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -70,198 +71,211 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    id, match_id, team_number, team_member_one, team_member_one_name, team_member_one_head, 
-    team_member_two, team_member_two_name, team_member_two_head
+  <sql id="Base_Column_List" >
+    id, match_id, team_number, team_member_one, team_member_one_name, team_member_one_head,
+    team_member_two, team_member_two_name, team_member_two_head, group_name
   </sql>
-  <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from match_team_member
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from match_team_member
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from match_team_member
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample">
+  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" >
     delete from match_team_member
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
-    insert into match_team_member (id, match_id, team_number, 
-      team_member_one, team_member_one_name, team_member_one_head, 
-      team_member_two, team_member_two_name, team_member_two_head
-      )
-    values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{teamNumber,jdbcType=INTEGER}, 
-      #{teamMemberOne,jdbcType=VARCHAR}, #{teamMemberOneName,jdbcType=VARCHAR}, #{teamMemberOneHead,jdbcType=VARCHAR}, 
-      #{teamMemberTwo,jdbcType=VARCHAR}, #{teamMemberTwoName,jdbcType=VARCHAR}, #{teamMemberTwoHead,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember" >
+    insert into match_team_member (id, match_id, team_number,
+      team_member_one, team_member_one_name, team_member_one_head,
+      team_member_two, team_member_two_name, team_member_two_head,
+      group_name)
+    values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{teamNumber,jdbcType=INTEGER},
+      #{teamMemberOne,jdbcType=VARCHAR}, #{teamMemberOneName,jdbcType=VARCHAR}, #{teamMemberOneHead,jdbcType=VARCHAR},
+      #{teamMemberTwo,jdbcType=VARCHAR}, #{teamMemberTwoName,jdbcType=VARCHAR}, #{teamMemberTwoHead,jdbcType=VARCHAR},
+      #{groupName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember" >
     insert into match_team_member
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="matchId != null">
+      <if test="matchId != null" >
         match_id,
       </if>
-      <if test="teamNumber != null">
+      <if test="teamNumber != null" >
         team_number,
       </if>
-      <if test="teamMemberOne != null">
+      <if test="teamMemberOne != null" >
         team_member_one,
       </if>
-      <if test="teamMemberOneName != null">
+      <if test="teamMemberOneName != null" >
         team_member_one_name,
       </if>
-      <if test="teamMemberOneHead != null">
+      <if test="teamMemberOneHead != null" >
         team_member_one_head,
       </if>
-      <if test="teamMemberTwo != null">
+      <if test="teamMemberTwo != null" >
         team_member_two,
       </if>
-      <if test="teamMemberTwoName != null">
+      <if test="teamMemberTwoName != null" >
         team_member_two_name,
       </if>
-      <if test="teamMemberTwoHead != null">
+      <if test="teamMemberTwoHead != null" >
         team_member_two_head,
       </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="matchId != null">
+      <if test="matchId != null" >
         #{matchId,jdbcType=VARCHAR},
       </if>
-      <if test="teamNumber != null">
+      <if test="teamNumber != null" >
         #{teamNumber,jdbcType=INTEGER},
       </if>
-      <if test="teamMemberOne != null">
+      <if test="teamMemberOne != null" >
         #{teamMemberOne,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberOneName != null">
+      <if test="teamMemberOneName != null" >
         #{teamMemberOneName,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberOneHead != null">
+      <if test="teamMemberOneHead != null" >
         #{teamMemberOneHead,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwo != null">
+      <if test="teamMemberTwo != null" >
         #{teamMemberTwo,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwoName != null">
+      <if test="teamMemberTwoName != null" >
         #{teamMemberTwoName,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwoHead != null">
+      <if test="teamMemberTwoHead != null" >
         #{teamMemberTwoHead,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchTeamMemberExample" resultType="java.lang.Integer" >
     select count(*) from match_team_member
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update match_team_member
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchId != null">
+      <if test="record.matchId != null" >
         match_id = #{record.matchId,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamNumber != null">
+      <if test="record.teamNumber != null" >
         team_number = #{record.teamNumber,jdbcType=INTEGER},
       </if>
-      <if test="record.teamMemberOne != null">
+      <if test="record.teamMemberOne != null" >
         team_member_one = #{record.teamMemberOne,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamMemberOneName != null">
+      <if test="record.teamMemberOneName != null" >
         team_member_one_name = #{record.teamMemberOneName,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamMemberOneHead != null">
+      <if test="record.teamMemberOneHead != null" >
         team_member_one_head = #{record.teamMemberOneHead,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamMemberTwo != null">
+      <if test="record.teamMemberTwo != null" >
         team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamMemberTwoName != null">
+      <if test="record.teamMemberTwoName != null" >
         team_member_two_name = #{record.teamMemberTwoName,jdbcType=VARCHAR},
       </if>
-      <if test="record.teamMemberTwoHead != null">
+      <if test="record.teamMemberTwoHead != null" >
         team_member_two_head = #{record.teamMemberTwoHead,jdbcType=VARCHAR},
       </if>
+      <if test="record.groupName != null" >
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update match_team_member
     set id = #{record.id,jdbcType=VARCHAR},
-      match_id = #{record.matchId,jdbcType=VARCHAR},
-      team_number = #{record.teamNumber,jdbcType=INTEGER},
-      team_member_one = #{record.teamMemberOne,jdbcType=VARCHAR},
-      team_member_one_name = #{record.teamMemberOneName,jdbcType=VARCHAR},
-      team_member_one_head = #{record.teamMemberOneHead,jdbcType=VARCHAR},
-      team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR},
-      team_member_two_name = #{record.teamMemberTwoName,jdbcType=VARCHAR},
-      team_member_two_head = #{record.teamMemberTwoHead,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    match_id = #{record.matchId,jdbcType=VARCHAR},
+    team_number = #{record.teamNumber,jdbcType=INTEGER},
+    team_member_one = #{record.teamMemberOne,jdbcType=VARCHAR},
+    team_member_one_name = #{record.teamMemberOneName,jdbcType=VARCHAR},
+    team_member_one_head = #{record.teamMemberOneHead,jdbcType=VARCHAR},
+    team_member_two = #{record.teamMemberTwo,jdbcType=VARCHAR},
+    team_member_two_name = #{record.teamMemberTwoName,jdbcType=VARCHAR},
+    team_member_two_head = #{record.teamMemberTwoHead,jdbcType=VARCHAR},
+    group_name = #{record.groupName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember" >
     update match_team_member
-    <set>
-      <if test="matchId != null">
+    <set >
+      <if test="matchId != null" >
         match_id = #{matchId,jdbcType=VARCHAR},
       </if>
-      <if test="teamNumber != null">
+      <if test="teamNumber != null" >
         team_number = #{teamNumber,jdbcType=INTEGER},
       </if>
-      <if test="teamMemberOne != null">
+      <if test="teamMemberOne != null" >
         team_member_one = #{teamMemberOne,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberOneName != null">
+      <if test="teamMemberOneName != null" >
         team_member_one_name = #{teamMemberOneName,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberOneHead != null">
+      <if test="teamMemberOneHead != null" >
         team_member_one_head = #{teamMemberOneHead,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwo != null">
+      <if test="teamMemberTwo != null" >
         team_member_two = #{teamMemberTwo,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwoName != null">
+      <if test="teamMemberTwoName != null" >
         team_member_two_name = #{teamMemberTwoName,jdbcType=VARCHAR},
       </if>
-      <if test="teamMemberTwoHead != null">
+      <if test="teamMemberTwoHead != null" >
         team_member_two_head = #{teamMemberTwoHead,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember">
+  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.MatchTeamMember" >
     update match_team_member
     set match_id = #{matchId,jdbcType=VARCHAR},
       team_number = #{teamNumber,jdbcType=INTEGER},
@@ -270,7 +284,8 @@
       team_member_one_head = #{teamMemberOneHead,jdbcType=VARCHAR},
       team_member_two = #{teamMemberTwo,jdbcType=VARCHAR},
       team_member_two_name = #{teamMemberTwoName,jdbcType=VARCHAR},
-      team_member_two_head = #{teamMemberTwoHead,jdbcType=VARCHAR}
+      team_member_two_head = #{teamMemberTwoHead,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

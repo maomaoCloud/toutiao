@@ -19,75 +19,96 @@ public class MatchTeamMember {
 
     private String teamMemberTwoHead;
 
-    public String getId() {
+    private String groupName;
+
+    private String ext;
+
+    public String getId () {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId (String id) {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getMatchId() {
+    public String getMatchId () {
         return matchId;
     }
 
-    public void setMatchId(String matchId) {
+    public void setMatchId (String matchId) {
         this.matchId = matchId == null ? null : matchId.trim();
     }
 
-    public Integer getTeamNumber() {
+    public Integer getTeamNumber () {
         return teamNumber;
     }
 
-    public void setTeamNumber(Integer teamNumber) {
+    public void setTeamNumber (Integer teamNumber) {
         this.teamNumber = teamNumber;
     }
 
-    public String getTeamMemberOne() {
+    public String getTeamMemberOne () {
         return teamMemberOne;
     }
 
-    public void setTeamMemberOne(String teamMemberOne) {
+    public void setTeamMemberOne (String teamMemberOne) {
         this.teamMemberOne = teamMemberOne == null ? null : teamMemberOne.trim();
     }
 
-    public String getTeamMemberOneName() {
+    public String getTeamMemberOneName () {
         return teamMemberOneName;
     }
 
-    public void setTeamMemberOneName(String teamMemberOneName) {
+    public void setTeamMemberOneName (String teamMemberOneName) {
         this.teamMemberOneName = teamMemberOneName == null ? null : teamMemberOneName.trim();
     }
 
-    public String getTeamMemberOneHead() {
+    public String getTeamMemberOneHead () {
         return teamMemberOneHead;
     }
 
-    public void setTeamMemberOneHead(String teamMemberOneHead) {
+    public void setTeamMemberOneHead (String teamMemberOneHead) {
         this.teamMemberOneHead = teamMemberOneHead == null ? null : teamMemberOneHead.trim();
     }
 
-    public String getTeamMemberTwo() {
+    public String getTeamMemberTwo () {
         return teamMemberTwo;
     }
 
-    public void setTeamMemberTwo(String teamMemberTwo) {
+    public void setTeamMemberTwo (String teamMemberTwo) {
         this.teamMemberTwo = teamMemberTwo == null ? null : teamMemberTwo.trim();
     }
 
-    public String getTeamMemberTwoName() {
+    public String getTeamMemberTwoName () {
         return teamMemberTwoName;
     }
 
-    public void setTeamMemberTwoName(String teamMemberTwoName) {
+    public void setTeamMemberTwoName (String teamMemberTwoName) {
         this.teamMemberTwoName = teamMemberTwoName == null ? null : teamMemberTwoName.trim();
     }
 
-    public String getTeamMemberTwoHead() {
+    public String getTeamMemberTwoHead () {
         return teamMemberTwoHead;
     }
 
-    public void setTeamMemberTwoHead(String teamMemberTwoHead) {
+    public void setTeamMemberTwoHead (String teamMemberTwoHead) {
         this.teamMemberTwoHead = teamMemberTwoHead == null ? null : teamMemberTwoHead.trim();
     }
+
+    public String getGroupName () {
+        return groupName;
+    }
+
+    public void setGroupName (String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getExt () {
+        return ext;
+    }
+
+    public void setExt (String ext) {
+        this.ext = ext;
+    }
+
 }

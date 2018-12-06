@@ -22,7 +22,7 @@ public class StringUtils {
     }
 
     public static boolean isBlank (String target) {
-        return target == null || target.trim().equals("");
+        return org.apache.commons.lang3.StringUtils.isBlank(target);
     }
 
     public static String gen6Num () {

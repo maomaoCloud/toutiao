@@ -15,7 +15,7 @@
     }
 
     table td {
-        vertical-align: middle;
+        vertical-align: middle !important;
         text-align: center;
         font-size: 23px;
         font-weight: bolder;
@@ -39,7 +39,7 @@
                     <div class="screen-item">
                         <table class="table table-bordered" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
                             <tr>
-                                <td class="head-title" colspan="10">
+                                <td class="head-title" colspan="12">
                                     <div style="margin-top:10px; font-size: 30px" th:text="${matchName}"></div>
                                     <div style="font-size:25px; margin:10px;" th:text="'第'+${turnNumChines}+'轮 座位表'"></div>
                                 </td>
@@ -48,11 +48,13 @@
                             <tr>
                                 <td width="8%" class="color-1">桌号</td>
                                 <td width="5%" class="vs">编号</td>
+                                <td width="15%" class="vs">单位名称</td>
                                 <td class="color-2">东</td>
                                 <td width="5%" class="color-2 no-left-border"></td>
                                 <td class="color-2 no-left-border">西</td>
-                                <td width="22%" class="vs"></td>
+                                <td width="5%" class="vs"></td>
                                 <td width="5%" class="vs">编号</td>
+                                <td width="15%" class="vs">单位名称</td>
                                 <td class="color-3">南</td>
                                 <td width="5%" class="color-3 no-left-border"></td>
                                 <td class="color-3 no-left-border">北</td>
@@ -61,11 +63,13 @@
                             <tr th:each="data:${d}">
                                 <td th:text="${data.tableNumber}+'号桌'"></td>
                                 <td th:text="${data.teamOneNum}"></td>
+                                <td th:text="${data.teamOneExt}"></td>
                                 <td th:text="${data.teamOneUserOneName}"></td>
                                 <td>搭</td>
                                 <td th:text="${data.teamOneUserTwoName}"></td>
                                 <td>VS</td>
                                 <td th:text="${data.teamTwoNum}"></td>
+                                <td th:text="${data.teamTwoExt}"></td>
                                 <td th:text="${data.teamTwoUserOneName}"></td>
                                 <td>搭</td>
                                 <td th:text="${data.teamTwoUserTwoName}"></td>
@@ -77,14 +81,14 @@
 
             <!-- 轮播（Carousel）指标 -->
             <ol class="carousel-indicators">
-                <li data-target="#myCarousel" th:each="d,dStat : ${dataResult}" th:data-slide-to="${dStat.index}"
+                <li data-target="#myCarouselSeat" th:each="d,dStat : ${dataResult}" th:data-slide-to="${dStat.index}"
                     th:class="${dStat.index == 0 ? ' active':''}"></li>
             </ol>
         </div>
 
         <table id="pShow" class="table table-bordered hide" style="border-right: 1px solid rgba(255, 255, 255, 0.1);">
             <tr>
-                <td class="head-title" colspan="10">
+                <td class="head-title" colspan="12">
                     <div style="margin-top:10px; font-size: 30px" th:text="${matchName}"></div>
                     <div style="font-size:25px; margin:10px;" th:text="'第'+${turnNumChines}+'轮 座位表'"></div>
                 </td>
@@ -93,11 +97,13 @@
             <tr>
                 <td width="8%" class="color-1">桌号</td>
                 <td width="5%" class="vs">编号</td>
+                <td width="15%" class="vs">单位名称</td>
                 <td class="color-2">东</td>
                 <td width="5%" class="color-2 no-left-border"></td>
                 <td class="color-2 no-left-border">西</td>
-                <td width="22%" class="vs"></td>
+                <td width="5%" class="vs"></td>
                 <td width="5%" class="vs">编号</td>
+                <td width="15%" class="vs">单位名称</td>
                 <td class="color-3">南</td>
                 <td width="5%" class="color-3 no-left-border"></td>
                 <td class="color-3 no-left-border">北</td>
@@ -106,11 +112,13 @@
             <tr th:each="data:${dataList}">
                 <td th:text="${data.tableNumber}+'号桌'"></td>
                 <td th:text="${data.teamOneNum}"></td>
+                <td th:text="${data.teamOneExt}"></td>
                 <td th:text="${data.teamOneUserOneName}"></td>
                 <td>搭</td>
                 <td th:text="${data.teamOneUserTwoName}"></td>
                 <td>VS</td>
                 <td th:text="${data.teamTwoNum}"></td>
+                <td th:text="${data.teamTwoExt}"></td>
                 <td th:text="${data.teamTwoUserOneName}"></td>
                 <td>搭</td>
                 <td th:text="${data.teamTwoUserTwoName}"></td>

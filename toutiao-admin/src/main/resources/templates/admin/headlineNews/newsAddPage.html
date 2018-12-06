@@ -152,7 +152,7 @@
             <tr>
                 <td width="100" class="td-title"><span class="red">*</span>标题：</td>
                 <td class="td-input" th:id="titleLabel">
-                    <input th:id="newsTitle" name="newsTitle" type="text" class="input-text w510" maxlength="20"
+                    <input th:id="newsTitle" name="newsTitle" type="text" class="input-text w510"
                            th:value="${news.newsTitle}"/>
                     <span class="error-msg"></span>
                 </td>
@@ -184,7 +184,7 @@
             <tr th:if="${news.newsType=='2'}">
                 <td width="100" class="td-title"><span class="red">*</span>链接地址：</td>
                 <td class="td-input" th:id="newsLinkLabel">
-                    <input th:id="newsLink" name="newsLink" type="text" class="input-text w510" maxlength="20"
+                    <input th:id="newsLink" name="newsLink" type="text" class="input-text w510"
                            th:value="${news.newsLink}"/>
                     <span class="error-msg"></span>
                 </td>

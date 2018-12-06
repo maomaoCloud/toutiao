@@ -45,8 +45,8 @@ App({
     loginUserInfo: null,
     sessionKey: null
   },
-  //serverUrl: "https://match.tiaotiaopoker.com/",
-  serverUrl: "http://127.0.0.1:8081/",
+  serverUrl: "https://match.tiaotiaopoker.com/",
+ // serverUrl: "http://127.0.0.1:8081/",
   /**显示错误提示*/
   showErrorMsg: function(msg) {
     wx.showToast({

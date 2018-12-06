@@ -54,6 +54,8 @@ public class ApplyOrder {
 
     private String groupName;
 
+    private String companyName;
+
     public String getId() {
         return id;
     }
@@ -252,6 +254,14 @@ public class ApplyOrder {
 
     public void setGroupName (String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getCompanyName () {
+        return companyName;
+    }
+
+    public void setCompanyName (String companyName) {
+        this.companyName = companyName;
     }
 
 }

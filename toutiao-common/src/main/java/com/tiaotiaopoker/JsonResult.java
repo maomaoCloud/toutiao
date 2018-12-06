@@ -38,7 +38,6 @@ public class JsonResult {
         return new JsonResult( false, Constants.ApiCode.FAILED, desc, data );
     }
 
-
     public JsonResult() {
     }
 
