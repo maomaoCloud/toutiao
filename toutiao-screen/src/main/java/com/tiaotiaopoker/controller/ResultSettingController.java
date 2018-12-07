@@ -4,10 +4,12 @@ import com.tiaotiaopoker.ChineseNum;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
+import com.tiaotiaopoker.entity.GroupScoreItem;
 import com.tiaotiaopoker.entity.MatchTeamDataDto;
 import com.tiaotiaopoker.entity.MatchTeamResultDto;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchTeamData;
+import com.tiaotiaopoker.pojo.MatchTeamMember;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
 import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchTeamDataService;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 @Controller
 @RequestMapping ("sys/resultSetting")
@@ -109,7 +111,6 @@ public class ResultSettingController {
 
     @RequestMapping ("resultDetail")
     public ModelAndView resultDetail (ModelAndView mv, String matchId, int turnNumber) {
-
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         if (turnNumber > matchRule.getRuleTurn()) {
             turnNumber = matchRule.getRuleTurn();
@@ -165,6 +166,144 @@ public class ResultSettingController {
         mv.addObject("resultData", resultData);
         mv.setViewName("resultSetting/resultShow");
         return mv;
+    }
+
+    /**
+     * 根据分组拿到成绩
+     */
+    @RequestMapping ("groupResultDetail")
+    public ModelAndView showResultByGroupName (ModelAndView mv, Integer turnNumber, String matchId) {
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        /*if (turnNumber > matchRule.getRuleTurn()) {
+            turnNumber = matchRule.getRuleTurn();
+        }*/
+        //成绩td标题
+        List<String> tdList     = new ArrayList<>();
+        String       resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+        for (String title : resultRule.split(",")) {
+            tdList.add((String) Constants.resultRule.resultRuleMap.get(title));
+        }
+        mv.addObject("tdList", tdList);
+        //成绩数据
+        MatchTeamResult result = new MatchTeamResult();
+        result.setMatchId(matchId);
+        result.setTurnNumber(turnNumber > 100 ? matchRule.getRuleTurn() : turnNumber);
+        List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
+        //根据规则显示相应的成绩
+        try {
+            for (MatchTeamResultDto resultDto : resultlist) {
+                String resultString = "";
+                Class  clazz        = resultDto.getClass();
+                for (String getName : resultRule.split(",")) {
+                    resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
+                }
+                resultDto.setResultString(resultString.substring(0, resultString.length() - 1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //获取所有的队伍信息  更具groupName分组
+        List<MatchTeamMember> matchTeamMembers = matchTeamResultService.getAllTeams(matchId);
+        Map<Integer, String>  groupNameMap     = new HashMap<>();
+        for (MatchTeamMember member : matchTeamMembers) {
+            groupNameMap.put(member.getTeamNumber(), member.getGroupName());
+        }
+
+
+        Map<String, List<MatchTeamResultDto>> groupByGroupName = new HashMap<>();
+        List<MatchTeamResultDto>              tmp;
+        String                                groupName        = null;
+        for (MatchTeamResultDto matchTeamResultDto : resultlist) {
+            groupName = groupNameMap.get(matchTeamResultDto.getTeamNumber());
+            tmp = groupByGroupName.get(groupName);
+            if (tmp == null) {
+                tmp = new ArrayList<>();
+            }
+            tmp.add(matchTeamResultDto);
+            groupByGroupName.put(groupName, tmp);
+        }
+
+        List<GroupScoreItem> resultData = new ArrayList<>();
+        for (String gn : groupByGroupName.keySet()) {
+            resultData.add(summary(resultRule, groupByGroupName.get(gn), gn));
+        }
+
+        groupByGroupName.clear();
+
+        Collections.sort(resultData);
+
+        if (turnNumber > 100) {
+            //表示展示团队总成绩
+            List<List<GroupScoreItem>> groupList = new ArrayList<>();
+            List<GroupScoreItem>       tmpList   = null;
+            int                        i         = 0;
+            for (GroupScoreItem resultDatum : resultData) {
+                resultDatum.setIndex(i + 1);
+                if (i%10 == 0) {
+                    if (tmpList != null) groupList.add(tmpList);
+                    tmpList = new ArrayList<>();
+                }
+
+                tmpList.add(resultDatum);
+                i++;
+            }
+
+            if (tmpList != null && tmpList.size() > 0) groupList.add(tmpList);
+            mv.addObject("groupDataList", groupList);
+        }
+
+        mv.addObject("matchName", matchRule.getMatchName());
+        mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
+        mv.addObject("resultlist", resultlist);
+        mv.addObject("resultData", resultData);
+        mv.setViewName(turnNumber > 100 ? "resultSetting/groupTotal" : "resultSetting/groupResultShow");
+        return mv;
+    }
+
+    public static GroupScoreItem summary (String rule, List<MatchTeamResultDto> list, String groupName) {
+        GroupScoreItem res = new GroupScoreItem();
+        if (StringUtils.isBlank(rule)) {
+            rule = Constants.result.DEFAULT_RESULT_RULE;
+        }
+
+        Class clazz = MatchTeamResultDto.class;
+
+        String[] ruleItem = rule.split(",");
+        if (ruleItem.length > 0) {
+            Object itemValue, myValue;
+            for (MatchTeamResultDto data : list) {
+                for (int i = 0; i < ruleItem.length; i++) {
+                    try {
+                        itemValue = clazz.getMethod("get" + ruleItem[i]).invoke(data);
+                        myValue = clazz.getMethod("get" + ruleItem[i]).invoke(res);
+                        if (myValue == null) myValue = 0;
+                        clazz.getMethod("set" + ruleItem[i], Integer.class).invoke(res, ((int) itemValue) + ((int) myValue));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setIndex(i + 1);
+        }
+
+        String resultString = "";
+        for (String getName : ruleItem) {
+            try {
+                resultString += clazz.getMethod("get" + getName).invoke(res) + ",";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        res.setResultString(resultString.substring(0, resultString.length() - 1));
+
+        res.setResultRule(rule);
+        res.setGroupName(groupName);
+        res.setData(list);
+        return res;
     }
 
 }

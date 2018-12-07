@@ -288,6 +288,19 @@
         loadData(1);*/
 
         $("#saveResultBtn").click(function () {
+            var resultDataFlag = true;
+            $("#teamResultForm").find("select").each(function(){
+                var resultData = $(this).val();
+                if(resultData=="0"){
+                    resultDataFlag = false;
+                    //showNotification("提示",$(this).parent().parent().parent().find("span").html()+"号桌的成绩未输入");
+                    layer.msg($(this).parent().parent().parent().find("span").html()+"号桌的成绩未输入");
+                    return false;
+                }
+            });
+            if(!resultDataFlag){
+                return;
+            }
             showLoading();
             $.post("/sys/resultSetting/save?token=" + getToken(), $("#teamResultForm").serialize(), function (data) {
                 if (data.success) {

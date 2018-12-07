@@ -30,14 +30,33 @@
         <div id="myCarouselScore" class="carousel slide" style="width: 100%;" data-ride="carousel">
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner" style="margin-top: 30px;">
-                <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}" th:each="d,dStat : ${resultData}">
+                <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}"
+                     th:each="d,dStat : ${resultData}">
                     <div class="screen-item">
                         <table class="table table-bordered label-table"
                                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
                             <tr>
-                                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
+                                <td class="head-title" colspan="13">
+                                    <div th:text="${matchName}+' —— 第'+${turnNumber}+'轮团队成绩单'"></div>
+                                    <div style="margin: 15px 0; font-size: 30px;"
+                                         th:text="'团队名称：'+${d.groupName}"></div>
+                                    <div>
+                                        <table style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px; font-size: 25px; background-color: rgba(255, 255, 255, 0.2);" class="table table-bordered label-table">
+                                            <tr>
+                                                <td th:colspan="${tdList.size()}">团队总成绩</td>
+                                            </tr>
+                                            <tr>
+                                                <td th:each="title:${tdList}" th:text="${title}"></td>
+                                            </tr>
+                                            <tr><td th:each="value:${d.resultString.split(',')}" th:text="${value}"></td></tr>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
 
+                            <tr>
+                                <td th:colspan="${tdList.size() + 8}">团队详细成绩</td>
+                            </tr>
                             <tr>
                                 <td valign="middle" rowspan="2">名次</td>
                                 <td colspan="4">选手信息</td>
@@ -56,7 +75,7 @@
                                 <td th:each="title:${tdList}" th:text="${title}"></td>
                             </tr>
 
-                            <tr th:each="result:${d }">
+                            <tr th:each="result:${d.data }">
                                 <td th:text="'第'+${result.index}+'名'"></td>
                                 <td th:text="${result.teamNumber}"></td>
                                 <td th:text="${result.userOne }"></td>

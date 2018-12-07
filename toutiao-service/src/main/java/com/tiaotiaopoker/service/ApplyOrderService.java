@@ -13,16 +13,19 @@ import java.util.Map;
  * Created by xiekang on 2018/9/19.
  */
 public interface ApplyOrderService {
-    Map<String, Object> addOrder(ApiApplyParams params) throws IOException, URISyntaxException;
+    Map<String, Object> addOrder (ApiApplyParams params) throws IOException, URISyntaxException;
 
-    Map<String, Object> addSignOrder(ApiApplyParams params) throws IOException, URISyntaxException;
+    Map<String, Object> addSignOrder (ApiApplyParams params) throws IOException, URISyntaxException;
 
-    Map<String, Object> getNewSignData(String matchId,
-                                       Date datePoint);
+    Map<String, Object> getNewSignData (String matchId,
+                                        Date datePoint);
 
-    List<ApplyOrder> getSignData(String matchId);
+    List<ApplyOrder> getSignData (String matchId);
 
-    void updateWaitApprove(String userId,
-                           String matchId,
-                           Integer nextStatue);
+    void updateWaitApprove (String userId,
+                            String matchId,
+                            Integer nextStatue);
+
+    void updateGroupName (String orderId, String groupName);
+
 }

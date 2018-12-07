@@ -1,6 +1,11 @@
 package com.tiaotiaopoker.entity;
 
+import com.tiaotiaopoker.Constants;
+import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatchTeamResultDto extends MatchTeamResult {
 
@@ -20,59 +25,59 @@ public class MatchTeamResultDto extends MatchTeamResult {
 
     private String resultString;
 
-    public String getResultString() {
+    public String getResultString () {
         return resultString;
     }
 
-    public void setResultString(String resultString) {
+    public void setResultString (String resultString) {
         this.resultString = resultString;
     }
 
-    public String getUserOneHead() {
+    public String getUserOneHead () {
         return userOneHead;
     }
 
-    public void setUserOneHead(String userOneHead) {
+    public void setUserOneHead (String userOneHead) {
         this.userOneHead = userOneHead;
     }
 
-    public String getUserTwoHead() {
+    public String getUserTwoHead () {
         return userTwoHead;
     }
 
-    public void setUserTwoHead(String userTwoHead) {
+    public void setUserTwoHead (String userTwoHead) {
         this.userTwoHead = userTwoHead;
     }
 
-    public String getUserOne() {
+    public String getUserOne () {
         return userOne;
     }
 
-    public void setUserOne(String userOne) {
+    public void setUserOne (String userOne) {
         this.userOne = userOne;
     }
 
-    public String getUserTwo() {
+    public String getUserTwo () {
         return userTwo;
     }
 
-    public void setUserTwo(String userTwo) {
+    public void setUserTwo (String userTwo) {
         this.userTwo = userTwo;
     }
 
-    public int getTeamNumber() {
+    public int getTeamNumber () {
         return teamNumber;
     }
 
-    public void setTeamNumber(int teamNumber) {
+    public void setTeamNumber (int teamNumber) {
         this.teamNumber = teamNumber;
     }
 
-    public int getTableNumber() {
+    public int getTableNumber () {
         return tableNumber;
     }
 
-    public void setTableNumber(int tableNumber) {
+    public void setTableNumber (int tableNumber) {
         this.tableNumber = tableNumber;
     }
 

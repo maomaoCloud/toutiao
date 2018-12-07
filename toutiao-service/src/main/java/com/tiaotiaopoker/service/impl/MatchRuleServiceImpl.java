@@ -37,9 +37,8 @@ public class MatchRuleServiceImpl implements MatchRuleService {
         List<MatchRule> matchRuleList = matchRuleMapper.selectByExample(matchRuleExample);
         if (matchRuleList.size() > 0) {
             return matchRuleList.get(0);
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override

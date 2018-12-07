@@ -361,6 +361,14 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         applyOrderMapper.updateByExampleSelective(order, example);
     }
 
+    @Override
+    public void updateGroupName (String orderId, String groupName) {
+        ApplyOrder order = new ApplyOrder();
+        order.setGroupName(groupName);
+        order.setId(orderId);
+        applyOrderMapper.updateByPrimaryKeySelective(order);
+    }
+
     private void installPayData (WxPayData payData) {
         payData.setAppid(WX_APPID);
         payData.setKey(WX_KEY);

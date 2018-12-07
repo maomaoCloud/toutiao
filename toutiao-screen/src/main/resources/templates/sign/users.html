@@ -30,7 +30,7 @@
         text-align: center;
     }
 
-    #user-table{
+    #user-table {
         color: #FFF;
     }
 
@@ -49,8 +49,17 @@
         text-align: center;
     }
 
-    .line-right{
+    .line-right {
         border-right: 1px solid #e8e8e8;
+    }
+
+    .edit-groupName {
+        border: none;
+        border-bottom: 1px solid #FFF;
+        color: #FFF;
+        outline: none;
+        background-color: transparent;
+        width: 150px;
     }
 </style>
 
@@ -74,34 +83,43 @@
             <table class="table" id="user-table">
                 <thead>
                 <tr style="border-top: 1px solid rgba(100,100,100,0.6);">
-                    <th colspan="4" style="border-bottom: none" class="line-right">用户信息</th>
-                    <th colspan="4" style="border-bottom: none" class="line-right">搭档信息</th>
+                    <th class="line-right" style="vertical-align: middle;" rowspan="2">团队名</th>
+                    <th colspan="5" style="border-bottom: none" class="line-right">用户信息</th>
+                    <th colspan="5" style="border-bottom: none" class="line-right">搭档信息</th>
                     <th rowspan="2" style="vertical-align: middle;">报名时间</th>
                 </tr>
                 <tr>
                     <th></th>
                     <th>姓名</th>
                     <th>手机</th>
+                    <th>身份证号</th>
                     <th class="line-right">状态</th>
                     <th></th>
                     <th>姓名</th>
                     <th>手机</th>
+                    <th>身份证号</th>
                     <th class="line-right">状态</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user,userStat : ${datas}">
+                    <td class="line-right">
+                        <input class="edit-groupName" th:data-id="${user.orderId}" th:value="${user.groupName}">
+                    </td>
                     <td>
                         <img class="head" th:src="${user.head}" src="assets/images/peter-avatar.jpg">
                     </td>
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.phone}">18012673347</td>
+                    <td th:text="${user.idCard}">18012673347</td>
                     <td class="line-right" th:text="${user.signStatue}"></td>
                     <td>
-                        <img  th:if="${user.hasPartner}" class="head" th:src="${user.partnerHead}" src="assets/images/peter-avatar.jpg">
+                        <img th:if="${user.hasPartner}" class="head" th:src="${user.partnerHead}"
+                             src="assets/images/peter-avatar.jpg">
                     </td>
                     <td th:text="${user.partnerName}"></td>
                     <td th:text="${user.partnerPhone}">18012673347</td>
+                    <td th:text="${user.partnerIdCard}">18012673347</td>
                     <td class="line-right" th:text="${user.partnerSignStatue}"></td>
                     <td th:text="${user.applyDate}">2018-10-10 12:23:56</td>
                 </tr>
@@ -121,6 +139,14 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     $(function () {
+        $(".edit-groupName").blur(function () {
+            var val = $(this).val();
+            var orderId = $(this).attr("data-id");
+            $.post("/sys/sign/userInfo/groupName/save", {groupName: val, orderId: orderId}, function (res) {
+
+            });
+        });
+
     })
     /* ]]> */
 </script>

@@ -157,7 +157,7 @@ public class SeatSettingController {
         int                          i          = 0;
         List<MatchTeamDataDto>       tmp        = null;
         for (MatchTeamDataDto matchTeamDataDto : dataList) {
-            if (i%10 == 0) {
+            if (i%8 == 0) {
                 if (tmp != null) dataResult.add(tmp);
 
                 tmp = new ArrayList<>();

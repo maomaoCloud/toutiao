@@ -76,7 +76,7 @@ public class SignController extends BaseController {
         List<ApiSimpleUserInfo>       tmp  = null;
         List<List<ApiSimpleUserInfo>> data = new ArrayList<>();
         for (ApiSimpleUserInfo asi : allList) {
-            if (i%10 == 0) {
+            if (i%12 == 0) {
                 if (tmp != null) {
                     data.add(tmp);
                 }
@@ -139,6 +139,13 @@ public class SignController extends BaseController {
         mv.addObject("datas", datas);
         mv.setViewName(ViewConstants.USERS);
         return mv;
+    }
+
+    @RequestMapping ("/userInfo/groupName/save")
+    @ResponseBody
+    public JsonResult saveGroupName (String groupName, String orderId) {
+        applyOrderService.updateGroupName(orderId, groupName);
+        return JsonResult.SUCCESS();
     }
 
 }

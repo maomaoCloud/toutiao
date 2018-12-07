@@ -12,28 +12,31 @@ import java.util.Map;
  * Created by xiekang on 2018/9/9.
  */
 public interface MatchService {
-    void saveMatch(MatchWithBLOBs data);
+    void saveMatch (MatchWithBLOBs data);
 
-    Map<String, Object> getMatchList(Integer pageNum,
-                                     Integer pageSize,
-                                     String userId);
+    Map<String, Object> getMatchList (Integer pageNum,
+                                      Integer pageSize,
+                                      String userId);
 
-    Map<String, Object> getMatchInfoById(String matchId,
-                                         String userId);
+    Map<String, Object> getMatchInfoById (String matchId,
+                                          String userId);
 
-    List<Match> queryMatchByCondition(Match match,
-                                      Pagination page);
+    List<Match> queryMatchByCondition (Match match,
+                                       Pagination page);
 
-    int updateMatchBySelective(MatchWithBLOBs match,
-                               SysUser sysUser);
+    int updateMatchBySelective (MatchWithBLOBs match,
+                                SysUser sysUser);
 
-    MatchWithBLOBs selectMatchById(String id);
+    MatchWithBLOBs selectMatchById (String id);
 
-    MatchWithBLOBs getMatchDataById(String matchId);
+    MatchWithBLOBs getMatchDataById (String matchId);
 
-    List<Match> getMatchByKeyWord(String kw);
+    List<Match> getMatchByKeyWord (String kw);
 
-    Map<String, Object> getMatchListManage(String userId);
+    Map<String, Object> getMatchListManage (String userId);
 
-    MatchWithBLOBs checkIsValidate(String matchId);
+    MatchWithBLOBs checkIsValidate (String matchId);
+
+    Boolean checkIsGroup (String matchId);
+
 }

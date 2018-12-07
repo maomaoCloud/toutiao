@@ -1,11 +1,10 @@
 package com.tiaotiaopoker.service.impl;
 
 import com.tiaotiaopoker.Constants;
+import com.tiaotiaopoker.dao.MatchTeamMemberMapper;
 import com.tiaotiaopoker.dao.MatchTeamResultMapper;
 import com.tiaotiaopoker.entity.MatchTeamResultDto;
-import com.tiaotiaopoker.pojo.MatchRule;
-import com.tiaotiaopoker.pojo.MatchTeamResult;
-import com.tiaotiaopoker.pojo.MatchTeamResultExample;
+import com.tiaotiaopoker.pojo.*;
 import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchTeamResultService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,12 @@ public class MatchTeamResultServiceImpl implements MatchTeamResultService {
     @Autowired
     private MatchRuleService matchRuleService;
 
+    @Autowired
+    private MatchTeamMemberMapper matchTeamMemberMapper;
+
     @Override
-    public List<MatchTeamResult> queryMatchTeamResultByCondition(MatchTeamResult matchTeamResult) {
-        MatchTeamResultExample example = new MatchTeamResultExample();
+    public List<MatchTeamResult> queryMatchTeamResultByCondition (MatchTeamResult matchTeamResult) {
+        MatchTeamResultExample          example  = new MatchTeamResultExample();
         MatchTeamResultExample.Criteria criteria = example.createCriteria();
         criteria.andMatchIdEqualTo(matchTeamResult.getMatchId());
         criteria.andTurnNumberEqualTo(matchTeamResult.getTurnNumber());
@@ -37,10 +39,10 @@ public class MatchTeamResultServiceImpl implements MatchTeamResultService {
     }
 
     @Override
-    public List<MatchTeamResultDto> sortMatchTeamResult(MatchTeamResult result) {
+    public List<MatchTeamResultDto> sortMatchTeamResult (MatchTeamResult result) {
         //查询比赛规则
-        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(result.getMatchId());
-        Map<String, Object> paramMap = new HashMap<>();
+        MatchRule           matchRule = matchRuleService.selectMatchRuleByMatchId(result.getMatchId());
+        Map<String, Object> paramMap  = new HashMap<>();
         paramMap.put("matchId", result.getMatchId());
         paramMap.put("turnNumber", result.getTurnNumber());
         List<MatchTeamResultDto> matchTeamResultDtos = matchTeamResultMapper.queryResultWithTableNumber(paramMap);
@@ -54,4 +56,12 @@ public class MatchTeamResultServiceImpl implements MatchTeamResultService {
         }
         return matchTeamResultDtos;
     }
+
+    @Override
+    public List<MatchTeamMember> getAllTeams (String matchId) {
+        MatchTeamMemberExample example = new MatchTeamMemberExample();
+        example.createCriteria().andMatchIdEqualTo(matchId);
+        return matchTeamMemberMapper.selectByExample(example);
+    }
+
 }
