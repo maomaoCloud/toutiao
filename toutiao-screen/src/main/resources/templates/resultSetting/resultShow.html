@@ -47,6 +47,7 @@
 
                             <tr>
                                 <td>编号</td>
+                                <td>单位名称</td>
                                 <td>选手姓名</td>
                                 <td>选手姓名</td>
                                 <td>桌号</td>
@@ -59,6 +60,7 @@
                             <tr th:each="result:${d }">
                                 <td th:text="'第'+${result.index}+'名'"></td>
                                 <td th:text="${result.teamNumber}"></td>
+                                <td th:text="${result.groupName}"></td>
                                 <td th:text="${result.userOne }"></td>
                                 <td th:text="${result.userTwo }"></td>
                                 <td th:text="${result.tableNumber }"></td>
