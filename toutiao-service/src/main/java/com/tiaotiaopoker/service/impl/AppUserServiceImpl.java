@@ -201,4 +201,9 @@ public class AppUserServiceImpl implements AppUserService {
         return resultMap;
     }
 
+    @Override
+    public List<AppUser> getUserByTrueName(String trueName) {
+        return appUserMapper.getUserByTrueName(trueName);
+    }
+
 }

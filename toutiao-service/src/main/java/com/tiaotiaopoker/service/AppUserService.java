@@ -2,6 +2,7 @@ package com.tiaotiaopoker.service;
 
 import com.tiaotiaopoker.pojo.AppUser;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,5 @@ public interface AppUserService {
 
     Map<String, Object> getUserIncome (String userId, String matchId);
 
+    List<AppUser> getUserByTrueName(String trueName);
 }
