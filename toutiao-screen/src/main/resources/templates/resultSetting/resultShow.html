@@ -35,18 +35,19 @@
                         <table class="table table-bordered label-table"
                                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
                             <tr>
-                                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
+                                <td class="head-title" colspan="17" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
                             </tr>
 
                             <tr>
                                 <td valign="middle" rowspan="2">名次</td>
-                                <td colspan="4">选手信息</td>
+                                <td colspan="5">选手信息</td>
                                 <td colspan="3">本轮成绩</td>
                                 <td th:colspan="${tdList.size()}">总成绩</td>
                             </tr>
 
                             <tr>
                                 <td>编号</td>
+                                <td>单位名称</td>
                                 <td>选手姓名</td>
                                 <td>选手姓名</td>
                                 <td>桌号</td>
@@ -59,6 +60,7 @@
                             <tr th:each="result:${d }">
                                 <td th:text="'第'+${result.index}+'名'"></td>
                                 <td th:text="${result.teamNumber}"></td>
+                                <td th:text="${result.groupName}"></td>
                                 <td th:text="${result.userOne }"></td>
                                 <td th:text="${result.userTwo }"></td>
                                 <td th:text="${result.tableNumber }"></td>

@@ -316,6 +316,7 @@
       mtm.team_member_two_name AS userTwo,
       mtm.team_member_one_head AS userOneHead,
       mtm.team_member_two_head AS userTwoHead,
+      mtm.group_name as groupName,
         mtr.id as id,
         mtr.match_id as matchId,
         mtr.team_id as teamId,

@@ -31,4 +31,6 @@ public interface AppUserMapper {
     int updateByPrimaryKeySelective(AppUser record);
 
     int updateByPrimaryKey(AppUser record);
+
+    List<AppUser> getUserByTrueName(String trueName);
 }

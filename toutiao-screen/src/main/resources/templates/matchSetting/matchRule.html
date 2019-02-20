@@ -102,6 +102,27 @@
 
         });
 
+        //已授权用户绑定点击事件
+        $("#authorizationUser").find("button").each(function () {
+            $(this).click(function () {
+                if ($(this).hasClass("btn-primary")){
+                    $(this).removeClass("btn-primary");
+                }else {
+                    alert(2);
+                    $(this).addClass("btn-primary");
+                }
+            });
+        });
+
+        //搜索授权用户绑定搜索事件
+        $("#authorizationSearch").click(function(){
+            $.post("/sys/matchAuthorController/searchUserByTrueName",{
+                trueName: $("#authorizationName").val()
+            },function(data){
+                console.log(data);
+            });
+        });
+
         var sVal = $("#ruleSeat").attr("value");
         if (sVal != null && sVal != "") {
             $("#ruleSeat").val(sVal);
@@ -407,6 +428,32 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+
+            <div class="form-group" th:if="${isAuthor == token}">
+                <label class="col-sm-4 control-label">授权用户</label>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="form-group col-sm-8" id="authorizationUser">
+                            <button type="button" class="btn btn-primary" style="float: left">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-8" style="margin-left: 0px;margin-right: 20px;">
+                            <input type="text" class="form-control" id="authorizationName">
+                            <button type="button" class="btn btn-primary" style="margin-left: 20px" id="authorizationSearch">搜索</button>
+                        </div>
+                        <div class="form-group col-sm-8" >
+                            <button type="button" class="btn btn-primary" style="float: left">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                            <button type="button" class="btn btn-primary">谢康</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
