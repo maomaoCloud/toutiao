@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.service.impl;
 
+import com.sun.org.apache.bcel.internal.generic.IFNULL;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.dao.*;
 import com.tiaotiaopoker.entity.ApiAdvertData;
@@ -204,6 +205,71 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public List<AppUser> getUserByTrueName(String trueName) {
         return appUserMapper.getUserByTrueName(trueName);
+    }
+
+    /**
+     * 导入用户同事生成比赛订单
+     * Created by maojian
+     *
+     * @date 2019/2/22 15:11
+     */
+    @Override
+    public void importUserWithOrder(List<List<String>> dataList) {
+        for (List<String> data : dataList) {
+            //创建appUser
+            AppUser appUser = genImportUser(data.get(0), data.get(0), data.get(1));
+            appUserMapper.insertSelective(appUser);
+
+            //判断是否带搭档
+            AppUser partnerUser = null;
+            if (data.get(4).equals(1)) {
+                //创建appUser搭档
+                partnerUser = genImportUser(data.get(2), data.get(2), data.get(3));
+                appUserMapper.insertSelective(appUser);
+            }
+
+            //生成比赛订单
+            ApplyOrder applyOrder = new ApplyOrder();
+            applyOrder.setId(com.tiaotiaopoker.StringUtils.generateOrderNo());
+            applyOrder.setUserId(appUser.getId());
+            applyOrder.setUserName(data.get(1));
+            applyOrder.setUserPhone(data.get(2));
+            applyOrder.setPartnerId(partnerUser == null ? null : partnerUser.getId());
+            applyOrder.setPartnerName(partnerUser == null ? null : partnerUser.getNickName());
+            applyOrder.setPartnerPhone(partnerUser == null ? null : partnerUser.getPhone());
+            applyOrder.setHasPartner(new Integer(data.get(4)));
+            applyOrder.setMatchId(data.get(5));
+            applyOrder.setUserHead(appUser.getAvatarUrl());
+            applyOrder.setPartnerHead(partnerUser == null ? null : partnerUser.getAvatarUrl());
+            applyOrder.setAddTime(new Date());
+            //支付和签到状态
+            applyOrder.setPayStatue(0);
+            applyOrder.setUserSignStatus(8);
+            applyOrder.setPartnerSignStatue(partnerUser == null ? null : 8);
+            applyOrder.setUserSignDatetime(new Date());
+            applyOrder.setPartnerSignDatetime(partnerUser == null ? null : new Date());
+            //团队公司信息
+            applyOrder.setGroupName(data.get(6));
+            applyOrder.setCompanyName(data.get(7));
+            applyOrderMapper.insertSelective(applyOrder);
+
+        }
+    }
+
+    public static AppUser genImportUser(String nickName, String trueName, String phone) {
+        AppUser appUser = new AppUser();
+        appUser.setId(com.tiaotiaopoker.StringUtils.generateShortUUID());
+        appUser.setNickName(nickName);
+        appUser.setTrueName(trueName);
+        //生成头像
+        //todo
+        appUser.setPhone(phone);
+        appUser.setUserStatus(0);
+        appUser.setUserLevel(0);
+        //0——小程序，1——导入用户
+        appUser.setUserFrom(0);
+        appUser.setLastLoginDateTime(new Date());
+        return appUser;
     }
 
 }

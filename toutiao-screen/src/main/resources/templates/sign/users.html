@@ -74,6 +74,13 @@
         <!-- tile header -->
         <div class="tile-header" style="text-align:center;">
             <h1><strong>参赛人员</strong></h1>
+            <div style="overflow:hidden;margin-bottom:-10px;min-height:44px;">
+                <a style="margin-top: 8px;" href="javascript:;" class="fileType">
+                    选择文件<input type="file" id="uploadFile" name="uploadFile" onchange="checkSuffix(event);"/>
+                </a>
+                <span style="vertical-align: text-bottom;" id="fileName"></span>
+                <input type="button" onclick="fileUpload()">
+            </div>
         </div>
         <!-- /tile header -->
 
@@ -149,6 +156,62 @@
 
     })
     /* ]]> */
+
+    function fileUpload(){
+        var formData = new FormData();
+        formData.append("file",document.getElementById("uploadFile").files[0]);
+        var timer;
+        //用 formData来ajax提交文件
+        $.ajax({
+            url: "/sys/sign/importUser",
+            data: formData,
+            type: "post",
+            dataType: "json",
+            cache: false,//上传文件无需缓存
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+            beforeSend:function(){
+                /*$('#uploadBtn').attr("disabled","disabled");
+                $("#uploadBtn").css({'background-color':'#dcdcdc'});
+                $('#progressBarMask').show();
+                //启动定时，查询进度
+                timer = setInterval(getProcess,500);*/
+            },
+            success: function (data) {
+                //上传完成，清除定时任务
+                if (timer != undefined && timer != null){
+                    clearInterval(timer);
+                }
+                $('#progressBarMask').hide();
+                if (data.status == 200){
+                    $.post("${path}/superOrder/getOrderCountSession.do",{},function(data){
+                        if (data.status == 200){
+                            clearProcess();
+                            dialogAlert("提示","操作成功，修改"+data.data+"条，总共"+orderNum+"条",function(){
+                                window.location.href="./superOrderUpdateList.do";
+                            });
+                        } else {
+                            clearProcess();
+                        }
+                    },"json");
+                } else if (data.status == 500){
+                    dialogAlert("提示",data.data,function(){
+                    });
+                    clearProcess();
+                }
+            },
+            error:function(data){
+                dialogAlert("提示","操作失败",function(){
+                });
+                //清除定时任务
+                if (timer != undefined && timer != null){
+                    clearInterval(timer);
+                }
+                $('#progressBarMask').hide();
+                clearProcess();
+            }
+        });
+    }
 </script>
 
 
