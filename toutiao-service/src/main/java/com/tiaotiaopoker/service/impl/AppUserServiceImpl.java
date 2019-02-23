@@ -1,8 +1,6 @@
 package com.tiaotiaopoker.service.impl;
 
-import com.sun.org.apache.bcel.internal.generic.IFNULL;
 import com.tiaotiaopoker.Constants;
-import com.tiaotiaopoker.ImagePlaceHolder;
 import com.tiaotiaopoker.dao.*;
 import com.tiaotiaopoker.entity.ApiAdvertData;
 import com.tiaotiaopoker.entity.ApiApplyOrder;
@@ -217,7 +215,7 @@ public class AppUserServiceImpl implements AppUserService {
      */
     @Transactional
     @Override
-    public void importUserWithOrder(List<List<String>> dataList) {
+    public void importUserWithOrder(List<List<String>> dataList, String matchId) {
         for (List<String> data : dataList) {
             //创建appUser
             AppUser appUser = genImportUser(data.get(0), data.get(0), data.get(1));
@@ -241,7 +239,7 @@ public class AppUserServiceImpl implements AppUserService {
             applyOrder.setPartnerName(partnerUser == null ? null : partnerUser.getNickName());
             applyOrder.setPartnerPhone(partnerUser == null ? null : partnerUser.getPhone());
             applyOrder.setHasPartner(new Integer(data.get(4)));
-            applyOrder.setMatchId(data.get(5));
+            applyOrder.setMatchId(matchId);
             applyOrder.setUserHead(appUser.getAvatarUrl());
             applyOrder.setPartnerHead(partnerUser == null ? null : partnerUser.getAvatarUrl());
             applyOrder.setAddTime(new Date());
@@ -251,13 +249,13 @@ public class AppUserServiceImpl implements AppUserService {
             applyOrder.setSharePercent(new BigDecimal(0));
             applyOrder.setPayDate(new Date());
             applyOrder.setPayStatue(1);
-            applyOrder.setUserSignStatus(new Integer(data.get(8)));
-            applyOrder.setPartnerSignStatue(partnerUser == null ? null : new Integer(data.get(8)));
+            applyOrder.setUserSignStatus(new Integer(data.get(7)));
+            applyOrder.setPartnerSignStatue(partnerUser == null ? null : new Integer(data.get(7)));
             applyOrder.setUserSignDatetime(new Date());
             applyOrder.setPartnerSignDatetime(partnerUser == null ? null : new Date());
             //团队公司信息
-            applyOrder.setGroupName(data.get(6));
-            applyOrder.setCompanyName(data.get(7));
+            applyOrder.setGroupName(data.get(5));
+            applyOrder.setCompanyName(data.get(6));
             applyOrderMapper.insertSelective(applyOrder);
 
         }

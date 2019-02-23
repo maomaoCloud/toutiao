@@ -28,5 +28,5 @@ public interface AppUserService {
 
     List<AppUser> getUserByTrueName(String trueName);
 
-    void importUserWithOrder(List<List<String>> dataList);
+    void importUserWithOrder(List<List<String>> dataList, String matchId);
 }

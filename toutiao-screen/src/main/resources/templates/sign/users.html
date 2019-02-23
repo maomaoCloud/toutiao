@@ -208,6 +208,7 @@
     function fileUpload(){
         var formData = new FormData();
         formData.append("file",document.getElementById("uploadFile").files[0]);
+        formData.append("matchId",getMatchId());
         var timer;
         //用 formData来ajax提交文件
         $.ajax({
@@ -242,7 +243,6 @@
         var suffix = fileName.substring(fileName.lastIndexOf('.')+1);
         if (suffix != "xlsx"){
             layer.msg("请上传后缀名为xlsx文件!");
-            return;
             return;
         } else {
             showLoading();

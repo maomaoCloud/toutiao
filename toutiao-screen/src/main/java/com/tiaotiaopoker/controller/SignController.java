@@ -178,14 +178,10 @@ public class SignController extends BaseController {
             is = mulFile.getInputStream();
             NsExcelReadXUtils read = new NsExcelReadXUtils(is, 0);
             List<List<String>> dataList = read.getLists(1, read.getCellNum(0));
-
-            appUserService.importUserWithOrder(dataList);
-
-
+            appUserService.importUserWithOrder(dataList,matchId);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return JsonResult.SUCCESS();
     }
 }
