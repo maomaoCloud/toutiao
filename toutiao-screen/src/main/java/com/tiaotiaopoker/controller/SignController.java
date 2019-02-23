@@ -1,16 +1,18 @@
 package com.tiaotiaopoker.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.NsExcelReadXUtils;
 import com.tiaotiaopoker.SecurityFactory;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.config.ViewConstants;
 import com.tiaotiaopoker.entity.ApiSimpleUserInfo;
+import com.tiaotiaopoker.entity.BiValue;
+import com.tiaotiaopoker.entity.SysSetting;
 import com.tiaotiaopoker.entity.UserInfo;
 import com.tiaotiaopoker.pojo.ApplyOrder;
 import com.tiaotiaopoker.service.AppUserService;
 import com.tiaotiaopoker.service.ApplyOrderService;
+import com.tiaotiaopoker.service.MatchRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -42,6 +44,8 @@ public class SignController extends BaseController {
     private String qrcode_key;
     @Autowired
     private ApplyOrderService applyOrderService;
+    @Autowired
+    private MatchRuleService  matchRuleService;
 
     @Autowired
     private AppUserService appUserService;
@@ -84,8 +88,14 @@ public class SignController extends BaseController {
         int i = 0;
         List<ApiSimpleUserInfo> tmp = null;
         List<List<ApiSimpleUserInfo>> data = new ArrayList<>();
+
+        SysSetting setting = matchRuleService.getSysSetting(matchId);
+        BiValue<Integer, Integer> biValue = setting.getData().get(SysSetting.Constants.INDEX_OF_SIGN_PAGE);
+        int pageSize = biValue.getValA();
+        int interval = biValue.getValB();
+
         for (ApiSimpleUserInfo asi : allList) {
-            if (i % 12 == 0) {
+            if (i%pageSize == 0) {
                 if (tmp != null) {
                     data.add(tmp);
                 }
@@ -104,6 +114,7 @@ public class SignController extends BaseController {
         mv.addObject("signUsers", signUsers);
         mv.addObject("partnerUsers", partnerUsers);
         mv.addObject("waitApprove", waitApprove);
+        mv.addObject("interval", interval*1000);
 
         return mv;
     }

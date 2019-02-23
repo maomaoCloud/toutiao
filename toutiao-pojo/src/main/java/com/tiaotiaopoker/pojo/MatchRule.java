@@ -47,6 +47,12 @@ public class MatchRule {
 
     private String ruleResult;
 
+    private Integer canWithOpponent;
+
+    private Integer canWithGroup;
+
+    private String sysSetting;
+
     public String getId() {
         return id;
     }
@@ -229,5 +235,29 @@ public class MatchRule {
 
     public void setRuleResult(String ruleResult) {
         this.ruleResult = ruleResult == null ? null : ruleResult.trim();
+    }
+
+    public Integer getCanWithOpponent() {
+        return canWithOpponent;
+    }
+
+    public void setCanWithOpponent(Integer canWithOpponent) {
+        this.canWithOpponent = canWithOpponent;
+    }
+
+    public Integer getCanWithGroup() {
+        return canWithGroup;
+    }
+
+    public void setCanWithGroup(Integer canWithGroup) {
+        this.canWithGroup = canWithGroup;
+    }
+
+    public String getSysSetting() {
+        return sysSetting;
+    }
+
+    public void setSysSetting(String sysSetting) {
+        this.sysSetting = sysSetting == null ? null : sysSetting.trim();
     }
 }

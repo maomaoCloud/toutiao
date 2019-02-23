@@ -1,50 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tiaotiaopoker.dao.MatchRuleMapper">
-  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.MatchRule">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="match_id" jdbcType="VARCHAR" property="matchId" />
-    <result column="match_name" jdbcType="VARCHAR" property="matchName" />
-    <result column="match_host" jdbcType="VARCHAR" property="matchHost" />
-    <result column="match_address" jdbcType="VARCHAR" property="matchAddress" />
-    <result column="match_date" jdbcType="VARCHAR" property="matchDate" />
-    <result column="match_referee" jdbcType="VARCHAR" property="matchReferee" />
-    <result column="match_logo" jdbcType="VARCHAR" property="matchLogo" />
-    <result column="match_technology" jdbcType="VARCHAR" property="matchTechnology" />
-    <result column="match_champion_img" jdbcType="VARCHAR" property="matchChampionImg" />
-    <result column="match_champion" jdbcType="VARCHAR" property="matchChampion" />
-    <result column="match_second_img" jdbcType="VARCHAR" property="matchSecondImg" />
-    <result column="match_second" jdbcType="VARCHAR" property="matchSecond" />
-    <result column="match_third_img" jdbcType="VARCHAR" property="matchThirdImg" />
-    <result column="match_third" jdbcType="VARCHAR" property="matchThird" />
-    <result column="rule_turn" jdbcType="INTEGER" property="ruleTurn" />
-    <result column="rule_pair" jdbcType="INTEGER" property="rulePair" />
-    <result column="rule_time" jdbcType="INTEGER" property="ruleTime" />
-    <result column="rule_win" jdbcType="INTEGER" property="ruleWin" />
-    <result column="rule_fail" jdbcType="INTEGER" property="ruleFail" />
-    <result column="rule_draw" jdbcType="INTEGER" property="ruleDraw" />
-    <result column="rule_seat" jdbcType="INTEGER" property="ruleSeat" />
-    <result column="rule_result" jdbcType="VARCHAR" property="ruleResult" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiaotiaopoker.dao.MatchRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.tiaotiaopoker.pojo.MatchRule" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="match_id" property="matchId" jdbcType="VARCHAR" />
+    <result column="match_name" property="matchName" jdbcType="VARCHAR" />
+    <result column="match_host" property="matchHost" jdbcType="VARCHAR" />
+    <result column="match_address" property="matchAddress" jdbcType="VARCHAR" />
+    <result column="match_date" property="matchDate" jdbcType="VARCHAR" />
+    <result column="match_referee" property="matchReferee" jdbcType="VARCHAR" />
+    <result column="match_logo" property="matchLogo" jdbcType="VARCHAR" />
+    <result column="match_technology" property="matchTechnology" jdbcType="VARCHAR" />
+    <result column="match_champion_img" property="matchChampionImg" jdbcType="VARCHAR" />
+    <result column="match_champion" property="matchChampion" jdbcType="VARCHAR" />
+    <result column="match_second_img" property="matchSecondImg" jdbcType="VARCHAR" />
+    <result column="match_second" property="matchSecond" jdbcType="VARCHAR" />
+    <result column="match_third_img" property="matchThirdImg" jdbcType="VARCHAR" />
+    <result column="match_third" property="matchThird" jdbcType="VARCHAR" />
+    <result column="rule_turn" property="ruleTurn" jdbcType="INTEGER" />
+    <result column="rule_pair" property="rulePair" jdbcType="INTEGER" />
+    <result column="rule_time" property="ruleTime" jdbcType="INTEGER" />
+    <result column="rule_win" property="ruleWin" jdbcType="INTEGER" />
+    <result column="rule_fail" property="ruleFail" jdbcType="INTEGER" />
+    <result column="rule_draw" property="ruleDraw" jdbcType="INTEGER" />
+    <result column="rule_seat" property="ruleSeat" jdbcType="INTEGER" />
+    <result column="rule_result" property="ruleResult" jdbcType="VARCHAR" />
+    <result column="can_with_opponent" property="canWithOpponent" jdbcType="INTEGER" />
+    <result column="can_with_group" property="canWithGroup" jdbcType="INTEGER" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <resultMap id="ResultMapWithBLOBs" type="com.tiaotiaopoker.pojo.MatchRule" extends="BaseResultMap" >
+    <result column="sys_setting" property="sysSetting" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -55,25 +60,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -84,390 +89,483 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
-    id, match_id, match_name, match_host, match_address, match_date, match_referee, match_logo, 
-    match_technology, match_champion_img, match_champion, match_second_img, match_second, 
-    match_third_img, match_third, rule_turn, rule_pair, rule_time, rule_win, rule_fail, 
-    rule_draw, rule_seat, rule_result
+  <sql id="Base_Column_List" >
+    id, match_id, match_name, match_host, match_address, match_date, match_referee, match_logo,
+    match_technology, match_champion_img, match_champion, match_second_img, match_second,
+    match_third_img, match_third, rule_turn, rule_pair, rule_time, rule_win, rule_fail,
+    rule_draw, rule_seat, rule_result, can_with_opponent, can_with_group
   </sql>
-  <select id="selectByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List" >
+    sys_setting
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from match_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" >
+    select
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from match_rule
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from match_rule
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from match_rule
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample">
+  <delete id="deleteByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" >
     delete from match_rule
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchRule">
-    insert into match_rule (id, match_id, match_name, 
-      match_host, match_address, match_date, 
-      match_referee, match_logo, match_technology, 
-      match_champion_img, match_champion, match_second_img, 
-      match_second, match_third_img, match_third, 
-      rule_turn, rule_pair, rule_time, 
-      rule_win, rule_fail, rule_draw, 
-      rule_seat, rule_result)
-    values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{matchName,jdbcType=VARCHAR}, 
-      #{matchHost,jdbcType=VARCHAR}, #{matchAddress,jdbcType=VARCHAR}, #{matchDate,jdbcType=VARCHAR}, 
-      #{matchReferee,jdbcType=VARCHAR}, #{matchLogo,jdbcType=VARCHAR}, #{matchTechnology,jdbcType=VARCHAR}, 
-      #{matchChampionImg,jdbcType=VARCHAR}, #{matchChampion,jdbcType=VARCHAR}, #{matchSecondImg,jdbcType=VARCHAR}, 
-      #{matchSecond,jdbcType=VARCHAR}, #{matchThirdImg,jdbcType=VARCHAR}, #{matchThird,jdbcType=VARCHAR}, 
-      #{ruleTurn,jdbcType=INTEGER}, #{rulePair,jdbcType=INTEGER}, #{ruleTime,jdbcType=INTEGER}, 
-      #{ruleWin,jdbcType=INTEGER}, #{ruleFail,jdbcType=INTEGER}, #{ruleDraw,jdbcType=INTEGER}, 
-      #{ruleSeat,jdbcType=INTEGER}, #{ruleResult,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.tiaotiaopoker.pojo.MatchRule" >
+    insert into match_rule (id, match_id, match_name,
+      match_host, match_address, match_date,
+      match_referee, match_logo, match_technology,
+      match_champion_img, match_champion, match_second_img,
+      match_second, match_third_img, match_third,
+      rule_turn, rule_pair, rule_time,
+      rule_win, rule_fail, rule_draw,
+      rule_seat, rule_result, can_with_opponent,
+      can_with_group, sys_setting)
+    values (#{id,jdbcType=VARCHAR}, #{matchId,jdbcType=VARCHAR}, #{matchName,jdbcType=VARCHAR},
+      #{matchHost,jdbcType=VARCHAR}, #{matchAddress,jdbcType=VARCHAR}, #{matchDate,jdbcType=VARCHAR},
+      #{matchReferee,jdbcType=VARCHAR}, #{matchLogo,jdbcType=VARCHAR}, #{matchTechnology,jdbcType=VARCHAR},
+      #{matchChampionImg,jdbcType=VARCHAR}, #{matchChampion,jdbcType=VARCHAR}, #{matchSecondImg,jdbcType=VARCHAR},
+      #{matchSecond,jdbcType=VARCHAR}, #{matchThirdImg,jdbcType=VARCHAR}, #{matchThird,jdbcType=VARCHAR},
+      #{ruleTurn,jdbcType=INTEGER}, #{rulePair,jdbcType=INTEGER}, #{ruleTime,jdbcType=INTEGER},
+      #{ruleWin,jdbcType=INTEGER}, #{ruleFail,jdbcType=INTEGER}, #{ruleDraw,jdbcType=INTEGER},
+      #{ruleSeat,jdbcType=INTEGER}, #{ruleResult,jdbcType=VARCHAR}, #{canWithOpponent,jdbcType=INTEGER},
+      #{canWithGroup,jdbcType=INTEGER}, #{sysSetting,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchRule">
+  <insert id="insertSelective" parameterType="com.tiaotiaopoker.pojo.MatchRule" >
     insert into match_rule
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="matchId != null">
+      <if test="matchId != null" >
         match_id,
       </if>
-      <if test="matchName != null">
+      <if test="matchName != null" >
         match_name,
       </if>
-      <if test="matchHost != null">
+      <if test="matchHost != null" >
         match_host,
       </if>
-      <if test="matchAddress != null">
+      <if test="matchAddress != null" >
         match_address,
       </if>
-      <if test="matchDate != null">
+      <if test="matchDate != null" >
         match_date,
       </if>
-      <if test="matchReferee != null">
+      <if test="matchReferee != null" >
         match_referee,
       </if>
-      <if test="matchLogo != null">
+      <if test="matchLogo != null" >
         match_logo,
       </if>
-      <if test="matchTechnology != null">
+      <if test="matchTechnology != null" >
         match_technology,
       </if>
-      <if test="matchChampionImg != null">
+      <if test="matchChampionImg != null" >
         match_champion_img,
       </if>
-      <if test="matchChampion != null">
+      <if test="matchChampion != null" >
         match_champion,
       </if>
-      <if test="matchSecondImg != null">
+      <if test="matchSecondImg != null" >
         match_second_img,
       </if>
-      <if test="matchSecond != null">
+      <if test="matchSecond != null" >
         match_second,
       </if>
-      <if test="matchThirdImg != null">
+      <if test="matchThirdImg != null" >
         match_third_img,
       </if>
-      <if test="matchThird != null">
+      <if test="matchThird != null" >
         match_third,
       </if>
-      <if test="ruleTurn != null">
+      <if test="ruleTurn != null" >
         rule_turn,
       </if>
-      <if test="rulePair != null">
+      <if test="rulePair != null" >
         rule_pair,
       </if>
-      <if test="ruleTime != null">
+      <if test="ruleTime != null" >
         rule_time,
       </if>
-      <if test="ruleWin != null">
+      <if test="ruleWin != null" >
         rule_win,
       </if>
-      <if test="ruleFail != null">
+      <if test="ruleFail != null" >
         rule_fail,
       </if>
-      <if test="ruleDraw != null">
+      <if test="ruleDraw != null" >
         rule_draw,
       </if>
-      <if test="ruleSeat != null">
+      <if test="ruleSeat != null" >
         rule_seat,
       </if>
-      <if test="ruleResult != null">
+      <if test="ruleResult != null" >
         rule_result,
       </if>
+      <if test="canWithOpponent != null" >
+        can_with_opponent,
+      </if>
+      <if test="canWithGroup != null" >
+        can_with_group,
+      </if>
+      <if test="sysSetting != null" >
+        sys_setting,
+      </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="matchId != null">
+      <if test="matchId != null" >
         #{matchId,jdbcType=VARCHAR},
       </if>
-      <if test="matchName != null">
+      <if test="matchName != null" >
         #{matchName,jdbcType=VARCHAR},
       </if>
-      <if test="matchHost != null">
+      <if test="matchHost != null" >
         #{matchHost,jdbcType=VARCHAR},
       </if>
-      <if test="matchAddress != null">
+      <if test="matchAddress != null" >
         #{matchAddress,jdbcType=VARCHAR},
       </if>
-      <if test="matchDate != null">
+      <if test="matchDate != null" >
         #{matchDate,jdbcType=VARCHAR},
       </if>
-      <if test="matchReferee != null">
+      <if test="matchReferee != null" >
         #{matchReferee,jdbcType=VARCHAR},
       </if>
-      <if test="matchLogo != null">
+      <if test="matchLogo != null" >
         #{matchLogo,jdbcType=VARCHAR},
       </if>
-      <if test="matchTechnology != null">
+      <if test="matchTechnology != null" >
         #{matchTechnology,jdbcType=VARCHAR},
       </if>
-      <if test="matchChampionImg != null">
+      <if test="matchChampionImg != null" >
         #{matchChampionImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchChampion != null">
+      <if test="matchChampion != null" >
         #{matchChampion,jdbcType=VARCHAR},
       </if>
-      <if test="matchSecondImg != null">
+      <if test="matchSecondImg != null" >
         #{matchSecondImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchSecond != null">
+      <if test="matchSecond != null" >
         #{matchSecond,jdbcType=VARCHAR},
       </if>
-      <if test="matchThirdImg != null">
+      <if test="matchThirdImg != null" >
         #{matchThirdImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchThird != null">
+      <if test="matchThird != null" >
         #{matchThird,jdbcType=VARCHAR},
       </if>
-      <if test="ruleTurn != null">
+      <if test="ruleTurn != null" >
         #{ruleTurn,jdbcType=INTEGER},
       </if>
-      <if test="rulePair != null">
+      <if test="rulePair != null" >
         #{rulePair,jdbcType=INTEGER},
       </if>
-      <if test="ruleTime != null">
+      <if test="ruleTime != null" >
         #{ruleTime,jdbcType=INTEGER},
       </if>
-      <if test="ruleWin != null">
+      <if test="ruleWin != null" >
         #{ruleWin,jdbcType=INTEGER},
       </if>
-      <if test="ruleFail != null">
+      <if test="ruleFail != null" >
         #{ruleFail,jdbcType=INTEGER},
       </if>
-      <if test="ruleDraw != null">
+      <if test="ruleDraw != null" >
         #{ruleDraw,jdbcType=INTEGER},
       </if>
-      <if test="ruleSeat != null">
+      <if test="ruleSeat != null" >
         #{ruleSeat,jdbcType=INTEGER},
       </if>
-      <if test="ruleResult != null">
+      <if test="ruleResult != null" >
         #{ruleResult,jdbcType=VARCHAR},
+      </if>
+      <if test="canWithOpponent != null" >
+        #{canWithOpponent,jdbcType=INTEGER},
+      </if>
+      <if test="canWithGroup != null" >
+        #{canWithGroup,jdbcType=INTEGER},
+      </if>
+      <if test="sysSetting != null" >
+        #{sysSetting,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.tiaotiaopoker.pojo.MatchRuleExample" resultType="java.lang.Integer" >
     select count(*) from match_rule
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update match_rule
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchId != null">
+      <if test="record.matchId != null" >
         match_id = #{record.matchId,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchName != null">
+      <if test="record.matchName != null" >
         match_name = #{record.matchName,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchHost != null">
+      <if test="record.matchHost != null" >
         match_host = #{record.matchHost,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchAddress != null">
+      <if test="record.matchAddress != null" >
         match_address = #{record.matchAddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchDate != null">
+      <if test="record.matchDate != null" >
         match_date = #{record.matchDate,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchReferee != null">
+      <if test="record.matchReferee != null" >
         match_referee = #{record.matchReferee,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchLogo != null">
+      <if test="record.matchLogo != null" >
         match_logo = #{record.matchLogo,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchTechnology != null">
+      <if test="record.matchTechnology != null" >
         match_technology = #{record.matchTechnology,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchChampionImg != null">
+      <if test="record.matchChampionImg != null" >
         match_champion_img = #{record.matchChampionImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchChampion != null">
+      <if test="record.matchChampion != null" >
         match_champion = #{record.matchChampion,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchSecondImg != null">
+      <if test="record.matchSecondImg != null" >
         match_second_img = #{record.matchSecondImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchSecond != null">
+      <if test="record.matchSecond != null" >
         match_second = #{record.matchSecond,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchThirdImg != null">
+      <if test="record.matchThirdImg != null" >
         match_third_img = #{record.matchThirdImg,jdbcType=VARCHAR},
       </if>
-      <if test="record.matchThird != null">
+      <if test="record.matchThird != null" >
         match_third = #{record.matchThird,jdbcType=VARCHAR},
       </if>
-      <if test="record.ruleTurn != null">
+      <if test="record.ruleTurn != null" >
         rule_turn = #{record.ruleTurn,jdbcType=INTEGER},
       </if>
-      <if test="record.rulePair != null">
+      <if test="record.rulePair != null" >
         rule_pair = #{record.rulePair,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleTime != null">
+      <if test="record.ruleTime != null" >
         rule_time = #{record.ruleTime,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleWin != null">
+      <if test="record.ruleWin != null" >
         rule_win = #{record.ruleWin,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleFail != null">
+      <if test="record.ruleFail != null" >
         rule_fail = #{record.ruleFail,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleDraw != null">
+      <if test="record.ruleDraw != null" >
         rule_draw = #{record.ruleDraw,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleSeat != null">
+      <if test="record.ruleSeat != null" >
         rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
       </if>
-      <if test="record.ruleResult != null">
+      <if test="record.ruleResult != null" >
         rule_result = #{record.ruleResult,jdbcType=VARCHAR},
       </if>
+      <if test="record.canWithOpponent != null" >
+        can_with_opponent = #{record.canWithOpponent,jdbcType=INTEGER},
+      </if>
+      <if test="record.canWithGroup != null" >
+        can_with_group = #{record.canWithGroup,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysSetting != null" >
+        sys_setting = #{record.sysSetting,jdbcType=LONGVARCHAR},
+      </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
     update match_rule
     set id = #{record.id,jdbcType=VARCHAR},
-      match_id = #{record.matchId,jdbcType=VARCHAR},
-      match_name = #{record.matchName,jdbcType=VARCHAR},
-      match_host = #{record.matchHost,jdbcType=VARCHAR},
-      match_address = #{record.matchAddress,jdbcType=VARCHAR},
-      match_date = #{record.matchDate,jdbcType=VARCHAR},
-      match_referee = #{record.matchReferee,jdbcType=VARCHAR},
-      match_logo = #{record.matchLogo,jdbcType=VARCHAR},
-      match_technology = #{record.matchTechnology,jdbcType=VARCHAR},
-      match_champion_img = #{record.matchChampionImg,jdbcType=VARCHAR},
-      match_champion = #{record.matchChampion,jdbcType=VARCHAR},
-      match_second_img = #{record.matchSecondImg,jdbcType=VARCHAR},
-      match_second = #{record.matchSecond,jdbcType=VARCHAR},
-      match_third_img = #{record.matchThirdImg,jdbcType=VARCHAR},
-      match_third = #{record.matchThird,jdbcType=VARCHAR},
-      rule_turn = #{record.ruleTurn,jdbcType=INTEGER},
-      rule_pair = #{record.rulePair,jdbcType=INTEGER},
-      rule_time = #{record.ruleTime,jdbcType=INTEGER},
-      rule_win = #{record.ruleWin,jdbcType=INTEGER},
-      rule_fail = #{record.ruleFail,jdbcType=INTEGER},
-      rule_draw = #{record.ruleDraw,jdbcType=INTEGER},
-      rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
-      rule_result = #{record.ruleResult,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    match_id = #{record.matchId,jdbcType=VARCHAR},
+    match_name = #{record.matchName,jdbcType=VARCHAR},
+    match_host = #{record.matchHost,jdbcType=VARCHAR},
+    match_address = #{record.matchAddress,jdbcType=VARCHAR},
+    match_date = #{record.matchDate,jdbcType=VARCHAR},
+    match_referee = #{record.matchReferee,jdbcType=VARCHAR},
+    match_logo = #{record.matchLogo,jdbcType=VARCHAR},
+    match_technology = #{record.matchTechnology,jdbcType=VARCHAR},
+    match_champion_img = #{record.matchChampionImg,jdbcType=VARCHAR},
+    match_champion = #{record.matchChampion,jdbcType=VARCHAR},
+    match_second_img = #{record.matchSecondImg,jdbcType=VARCHAR},
+    match_second = #{record.matchSecond,jdbcType=VARCHAR},
+    match_third_img = #{record.matchThirdImg,jdbcType=VARCHAR},
+    match_third = #{record.matchThird,jdbcType=VARCHAR},
+    rule_turn = #{record.ruleTurn,jdbcType=INTEGER},
+    rule_pair = #{record.rulePair,jdbcType=INTEGER},
+    rule_time = #{record.ruleTime,jdbcType=INTEGER},
+    rule_win = #{record.ruleWin,jdbcType=INTEGER},
+    rule_fail = #{record.ruleFail,jdbcType=INTEGER},
+    rule_draw = #{record.ruleDraw,jdbcType=INTEGER},
+    rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
+    rule_result = #{record.ruleResult,jdbcType=VARCHAR},
+    can_with_opponent = #{record.canWithOpponent,jdbcType=INTEGER},
+    can_with_group = #{record.canWithGroup,jdbcType=INTEGER},
+    sys_setting = #{record.sysSetting,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.MatchRule">
+  <update id="updateByExample" parameterType="map" >
     update match_rule
-    <set>
-      <if test="matchId != null">
+    set id = #{record.id,jdbcType=VARCHAR},
+    match_id = #{record.matchId,jdbcType=VARCHAR},
+    match_name = #{record.matchName,jdbcType=VARCHAR},
+    match_host = #{record.matchHost,jdbcType=VARCHAR},
+    match_address = #{record.matchAddress,jdbcType=VARCHAR},
+    match_date = #{record.matchDate,jdbcType=VARCHAR},
+    match_referee = #{record.matchReferee,jdbcType=VARCHAR},
+    match_logo = #{record.matchLogo,jdbcType=VARCHAR},
+    match_technology = #{record.matchTechnology,jdbcType=VARCHAR},
+    match_champion_img = #{record.matchChampionImg,jdbcType=VARCHAR},
+    match_champion = #{record.matchChampion,jdbcType=VARCHAR},
+    match_second_img = #{record.matchSecondImg,jdbcType=VARCHAR},
+    match_second = #{record.matchSecond,jdbcType=VARCHAR},
+    match_third_img = #{record.matchThirdImg,jdbcType=VARCHAR},
+    match_third = #{record.matchThird,jdbcType=VARCHAR},
+    rule_turn = #{record.ruleTurn,jdbcType=INTEGER},
+    rule_pair = #{record.rulePair,jdbcType=INTEGER},
+    rule_time = #{record.ruleTime,jdbcType=INTEGER},
+    rule_win = #{record.ruleWin,jdbcType=INTEGER},
+    rule_fail = #{record.ruleFail,jdbcType=INTEGER},
+    rule_draw = #{record.ruleDraw,jdbcType=INTEGER},
+    rule_seat = #{record.ruleSeat,jdbcType=INTEGER},
+    rule_result = #{record.ruleResult,jdbcType=VARCHAR},
+    can_with_opponent = #{record.canWithOpponent,jdbcType=INTEGER},
+    can_with_group = #{record.canWithGroup,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiaotiaopoker.pojo.MatchRule" >
+    update match_rule
+    <set >
+      <if test="matchId != null" >
         match_id = #{matchId,jdbcType=VARCHAR},
       </if>
-      <if test="matchName != null">
+      <if test="matchName != null" >
         match_name = #{matchName,jdbcType=VARCHAR},
       </if>
-      <if test="matchHost != null">
+      <if test="matchHost != null" >
         match_host = #{matchHost,jdbcType=VARCHAR},
       </if>
-      <if test="matchAddress != null">
+      <if test="matchAddress != null" >
         match_address = #{matchAddress,jdbcType=VARCHAR},
       </if>
-      <if test="matchDate != null">
+      <if test="matchDate != null" >
         match_date = #{matchDate,jdbcType=VARCHAR},
       </if>
-      <if test="matchReferee != null">
+      <if test="matchReferee != null" >
         match_referee = #{matchReferee,jdbcType=VARCHAR},
       </if>
-      <if test="matchLogo != null">
+      <if test="matchLogo != null" >
         match_logo = #{matchLogo,jdbcType=VARCHAR},
       </if>
-      <if test="matchTechnology != null">
+      <if test="matchTechnology != null" >
         match_technology = #{matchTechnology,jdbcType=VARCHAR},
       </if>
-      <if test="matchChampionImg != null">
+      <if test="matchChampionImg != null" >
         match_champion_img = #{matchChampionImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchChampion != null">
+      <if test="matchChampion != null" >
         match_champion = #{matchChampion,jdbcType=VARCHAR},
       </if>
-      <if test="matchSecondImg != null">
+      <if test="matchSecondImg != null" >
         match_second_img = #{matchSecondImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchSecond != null">
+      <if test="matchSecond != null" >
         match_second = #{matchSecond,jdbcType=VARCHAR},
       </if>
-      <if test="matchThirdImg != null">
+      <if test="matchThirdImg != null" >
         match_third_img = #{matchThirdImg,jdbcType=VARCHAR},
       </if>
-      <if test="matchThird != null">
+      <if test="matchThird != null" >
         match_third = #{matchThird,jdbcType=VARCHAR},
       </if>
-      <if test="ruleTurn != null">
+      <if test="ruleTurn != null" >
         rule_turn = #{ruleTurn,jdbcType=INTEGER},
       </if>
-      <if test="rulePair != null">
+      <if test="rulePair != null" >
         rule_pair = #{rulePair,jdbcType=INTEGER},
       </if>
-      <if test="ruleTime != null">
+      <if test="ruleTime != null" >
         rule_time = #{ruleTime,jdbcType=INTEGER},
       </if>
-      <if test="ruleWin != null">
+      <if test="ruleWin != null" >
         rule_win = #{ruleWin,jdbcType=INTEGER},
       </if>
-      <if test="ruleFail != null">
+      <if test="ruleFail != null" >
         rule_fail = #{ruleFail,jdbcType=INTEGER},
       </if>
-      <if test="ruleDraw != null">
+      <if test="ruleDraw != null" >
         rule_draw = #{ruleDraw,jdbcType=INTEGER},
       </if>
-      <if test="ruleSeat != null">
+      <if test="ruleSeat != null" >
         rule_seat = #{ruleSeat,jdbcType=INTEGER},
       </if>
-      <if test="ruleResult != null">
+      <if test="ruleResult != null" >
         rule_result = #{ruleResult,jdbcType=VARCHAR},
+      </if>
+      <if test="canWithOpponent != null" >
+        can_with_opponent = #{canWithOpponent,jdbcType=INTEGER},
+      </if>
+      <if test="canWithGroup != null" >
+        can_with_group = #{canWithGroup,jdbcType=INTEGER},
+      </if>
+      <if test="sysSetting != null" >
+        sys_setting = #{sysSetting,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.MatchRule">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiaotiaopoker.pojo.MatchRule" >
     update match_rule
     set match_id = #{matchId,jdbcType=VARCHAR},
       match_name = #{matchName,jdbcType=VARCHAR},
@@ -490,7 +588,38 @@
       rule_fail = #{ruleFail,jdbcType=INTEGER},
       rule_draw = #{ruleDraw,jdbcType=INTEGER},
       rule_seat = #{ruleSeat,jdbcType=INTEGER},
-      rule_result = #{ruleResult,jdbcType=VARCHAR}
+      rule_result = #{ruleResult,jdbcType=VARCHAR},
+      can_with_opponent = #{canWithOpponent,jdbcType=INTEGER},
+      can_with_group = #{canWithGroup,jdbcType=INTEGER},
+      sys_setting = #{sysSetting,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiaotiaopoker.pojo.MatchRule" >
+    update match_rule
+    set match_id = #{matchId,jdbcType=VARCHAR},
+      match_name = #{matchName,jdbcType=VARCHAR},
+      match_host = #{matchHost,jdbcType=VARCHAR},
+      match_address = #{matchAddress,jdbcType=VARCHAR},
+      match_date = #{matchDate,jdbcType=VARCHAR},
+      match_referee = #{matchReferee,jdbcType=VARCHAR},
+      match_logo = #{matchLogo,jdbcType=VARCHAR},
+      match_technology = #{matchTechnology,jdbcType=VARCHAR},
+      match_champion_img = #{matchChampionImg,jdbcType=VARCHAR},
+      match_champion = #{matchChampion,jdbcType=VARCHAR},
+      match_second_img = #{matchSecondImg,jdbcType=VARCHAR},
+      match_second = #{matchSecond,jdbcType=VARCHAR},
+      match_third_img = #{matchThirdImg,jdbcType=VARCHAR},
+      match_third = #{matchThird,jdbcType=VARCHAR},
+      rule_turn = #{ruleTurn,jdbcType=INTEGER},
+      rule_pair = #{rulePair,jdbcType=INTEGER},
+      rule_time = #{ruleTime,jdbcType=INTEGER},
+      rule_win = #{ruleWin,jdbcType=INTEGER},
+      rule_fail = #{ruleFail,jdbcType=INTEGER},
+      rule_draw = #{ruleDraw,jdbcType=INTEGER},
+      rule_seat = #{ruleSeat,jdbcType=INTEGER},
+      rule_result = #{ruleResult,jdbcType=VARCHAR},
+      can_with_opponent = #{canWithOpponent,jdbcType=INTEGER},
+      can_with_group = #{canWithGroup,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

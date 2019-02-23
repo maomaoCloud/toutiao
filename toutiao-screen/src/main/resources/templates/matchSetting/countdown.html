@@ -113,7 +113,7 @@
         </div>
         <div id="theme" th:text="${theme}"></div>
         <div th:if="${hasHost ||  hasMatchReferee}" id="host">
-            <span th:if="${hasHost}" th:text="'承办单位：'+${host}"></span><br>
+            <span th:if="${hasHost}" th:text="''+${host}"></span><br>
             <span th:if="${hasMatchReferee}" id="referee" th:text="'裁判长：'+${matchReferee}"></span>
         </div>
         <div class="time-item">

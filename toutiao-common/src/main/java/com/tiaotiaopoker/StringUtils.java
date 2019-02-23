@@ -12,10 +12,10 @@ public class StringUtils {
 
     public static String generateShortUUID () {
         StringBuffer shortBuffer = new StringBuffer();
-        String       uuid        = UUID.randomUUID().toString().replace("-", "");
+        String uuid = UUID.randomUUID().toString().replace("-", "");
         for (int i = 0; i < 8; i++) {
             String str = uuid.substring(i*4, i*4 + 4);
-            int    x   = Integer.parseInt(str, 16);
+            int x = Integer.parseInt(str, 16);
             shortBuffer.append(chars[x%0x3E]);
         }
         return shortBuffer.toString();
@@ -36,12 +36,27 @@ public class StringUtils {
 
     public static String generateOrderNo () {
         String dateTimeKey = new DateTime().toString("yyyyMMddHHmmssSSSS");
-        String _6RandNum   = gen6Num();
+        String _6RandNum = gen6Num();
         return dateTimeKey + _6RandNum;
     }
 
     public static String genRandomKey () {
         return new StringBuffer(generateShortUUID()).append(generateShortUUID()).toString();
+    }
+
+    public static void main (String[] args) {
+        System.out.println(",123".split(",").length);
+    }
+
+    public static String arrayToString (String[] arrayData, String splitter) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < arrayData.length - 1; i++) {
+            sb.append(arrayData[i]);
+            sb.append(splitter);
+        }
+
+        sb.append(arrayData[arrayData.length - 1]);
+        return sb.toString();
     }
 
 }

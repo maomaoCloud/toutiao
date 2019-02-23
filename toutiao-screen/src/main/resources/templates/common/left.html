@@ -243,6 +243,10 @@
                     </li>
 
                     <li class="divided">
+                        <a href="javascript:;" th:id="scrollSetting">系统设置</a>
+                    </li>
+
+                    <li class="divided">
                         <a href="javascript:void(0);" th:id="helpLink">帮助中心</a>
                     </li>
                 </ul>
@@ -397,7 +401,6 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
 
-
     $(function () {
         var token = [[${token}]]
 
@@ -494,6 +497,16 @@
             });
         });
 
+        //滚动设置
+        $(document).on("click","#scrollSetting",function () {
+            showLoading();
+            _destory();
+            var matchId = getMatchId();
+            $("#row").load("/sys/scrollSetting/page?matchId=" + matchId + "&token=" + token, function () {
+                closeLoading();
+            });
+        });
+
         //比赛规则展示
         $(document).on("click", "#turnBefore", function () {
             showLoading();
@@ -510,6 +523,16 @@
             _destory();
             var matchId = getMatchId();
             $("#row").load("/sys/prize/" + matchId + "?token=" + token, function () {
+                closeLoading();
+            });
+        });
+
+        //修改成绩
+        $(document).on('click','#editScore', function () {
+            var turnNumber = $(this).attr("data-turn");
+            showLoading();
+            _destory();
+            $("#row").load("/sys/resultSetting/resultEdit?token="+getToken()+"&matchId="+getMatchId()+"&turnNumber="+turnNumber, function () {
                 closeLoading();
             });
         });

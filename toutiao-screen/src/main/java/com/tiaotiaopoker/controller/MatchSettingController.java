@@ -125,8 +125,8 @@ public class MatchSettingController {
     //比赛轮次
     @RequestMapping("matchTurn")
     @ResponseBody
-    public List<String> matchTurn(String token,
-                                  String matchId) {
+    public List<String> matchTurn (String token,
+                                   String matchId) {
         MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
         int ruleTurn = (null == matchRule ? 0 : matchRule.getRuleTurn());
         List<String> ruleTurnList = new ArrayList<>();
@@ -141,6 +141,13 @@ public class MatchSettingController {
     public JsonResult save(MatchRule matchRule, String authorUserIds, String authorUserNames) {
         JsonResult jsonResult;
         try {
+            //这里做判断，如果没有设置按总分拍排序，就不需要填写胜负平的得分，这样会影响我们的程序，所以手动初始化为0
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(matchRule.getRuleResult()) && !matchRule.getRuleResult().contains("TotalPoint")) {
+                matchRule.setRuleWin(2);
+                matchRule.setRuleFail(0);
+                matchRule.setRuleDraw(1);
+            }
+
             int result = matchRuleService.saveBySelective(matchRule);
             MatchRule matchRuleInfo = matchRuleService.selectMatchRuleById(matchRule.getId());
             //删除当前比赛之前的所有授权
@@ -166,7 +173,7 @@ public class MatchSettingController {
         return jsonResult;
     }
 
-    private void divideRuleResult(Map<String, Object> ruleResultMap, String ruleResult, List<RuleResult> myList, List<RuleResult> otherList) {
+    private void divideRuleResult (Map<String, String> ruleResultMap, String ruleResult, List<RuleResult> myList, List<RuleResult> otherList) {
         if (StringUtils.isBlank(ruleResult)) {
             ruleResult = Constants.result.DEFAULT_RESULT_RULE;
         }
@@ -178,7 +185,7 @@ public class MatchSettingController {
             myListSet.add(ruleItem);
         }
 
-        for (Map.Entry<String, Object> entry : ruleResultMap.entrySet()) {
+        for (Map.Entry<String, String> entry : ruleResultMap.entrySet()) {
             if (!myListSet.contains(entry.getKey())) {
                 otherList.add(new RuleResult(entry.getKey(), entry.getValue().toString()));
             }

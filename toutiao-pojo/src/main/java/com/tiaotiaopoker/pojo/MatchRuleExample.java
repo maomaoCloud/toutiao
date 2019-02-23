@@ -1643,6 +1643,126 @@ public class MatchRuleExample {
             addCriterion("rule_result not between", value1, value2, "ruleResult");
             return (Criteria) this;
         }
+
+        public Criteria andCanWithOpponentIsNull() {
+            addCriterion("can_with_opponent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentIsNotNull() {
+            addCriterion("can_with_opponent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentEqualTo(Integer value) {
+            addCriterion("can_with_opponent =", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentNotEqualTo(Integer value) {
+            addCriterion("can_with_opponent <>", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentGreaterThan(Integer value) {
+            addCriterion("can_with_opponent >", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentGreaterThanOrEqualTo(Integer value) {
+            addCriterion("can_with_opponent >=", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentLessThan(Integer value) {
+            addCriterion("can_with_opponent <", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentLessThanOrEqualTo(Integer value) {
+            addCriterion("can_with_opponent <=", value, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentIn(List<Integer> values) {
+            addCriterion("can_with_opponent in", values, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentNotIn(List<Integer> values) {
+            addCriterion("can_with_opponent not in", values, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentBetween(Integer value1, Integer value2) {
+            addCriterion("can_with_opponent between", value1, value2, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithOpponentNotBetween(Integer value1, Integer value2) {
+            addCriterion("can_with_opponent not between", value1, value2, "canWithOpponent");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupIsNull() {
+            addCriterion("can_with_group is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupIsNotNull() {
+            addCriterion("can_with_group is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupEqualTo(Integer value) {
+            addCriterion("can_with_group =", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupNotEqualTo(Integer value) {
+            addCriterion("can_with_group <>", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupGreaterThan(Integer value) {
+            addCriterion("can_with_group >", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupGreaterThanOrEqualTo(Integer value) {
+            addCriterion("can_with_group >=", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupLessThan(Integer value) {
+            addCriterion("can_with_group <", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupLessThanOrEqualTo(Integer value) {
+            addCriterion("can_with_group <=", value, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupIn(List<Integer> values) {
+            addCriterion("can_with_group in", values, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupNotIn(List<Integer> values) {
+            addCriterion("can_with_group not in", values, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupBetween(Integer value1, Integer value2) {
+            addCriterion("can_with_group between", value1, value2, "canWithGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanWithGroupNotBetween(Integer value1, Integer value2) {
+            addCriterion("can_with_group not between", value1, value2, "canWithGroup");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

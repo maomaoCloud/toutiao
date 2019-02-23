@@ -1,11 +1,6 @@
 package com.tiaotiaopoker.entity;
 
-import com.tiaotiaopoker.Constants;
-import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.pojo.MatchTeamResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MatchTeamResultDto extends MatchTeamResult {
 
@@ -33,6 +28,12 @@ public class MatchTeamResultDto extends MatchTeamResult {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+    /**
+     * 对手级差分
+     */
+    public int getOpDisparity () {
+        return 26 - this.getDisparity();
     }
 
     public String getResultString () {

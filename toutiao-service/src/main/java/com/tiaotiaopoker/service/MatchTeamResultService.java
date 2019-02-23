@@ -13,4 +13,6 @@ public interface MatchTeamResultService {
 
     List<MatchTeamMember> getAllTeams (String matchId);
 
+    void editPersonalScore (String teamId, Integer turnNumber, int val, String matchId);
+
 }

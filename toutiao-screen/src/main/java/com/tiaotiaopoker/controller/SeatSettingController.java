@@ -5,10 +5,10 @@ import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.MatchTeamDataDto;
-import com.tiaotiaopoker.pojo.AppUser;
-import com.tiaotiaopoker.pojo.MatchRule;
-import com.tiaotiaopoker.pojo.MatchTeamData;
+import com.tiaotiaopoker.entity.SysSetting;
+import com.tiaotiaopoker.pojo.*;
 import com.tiaotiaopoker.service.MatchRuleService;
+import com.tiaotiaopoker.service.MatchService;
 import com.tiaotiaopoker.service.MatchTeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +30,9 @@ public class SeatSettingController {
 
     @Autowired
     private MatchTeamDataService matchTeamDataService;
+
+    @Autowired
+    private MatchService matchService;
 
     @RequestMapping ("index")
     public ModelAndView seatIndex (ModelAndView mv, String matchId) {
@@ -151,13 +154,15 @@ public class SeatSettingController {
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
-        MatchRule                    matchRule  = matchRuleService.selectMatchRuleByMatchId(matchId);
-        List<MatchTeamDataDto>       dataList   = matchTeamDataService.queryTeamDataByCondition(data);
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
         List<List<MatchTeamDataDto>> dataResult = new ArrayList<>();
-        int                          i          = 0;
-        List<MatchTeamDataDto>       tmp        = null;
+        int i = 0;
+        List<MatchTeamDataDto> tmp = null;
+
+        SysSetting setting = matchRuleService.getSysSetting(matchId);
         for (MatchTeamDataDto matchTeamDataDto : dataList) {
-            if (i%8 == 0) {
+            if (i%setting.getData().get(SysSetting.Constants.INDEX_OF_SEAT_PAGE).getValA() == 0) {
                 if (tmp != null) dataResult.add(tmp);
 
                 tmp = new ArrayList<>();
@@ -173,6 +178,7 @@ public class SeatSettingController {
         mv.addObject("turnNumChines", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("dataList", dataList);
         mv.addObject("dataResult", dataResult);
+        mv.addObject("interval", setting.getData().get(SysSetting.Constants.INDEX_OF_SEAT_PAGE).getValB()*1000);
         mv.setViewName("seatSetting/seatShowDetail");
         return mv;
     }
@@ -182,8 +188,8 @@ public class SeatSettingController {
         MatchTeamData data = new MatchTeamData();
         data.setMatchId(matchId);
         data.setTurnNumber(turnNumber);
-        MatchRule              matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
-        List<MatchTeamDataDto> dataList  = matchTeamDataService.queryTeamDataByCondition(data);
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        List<MatchTeamDataDto> dataList = matchTeamDataService.queryTeamDataByCondition(data);
         mv.addObject("matchDate", matchRule.getMatchDate());
         mv.addObject("matchName", matchRule.getMatchName());
         mv.addObject("dataList", dataList);
@@ -193,7 +199,7 @@ public class SeatSettingController {
 
     private List<AppUser> getUserList (MatchTeamDataDto data) {
         List<AppUser> userList = new ArrayList<>();
-        AppUser       user1    = new AppUser();
+        AppUser user1 = new AppUser();
         user1.setTrueName(data.getTeamOneUserOneName());
         user1.setAvatarUrl(data.getTeamOneUserOneHead());
         userList.add(user1);

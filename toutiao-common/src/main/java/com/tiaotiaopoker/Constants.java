@@ -93,7 +93,7 @@ public class Constants {
     }
 
     public static final class resultRule {
-        public static final Map<String, Object> resultRuleMap = new HashMap<String, Object>() {
+        public static final Map<String, String> resultRuleMap = new HashMap<String, String>() {
             {
                 put("TotalPoint", "总积分");
                 put("TotalWin", "胜轮次");
@@ -107,5 +107,24 @@ public class Constants {
         };
 
     }
+
+    public static final Map<String, String> ResultColumnMap = new HashMap() {
+        {
+            this.put("Index", "名次");
+            this.put("TeamNumber", "编号");
+            this.put("UserOne", "选手A");
+            this.put("UserTwo", "选手B");
+            this.put("TableNumber", "桌号");
+            this.put("Score", "级数");
+            this.put("Disparity", "级差分");
+            this.put("OpDisparity", "对手级差分");
+            this.putAll(resultRule.resultRuleMap);
+        }
+    };
+
+    /**
+     * 默认成绩页展示列
+     */
+    public static final String DEFAULT_COLUMN = "Index,TeamNumber,UserOne,UserTwo,TableNumber,Score,Disparity,OpDisparity";
 
 }

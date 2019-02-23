@@ -31,7 +31,7 @@
         }
 
         .user-group {
-            width: 100%;
+            width: 90%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,17 +46,17 @@
         }
 
         .user-group img {
-            width: 80px;
-            height: 80px;
+            width: 50px;
+            height: 50px;
             margin-top: 5px;
             border-radius: 50%;
+            margin: 10px;
         }
 
         .user-group .user-a {
             width: 40%;
             background-color: rgba(150, 150, 150, 0.4);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -78,7 +78,6 @@
             width: 45%;
             background-color: rgba(150, 150, 150, 0.4);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -123,8 +122,6 @@
             width: 80px;
             text-align: center;
             padding-left: 30px;
-            padding-bottom: 3px;
-            margin-top: 10px;
         }
 
         .zh {
@@ -186,7 +183,7 @@
 
     <!-- tile widget -->
     <div class="tile-widget color transparent-black textured" id="enter-data-list">
-        <form id="teamResultForm">
+        <form id="teamResultForm" style="display: flex; flex-wrap: wrap; justify-content: center;">
             <input type="hidden" th:value="${matchId }" name="matchId">
             <input type="hidden" th:value="${turn }" name="turnNumber">
             <div class="user-group" th:each="team:${matchDataList }">
@@ -278,6 +275,7 @@
         letter-spacing: 2px;" th:text="${msg}"></div>
     </div>
 </div>
+
 <script>
     $(function () {
         /*$("#resultTurnSelect").change(function () {

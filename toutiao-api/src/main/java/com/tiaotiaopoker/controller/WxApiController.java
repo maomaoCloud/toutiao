@@ -6,7 +6,6 @@ import com.tiaotiaopoker.entity.ApiAppUserInfo;
 import com.tiaotiaopoker.entity.WithdrawLimit;
 import com.tiaotiaopoker.entity.WxLoginParam;
 import com.tiaotiaopoker.pojo.AppUser;
-import com.tiaotiaopoker.pojo.WithdrawLog;
 import com.tiaotiaopoker.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

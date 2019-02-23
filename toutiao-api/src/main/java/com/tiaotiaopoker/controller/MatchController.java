@@ -1,6 +1,5 @@
 package com.tiaotiaopoker.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.QrCodeCreateUtil;
@@ -8,9 +7,11 @@ import com.tiaotiaopoker.SecurityFactory;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.ApiApplyParams;
 import com.tiaotiaopoker.pojo.AppUser;
-import com.tiaotiaopoker.pojo.Match;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
-import com.tiaotiaopoker.service.*;
+import com.tiaotiaopoker.service.AppUserService;
+import com.tiaotiaopoker.service.ApplyOrderService;
+import com.tiaotiaopoker.service.MatchService;
+import com.tiaotiaopoker.service.ScreenService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 
 /**

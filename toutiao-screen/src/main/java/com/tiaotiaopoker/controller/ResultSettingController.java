@@ -4,9 +4,7 @@ import com.tiaotiaopoker.ChineseNum;
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
-import com.tiaotiaopoker.entity.GroupScoreItem;
-import com.tiaotiaopoker.entity.MatchTeamDataDto;
-import com.tiaotiaopoker.entity.MatchTeamResultDto;
+import com.tiaotiaopoker.entity.*;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchTeamData;
 import com.tiaotiaopoker.pojo.MatchTeamMember;
@@ -16,6 +14,7 @@ import com.tiaotiaopoker.service.MatchTeamDataService;
 import com.tiaotiaopoker.service.MatchTeamResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -74,8 +73,8 @@ public class ResultSettingController {
         MatchTeamData matchTeamData = new MatchTeamData();
         matchTeamData.setMatchId(matchId);
         matchTeamData.setTurnNumber(ruleTurn);
-        List<MatchTeamDataDto> list            = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
-        MatchTeamResult        matchTeamResult = new MatchTeamResult();
+        List<MatchTeamDataDto> list = matchTeamDataService.queryTeamDataByCondition(matchTeamData);
+        MatchTeamResult matchTeamResult = new MatchTeamResult();
         matchTeamResult.setTurnNumber(ruleTurn);
         matchTeamResult.setMatchId(matchId);
         List<MatchTeamResult> resultList = matchTeamResultService.queryMatchTeamResultByCondition(matchTeamResult);
@@ -116,8 +115,8 @@ public class ResultSettingController {
             turnNumber = matchRule.getRuleTurn();
         }
         //成绩td标题
-        List<String> tdList     = new ArrayList<>();
-        String       resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+        List<String> tdList = new ArrayList<>();
+        String resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
         for (String title : resultRule.split(",")) {
             tdList.add((String) Constants.resultRule.resultRuleMap.get(title));
         }
@@ -128,42 +127,66 @@ public class ResultSettingController {
         result.setTurnNumber(turnNumber);
         List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
         //根据规则显示相应的成绩
+        SysSetting setting = matchRuleService.getSysSetting(matchId);
+        List<List<BiValue<String, String>>> columnData = new ArrayList<>();
+
         try {
+            Class clazz = MatchTeamResultDto.class;
             for (MatchTeamResultDto resultDto : resultlist) {
-                String resultString = "";
-                Class  clazz        = resultDto.getClass();
-                for (String getName : resultRule.split(",")) {
-                    resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
+                List<BiValue<String, String>> dataItem = new ArrayList<>();
+                for (BiValue<String, String> biValue : setting.getShowColumn()) {
+                    BiValue tmpBiValue = new BiValue();
+                    tmpBiValue.setValB(clazz.getMethod("get" + biValue.getValB()).invoke(resultDto).toString());
+                    dataItem.add(tmpBiValue);
                 }
-                resultDto.setResultString(resultString.substring(0, resultString.length() - 1));
+                columnData.add(dataItem);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        List<List<MatchTeamResultDto>> resultData = new ArrayList<>();
-        List<MatchTeamResultDto>       tmp        = null;
-        int                            i          = 0;
-        for (MatchTeamResultDto matchTeamResultDto : resultlist) {
-            matchTeamResultDto.setIndex(i + 1);
-            if (i%10 == 0) {
+        List<List<List<BiValue<String, String>>>> resultData = new ArrayList<>();
+        List<List<BiValue<String, String>>> tmp = null;
+        int i = 0;
+
+        for (List<BiValue<String, String>> item : columnData) {
+            //matchTeamResultDto.setIndex(i + 1);
+            if (i%setting.getData().get(SysSetting.Constants.INDEX_OF_SCORE_PAGE).getValA() == 0) {
                 if (tmp != null) {
                     resultData.add(tmp);
                 }
 
                 tmp = new ArrayList<>();
             }
-            tmp.add(matchTeamResultDto);
+            tmp.add(item);
             i++;
         }
 
         if (tmp != null && tmp.size() > 0)
             resultData.add(tmp);
 
+        List<DoubleList<List<BiValue<String, String>>>> rlt = new ArrayList<>();
+        for (i = 0; i < resultData.size()/2; i++) {
+            DoubleList<List<BiValue<String, String>>> di = new DoubleList<>();
+            di.setMainList(resultData.get(2*i));
+            di.setSubList(resultData.get(2*i + 1));
+            rlt.add(di);
+        }
+
+        if (resultData.size()%2 != 0) {
+            DoubleList<List<BiValue<String, String>>> di = new DoubleList<>();
+            di.setMainList(resultData.get(resultData.size() - 1));
+            di.setSubList(new ArrayList<>());
+            rlt.add(di);
+        }
+
         mv.addObject("matchName", matchRule.getMatchName());
-        mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
+        mv.addObject("turnNumberName", ChineseNum.getChineseNum(turnNumber));
+        mv.addObject("turnNumber", turnNumber);
         mv.addObject("resultlist", resultlist);
-        mv.addObject("resultData", resultData);
+        mv.addObject("resultData", rlt);
+        mv.addObject("setting", setting);
+        mv.addObject("interval", setting.getData().get(SysSetting.Constants.INDEX_OF_SCORE_PAGE).getValB()*1000);
         mv.setViewName("resultSetting/resultShow");
         return mv;
     }
@@ -178,8 +201,8 @@ public class ResultSettingController {
             turnNumber = matchRule.getRuleTurn();
         }*/
         //成绩td标题
-        List<String> tdList     = new ArrayList<>();
-        String       resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
+        List<String> tdList = new ArrayList<>();
+        String resultRule = StringUtils.isBlank(matchRule.getRuleResult()) ? Constants.result.DEFAULT_RESULT_RULE : matchRule.getRuleResult();
         for (String title : resultRule.split(",")) {
             tdList.add((String) Constants.resultRule.resultRuleMap.get(title));
         }
@@ -193,7 +216,7 @@ public class ResultSettingController {
         try {
             for (MatchTeamResultDto resultDto : resultlist) {
                 String resultString = "";
-                Class  clazz        = resultDto.getClass();
+                Class clazz = resultDto.getClass();
                 for (String getName : resultRule.split(",")) {
                     resultString += clazz.getMethod("get" + getName).invoke(resultDto) + ",";
                 }
@@ -205,15 +228,15 @@ public class ResultSettingController {
 
         //获取所有的队伍信息  更具groupName分组
         List<MatchTeamMember> matchTeamMembers = matchTeamResultService.getAllTeams(matchId);
-        Map<Integer, String>  groupNameMap     = new HashMap<>();
+        Map<Integer, String> groupNameMap = new HashMap<>();
         for (MatchTeamMember member : matchTeamMembers) {
             groupNameMap.put(member.getTeamNumber(), member.getGroupName());
         }
 
 
         Map<String, List<MatchTeamResultDto>> groupByGroupName = new HashMap<>();
-        List<MatchTeamResultDto>              tmp;
-        String                                groupName        = null;
+        List<MatchTeamResultDto> tmp;
+        String groupName = null;
         for (MatchTeamResultDto matchTeamResultDto : resultlist) {
             groupName = groupNameMap.get(matchTeamResultDto.getTeamNumber());
             tmp = groupByGroupName.get(groupName);
@@ -233,14 +256,15 @@ public class ResultSettingController {
 
         Collections.sort(resultData);
 
+        SysSetting setting = matchRuleService.getSysSetting(matchId);
         if (turnNumber > 100) {
             //表示展示团队总成绩
             List<List<GroupScoreItem>> groupList = new ArrayList<>();
-            List<GroupScoreItem>       tmpList   = null;
-            int                        i         = 0;
+            List<GroupScoreItem> tmpList = null;
+            int i = 0;
             for (GroupScoreItem resultDatum : resultData) {
                 resultDatum.setIndex(i + 1);
-                if (i%10 == 0) {
+                if (i%setting.getData().get(SysSetting.Constants.INDEX_OF_GROUP_SCORE_PAGE).getValA() == 0) {
                     if (tmpList != null) groupList.add(tmpList);
                     tmpList = new ArrayList<>();
                 }
@@ -257,6 +281,7 @@ public class ResultSettingController {
         mv.addObject("turnNumber", ChineseNum.getChineseNum(turnNumber));
         mv.addObject("resultlist", resultlist);
         mv.addObject("resultData", resultData);
+        mv.addObject("interval", setting.getData().get(SysSetting.Constants.INDEX_OF_GROUP_SCORE_PAGE).getValB()*1000);
         mv.setViewName(turnNumber > 100 ? "resultSetting/groupTotal" : "resultSetting/groupResultShow");
         return mv;
     }
@@ -304,6 +329,35 @@ public class ResultSettingController {
         res.setGroupName(groupName);
         res.setData(list);
         return res;
+    }
+
+    @RequestMapping ("resultEdit")
+    public ModelAndView editResult (ModelAndView mv, String matchId, Integer turnNumber) {
+        MatchRule matchRule = matchRuleService.selectMatchRuleByMatchId(matchId);
+        if (turnNumber > matchRule.getRuleTurn()) {
+            turnNumber = matchRule.getRuleTurn();
+        }
+
+        //成绩数据
+        MatchTeamResult result = new MatchTeamResult();
+        result.setMatchId(matchId);
+        result.setTurnNumber(turnNumber);
+        List<MatchTeamResultDto> resultlist = matchTeamResultService.sortMatchTeamResult(result);
+
+        mv.addObject("turnNumberName", ChineseNum.getChineseNum(turnNumber));
+        mv.addObject("turnNumber", turnNumber);
+        mv.addObject("resultlist", resultlist);
+        mv.addObject("matchId", matchId);
+        mv.setViewName("resultSetting/resultEdit");
+        return mv;
+    }
+
+    @RequestMapping ("resultEditDo")
+    @ResponseBody
+    public JsonResult resultEditDo (String teamId, Integer turnNumber, int val, String matchId) {
+        //matchTeamResultService
+        matchTeamResultService.editPersonalScore(teamId, turnNumber, val, matchId);
+        return JsonResult.SUCCESS();
     }
 
 }

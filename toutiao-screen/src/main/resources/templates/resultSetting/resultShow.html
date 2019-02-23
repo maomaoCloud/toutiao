@@ -31,45 +31,33 @@
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner" style="margin-top: 30px;">
                 <div class="item" th:class="'item '+${dStat.index == 0 ? ' active':''}" th:each="d,dStat : ${resultData}">
-                    <div class="screen-item">
+                    <div class="screen-item" style="display: flex;">
+                        <table class="table table-bordered label-table"
+                               style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px; margin-right: 10px;">
+                            <tr>
+                                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumberName}+'轮成绩单'"></td>
+                            </tr>
+                            <tr>
+                                <td th:each="title:${setting.showColumn}" th:text="${title.valA}">名次</td>
+                            </tr>
+
+                            <tr th:each="result:${d.mainList }">
+                                <td th:each="item:${result}" th:text="${item.valB}"></td>
+                            </tr>
+                        </table>
+
                         <table class="table table-bordered label-table"
                                style="border-right: 1px solid rgba(255, 255, 255, 0.1); margin-bottom:20px;">
                             <tr>
-                                <td class="head-title" colspan="17" th:text="${matchName}+' —— 第'+${turnNumber}+'轮成绩单'"></td>
+                                <td class="head-title" colspan="13" th:text="${matchName}+' —— 第'+${turnNumberName}+'轮成绩单'"></td>
                             </tr>
-
                             <tr>
-                                <td valign="middle" rowspan="2">名次</td>
-                                <td colspan="5">选手信息</td>
-                                <td colspan="3">本轮成绩</td>
-                                <td th:colspan="${tdList.size()}">总成绩</td>
+                                <td th:each="title:${setting.showColumn}" th:text="${title.valA}">名次</td>
                             </tr>
 
-                            <tr>
-                                <td>编号</td>
-                                <td>单位名称</td>
-                                <td>选手姓名</td>
-                                <td>选手姓名</td>
-                                <td>桌号</td>
-                                <td>级数</td>
-                                <td>级差分</td>
-                                <td>对手级差分</td>
-                                <td th:each="title:${tdList}" th:text="${title}"></td>
+                            <tr th:each="result:${d.subList }">
+                                <td th:each="item:${result}" th:text="${item.valB}"></td>
                             </tr>
-
-                            <tr th:each="result:${d }">
-                                <td th:text="'第'+${result.index}+'名'"></td>
-                                <td th:text="${result.teamNumber}"></td>
-                                <td th:text="${result.groupName}"></td>
-                                <td th:text="${result.userOne }"></td>
-                                <td th:text="${result.userTwo }"></td>
-                                <td th:text="${result.tableNumber }"></td>
-                                <td th:text="${result.score }"></td>
-                                <td th:text="${result.disparity }"></td>
-                                <td th:text="${26 - result.disparity }"></td>
-                                <td th:each="value:${result.resultString.split(',')}" th:text="${value}"></td>
-                            </tr>
-
                         </table>
                     </div>
                 </div>
@@ -81,15 +69,20 @@
                     th:class="${dStat.index == 0 ? ' active':''}"></li>
             </ol>
         </div>
-
+        <div style="text-align:center;">
+            <button type="button" th:data-turn="${turnNumber}" id="editScore" class="btn btn-green margin-bottom-20">修改本轮成绩</button>
+        </div>
     </div>
     <!-- /tile body -->
 </section>
-<script>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+
     $(function () {
         $('#myCarouselScore').carousel({
-            interval: 6000
+            interval: [[${interval}]]
         });
     });
+    /* ]]> */
 </script>
 </html>

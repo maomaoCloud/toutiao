@@ -3,14 +3,15 @@ package com.tiaotiaopoker.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.StringUtil;
 import com.tiaotiaopoker.JsonResult;
-import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.ApiNwsDetail;
 import com.tiaotiaopoker.pojo.HeadlineNews;
 import com.tiaotiaopoker.service.HeadlineNewsService;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 

@@ -63,15 +63,28 @@
                 showNotification("提示", "请选择首轮座位规则！");
                 return;
             }
-            var ruleWin = $("#ruleWin").val();
-            if (ruleWin == null || ruleWin == '' || isNaN(ruleWin)) {
-                showNotification("提示", "请填写胜得分！");
-                return;
+
+            //查看是否选择了按总分排名，如果不存在，则不需要检查是否需要数据
+            var hasTotalScore = false;
+            var leftBox = document.getElementById('right');
+            for (var i = leftBox.options.length - 1; i >= 0; i--) {
+                if (leftBox.options[i].value == "TotalPoint") {
+                    hasTotalScore = true;
+                    break;
+                }
             }
-            var ruleFail = $("#ruleFail").val();
-            if (ruleFail == null || ruleFail == '' || isNaN(ruleFail)) {
-                showNotification("提示", "请填写负得分！");
-                return;
+
+            if (hasTotalScore) {
+                var ruleWin = $("#ruleWin").val();
+                if (ruleWin == null || ruleWin == '' || isNaN(ruleWin)) {
+                    showNotification("提示", "请填写胜得分！");
+                    return;
+                }
+                var ruleFail = $("#ruleFail").val();
+                if (ruleFail == null || ruleFail == '' || isNaN(ruleFail)) {
+                    showNotification("提示", "请填写负得分！");
+                    return;
+                }
             }
 
             //获取当游戏是否分团队
@@ -151,7 +164,15 @@
             $("#ruleSeat").val(sVal);
         }
 
-    })
+        var leftBox = document.getElementById('left');
+        for (var i = leftBox.options.length - 1; i >= 0; i--) {
+            if (leftBox.options[i].value == "TotalPoint") {
+                $("#score-setting-box").addClass("hide");
+                break;
+            }
+        }
+
+    });
 
     //已选择授权用户取消授权(重新恢复授权)
     function checkAuthorUserIsAuthor(obj) {
@@ -226,10 +247,15 @@
     }
 
     //移动
-    function moveOption(obj1, obj2) {
+    function moveOption(obj1, obj2, direction) {
         for (var i = obj1.options.length - 1; i >= 0; i--) {
             if (obj1.options[i].selected) {
                 var opt = new Option(obj1.options[i].text, obj1.options[i].value);
+                if (direction == "to_left" && obj1.options[i].value == "TotalPoint") {
+                    $("#score-setting-box").addClass("hide");
+                } else if (direction == "to_right" && obj1.options[i].value == "TotalPoint") {
+                    $("#score-setting-box").removeClass("hide");
+                }
                 opt.selected = true;
                 obj2.options.add(opt);
                 obj1.remove(i);
@@ -375,7 +401,60 @@
                 </div>
             </div>
 
+
             <div class="form-group">
+                <label class="col-sm-4 control-label">成绩排名规则</label>
+                <div class="col-sm-8">
+                    <table border="0" width="400">
+                        <tr>
+                            <td><span style="font-size: 20px;color: white;">可选择排序方式</span></td>
+                            <td></td>
+                            <td><span style="font-size: 20px;color: white;">已选择排序方式</span></td>
+                        </tr>
+                        <tr>
+                            <td width="40%">
+                                <select multiple name="left" id="left" size="8" style='width:200px;'
+                                        ondblclick="moveOption(document.getElementById('left'), document.getElementById('right'),'to_right')">
+                                    <option th:each="otherRule:${otherList}" th:value="${otherRule.ruleEnglish}"
+                                            th:text="${otherRule.ruleChinese}"></option>
+                                </select>
+                            </td>
+                            <td width="20%" align="center">
+                                <input type="button" value=" >> "
+                                       onclick="moveOption(document.getElementById('left'),document.getElementById('right'),'to_right')"><br><br>
+                                <input type="button" value=" << "
+                                       onclick="moveOption(document.getElementById('right'), document.getElementById('left'),'to_left')">
+                            </td>
+                            <td width="40%">
+                                <select multiple id="right" size="8" style='width:200px;'
+                                        ondblclick="moveOption(document.getElementById('right'), document.getElementById('left'),'to_left')">
+                                    <option th:each="myRule:${myList}" th:value="${myRule.ruleEnglish}"
+                                            th:text="${myRule.ruleChinese}"></option>
+                                </select>
+                                <input type="hidden" id="ruleResult" name="ruleResult">;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" sty>
+                                <button type="button" class="btn btn-primary operate"
+                                        onclick="moveTop(document.getElementById('right'));">置顶
+                                </button>
+                                <button type="button" class="btn btn-primary operate"
+                                        onclick="moveUp(document.getElementById('right'));">上移
+                                </button>
+                                <button type="button" class="btn btn-primary operate"
+                                        onclick="moveDown(document.getElementById('right'));">下移
+                                </button>
+                                <button type="button" class="btn btn-primary operate"
+                                        onclick="moveBottom(document.getElementById('right'));">置底
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group" id="score-setting-box">
                 <label class="col-sm-4 control-label">积分设置</label>
                 <div class="col-sm-8">
                     <div class="row">
@@ -409,6 +488,7 @@
                 </div>
             </div>
 
+
             <div class="form-group">
                 <label class="col-sm-4 control-label">首轮座位排序方式</label>
                 <div class="col-sm-8">
@@ -419,58 +499,6 @@
                         <option th:value="2"> 首尾编排</option>
                         <option th:value="3"> 拦腰编排</option>
                     </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-4 control-label">成绩排名规则</label>
-                <div class="col-sm-8">
-                    <table border="0" width="400">
-                        <tr>
-                            <td><span style="font-size: 20px;color: white;">可选择排序方式</span></td>
-                            <td></td>
-                            <td><span style="font-size: 20px;color: white;">已选择排序方式</span></td>
-                        </tr>
-                        <tr>
-                            <td width="40%">
-                                <select multiple name="left" id="left" size="8" style='width:200px;'
-                                        ondblclick="moveOption(document.getElementById('left'), document.getElementById('right'))">
-                                    <option th:each="otherRule:${otherList}" th:value="${otherRule.ruleEnglish}"
-                                            th:text="${otherRule.ruleChinese}"></option>
-                                </select>
-                            </td>
-                            <td width="20%" align="center">
-                                <input type="button" value=" >> "
-                                       onclick="moveOption(document.getElementById('left'),document.getElementById('right'))"><br><br>
-                                <input type="button" value=" << "
-                                       onclick="moveOption(document.getElementById('right'), document.getElementById('left'))">
-                            </td>
-                            <td width="40%">
-                                <select multiple id="right" size="8" style='width:200px;'
-                                        ondblclick="moveOption(document.getElementById('right'), document.getElementById('left'))">
-                                    <option th:each="myRule:${myList}" th:value="${myRule.ruleEnglish}"
-                                            th:text="${myRule.ruleChinese}"></option>
-                                </select>
-                                <input type="hidden" id="ruleResult" name="ruleResult">;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" sty>
-                                <button type="button" class="btn btn-primary operate"
-                                        onclick="moveTop(document.getElementById('right'));">置顶
-                                </button>
-                                <button type="button" class="btn btn-primary operate"
-                                        onclick="moveUp(document.getElementById('right'));">上移
-                                </button>
-                                <button type="button" class="btn btn-primary operate"
-                                        onclick="moveDown(document.getElementById('right'));">下移
-                                </button>
-                                <button type="button" class="btn btn-primary operate"
-                                        onclick="moveBottom(document.getElementById('right'));">置底
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 

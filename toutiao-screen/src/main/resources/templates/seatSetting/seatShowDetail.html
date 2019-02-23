@@ -137,17 +137,19 @@
     /* <![CDATA[ */
     $(function () {
         $('#myCarouselSeat').carousel({
-            interval: 6000
+            interval: [[${interval}]]
         });
 
         $("#print").click(function () {
             $('#myCarouselSeat').addClass("hide");
+            $("#bottom-info").addClass("hide");
             $("#pShow").removeClass("hide");
             $(this).addClass("hide");
             hideNav();
             window.print();
             showNav();
             $(this).removeClass("hide");
+            $("#bottom-info").removeClass("hide");
             $('#myCarouselSeat').removeClass("hide");
             $("#pShow").addClass("hide");
         });
