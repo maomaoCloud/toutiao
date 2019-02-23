@@ -75,12 +75,11 @@
         <div class="tile-header" style="text-align:center;">
             <h1><strong>参赛人员</strong></h1>
             <div style="overflow:hidden;margin-bottom:-10px;min-height:44px;">
-                <a style="margin-top: 8px;" href="javascript:;" class="fileType">
-                    选择文件<input type="file" id="uploadFile" name="uploadFile" onchange="checkSuffix(event);"/>
-                </a>
+                    <input type="file" id="uploadFile" name="uploadFile" style="display: none" onchange="checkSuffix(event)"/>
                 <span style="vertical-align: text-bottom;" id="fileName"></span>
-                <input type="button" onclick="fileUpload()">
+                <input type="button" onclick="javascript:$('#uploadFile').click()" th:value="导入参赛人员">
             </div>
+            <a href="/tpl.xlsx">上传模板</a>
         </div>
         <!-- /tile header -->
 
@@ -171,46 +170,35 @@
             processData: false,//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
             beforeSend:function(){
-                /*$('#uploadBtn').attr("disabled","disabled");
-                $("#uploadBtn").css({'background-color':'#dcdcdc'});
-                $('#progressBarMask').show();
-                //启动定时，查询进度
-                timer = setInterval(getProcess,500);*/
             },
             success: function (data) {
-                //上传完成，清除定时任务
-                if (timer != undefined && timer != null){
-                    clearInterval(timer);
-                }
-                $('#progressBarMask').hide();
-                if (data.status == 200){
-                    $.post("${path}/superOrder/getOrderCountSession.do",{},function(data){
-                        if (data.status == 200){
-                            clearProcess();
-                            dialogAlert("提示","操作成功，修改"+data.data+"条，总共"+orderNum+"条",function(){
-                                window.location.href="./superOrderUpdateList.do";
-                            });
-                        } else {
-                            clearProcess();
-                        }
-                    },"json");
-                } else if (data.status == 500){
-                    dialogAlert("提示",data.data,function(){
-                    });
-                    clearProcess();
+                closeLoading();
+                if (data.success){
+                    layer.msg("导入成功！")
+                    $("#users").click();
+                } else{
+                    layer.msg("导入失败！")
                 }
             },
             error:function(data){
-                dialogAlert("提示","操作失败",function(){
-                });
-                //清除定时任务
-                if (timer != undefined && timer != null){
-                    clearInterval(timer);
-                }
-                $('#progressBarMask').hide();
-                clearProcess();
+                closeLoading();
+                layer.msg("导入失败！")
             }
         });
+    }
+
+    function checkSuffix(e){
+        var src=e.target || window.event.srcElement;
+        var fileName = src.value;
+        var suffix = fileName.substring(fileName.lastIndexOf('.')+1);
+        if (suffix != "xlsx"){
+            layer.msg("请上传后缀名为xlsx文件!");
+            return;
+            return;
+        } else {
+            showLoading();
+            fileUpload();
+        }
     }
 </script>
 

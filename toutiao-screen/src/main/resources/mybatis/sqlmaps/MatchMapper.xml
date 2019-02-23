@@ -480,10 +480,6 @@
     left join
     sys_user as su on
       su.user_id = md.operate_user
-    left join
-      match_authorization as ma
-    on
-      ma.match_id = md.id
     where
     1=1
     <if test="statue != '' and statue != null">
@@ -494,7 +490,14 @@
     </if>
     <if test="userId != '' and userId != null">
       and md.user_id= #{userId,jdbcType=VARCHAR}
-      or ma.user_id = #{userId,jdbcType=VARCHAR}
+      OR md.id IN (
+      SELECT
+      ma.match_id
+      FROM
+      match_authorization AS ma
+      WHERE
+      ma.user_id = 'Qy6qyiy1'
+      )
     </if>
     order by
     add_time DESC

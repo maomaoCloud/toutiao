@@ -2,6 +2,7 @@ package com.tiaotiaopoker.service.impl;
 
 import com.sun.org.apache.bcel.internal.generic.IFNULL;
 import com.tiaotiaopoker.Constants;
+import com.tiaotiaopoker.ImagePlaceHolder;
 import com.tiaotiaopoker.dao.*;
 import com.tiaotiaopoker.entity.ApiAdvertData;
 import com.tiaotiaopoker.entity.ApiApplyOrder;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -208,11 +210,12 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     /**
-     * 导入用户同事生成比赛订单
+     * 导入用户同时生成比赛订单
      * Created by maojian
      *
      * @date 2019/2/22 15:11
      */
+    @Transactional
     @Override
     public void importUserWithOrder(List<List<String>> dataList) {
         for (List<String> data : dataList) {
@@ -222,18 +225,18 @@ public class AppUserServiceImpl implements AppUserService {
 
             //判断是否带搭档
             AppUser partnerUser = null;
-            if (data.get(4).equals(1)) {
+            if (data.get(4).equals("1")) {
                 //创建appUser搭档
                 partnerUser = genImportUser(data.get(2), data.get(2), data.get(3));
-                appUserMapper.insertSelective(appUser);
+                appUserMapper.insertSelective(partnerUser);
             }
 
             //生成比赛订单
             ApplyOrder applyOrder = new ApplyOrder();
             applyOrder.setId(com.tiaotiaopoker.StringUtils.generateOrderNo());
             applyOrder.setUserId(appUser.getId());
-            applyOrder.setUserName(data.get(1));
-            applyOrder.setUserPhone(data.get(2));
+            applyOrder.setUserName(data.get(0));
+            applyOrder.setUserPhone(data.get(1));
             applyOrder.setPartnerId(partnerUser == null ? null : partnerUser.getId());
             applyOrder.setPartnerName(partnerUser == null ? null : partnerUser.getNickName());
             applyOrder.setPartnerPhone(partnerUser == null ? null : partnerUser.getPhone());
@@ -243,9 +246,13 @@ public class AppUserServiceImpl implements AppUserService {
             applyOrder.setPartnerHead(partnerUser == null ? null : partnerUser.getAvatarUrl());
             applyOrder.setAddTime(new Date());
             //支付和签到状态
-            applyOrder.setPayStatue(0);
-            applyOrder.setUserSignStatus(8);
-            applyOrder.setPartnerSignStatue(partnerUser == null ? null : 8);
+            applyOrder.setPrice(new BigDecimal(0));
+            applyOrder.setPayMoney(new BigDecimal(0));
+            applyOrder.setSharePercent(new BigDecimal(0));
+            applyOrder.setPayDate(new Date());
+            applyOrder.setPayStatue(1);
+            applyOrder.setUserSignStatus(new Integer(data.get(8)));
+            applyOrder.setPartnerSignStatue(partnerUser == null ? null : new Integer(data.get(8)));
             applyOrder.setUserSignDatetime(new Date());
             applyOrder.setPartnerSignDatetime(partnerUser == null ? null : new Date());
             //团队公司信息
@@ -261,8 +268,9 @@ public class AppUserServiceImpl implements AppUserService {
         appUser.setId(com.tiaotiaopoker.StringUtils.generateShortUUID());
         appUser.setNickName(nickName);
         appUser.setTrueName(trueName);
+        appUser.setRegDate(new Date());
         //生成头像
-        //todo
+        appUser.setAvatarUrl("https://match.tiaotiaopoker.com/tools/placeholder/200x200/bgRGB_CCCCCC/textRGB_000000/fontSize_60/"+trueName);
         appUser.setPhone(phone);
         appUser.setUserStatus(0);
         appUser.setUserLevel(0);

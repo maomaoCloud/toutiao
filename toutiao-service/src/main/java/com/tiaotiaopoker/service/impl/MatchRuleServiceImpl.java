@@ -64,4 +64,9 @@ public class MatchRuleServiceImpl implements MatchRuleService {
         }
     }
 
+    @Override
+    public MatchRule selectMatchRuleById(String id) {
+        return matchRuleMapper.selectByPrimaryKey(id);
+    }
+
 }

@@ -5,8 +5,10 @@ import com.tiaotiaopoker.JsonResult;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.entity.RuleResult;
 import com.tiaotiaopoker.pojo.Match;
+import com.tiaotiaopoker.pojo.MatchAuthorization;
 import com.tiaotiaopoker.pojo.MatchRule;
 import com.tiaotiaopoker.pojo.MatchWithBLOBs;
+import com.tiaotiaopoker.service.MatchAuthorizationService;
 import com.tiaotiaopoker.service.MatchRuleService;
 import com.tiaotiaopoker.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class MatchSettingController {
 
     @Autowired
     private MatchRuleService matchRuleService;
+
+    @Autowired
+    private MatchAuthorizationService authorizationService;
 
     @RequestMapping("index")
     public ModelAndView index(ModelAndView mv,
@@ -58,6 +63,17 @@ public class MatchSettingController {
         mv.addObject("matchList", matchList);
         mv.addObject("matchId", matchId);
         mv.setViewName("matchSetting/matchIndex");
+
+        //校验当前比赛是否是授权比赛
+        if (matchId != null){
+            MatchWithBLOBs matchData = matchService.getMatchDataById(matchId);
+            mv.addObject("isAuthor", matchData.getUserId());
+            if (matchData.getUserId().equals(token)) {
+                //若当前比赛是由当前操作人创建，则查出所有当前比赛的授权用户
+                List<MatchAuthorization> authorList = authorizationService.queryAuthorizationList(matchRule.getMatchId());
+                mv.addObject("authorList", authorList);
+            }
+        }
         return mv;
     }
 
@@ -98,7 +114,11 @@ public class MatchSettingController {
         //校验当前比赛是否是授权比赛
         MatchWithBLOBs matchData = matchService.getMatchDataById(matchRule.getMatchId());
         mv.addObject("isAuthor", matchData.getUserId());
-
+        if (matchData.getUserId().equals(token)) {
+            //若当前比赛是由当前操作人创建，则查出所有当前比赛的授权用户
+            List<MatchAuthorization> authorList = authorizationService.queryAuthorizationList(matchRule.getMatchId());
+            mv.addObject("authorList", authorList);
+        }
         return mv;
     }
 
@@ -118,10 +138,22 @@ public class MatchSettingController {
 
     @RequestMapping("save")
     @ResponseBody
-    public JsonResult save(MatchRule matchRule) {
+    public JsonResult save(MatchRule matchRule, String authorUserIds, String authorUserNames) {
         JsonResult jsonResult;
         try {
             int result = matchRuleService.saveBySelective(matchRule);
+            MatchRule matchRuleInfo = matchRuleService.selectMatchRuleById(matchRule.getId());
+            //删除当前比赛之前的所有授权
+            authorizationService.deleteAuthorizationByMatchId(matchRuleInfo.getMatchId());
+            if (!StringUtils.isBlank(authorUserIds)) {
+                //新增授权
+                MatchAuthorization matchAuthorization = new MatchAuthorization();
+                matchAuthorization.setMatchId(matchRuleInfo.getMatchId());
+                matchAuthorization.setMatchName(matchRuleInfo.getMatchName());
+                matchAuthorization.setUserId(authorUserIds);
+                matchAuthorization.setUserTrueName(authorUserNames);
+                authorizationService.addAuthorization(matchAuthorization);
+            }
             if (result > 0) {
                 jsonResult = JsonResult.SUCCESS("保存成功");
             } else {

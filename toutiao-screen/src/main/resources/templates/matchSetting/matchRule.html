@@ -12,6 +12,19 @@
                 ruleResultString += $(this).attr("value") + ",";
             });
             $("#ruleResult").val(ruleResultString.length > 0 ? ruleResultString.substring(0, ruleResultString.length - 1) : "");
+            //拼接授权用户
+            var authorUserString = '';
+            $("#authorizationUser button[class='btn btn-primary']").each(function(){
+                authorUserString += $(this).attr("data-id") + ",";
+            });
+            $("#authorUserIds").val(authorUserString.length > 0 ? authorUserString.substring(0, authorUserString.length - 1) : "");
+
+            var authorUserNameString = '';
+            $("#authorizationUser button[class='btn btn-primary']").each(function(){
+                authorUserNameString += $(this).html() + ",";
+            });
+            $("#authorUserNames").val(authorUserNameString.length > 0 ? authorUserNameString.substring(0, authorUserNameString.length - 1) : "");
+
             $.post("/sys/matchSetting/save", $("#matchRuleForm").serialize(), function (data) {
                 //resetMatchRule();
             });
@@ -102,24 +115,34 @@
 
         });
 
-        //已授权用户绑定点击事件
-        $("#authorizationUser").find("button").each(function () {
-            $(this).click(function () {
-                if ($(this).hasClass("btn-primary")){
-                    $(this).removeClass("btn-primary");
-                }else {
-                    alert(2);
-                    $(this).addClass("btn-primary");
-                }
-            });
-        });
-
         //搜索授权用户绑定搜索事件
         $("#authorizationSearch").click(function(){
+            if (!$("#authorizationName").val()) {
+                return;
+            }
+            //清空之前的搜索结果
+            $("#searchResultDiv").html("");
             $.post("/sys/matchAuthorController/searchUserByTrueName",{
                 trueName: $("#authorizationName").val()
             },function(data){
-                console.log(data);
+                var button = '';
+                for(var i = 0 ;i<data.length; i++){
+                    var author = data[i];
+                    button += '<button type="button" class="btn btn-primary" data-id="'+author.id+'">'+author.trueName+'</button>'
+                }
+                $("#searchResultDiv").append(button);
+                $("#searchResultDiv").find("button").each(function(){
+                    $(this).click(function () {
+                        if(checkAuthorUserIsExist($(this).attr("data-id"))){
+                            layer.msg("该用户已授权，不得重复授权");
+                            return;
+                        }
+                        var authorButton = '';
+                        authorButton += ' <button type="button" onclick="checkAuthorUserIsAuthor(this)" class="btn btn-primary" data-id="'+$(this).attr("data-id")+'">'+$(this).html()+'</button>';
+                        $("#authorizationUser").append(authorButton);
+                        $(this).remove();
+                    });
+                });
             });
         });
 
@@ -129,6 +152,26 @@
         }
 
     })
+
+    //已选择授权用户取消授权(重新恢复授权)
+    function checkAuthorUserIsAuthor(obj) {
+        layer.confirm("确定要取消授权吗?",function (index) {
+            $(obj).remove();
+            layer.close(index);
+        });
+    }
+
+    //校验当前点击用户是否已授权
+    function checkAuthorUserIsExist(userId) {
+        var result = false;
+        $("#authorizationUser").find("button").each(function () {
+            if ($(this).attr("data-id")== userId){
+                result = true;
+                return false;
+            }
+        });
+        return result;
+    }
 
     function resetMatchRule() {
         //重置基础规则设置
@@ -432,14 +475,13 @@
             </div>
 
             <div class="form-group" th:if="${isAuthor == token}">
+                <input id="authorUserIds" name="authorUserIds" type="hidden">
+                <input id="authorUserNames" name="authorUserNames" type="hidden">
                 <label class="col-sm-4 control-label">授权用户</label>
                 <div class="col-sm-8">
                     <div class="row">
                         <div class="form-group col-sm-8" id="authorizationUser">
-                            <button type="button" class="btn btn-primary" style="float: left">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
+                            <button type="button" class="btn btn-primary" onclick="checkAuthorUserIsAuthor(this)" th:data-id="${author.userId}" th:each="author:${authorList}" th:text="${author.userTrueName }"></button>
                         </div>
                     </div>
                     <div class="row">
@@ -447,11 +489,8 @@
                             <input type="text" class="form-control" id="authorizationName">
                             <button type="button" class="btn btn-primary" style="margin-left: 20px" id="authorizationSearch">搜索</button>
                         </div>
-                        <div class="form-group col-sm-8" >
-                            <button type="button" class="btn btn-primary" style="float: left">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
-                            <button type="button" class="btn btn-primary">谢康</button>
+                        <div class="form-group col-sm-8" id="searchResultDiv">
+
                         </div>
                     </div>
                 </div>

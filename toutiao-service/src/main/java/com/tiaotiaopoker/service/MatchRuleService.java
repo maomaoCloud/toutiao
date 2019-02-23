@@ -11,4 +11,6 @@ public interface MatchRuleService {
     MatchRule selectMatchRuleByMatchId(String matchId);
 
     void createMatchRuleByMatch(Match myMatch);
+
+    MatchRule selectMatchRuleById(String id);
 }
