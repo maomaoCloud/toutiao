@@ -84,9 +84,13 @@
         <div class="tile-header" style="text-align:center;">
             <h1><strong>参赛人员 (点击姓名可编辑选手信息)</strong></h1>
             <div style="overflow:hidden;margin-bottom:-10px;min-height:44px;">
-                    <input type="file" id="uploadFile" name="uploadFile" style="display: none" onchange="checkSuffix(event)"/>
+                <input type="file" id="uploadFile" name="uploadFile" style="display: none"
+                       onchange="checkSuffix(event)"/>
                 <span style="vertical-align: text-bottom;" id="fileName"></span>
                 <input type="button" onclick="javascript:$('#uploadFile').click()" th:value="导入参赛人员">
+
+                <button class="btn" id="addUserBtn">添加参赛人员</button>
+                <button class="btn" id="delete">删除选中人员</button>
             </div>
             <a href="/tpl.xlsx">上传模板</a>
         </div>
@@ -98,6 +102,9 @@
             <table class="table" id="user-table">
                 <thead>
                 <tr style="border-top: 1px solid rgba(100,100,100,0.6);">
+                    <th class="line-right" style="vertical-align: middle;" rowspan="2">
+                        <input type="checkbox" class="checkAll">
+                    </th>
                     <th class="line-right" style="vertical-align: middle;" rowspan="2">团队名</th>
                     <th colspan="5" style="border-bottom: none" class="line-right">用户信息</th>
                     <th colspan="5" style="border-bottom: none" class="line-right">搭档信息</th>
@@ -118,6 +125,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="user,userStat : ${datas}">
+                    <td>
+                        <input type="checkbox" th:value="${user.orderId}" class="checkItem">
+                    </td>
                     <td class="line-right">
                         <input class="edit-groupName" th:data-id="${user.orderId}" th:value="${user.groupName}">
                     </td>
@@ -125,7 +135,11 @@
                         <img class="head" th:src="${user.head}" src="assets/images/peter-avatar.jpg">
                     </td>
                     <td>
-                        <a href="#" class="editUserInfo" title="点击修改选手信息" th:text="${user.name}"></a>
+                        <a href="#" th:data-orderId="${user.orderId}" th:data-id="${user.userId}"
+                           th:data-phone="${user.phone}"
+                           th:data-idCard="${user.idCard}" th:data-sign="${user.signStatue}" th:data-type="A"
+                           class="editUserInfo"
+                           title="点击修改选手信息" th:text="${user.name}"></a>
                     </td>
                     <td th:text="${user.phone}">18012673347</td>
                     <td th:text="${user.idCard}">18012673347</td>
@@ -135,7 +149,11 @@
                              src="assets/images/peter-avatar.jpg">
                     </td>
                     <td>
-                        <a href="#" class="editUserInfo" title="点击修改选手信息" th:text="${user.partnerName}"></a>
+                        <a href="#" th:data-orderId="${user.orderId}" th:data-id="${user.partnerId}"
+                           th:data-phone="${user.partnerPhone}"
+                           th:data-idCard="${user.partnerIdCard}" th:data-sign="${user.partnerSignStatue}"
+                           th:data-type="B"
+                           class="editUserInfo" title="点击修改选手信息" th:text="${user.partnerName}"></a>
                     </td>
                     <td th:text="${user.partnerPhone}">18012673347</td>
                     <td th:text="${user.partnerIdCard}">18012673347</td>
@@ -148,7 +166,6 @@
         </div>
         <!-- /tile body -->
 
-
     </section>
     <!-- /tile -->
 
@@ -158,6 +175,42 @@
 <script th:inline="javascript">
     /* <![CDATA[ */
     $(function () {
+        $(".checkAll").click(function () {
+            var status = $(this).prop('checked');
+
+            $(".checkItem").each(function () {
+                $(this).prop("checked", status);
+            });
+        });
+
+        $("#delete").click(function () {
+            if (layer.confirm("您确实要删除吗？", function (idx) {
+                layer.close(idx);
+                var ids = [];
+                $(".checkItem").each(function () {
+                    if ($(this).prop('checked')) {
+                        ids.push($(this).val());
+                    }
+                });
+
+                if (ids.length <= 0) {
+                    layer.msg("请选中还要删除的比赛人员！");
+                    return;
+                }
+
+                showLoading();
+                $.post("/sys/sign/users/delete?token=" + getToken(), {orderIds: ids.join(",")}, function (res) {
+                    closeLoading();
+                    if (res.success) {
+                        layer.msg("删除成功！");
+                        $("#users").click();
+                    } else {
+                        layer.msg("服务器繁忙，稍后重试！");
+                    }
+                });
+            })) ;
+        });
+
         $(".edit-groupName").blur(function () {
             var val = $(this).val();
             var orderId = $(this).attr("data-id");
@@ -166,7 +219,43 @@
             });
         });
 
+        $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
         $(".editUserInfo").click(function () {
+            var orderId = $(this).attr("data-orderId");
+            var phone = $(this).attr("data-phone");
+            var name = $(this).html();
+            var idCard = $(this).attr("data-idCard");
+            var sign = $(this).attr("data-sign") === "已签到" ? "1" : "0";
+            var userType = $(this).attr("data-type");
+            var userId = $(this).attr("data-id");
+
+            if (phone == undefined) {
+                phone = "";
+            }
+
+            if (name == undefined) {
+                name = "";
+            }
+
+            if (idCard == undefined) {
+                idCard = "";
+            }
+
             layer.open({
                 type: 1,
                 title: "编辑选手信息",
@@ -176,39 +265,136 @@
                 anim: 2,
                 shadeClose: false, //开启遮罩关闭
                 yes: function (index) {
+                    var data = $("#editUserInfoForm").serializeObject();
+                    data.matchId = getMatchId();
+                    console.log(data);
+                    if (data.name === '') {
+                        layer.msg('请输入姓名！');
+                        return;
+                    }
                     layer.close(index);
-                  alert("1");
+                    showLoading();
+                    $.post("/sys/sign/user/edit?token=" + getToken(), data, function (res) {
+                        closeLoading();
+                        if (res.success) {
+                            layer.msg("修改成功！");
+                            $("#users").click();
+                        } else {
+                            layer.msg("服务器繁忙，稍后重试！");
+                        }
+                    });
                 },
                 content: `<div class='editUserInfo-box'>
-                            <div class="data-item">
-                            <label>姓&nbsp;&nbsp;&nbsp;名：</label>
-                            <input type="text">
-                            </div>
-                            <div class="data-item">
-                            <label>手&nbsp;&nbsp;&nbsp;机：</label>
-                            <input type="text">
-                            </div>
-                            <div class="data-item">
-                            <label>身份证：</label>
-                            <input type="text">
-                            </div>
-                            <div class="data-item">
-                            <label>状&nbsp;&nbsp;&nbsp;态：</label>
-                            <select>
-                                <option value="0">未签到</option>
-                                <option value="1">已签到</option>
-                            </select>
-                            </div>
+                            <form id="editUserInfoForm" method="post">
+                                <div class="data-item">
+                                <label>姓&nbsp;&nbsp;&nbsp;名：</label>
+                                <input name="name" value="${name}" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>手&nbsp;&nbsp;&nbsp;机：</label>
+                                <input name="phone" value="${phone}" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>身份证：</label>
+                                <input name="idCard" value="${idCard}" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>状&nbsp;&nbsp;&nbsp;态：</label>
+                                <select name="sign">
+                                    <option ${sign === "0" ? 'selected="selected"' : ""} value="0">未签到</option>
+                                    <option ${sign === "1" ? 'selected="selected"' : ""} value="1">已签到</option>
+                                </select>
+                                <input name="orderId" type="hidden" value="${orderId}">
+                                <input name="userType" type="hidden" value="${userType}">
+                                <input name="userId" type="hidden" value="${userId}">
+                                </div>
+                            </form>
                           </div>`
             });
         });
     })
+
+    $("#addUserBtn").click(function () {
+        layer.open({
+            type: 1,
+            title: "编辑选手信息",
+            btn: ['确认', '取消'],
+            skin: 'layui-layer-demo', //样式类名
+            closeBtn: 1, //不显示关闭按钮
+            anim: 2,
+            shadeClose: false, //开启遮罩关闭
+            yes: function (index) {
+                var data = $("#editUserInfoForm").serializeObject();
+                data.matchId = getMatchId();
+                console.log(data);
+                if (data.name === '') {
+                    layer.msg('请输入姓名！');
+                    return;
+                }
+                layer.close(index);
+                showLoading();
+                $.post("/sys/sign/user/edit?token=" + getToken(), data, function (res) {
+                    closeLoading();
+                    if (res.success) {
+                        layer.msg("修改成功！");
+                        $("#users").click();
+                    } else {
+                        layer.msg("服务器繁忙，稍后重试！");
+                    }
+                });
+            },
+            content: `<div class='editUserInfo-box'>
+                            <form id="editUserInfoForm" method="post">
+                                <div class="data-item">
+                                <label>姓&nbsp;&nbsp;&nbsp;名：</label>
+                                <input name="name" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>手&nbsp;&nbsp;&nbsp;机：</label>
+                                <input name="phone" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>身份证：</label>
+                                <input name="idCard" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>状&nbsp;&nbsp;&nbsp;态：</label>
+                                <select name="sign">
+                                    <option  value="0">未签到</option>
+                                    <option  value="1">已签到</option>
+                                </select>
+                                <hr>
+                                <div class="data-item">
+                                <label>搭&nbsp;&nbsp;&nbsp;档：</label>
+                                <input name="partnerName" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>手&nbsp;&nbsp;&nbsp;机：</label>
+                                <input name="partnerPhone" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>身份证：</label>
+                                <input name="partnerIdCard" value="" type="text">
+                                </div>
+                                <div class="data-item">
+                                <label>状&nbsp;&nbsp;&nbsp;态：</label>
+                                <select name="partnerSign">
+                                    <option value="0">未签到</option>
+                                    <option value="1">已签到</option>
+                                </select>
+                                </div>
+                            </form>
+                          </div>`
+        });
+
+    });
+
     /* ]]> */
 
-    function fileUpload(){
+    function fileUpload() {
         var formData = new FormData();
-        formData.append("file",document.getElementById("uploadFile").files[0]);
-        formData.append("matchId",getMatchId());
+        formData.append("file", document.getElementById("uploadFile").files[0]);
+        formData.append("matchId", getMatchId());
         var timer;
         //用 formData来ajax提交文件
         $.ajax({
@@ -219,29 +405,29 @@
             cache: false,//上传文件无需缓存
             processData: false,//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
-            beforeSend:function(){
+            beforeSend: function () {
             },
             success: function (data) {
                 closeLoading();
-                if (data.success){
+                if (data.success) {
                     layer.msg("导入成功！")
                     $("#users").click();
-                } else{
+                } else {
                     layer.msg("导入失败！")
                 }
             },
-            error:function(data){
+            error: function (data) {
                 closeLoading();
                 layer.msg("导入失败！")
             }
         });
     }
 
-    function checkSuffix(e){
-        var src=e.target || window.event.srcElement;
+    function checkSuffix(e) {
+        var src = e.target || window.event.srcElement;
         var fileName = src.value;
-        var suffix = fileName.substring(fileName.lastIndexOf('.')+1);
-        if (suffix != "xlsx"){
+        var suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+        if (suffix != "xlsx") {
             layer.msg("请上传后缀名为xlsx文件!");
             return;
         } else {

@@ -35,13 +35,13 @@ import java.util.Map;
  * Created by xiekang on 2018/10/9.
  */
 @Controller
-@RequestMapping("sys/sign")
-@Scope("prototype")
+@RequestMapping ("sys/sign")
+@Scope ("prototype")
 public class SignController extends BaseController {
-    @Value("${scan.sign.qrcode.url}")
-    private String qrcode_url_prefix;
-    @Value("${scan.qrcode.key}")
-    private String qrcode_key;
+    @Value ("${scan.sign.qrcode.url}")
+    private String            qrcode_url_prefix;
+    @Value ("${scan.qrcode.key}")
+    private String            qrcode_key;
     @Autowired
     private ApplyOrderService applyOrderService;
     @Autowired
@@ -50,9 +50,9 @@ public class SignController extends BaseController {
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping("match/{matchId}")
-    public ModelAndView index(ModelAndView mv,
-                              @PathVariable("matchId") String matchId) {
+    @RequestMapping ("match/{matchId}")
+    public ModelAndView index (ModelAndView mv,
+                               @PathVariable ("matchId") String matchId) {
         String id = StringUtils.genRandomKey();
         String key = SecurityFactory.MD5.encrypt(id + qrcode_key, null);
         String qrcode_url = String.format(qrcode_url_prefix, id, matchId, key);
@@ -119,10 +119,10 @@ public class SignController extends BaseController {
         return mv;
     }
 
-    @RequestMapping("match/{matchId}/new")
+    @RequestMapping ("match/{matchId}/new")
     @ResponseBody
-    public JsonResult showNewSign(@PathVariable("matchId") String matchId,
-                                  Date datePoint) {
+    public JsonResult showNewSign (@PathVariable ("matchId") String matchId,
+                                   Date datePoint) {
         //每次只获取datePoint之后的数据
         try {
             Map<String, Object> resultMap = applyOrderService.getNewSignData(matchId, datePoint);
@@ -132,11 +132,11 @@ public class SignController extends BaseController {
         return JsonResult.FAILED();
     }
 
-    @RequestMapping("wait/approve")
+    @RequestMapping ("wait/approve")
     @ResponseBody
-    public JsonResult waitApprove(String userId,
-                                  String matchId,
-                                  Integer doType) {
+    public JsonResult waitApprove (String userId,
+                                   String matchId,
+                                   Integer doType) {
         //每次只获取datePoint之后的数据
         try {
             Integer nextStatue = doType.equals(1) ? 1 : -1; //更新的签到状态  1为同意 -1为不同意
@@ -147,9 +147,9 @@ public class SignController extends BaseController {
         return JsonResult.FAILED();
     }
 
-    @RequestMapping("users/{matchId}")
-    public ModelAndView users(ModelAndView mv,
-                              @PathVariable("matchId") String matchId) {
+    @RequestMapping ("users/{matchId}")
+    public ModelAndView users (ModelAndView mv,
+                               @PathVariable ("matchId") String matchId) {
         List<ApplyOrder> signData = applyOrderService.getSignData(matchId);
         List<UserInfo> datas = new ArrayList<>();
         for (ApplyOrder order : signData) {
@@ -161,27 +161,42 @@ public class SignController extends BaseController {
         return mv;
     }
 
-    @RequestMapping("/userInfo/groupName/save")
+    @RequestMapping ("/userInfo/groupName/save")
     @ResponseBody
-    public JsonResult saveGroupName(String groupName, String orderId) {
+    public JsonResult saveGroupName (String groupName, String orderId) {
         applyOrderService.updateGroupName(orderId, groupName);
         return JsonResult.SUCCESS();
     }
 
-    @RequestMapping(value = "/importUser")
+    @RequestMapping (value = "/importUser")
     @ResponseBody
-    public JsonResult importUser(@RequestParam("file") MultipartFile mulFile, String matchId) {
-
+    public JsonResult importUser (@RequestParam ("file") MultipartFile mulFile, String matchId) {
         try {
             //拿到上传的文件流
             InputStream is = null;
             is = mulFile.getInputStream();
             NsExcelReadXUtils read = new NsExcelReadXUtils(is, 0);
             List<List<String>> dataList = read.getLists(1, read.getCellNum(0));
-            appUserService.importUserWithOrder(dataList,matchId);
+            appUserService.importUserWithOrder(dataList, matchId);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return JsonResult.SUCCESS();
     }
+
+    @RequestMapping ("/user/edit")
+    @ResponseBody
+    public JsonResult editUserInfo (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
+        appUserService.updateUserInfoFromScreen(orderId, name, phone, idCard, sign, userType, matchId, userId);
+        return JsonResult.SUCCESS();
+    }
+
+    @RequestMapping ("/users/delete")
+    @ResponseBody
+    public JsonResult deleteOrder (String orderIds) {
+        String[] orderIdArray = orderIds.split(",");
+        applyOrderService.deleteOrders(orderIdArray);
+        return JsonResult.SUCCESS();
+    }
+
 }

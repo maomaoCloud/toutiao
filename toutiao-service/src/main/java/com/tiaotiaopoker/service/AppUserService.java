@@ -26,7 +26,10 @@ public interface AppUserService {
 
     Map<String, Object> getUserIncome (String userId, String matchId);
 
-    List<AppUser> getUserByTrueName(String trueName);
+    List<AppUser> getUserByTrueName (String trueName);
 
-    void importUserWithOrder(List<List<String>> dataList, String matchId);
+    void importUserWithOrder (List<List<String>> dataList, String matchId);
+
+    void updateUserInfoFromScreen (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId);
+
 }

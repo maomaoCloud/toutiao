@@ -32,6 +32,8 @@ public class AppUserServiceImpl implements AppUserService {
     private MatchMapper           matchMapper;
     @Autowired
     private WithdrawLogMapper     withdrawLogMapper;
+    @Autowired
+    private MatchTeamMemberMapper matchTeamMemberMapper;
 
     @Override
     public AppUser getUserByOpenId (String openId) {
@@ -90,12 +92,12 @@ public class AppUserServiceImpl implements AppUserService {
     public Map<String, Object> getUserCenterInfo (String userId) {
         Map<String, Object> resultMap = new HashMap<>();
         //我的报名(已支付)
-        List<ApplyOrderDto>      orderList = applyOrderMapper.queryOrderListByUserId(userId);
-        ArrayList<ApiApplyOrder> notStart  = new ArrayList<>();
-        ArrayList<ApiApplyOrder> underWay  = new ArrayList<>();
-        ArrayList<ApiApplyOrder> end       = new ArrayList<>();
-        ArrayList<ApiApplyOrder> all       = new ArrayList<>();
-        Map<String, Object>      orderMap  = new HashMap<>();
+        List<ApplyOrderDto> orderList = applyOrderMapper.queryOrderListByUserId(userId);
+        ArrayList<ApiApplyOrder> notStart = new ArrayList<>();
+        ArrayList<ApiApplyOrder> underWay = new ArrayList<>();
+        ArrayList<ApiApplyOrder> end = new ArrayList<>();
+        ArrayList<ApiApplyOrder> all = new ArrayList<>();
+        Map<String, Object> orderMap = new HashMap<>();
         for (ApplyOrderDto orderDto : orderList) {
             ApiApplyOrder apiOrder = ApiApplyOrder.genFromApplyOrderDto(orderDto);
             all.add(apiOrder);
@@ -118,18 +120,18 @@ public class AppUserServiceImpl implements AppUserService {
         resultMap.put("myOrder", orderMap);
 
         //我的发布
-        MatchExample          matchExample         = new MatchExample();
+        MatchExample matchExample = new MatchExample();
         MatchExample.Criteria matchExampleCriteria = matchExample.createCriteria();
         matchExampleCriteria.andUserIdEqualTo(userId);
         ArrayList<ApiMatchData> notStartMatch = new ArrayList<>();
         ArrayList<ApiMatchData> underWayMatch = new ArrayList<>();
-        ArrayList<ApiMatchData> endMatch      = new ArrayList<>();
-        ArrayList<ApiMatchData> allMatch      = new ArrayList<>();
-        List<Match>             matchList     = matchMapper.selectByExample(matchExample);
-        Map<String, Object>     matchMap      = new HashMap<>();
+        ArrayList<ApiMatchData> endMatch = new ArrayList<>();
+        ArrayList<ApiMatchData> allMatch = new ArrayList<>();
+        List<Match> matchList = matchMapper.selectByExample(matchExample);
+        Map<String, Object> matchMap = new HashMap<>();
         for (Match match : matchList) {
-            ApiMatchData apiMatch  = ApiMatchData.genFromMatch(match, userId);
-            int          signUpNum = applyOrderMapper.sumSignUpNumByMatchId(match.getId());
+            ApiMatchData apiMatch = ApiMatchData.genFromMatch(match, userId);
+            int signUpNum = applyOrderMapper.sumSignUpNumByMatchId(match.getId());
             apiMatch.setSignUpNum(signUpNum);
             allMatch.add(apiMatch);
             if (Constants.Match.NOT_START.equals(apiMatch.getMatchState())) {
@@ -152,11 +154,11 @@ public class AppUserServiceImpl implements AppUserService {
 
         //当前时间，日期范围内的广告
         Map<String, Object> paramMap = new HashMap<>();
-        DateTime            dateTime = new DateTime();
+        DateTime dateTime = new DateTime();
         paramMap.put("date", dateTime.toString("yyyy-MM-dd"));
         paramMap.put("time", dateTime.toString("HH:mm"));
-        List<AdvertRecommend> advertList     = advertRecommendMapper.queryAdvertByCondition(paramMap);
-        ArrayList<Object>     advertDataList = new ArrayList<>();
+        List<AdvertRecommend> advertList = advertRecommendMapper.queryAdvertByCondition(paramMap);
+        ArrayList<Object> advertDataList = new ArrayList<>();
         for (AdvertRecommend advert : advertList) {
             advertDataList.add(ApiAdvertData.genFromAdvert(advert));
         }
@@ -168,8 +170,8 @@ public class AppUserServiceImpl implements AppUserService {
     public Map<String, Object> getUserIncome (String userId,
                                               String matchId) {
         Map<String, Object> resultMap = new HashMap<>();
-        Map<String, Object> paramMap  = new HashMap<>();
-        BigDecimal          hundred   = new BigDecimal(100);
+        Map<String, Object> paramMap = new HashMap<>();
+        BigDecimal hundred = new BigDecimal(100);
         //累计收益
         paramMap.put("userId", userId);
         BigDecimal sumPayMoney = applyOrderMapper.sumPayMoneyByCondition(paramMap);
@@ -203,7 +205,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<AppUser> getUserByTrueName(String trueName) {
+    public List<AppUser> getUserByTrueName (String trueName) {
         return appUserMapper.getUserByTrueName(trueName);
     }
 
@@ -215,7 +217,7 @@ public class AppUserServiceImpl implements AppUserService {
      */
     @Transactional
     @Override
-    public void importUserWithOrder(List<List<String>> dataList, String matchId) {
+    public void importUserWithOrder (List<List<String>> dataList, String matchId) {
         for (List<String> data : dataList) {
             //创建appUser
             AppUser appUser = genImportUser(data.get(0), data.get(0), data.get(1));
@@ -261,14 +263,49 @@ public class AppUserServiceImpl implements AppUserService {
         }
     }
 
-    public static AppUser genImportUser(String nickName, String trueName, String phone) {
+    @Override
+    public void updateUserInfoFromScreen (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
+        //1. 根据订单  更新用户信息
+        ApplyOrder order = new ApplyOrder();
+        order.setId(orderId);
+        if ("A".equals(userType)) {
+            order.setUserName(name);
+            order.setUserPhone(phone);
+            order.setUserIdCard(idCard);
+            order.setUserSignStatus(sign);
+
+        } else {
+            order.setPartnerName(name);
+            order.setPartnerPhone(phone);
+            order.setPartnerIdCard(idCard);
+            order.setPartnerSignStatue(sign);
+        }
+
+        applyOrderMapper.updateByPrimaryKeySelective(order);
+
+        //更新match_team_number
+        MatchTeamMember member = new MatchTeamMember();
+        MatchTeamMemberExample example = new MatchTeamMemberExample();
+        MatchTeamMemberExample.Criteria criteria = example.createCriteria().andMatchIdEqualTo(matchId);
+        if ("A".equals(userType)) {
+            criteria.andTeamMemberOneEqualTo(userId);
+            member.setTeamMemberOneName(name);
+        } else {
+            criteria.andTeamMemberTwoEqualTo(userId);
+            member.setTeamMemberTwoName(name);
+        }
+        matchTeamMemberMapper.updateByExampleSelective(member, example);
+
+    }
+
+    public static AppUser genImportUser (String nickName, String trueName, String phone) {
         AppUser appUser = new AppUser();
         appUser.setId(com.tiaotiaopoker.StringUtils.generateShortUUID());
         appUser.setNickName(nickName);
         appUser.setTrueName(trueName);
         appUser.setRegDate(new Date());
         //生成头像
-        appUser.setAvatarUrl("https://match.tiaotiaopoker.com/tools/placeholder/200x200/bgRGB_CCCCCC/textRGB_000000/fontSize_60/"+trueName);
+        appUser.setAvatarUrl("https://match.tiaotiaopoker.com/tools/placeholder/200x200/bgRGB_CCCCCC/textRGB_000000/fontSize_60/" + trueName);
         appUser.setPhone(phone);
         appUser.setUserStatus(0);
         appUser.setUserLevel(0);

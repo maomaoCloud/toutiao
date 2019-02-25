@@ -28,4 +28,6 @@ public interface ApplyOrderService {
 
     void updateGroupName (String orderId, String groupName);
 
+    void deleteOrders (String[] orderIdArray);
+
 }

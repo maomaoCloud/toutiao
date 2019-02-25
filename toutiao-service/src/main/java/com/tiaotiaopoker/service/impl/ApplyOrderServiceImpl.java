@@ -57,7 +57,7 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
 
     @Override
     public Map<String, Object> addOrder (ApiApplyParams params) throws IOException, URISyntaxException {
-        MatchWithBLOBs      match     = matchService.getMatchDataById(params.getMatchId());
+        MatchWithBLOBs match = matchService.getMatchDataById(params.getMatchId());
         Map<String, Object> resultMap = new HashMap<>();
         if (match == null) return resultMap;
 
@@ -91,8 +91,8 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         ApplyOrderExample example = new ApplyOrderExample();
         example.createCriteria().andUserIdEqualTo(params.getUserId()).andMatchIdEqualTo(params.getMatchId());
         List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample(example);
-        ApplyOrder       order;
-        Boolean          needPay     = true;
+        ApplyOrder order;
+        Boolean needPay = true;
         resultMap.put("hasPay", false);
         if (applyOrders != null && applyOrders.size() > 0) {
             order = applyOrders.get(0);
@@ -166,11 +166,11 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             String orderResult = HttpPosts.POST.request(WX_UNIFIEDORDER_URL, data);
             System.out.println("[" + new DateTime().toString("yyyy-MM-dd") + "] 下单结果：" + orderResult);
             Map<String, String> orderResultMap = XmlUtils.returnXMLData(orderResult);
-            String              return_code    = orderResultMap.get("return_code");
+            String return_code = orderResultMap.get("return_code");
 
             if (return_code.equals("SUCCESS")) {
-                String           prepay_id = orderResultMap.get("prepay_id");
-                WxPayResultModel model     = new WxPayResultModel();
+                String prepay_id = orderResultMap.get("prepay_id");
+                WxPayResultModel model = new WxPayResultModel();
                 model.setAppId(WX_APPID);
                 model.setKey(WX_KEY);
                 model.setNonceStr(payData.getNonce_str());
@@ -190,9 +190,9 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
 
     @Override
     public Map<String, Object> addSignOrder (ApiApplyParams params) throws IOException, URISyntaxException {
-        String              key       = screenService.genSignDataKey(params.getMatchId());
+        String key = screenService.genSignDataKey(params.getMatchId());
         Map<String, Object> resultMap = new HashMap<>();
-        Object              o         = redisService.get(key);
+        Object o = redisService.get(key);
         if (o == null) {
             return resultMap;
         }
@@ -206,8 +206,8 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         ApplyOrderExample example = new ApplyOrderExample();
         example.createCriteria().andUserIdEqualTo(params.getUserId()).andMatchIdEqualTo(params.getMatchId());
         List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample(example);
-        ApplyOrder       order;
-        Boolean          needPay     = true;
+        ApplyOrder order;
+        Boolean needPay = true;
         resultMap.put("hasPay", false);
         if (applyOrders != null && applyOrders.size() > 0) {
             order = applyOrders.get(0);
@@ -271,11 +271,11 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
             String orderResult = HttpPosts.POST.request(WX_UNIFIEDORDER_URL, data);
             System.out.println("[" + new DateTime().toString("yyyy-MM-dd") + "] 下单结果：" + orderResult);
             Map<String, String> orderResultMap = XmlUtils.returnXMLData(orderResult);
-            String              return_code    = orderResultMap.get("return_code");
+            String return_code = orderResultMap.get("return_code");
 
             if (return_code.equals("SUCCESS")) {
-                String           prepay_id = orderResultMap.get("prepay_id");
-                WxPayResultModel model     = new WxPayResultModel();
+                String prepay_id = orderResultMap.get("prepay_id");
+                WxPayResultModel model = new WxPayResultModel();
                 model.setAppId(WX_APPID);
                 model.setKey(WX_KEY);
                 model.setNonceStr(payData.getNonce_str());
@@ -301,11 +301,11 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         ApplyOrderExample example = new ApplyOrderExample();
         //支付了的 已经签到的 签到时间大于这个时间的
         example.createCriteria().andMatchIdEqualTo(matchId).andPayStatueEqualTo(1).andUserSignStatusEqualTo(1);
-        List<ApplyOrder>        applyOrders = applyOrderMapper.selectByExample(example);
-        List<ApiSimpleUserInfo> aUsers      = new ArrayList<>();
-        List<ApiSimpleUserInfo> bUsers      = new ArrayList<>();
-        List<ApiSimpleUserInfo> cUsers      = new ArrayList<>();
-        ApiSimpleUserInfo       userInfo;
+        List<ApplyOrder> applyOrders = applyOrderMapper.selectByExample(example);
+        List<ApiSimpleUserInfo> aUsers = new ArrayList<>();
+        List<ApiSimpleUserInfo> bUsers = new ArrayList<>();
+        List<ApiSimpleUserInfo> cUsers = new ArrayList<>();
+        ApiSimpleUserInfo userInfo;
         for (ApplyOrder order : applyOrders) {
             userInfo = ApiSimpleUserInfo.genFromApplyOrder(order);
             aUsers.add(userInfo);
@@ -367,6 +367,13 @@ public class ApplyOrderServiceImpl implements ApplyOrderService {
         order.setGroupName(groupName);
         order.setId(orderId);
         applyOrderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public void deleteOrders (String[] orderIdArray) {
+        ApplyOrderExample example = new ApplyOrderExample();
+        example.createCriteria().andIdIn(Arrays.asList(orderIdArray));
+        applyOrderMapper.deleteByExample(example);
     }
 
     private void installPayData (WxPayData payData) {

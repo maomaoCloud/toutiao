@@ -23,6 +23,8 @@ public class UserInfo {
     private String  partnerIdCard;
     private String  partnerSignStatue;
 
+    private String partnerId;
+
     private String orderId;
 
     public String getUserId () {
@@ -99,7 +101,8 @@ public class UserInfo {
             info.setPartnerIdCard(order.getPartnerIdCard());
             info.setPartnerName(order.getPartnerName());
             info.setPartnerPhone(order.getPartnerPhone());
-            info.setPartnerSignStatue(getSignStatusName(order.getPayStatue()));
+            info.setPartnerSignStatue(getSignStatusName(order.getPartnerSignStatue()));
+            info.setPartnerId(order.getPartnerId());
         }
         return info;
     }
@@ -126,6 +129,7 @@ public class UserInfo {
             info.setPartnerName(order.getPartnerName());
             info.setPartnerPhone(order.getPartnerPhone());
             info.setPartnerSignStatue(getSignStatusName(order.getPayStatue()));
+            info.setPartnerId(order.getPartnerId());
         }
         return info;
     }
@@ -223,6 +227,14 @@ public class UserInfo {
 
     public void setOrderId (String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getPartnerId () {
+        return partnerId;
+    }
+
+    public void setPartnerId (String partnerId) {
+        this.partnerId = partnerId;
     }
 
 }
