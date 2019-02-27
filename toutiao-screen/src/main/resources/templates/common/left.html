@@ -29,7 +29,7 @@
     <link rel="stylesheet"
           th:href="@{${#httpServletRequest.getContextPath()} + '/js/vendor/chosen/css/chosen-bootstrap.css'}">
 
-    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=3.8'}" rel="stylesheet">
+    <link th:href="@{${#httpServletRequest.getContextPath()} + '/css/minimal.css?v=3.2'}" rel="stylesheet">
     <link th:href="@{${#httpServletRequest.getContextPath()} + '/layer/theme/default/layer.css'}" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js} IE8 support of HTML5 elements and media queries -->
@@ -45,6 +45,8 @@
             width: 100%;
             font-family: PingFangSC-Regular, Helvetica, Arial, Microsoft Yahei, sans-serif !important;
         }
+
+        #wrap::-webkit-scrollbar { width: 0 !important;  display: none }
 
         .full-screen {
             padding-left: 15px !important;

@@ -70,6 +70,51 @@
     .editUserInfo-box {
         padding: 10px;
     }
+
+    #funcBox {
+        overflow: hidden;
+        margin-bottom: -10px;
+        min-height: 44px;
+    }
+
+    #funcBox .tplLink{
+        font-size: 15px;
+        color: #1cbbd2;
+    }
+
+    #funcBox button{
+        background: transparent;
+        border: 1px solid #CCC !important;
+        color: #FFF;
+        margin: 10px;
+    }
+
+    #funcBox button:hover{
+        color: #E1E1E1;
+        margin: 10px 15px;
+    }
+
+    #editUserInfoForm .data-item{
+        display: flex;
+        margin: 10px 0;
+        align-items: center;
+    }
+
+    #editUserInfoForm .data-item input{
+        height: 30px;
+    }
+
+    #editUserInfoForm .data-item label{
+        width: 25%;
+        font-size: 15px;
+        font-weight: normal;
+    }
+
+    #editUserInfoForm .data-item select{
+        background: transparent;
+        height: 33px;
+        font-size: 13px;
+    }
 </style>
 
 <!-- col 12 -->
@@ -83,16 +128,15 @@
         <!-- tile header -->
         <div class="tile-header" style="text-align:center;">
             <h1><strong>参赛人员 (点击姓名可编辑选手信息)</strong></h1>
-            <div style="overflow:hidden;margin-bottom:-10px;min-height:44px;">
+            <div id="funcBox">
                 <input type="file" id="uploadFile" name="uploadFile" style="display: none"
                        onchange="checkSuffix(event)"/>
                 <span style="vertical-align: text-bottom;" id="fileName"></span>
-                <input type="button" onclick="javascript:$('#uploadFile').click()" th:value="导入参赛人员">
-
+                <button class="btn" onclick="javascript:$('#uploadFile').click()">导入参赛人员</button>
                 <button class="btn" id="addUserBtn">添加参赛人员</button>
                 <button class="btn" id="delete">删除选中人员</button>
+                <a class="tplLink" href="/tpl.xlsx">点击下载导入模板</a>
             </div>
-            <a href="/tpl.xlsx">上传模板</a>
         </div>
         <!-- /tile header -->
 
@@ -288,19 +332,19 @@
                             <form id="editUserInfoForm" method="post">
                                 <div class="data-item">
                                 <label>姓&nbsp;&nbsp;&nbsp;名：</label>
-                                <input name="name" value="${name}" type="text">
+                                <input name="name" class="form-control" value="${name}" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>手&nbsp;&nbsp;&nbsp;机：</label>
-                                <input name="phone" value="${phone}" type="text">
+                                <input name="phone" class="form-control" value="${phone}" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>身份证：</label>
-                                <input name="idCard" value="${idCard}" type="text">
+                                <input name="idCard" class="form-control" value="${idCard}" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>状&nbsp;&nbsp;&nbsp;态：</label>
-                                <select name="sign">
+                                <select class="form-control" name="sign">
                                     <option ${sign === "0" ? 'selected="selected"' : ""} value="0">未签到</option>
                                     <option ${sign === "1" ? 'selected="selected"' : ""} value="1">已签到</option>
                                 </select>
@@ -317,7 +361,7 @@
     $("#addUserBtn").click(function () {
         layer.open({
             type: 1,
-            title: "编辑选手信息",
+            title: "添加选手",
             btn: ['确认', '取消'],
             skin: 'layui-layer-demo', //样式类名
             closeBtn: 1, //不显示关闭按钮
@@ -347,38 +391,39 @@
                             <form id="editUserInfoForm" method="post">
                                 <div class="data-item">
                                 <label>姓&nbsp;&nbsp;&nbsp;名：</label>
-                                <input name="name" value="" type="text">
+                                <input name="name" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>手&nbsp;&nbsp;&nbsp;机：</label>
-                                <input name="phone" value="" type="text">
+                                <input name="phone" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>身份证：</label>
-                                <input name="idCard" value="" type="text">
+                                <input name="idCard" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>状&nbsp;&nbsp;&nbsp;态：</label>
-                                <select name="sign">
+                                <select class="form-control" name="sign">
                                     <option  value="0">未签到</option>
                                     <option  value="1">已签到</option>
                                 </select>
+                                </div>
                                 <hr>
                                 <div class="data-item">
                                 <label>搭&nbsp;&nbsp;&nbsp;档：</label>
-                                <input name="partnerName" value="" type="text">
+                                <input name="partnerName" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>手&nbsp;&nbsp;&nbsp;机：</label>
-                                <input name="partnerPhone" value="" type="text">
+                                <input name="partnerPhone" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>身份证：</label>
-                                <input name="partnerIdCard" value="" type="text">
+                                <input name="partnerIdCard" class="form-control" value="" type="text">
                                 </div>
                                 <div class="data-item">
                                 <label>状&nbsp;&nbsp;&nbsp;态：</label>
-                                <select name="partnerSign">
+                                <select class="form-control" name="partnerSign">
                                     <option value="0">未签到</option>
                                     <option value="1">已签到</option>
                                 </select>
