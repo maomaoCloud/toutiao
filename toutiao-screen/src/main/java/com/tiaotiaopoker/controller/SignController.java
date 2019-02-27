@@ -5,10 +5,7 @@ import com.tiaotiaopoker.NsExcelReadXUtils;
 import com.tiaotiaopoker.SecurityFactory;
 import com.tiaotiaopoker.StringUtils;
 import com.tiaotiaopoker.config.ViewConstants;
-import com.tiaotiaopoker.entity.ApiSimpleUserInfo;
-import com.tiaotiaopoker.entity.BiValue;
-import com.tiaotiaopoker.entity.SysSetting;
-import com.tiaotiaopoker.entity.UserInfo;
+import com.tiaotiaopoker.entity.*;
 import com.tiaotiaopoker.pojo.ApplyOrder;
 import com.tiaotiaopoker.service.AppUserService;
 import com.tiaotiaopoker.service.ApplyOrderService;
@@ -35,24 +32,24 @@ import java.util.Map;
  * Created by xiekang on 2018/10/9.
  */
 @Controller
-@RequestMapping ("sys/sign")
-@Scope ("prototype")
+@RequestMapping("sys/sign")
+@Scope("prototype")
 public class SignController extends BaseController {
-    @Value ("${scan.sign.qrcode.url}")
-    private String            qrcode_url_prefix;
-    @Value ("${scan.qrcode.key}")
-    private String            qrcode_key;
+    @Value("${scan.sign.qrcode.url}")
+    private String qrcode_url_prefix;
+    @Value("${scan.qrcode.key}")
+    private String qrcode_key;
     @Autowired
     private ApplyOrderService applyOrderService;
     @Autowired
-    private MatchRuleService  matchRuleService;
+    private MatchRuleService matchRuleService;
 
     @Autowired
     private AppUserService appUserService;
 
-    @RequestMapping ("match/{matchId}")
-    public ModelAndView index (ModelAndView mv,
-                               @PathVariable ("matchId") String matchId) {
+    @RequestMapping("match/{matchId}")
+    public ModelAndView index(ModelAndView mv,
+                              @PathVariable("matchId") String matchId) {
         String id = StringUtils.genRandomKey();
         String key = SecurityFactory.MD5.encrypt(id + qrcode_key, null);
         String qrcode_url = String.format(qrcode_url_prefix, id, matchId, key);
@@ -95,7 +92,7 @@ public class SignController extends BaseController {
         int interval = biValue.getValB();
 
         for (ApiSimpleUserInfo asi : allList) {
-            if (i%pageSize == 0) {
+            if (i % pageSize == 0) {
                 if (tmp != null) {
                     data.add(tmp);
                 }
@@ -114,15 +111,15 @@ public class SignController extends BaseController {
         mv.addObject("signUsers", signUsers);
         mv.addObject("partnerUsers", partnerUsers);
         mv.addObject("waitApprove", waitApprove);
-        mv.addObject("interval", interval*1000);
+        mv.addObject("interval", interval * 1000);
 
         return mv;
     }
 
-    @RequestMapping ("match/{matchId}/new")
+    @RequestMapping("match/{matchId}/new")
     @ResponseBody
-    public JsonResult showNewSign (@PathVariable ("matchId") String matchId,
-                                   Date datePoint) {
+    public JsonResult showNewSign(@PathVariable("matchId") String matchId,
+                                  Date datePoint) {
         //每次只获取datePoint之后的数据
         try {
             Map<String, Object> resultMap = applyOrderService.getNewSignData(matchId, datePoint);
@@ -132,11 +129,11 @@ public class SignController extends BaseController {
         return JsonResult.FAILED();
     }
 
-    @RequestMapping ("wait/approve")
+    @RequestMapping("wait/approve")
     @ResponseBody
-    public JsonResult waitApprove (String userId,
-                                   String matchId,
-                                   Integer doType) {
+    public JsonResult waitApprove(String userId,
+                                  String matchId,
+                                  Integer doType) {
         //每次只获取datePoint之后的数据
         try {
             Integer nextStatue = doType.equals(1) ? 1 : -1; //更新的签到状态  1为同意 -1为不同意
@@ -147,9 +144,9 @@ public class SignController extends BaseController {
         return JsonResult.FAILED();
     }
 
-    @RequestMapping ("users/{matchId}")
-    public ModelAndView users (ModelAndView mv,
-                               @PathVariable ("matchId") String matchId) {
+    @RequestMapping("users/{matchId}")
+    public ModelAndView users(ModelAndView mv,
+                              @PathVariable("matchId") String matchId) {
         List<ApplyOrder> signData = applyOrderService.getSignData(matchId);
         List<UserInfo> datas = new ArrayList<>();
         for (ApplyOrder order : signData) {
@@ -161,16 +158,16 @@ public class SignController extends BaseController {
         return mv;
     }
 
-    @RequestMapping ("/userInfo/groupName/save")
+    @RequestMapping("/userInfo/groupName/save")
     @ResponseBody
-    public JsonResult saveGroupName (String groupName, String orderId) {
+    public JsonResult saveGroupName(String groupName, String orderId) {
         applyOrderService.updateGroupName(orderId, groupName);
         return JsonResult.SUCCESS();
     }
 
-    @RequestMapping (value = "/importUser")
+    @RequestMapping(value = "/importUser")
     @ResponseBody
-    public JsonResult importUser (@RequestParam ("file") MultipartFile mulFile, String matchId) {
+    public JsonResult importUser(@RequestParam("file") MultipartFile mulFile, String matchId) {
         try {
             //拿到上传的文件流
             InputStream is = null;
@@ -184,19 +181,25 @@ public class SignController extends BaseController {
         return JsonResult.SUCCESS();
     }
 
-    @RequestMapping ("/user/edit")
+    @RequestMapping("/user/edit")
     @ResponseBody
-    public JsonResult editUserInfo (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
+    public JsonResult editUserInfo(String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
         appUserService.updateUserInfoFromScreen(orderId, name, phone, idCard, sign, userType, matchId, userId);
         return JsonResult.SUCCESS();
     }
 
-    @RequestMapping ("/users/delete")
+    @RequestMapping("/users/delete")
     @ResponseBody
-    public JsonResult deleteOrder (String orderIds) {
+    public JsonResult deleteOrder(String orderIds) {
         String[] orderIdArray = orderIds.split(",");
         applyOrderService.deleteOrders(orderIdArray);
         return JsonResult.SUCCESS();
     }
 
+    @RequestMapping("/users/add")
+    @ResponseBody
+    public JsonResult addUsers(AddUsersItemModel users,String matchId) {
+        appUserService.addAppUserFromScreen(users,matchId);
+        return JsonResult.SUCCESS();
+    }
 }

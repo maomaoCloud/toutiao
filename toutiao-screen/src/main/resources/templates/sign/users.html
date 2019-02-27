@@ -77,50 +77,54 @@
         min-height: 44px;
     }
 
-    #funcBox .tplLink{
+    #funcBox .tplLink {
         font-size: 15px;
         color: #1cbbd2;
     }
 
-    #funcBox button{
+    #funcBox button {
         background: transparent;
         border: 1px solid #CCC !important;
         color: #FFF;
         margin: 10px;
     }
 
-    #funcBox button:hover{
+    #funcBox button:hover {
         color: #E1E1E1;
         margin: 10px 15px;
     }
 
-    #editUserInfoForm .data-item{
+    .editUserInfo-box .data-item {
         display: flex;
         margin: 10px 0;
         align-items: center;
     }
 
-    #editUserInfoForm .data-item input{
+    .editUserInfo-box .data-item input {
         height: 30px;
     }
 
-    #editUserInfoForm .data-item label{
+    .editUserInfo-box .data-item label {
         width: 25%;
         font-size: 15px;
         font-weight: normal;
     }
 
-    #editUserInfoForm .data-item select{
+    .editUserInfo-box .data-item select {
         background: transparent;
         height: 33px;
         font-size: 13px;
+    }
+
+    .no-sign{
+        color: #2cc1f0;
+        font-size: 25px;
+        font-style: italic;
     }
 </style>
 
 <!-- col 12 -->
 <div class="col-lg-12 col-md-12">
-
-
     <!-- tile -->
     <section class="tile color transparent-black">
 
@@ -187,7 +191,7 @@
                     </td>
                     <td th:text="${user.phone}">18012673347</td>
                     <td th:text="${user.idCard}">18012673347</td>
-                    <td class="line-right" th:text="${user.signStatue}"></td>
+                    <td class="line-right" th:class="${user.signStatue.equals('已签到') ? 'sign':'no-sign'}" th:text="${user.signStatue}"></td>
                     <td>
                         <img th:if="${user.hasPartner}" class="head" th:src="${user.partnerHead}"
                              src="assets/images/peter-avatar.jpg">
@@ -201,7 +205,7 @@
                     </td>
                     <td th:text="${user.partnerPhone}">18012673347</td>
                     <td th:text="${user.partnerIdCard}">18012673347</td>
-                    <td class="line-right" th:text="${user.partnerSignStatue}"></td>
+                    <td class="line-right" th:class="${user.partnerSignStatue.equals('已签到') ? 'sign':'no-sign'}" th:text="${user.partnerSignStatue}"></td>
                     <td th:text="${user.applyDate}">2018-10-10 12:23:56</td>
                 </tr>
                 </tbody>
@@ -244,11 +248,11 @@
 
                 showLoading();
                 $.post("/sys/sign/users/delete?token=" + getToken(), {orderIds: ids.join(",")}, function (res) {
-                    closeLoading();
                     if (res.success) {
                         layer.msg("删除成功！");
                         $("#users").click();
                     } else {
+                        closeLoading();
                         layer.msg("服务器繁忙，稍后重试！");
                     }
                 });
@@ -316,14 +320,25 @@
                         layer.msg('请输入姓名！');
                         return;
                     }
+
+                    if(data.phone != "" && !is_mobile(data.phone)){
+                        layer.msg('手机号码格式有误！');
+                        return;
+                    }
+
+                    if(data.idCard != "" && !is_idCard(data.idCard)){
+                        layer.msg('身份证号有误！');
+                        return;
+                    }
+
                     layer.close(index);
                     showLoading();
                     $.post("/sys/sign/user/edit?token=" + getToken(), data, function (res) {
-                        closeLoading();
                         if (res.success) {
                             layer.msg("修改成功！");
                             $("#users").click();
                         } else {
+                            closeLoading();
                             layer.msg("服务器繁忙，稍后重试！");
                         }
                     });
@@ -368,27 +383,52 @@
             anim: 2,
             shadeClose: false, //开启遮罩关闭
             yes: function (index) {
-                var data = $("#editUserInfoForm").serializeObject();
+                var data = $("#addUserInfoForm").serializeObject();
                 data.matchId = getMatchId();
                 console.log(data);
                 if (data.name === '') {
                     layer.msg('请输入姓名！');
                     return;
                 }
+
+                if(data.phone != "" && !is_mobile(data.phone)){
+                    layer.msg('手机号码格式有误！');
+                    return;
+                }
+
+                if(data.idCard != "" && !is_idCard(data.idCard)){
+                    layer.msg('身份证号有误！');
+                    return;
+                }
+
+                var hasPartner = data.partnerName != "";
+                if (hasPartner) {
+                    //检测身份证和手机号是否有意义
+                    if(data.partnerPhone != "" && !is_mobile(data.partnerPhone)){
+                        layer.msg('手机号码格式有误！');
+                        return;
+                    }
+
+                    if(data.partnerIdCard != "" && !is_idCard(data.partnerIdCard)){
+                        layer.msg('身份证号有误！');
+                        return;
+                    }
+                }
+
                 layer.close(index);
                 showLoading();
-                $.post("/sys/sign/user/edit?token=" + getToken(), data, function (res) {
-                    closeLoading();
+                $.post("/sys/sign/users/add?token=" + getToken(), data, function (res) {
                     if (res.success) {
-                        layer.msg("修改成功！");
+                        layer.msg("添加成功！");
                         $("#users").click();
                     } else {
+                        closeLoading();
                         layer.msg("服务器繁忙，稍后重试！");
                     }
                 });
             },
             content: `<div class='editUserInfo-box'>
-                            <form id="editUserInfoForm" method="post">
+                            <form id="addUserInfoForm" method="post">
                                 <div class="data-item">
                                 <label>姓&nbsp;&nbsp;&nbsp;名：</label>
                                 <input name="name" class="form-control" value="" type="text">
@@ -453,11 +493,11 @@
             beforeSend: function () {
             },
             success: function (data) {
-                closeLoading();
                 if (data.success) {
                     layer.msg("导入成功！")
                     $("#users").click();
                 } else {
+                    closeLoading();
                     layer.msg("导入失败！")
                 }
             },

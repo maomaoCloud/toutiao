@@ -1,5 +1,6 @@
 package com.tiaotiaopoker.service;
 
+import com.tiaotiaopoker.entity.AddUsersItemModel;
 import com.tiaotiaopoker.pojo.AppUser;
 
 import java.util.List;
@@ -32,4 +33,5 @@ public interface AppUserService {
 
     void updateUserInfoFromScreen (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId);
 
+    void addAppUserFromScreen(AddUsersItemModel users,String matchId);
 }

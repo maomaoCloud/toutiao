@@ -34,7 +34,7 @@ function getHasGroupName() {
 }
 
 function setHasGroupName(_hasGroupName) {
-     hasGroupName = _hasGroupName;
+    hasGroupName = _hasGroupName;
 }
 
 /**显示信息*/
@@ -56,8 +56,7 @@ function getClientHeight() {
     var clientHeight = 0;
     if (document.body.clientHeight && document.documentElement.clientHeight) {
         var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
-    }
-    else {
+    } else {
         var clientHeight = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;
     }
     return clientHeight;
@@ -100,8 +99,7 @@ function _exit_full_screen() {
         document.webkitExitFullscreen; //IE11
     if (exitMethod) {
         exitMethod.call(document);
-    }
-    else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+    } else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
         var wscript = new ActiveXObject("WScript.Shell");
         if (wscript !== null) {
             wscript.SendKeys("{F11}");
@@ -130,3 +128,16 @@ function getCookie(c_name) {
     return ""
 }
 
+function is_mobile(phone) {
+//	var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+    //var pattern =/^([0-9-]+)$/;   //验证手机号码之前所用
+    var pattern = /^((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)$/;
+    //   var isPhone=/^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;  //座机验证规则
+    return pattern.test(phone);
+}
+
+
+function is_idCard(idCard) {
+    var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    return regIdNo.test(idCard);
+}

@@ -2,15 +2,13 @@ package com.tiaotiaopoker.service.impl;
 
 import com.tiaotiaopoker.Constants;
 import com.tiaotiaopoker.dao.*;
-import com.tiaotiaopoker.entity.ApiAdvertData;
-import com.tiaotiaopoker.entity.ApiApplyOrder;
-import com.tiaotiaopoker.entity.ApiMatchData;
-import com.tiaotiaopoker.entity.ApplyOrderDto;
+import com.tiaotiaopoker.entity.*;
 import com.tiaotiaopoker.pojo.*;
 import com.tiaotiaopoker.service.AppUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +21,20 @@ import java.util.*;
 @Service
 public class AppUserServiceImpl implements AppUserService {
     @Autowired
-    private AppUserMapper         appUserMapper;
+    private AppUserMapper appUserMapper;
     @Autowired
     private AdvertRecommendMapper advertRecommendMapper;
     @Autowired
-    private ApplyOrderMapper      applyOrderMapper;
+    private ApplyOrderMapper applyOrderMapper;
     @Autowired
-    private MatchMapper           matchMapper;
+    private MatchMapper matchMapper;
     @Autowired
-    private WithdrawLogMapper     withdrawLogMapper;
+    private WithdrawLogMapper withdrawLogMapper;
     @Autowired
     private MatchTeamMemberMapper matchTeamMemberMapper;
 
     @Override
-    public AppUser getUserByOpenId (String openId) {
+    public AppUser getUserByOpenId(String openId) {
         AppUserExample example = new AppUserExample();
         example.createCriteria().andOpenIdEqualTo(openId);
 
@@ -47,12 +45,12 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void addAppUser (AppUser appUser) {
+    public void addAppUser(AppUser appUser) {
         appUserMapper.insertSelective(appUser);
     }
 
     @Override
-    public AppUser updateAppUserInfo (AppUser user) {
+    public AppUser updateAppUserInfo(AppUser user) {
         user.setUpdateInfoDate(new Date());
         user.setLastLoginDateTime(new Date());
         appUserMapper.updateByPrimaryKeySelective(user);
@@ -71,10 +69,10 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void updateUserApplyInfo (String userId,
-                                     String trueName,
-                                     String userPhone,
-                                     String userIdCard) {
+    public void updateUserApplyInfo(String userId,
+                                    String trueName,
+                                    String userPhone,
+                                    String userIdCard) {
         AppUser user = new AppUser();
         user.setId(userId);
         user.setTrueName(trueName);
@@ -84,12 +82,12 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser getUserByUserId (String userId) {
+    public AppUser getUserByUserId(String userId) {
         return appUserMapper.selectByPrimaryKey(userId);
     }
 
     @Override
-    public Map<String, Object> getUserCenterInfo (String userId) {
+    public Map<String, Object> getUserCenterInfo(String userId) {
         Map<String, Object> resultMap = new HashMap<>();
         //我的报名(已支付)
         List<ApplyOrderDto> orderList = applyOrderMapper.queryOrderListByUserId(userId);
@@ -167,8 +165,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public Map<String, Object> getUserIncome (String userId,
-                                              String matchId) {
+    public Map<String, Object> getUserIncome(String userId,
+                                             String matchId) {
         Map<String, Object> resultMap = new HashMap<>();
         Map<String, Object> paramMap = new HashMap<>();
         BigDecimal hundred = new BigDecimal(100);
@@ -205,7 +203,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<AppUser> getUserByTrueName (String trueName) {
+    public List<AppUser> getUserByTrueName(String trueName) {
         return appUserMapper.getUserByTrueName(trueName);
     }
 
@@ -217,7 +215,7 @@ public class AppUserServiceImpl implements AppUserService {
      */
     @Transactional
     @Override
-    public void importUserWithOrder (List<List<String>> dataList, String matchId) {
+    public void importUserWithOrder(List<List<String>> dataList, String matchId) {
         for (List<String> data : dataList) {
             //创建appUser
             AppUser appUser = genImportUser(data.get(0), data.get(0), data.get(1));
@@ -264,7 +262,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void updateUserInfoFromScreen (String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
+    public void updateUserInfoFromScreen(String orderId, String name, String phone, String idCard, Integer sign, String userType, String matchId, String userId) {
         //1. 根据订单  更新用户信息
         ApplyOrder order = new ApplyOrder();
         order.setId(orderId);
@@ -298,14 +296,67 @@ public class AppUserServiceImpl implements AppUserService {
 
     }
 
-    public static AppUser genImportUser (String nickName, String trueName, String phone) {
+    @Override
+    public void addAppUserFromScreen(AddUsersItemModel users, String matchId) {
+        AppUser user = genImportUser(users.getName(), users.getName(), users.getPhone(), users.getIdCard());
+        appUserMapper.insertSelective(user);
+
+        AppUser partner = null;
+        if (StringUtils.isNotBlank(users.getPartnerName())) {
+            partner = genImportUser(users.getPartnerName(), users.getPartnerName(), users.getPartnerPhone(), users.getPartnerIdCard());
+            appUserMapper.insertSelective(partner);
+        }
+
+        addOrder(user, partner, matchId, users);
+    }
+
+    private void addOrder(AppUser user, AppUser partner, String matchId, AddUsersItemModel users) {
+        //生成比赛订单
+        boolean noPartner = partner == null;
+
+        ApplyOrder applyOrder = new ApplyOrder();
+        applyOrder.setId(com.tiaotiaopoker.StringUtils.generateOrderNo());
+        applyOrder.setUserId(user.getId());
+        applyOrder.setUserName(user.getTrueName());
+        applyOrder.setUserPhone(user.getPhone());
+        applyOrder.setPartnerId(noPartner ? null : partner.getId());
+        applyOrder.setPartnerName(noPartner ? null : partner.getNickName());
+        applyOrder.setPartnerPhone(noPartner ? null : partner.getPhone());
+        applyOrder.setHasPartner(noPartner ? 0 : 1);
+        applyOrder.setMatchId(matchId);
+        applyOrder.setUserIdCard(user.getIdCard());
+        applyOrder.setPartnerIdCard(noPartner ? null : partner.getIdCard());
+        applyOrder.setUserHead(user.getAvatarUrl());
+        applyOrder.setPartnerHead(noPartner ? null : partner.getAvatarUrl());
+        applyOrder.setAddTime(new Date());
+        //支付和签到状态
+        applyOrder.setPrice(new BigDecimal(0));
+        applyOrder.setPayMoney(new BigDecimal(0));
+        applyOrder.setSharePercent(new BigDecimal(0));
+        applyOrder.setPayDate(new Date());
+        applyOrder.setPayStatue(1);
+        applyOrder.setUserSignStatus(users.getSign());
+        applyOrder.setPartnerSignStatue(noPartner ? null : users.getPartnerSign());
+        applyOrder.setUserSignDatetime(new Date());
+        applyOrder.setPartnerSignDatetime(noPartner ? null : new Date());
+        //团队公司信息
+        applyOrder.setGroupName("");
+        applyOrder.setCompanyName("");
+        applyOrderMapper.insertSelective(applyOrder);
+    }
+
+    @Value("${avatar.api}")
+    private String AVATAR_API_FMT;
+
+    public AppUser genImportUser(String nickName, String trueName, String phone) {
         AppUser appUser = new AppUser();
         appUser.setId(com.tiaotiaopoker.StringUtils.generateShortUUID());
         appUser.setNickName(nickName);
         appUser.setTrueName(trueName);
         appUser.setRegDate(new Date());
         //生成头像
-        appUser.setAvatarUrl("https://match.tiaotiaopoker.com/tools/placeholder/200x200/bgRGB_CCCCCC/textRGB_000000/fontSize_60/" + trueName);
+        String avatar = String.format(AVATAR_API_FMT, trueName);
+        appUser.setAvatarUrl(avatar);
         appUser.setPhone(phone);
         appUser.setUserStatus(0);
         appUser.setUserLevel(0);
@@ -315,4 +366,9 @@ public class AppUserServiceImpl implements AppUserService {
         return appUser;
     }
 
+    private AppUser genImportUser(String nickName, String trueName, String phone, String idCard) {
+        AppUser user = genImportUser(nickName, trueName, phone);
+        user.setIdCard(idCard);
+        return user;
+    }
 }
